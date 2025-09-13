@@ -1,0 +1,911 @@
+ <!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>贪吃蛇 Gluttonous Snake</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+        }
+        .game-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        canvas {
+            border-radius: 10px;
+            background: #0f3460;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+        .score-panel {
+            display: flex;
+            justify-content: space-between;
+            width: 400px;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        .score-panel div {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+        .controls {
+            display: none;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .controls button {
+            width: 60px;
+            height: 60px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .controls button:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+        @media (max-width: 768px) {
+            .score-panel {
+                width: 300px;
+            }
+            .controls {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .controls button:nth-child(1) {
+                grid-column: 2;
+            }
+            .controls button:nth-child(2) {
+                grid-column: 1;
+                grid-row: 2;
+            }
+            .controls button:nth-child(3) {
+                grid-column: 2;
+                grid-row: 2;
+            }
+            .controls button:nth-child(4) {
+                grid-column: 3;
+                grid-row: 2;
+            }
+        }
+        .game-over {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            display: none;
+        }
+        .game-over h2 {
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+        .game-over p {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        .game-over button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background: #e94560;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .game-over button:hover {
+            background: #ff2e63;
+        }
+        .start-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 52, 96, 0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+        }
+        .start-screen h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #00ff9d;
+        }
+        .start-screen p {
+            margin-bottom: 30px;
+            font-size: 1.2rem;
+            text-align: center;
+            max-width: 400px;
+        }
+        .start-screen button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            background: #00ff9d;
+            color: #0f3460;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .start-screen button:hover {
+            background: #00e68a;
+            transform: scale(1.05);
+        }
+        
+        /* 添加水印样式 */
+        .watermark {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.3);
+            z-index: 1000;
+            pointer-events: none;
+        }
+        
+        /* 添加反馈按钮样式 */
+        .feedback-button {
+            position: fixed;
+            top: 20px;
+            right: 10px;
+
+
+
+            width: 100px; /* 调整宽度以适应文字 */
+            height: 70px; /* 调整高度 */
+            border-radius: 25px; /* 调整圆角 */
+            background: rgba(0, 255, 157, 0.8);
+            color: #0f3460;
+
+            font-size: 1rem; /* 调整字体大小 */
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            z-index: 1001;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .feedback-button:hover {
+            background: rgba(0, 255, 157, 1);
+            transform: scale(1.1);
+        }
+        
+        /* 添加更新日志按钮样式 */
+        .changelog-button {
+            position: fixed;
+            top: 110px;
+            right: 10px;
+            width: 100px;
+            height: 70px;
+            border-radius: 25px;
+            background: rgba(0, 255, 157, 0.8);
+            color: #0f3460;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            z-index: 1001;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .changelog-button:hover {
+            background: rgba(0, 255, 157, 1);
+            transform: scale(1.1);
+        }
+        
+        /* 添加反馈栏样式 */
+        .feedback-panel {
+            position: fixed;
+            top: 80px;
+            right: 100px;
+            width: 400px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .feedback-panel:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
+        }
+        
+        .feedback-panel h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #00ff9d;
+            font-size: 1.3rem;
+        }
+        
+        .feedback-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        /* 添加更新日志栏样式 */
+        .changelog-panel {
+            position: fixed;
+            top: 100px; /* 调整位置到反馈按钮下方 */
+            right: 100px; /* 更改位置到右侧与反馈按钮对齐 */
+            width: 400px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .changelog-panel:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
+        }
+        
+        .changelog-panel h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #00ff9d;
+            font-size: 1.3rem;
+        }
+        
+        .changelog-content {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .changelog-content h4 {
+            color: #00ff9d;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+        
+        .changelog-content ul {
+            padding-left: 20px;
+        }
+        
+        .changelog-content li {
+            margin-bottom: 5px;
+        }
+        
+        .feedback-form input,
+        .feedback-form textarea {
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+        
+        .feedback-form input:focus,
+        .feedback-form textarea:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 10px rgba(0, 255, 157, 0.5);
+        }
+        
+        .feedback-form input::placeholder,
+        .feedback-form textarea::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .feedback-form textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .feedback-form button {
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: #00ff9d;
+            color: #0f3460;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .feedback-form button:hover {
+            background: #00e68a;
+            transform: scale(1.03);
+        }
+        
+        .feedback-message {
+            margin-top: 15px;
+            text-align: center;
+            min-height: 24px;
+            color: #00ff9d;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .feedback-message.show {
+            opacity: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .feedback-panel {
+                width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="score-panel">
+            <div>当前得分<br>score: <span id="score">0</span></div>
+            <div>最高得分<br>high score: <span id="high-score">0</span></div>
+        </div>
+        <canvas id="gameCanvas" width="400" height="400"></canvas>
+        <div class="game-over">
+            <h2>游戏结束<br>gameover</h2>
+            <p>你的得分<br>score: <span id="final-score">0</span></p>
+            <button onclick="restartGame()">重新开始<br>Restart</button>
+        </div>
+        <div class="start-screen" id="start-screen">
+            <h1>贪吃蛇<br>Gluttonous Snake</h1>
+            <p>使用方向键，WASD，或屏幕上的方向按钮来控制贪吃蛇的移动。<br>吃到食物可以增加得分，避免撞到墙壁或自己。<br>Use the arrow keys, WASD, or the directional buttons on the screen to control the movement of the snake.<br>Eating food increases your score; avoid hitting the walls or the snake itself.</p>
+            <button onclick="startGame()">开始游戏<br>startGame</button>
+        </div>
+    </div>
+    <div class="controls">
+        <button onclick="changeDirection('up')">&#8593;</button>
+        <button onclick="changeDirection('left')">&#8592;</button>
+        <button onclick="changeDirection('down')">&#8595;</button>
+        <button onclick="changeDirection('right')">&#8594;</button>
+    </div>
+    
+    <!-- 添加反馈栏 -->
+    <div class="feedback-panel">
+        <h3>游戏反馈 | Game Feedback</h3>
+        <p>如果您在游玩中发现有bug或建议，请将建议发送至gamefeedback@126.com<br>
+        If you encounter any bugs or have suggestions, please send them to gamefeedback@126.com</p>
+        <div class="feedback-message" id="feedback-message"></div>
+    </div>
+
+    <!-- 添加反馈按钮 -->
+
+    <button class="feedback-button" onclick="toggleFeedback()">游戏反馈<br>Game Feedback</button>
+    
+    <!-- 添加更新日志按钮 -->
+    <button class="changelog-button" onclick="toggleChangelog()">更新日志<br>Changelog</button>
+    
+    <!-- 添加更新日志栏 -->
+    <div class="changelog-panel" id="changelog-panel">
+        <h3>更新日志 | Changelog</h3>
+        <h3>(年/月/日)<br>（Year/Month/Day）</h3>
+        <div class="changelog-content">
+            <h4>versions 1.1.8 (2025-09-13)</h4>
+            <ul>
+                <li>增加了WASD控制</li>
+                <li>Add WASD controls for easier gameplay</li>
+            </ul>
+            <h4>versions 1.1.7 (2025-09-12)</h4>
+            <ul>
+                <li>蛇的头部增加眼睛，用于辨认方向</li>
+                <li>修复了偶尔出现的显示错误</li>
+                <li>改进了移动端操作体验</li>
+                 <li>Add eyes to the snake's head to help identify direction</li>
+                 <li>Fix occasional display errors</li>
+                 <li>Add mobile controls for easier gameplay</li>
+            </ul>
+            <h4>versions 1.1.6 (2025-09-11)</h4>
+            <ul>
+                <li>新增了反馈功能</li>
+                <li>优化了界面视差效果</li>
+                <li>修复了已知bug</li>
+                <li>feedback functionality</li>
+                <li>Optimize interface parallax effect</li>
+                <li>Fix known bugs</li>
+            </ul>
+            <h4>versions 1.1.5 (2025-09-10)</h4>
+            <ul>
+                <li>首次发布</li>
+                <li>实现了基本贪吃蛇游戏功能</li>
+                <li>添加了得分系统</li>
+                <li>First release</li>
+                <li>Implemented basic snake game functionality</li>
+                <li>Added scoring system</li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- 添加水印 -->
+    <div class="watermark"><h3>@zicong<br>versions1.1.8<h3</div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const scoreElement = document.getElementById('score');
+        const highScoreElement = document.getElementById('high-score');
+        const finalScoreElement = document.getElementById('final-score');
+        const gameOverScreen = document.querySelector('.game-over');
+        const startScreen = document.getElementById('start-screen');
+
+        // Game settings
+        const gridSize = 20;
+        const tileCount = 20;
+        let snake = [];
+        let food = {};
+        let dx = 1;
+        let dy = 0;
+        let score = 0;
+        let highScore = localStorage.getItem('snakeHighScore') || 0;
+        let gameLoopId;
+        let gameSpeed = 150;
+        let isGameRunning = false;
+        let particles = [];
+
+        highScoreElement.textContent = highScore;
+
+        // Initialize snake
+        function initSnake() {
+            snake = [
+                { x: 10, y: 10 },
+                { x: 9, y: 10 },
+                { x: 8, y: 10 }
+            ];
+            score = 0;
+            scoreElement.textContent = score;
+            dx = 1;
+            dy = 0;
+            
+            // Clear particles when restarting
+            particles = [];
+        }
+
+        // Add particle effect
+        function createParticles(x, y, color) {
+            const particles = [];
+            for (let i = 0; i < 5; i++) {
+                particles.push({
+                    x: x * gridSize + gridSize / 2,
+                    y: y * gridSize + gridSize / 2,
+                    dx: (Math.random() - 0.5) * 5,
+                    dy: (Math.random() - 0.5) * 5,
+                    size: Math.random() * 3 + 1,
+                    color: color,
+                    life: 20
+                });
+            }
+            return particles;
+        }
+
+        // Generate random food position
+        function generateFood() {
+            food = {
+                x: Math.floor(Math.random() * tileCount),
+                y: Math.floor(Math.random() * tileCount)
+            };
+
+            // Check if food spawns on snake
+            if (snake.some(segment => segment.x === food.x && segment.y === food.y)) {
+                generateFood();
+            }
+        }
+
+        // Draw everything
+        function draw() {
+            // Clear canvas with an animated gradient background
+            const time = Date.now() / 5000;
+            const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            gradient.addColorStop(0, `hsl(${(time * 20) % 360}, 50%, 10%)`);
+            gradient.addColorStop(1, `hsl(${(time * 20 + 180) % 360}, 50%, 15%)`);
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Draw animated grid
+            ctx.strokeStyle = `rgba(255, 255, 255, ${0.03 + Math.sin(Date.now() / 1000) * 0.02})`;
+            ctx.lineWidth = 0.5;
+            for (let i = 0; i < tileCount; i++) {
+                ctx.beginPath();
+                ctx.moveTo(i * gridSize, 0);
+                ctx.lineTo(i * gridSize, canvas.height);
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.moveTo(0, i * gridSize);
+                ctx.lineTo(canvas.width, i * gridSize);
+                ctx.stroke();
+            }
+
+            // Draw snake with gradient and glow effect
+            snake.forEach((segment, index) => {
+                // Head color
+                if (index === 0) {
+                    const headGradient = ctx.createRadialGradient(
+                        segment.x * gridSize + gridSize/2, 
+                        segment.y * gridSize + gridSize/2, 
+                        1,
+                        segment.x * gridSize + gridSize/2, 
+                        segment.y * gridSize + gridSize/2, 
+                        gridSize/2
+                    );
+                    headGradient.addColorStop(0, '#00ff9d');
+                    headGradient.addColorStop(1, '#00cc7a');
+                    ctx.fillStyle = headGradient;
+                    ctx.shadowColor = '#00ff9d';
+                    
+                    // Draw head
+                    ctx.shadowBlur = 10 + Math.sin(Date.now() / 100 + index) * 3;
+                    ctx.fillRect(segment.x * gridSize, segment.y * gridSize, gridSize - 2, gridSize - 2);
+                    
+                    // Draw eyes (two small squares at the top-left of the head)
+                    ctx.fillStyle = '#000'; // Black eyes
+                    ctx.shadowBlur = 0; // No shadow for eyes
+                    
+                    // Eye size (adjust as needed)
+                    const eyeSize = gridSize / 5;
+                    
+                    // Position eyes in the top-left corner of the head
+                    // Leave some margin from the edges
+                    const eyeMargin = gridSize / 6;
+                    
+                    // Adjust eye positions based on snake direction
+                    let leftEyeX, leftEyeY, rightEyeX, rightEyeY;
+                    
+                    if (dx === 1) { // Moving right
+                        leftEyeX = segment.x * gridSize + eyeMargin * 2;
+                        leftEyeY = segment.y * gridSize + eyeMargin;
+                        rightEyeX = segment.x * gridSize + eyeMargin * 2;
+                        rightEyeY = segment.y * gridSize + eyeMargin * 3;
+                    } else if (dx === -1) { // Moving left
+                        leftEyeX = segment.x * gridSize + eyeMargin;
+                        leftEyeY = segment.y * gridSize + eyeMargin;
+                        rightEyeX = segment.x * gridSize + eyeMargin;
+                        rightEyeY = segment.y * gridSize + eyeMargin * 3;
+                    } else if (dy === 1) { // Moving down
+                        leftEyeX = segment.x * gridSize + eyeMargin;
+                        leftEyeY = segment.y * gridSize + eyeMargin * 2;
+                        rightEyeX = segment.x * gridSize + eyeMargin * 3;
+                        rightEyeY = segment.y * gridSize + eyeMargin * 2;
+                    } else { // Moving up (default)
+                        leftEyeX = segment.x * gridSize + eyeMargin;
+                        leftEyeY = segment.y * gridSize + eyeMargin;
+                        rightEyeX = segment.x * gridSize + eyeMargin * 3;
+                        rightEyeY = segment.y * gridSize + eyeMargin;
+                    }
+                    
+                    // Left eye
+                    ctx.fillRect(leftEyeX, leftEyeY, eyeSize, eyeSize);
+                    
+                    // Right eye
+                    ctx.fillRect(rightEyeX, rightEyeY, eyeSize, eyeSize);
+                } else {
+                    // Create gradient for body segments
+                    const bodyGradient = ctx.createLinearGradient(
+                        segment.x * gridSize, 
+                        segment.y * gridSize, 
+                        segment.x * gridSize + gridSize, 
+                        segment.y * gridSize + gridSize
+                    );
+                    
+                    if (index % 2 === 0) {
+                        bodyGradient.addColorStop(0, '#16c79a');
+                        bodyGradient.addColorStop(1, '#13a885');
+                        ctx.fillStyle = bodyGradient;
+                        ctx.shadowColor = '#16c79a';
+                    } else {
+                        bodyGradient.addColorStop(0, '#13a885');
+                        bodyGradient.addColorStop(1, '#0f8a6d');
+                        ctx.fillStyle = bodyGradient;
+                        ctx.shadowColor = '#13a885';
+                    }
+                }
+                
+                // Add glow effect for body segments
+                if (index !== 0) {
+                    ctx.shadowBlur = 10 + Math.sin(Date.now() / 100 + index) * 3;
+                    ctx.fillRect(segment.x * gridSize, segment.y * gridSize, gridSize - 2, gridSize - 2);
+                }
+                
+                // Reset shadow
+                ctx.shadowBlur = 0;
+            });
+
+            // Draw food with pulsing and rotating effect
+            const pulse = Math.sin(Date.now() / 200) * 0.5 + 0.5;
+            const radius = (gridSize / 2 - 2) * (0.8 + pulse * 0.2);
+            const rotation = Date.now() / 1000;
+            
+            ctx.save();
+            ctx.translate(food.x * gridSize + gridSize / 2, food.y * gridSize + gridSize / 2);
+            ctx.rotate(rotation);
+            
+            // Create animated gradient for food
+            const foodHue = (Date.now() / 20) % 360;
+            const foodGradient = ctx.createRadialGradient(0, 0, 1, 0, 0, radius);
+            foodGradient.addColorStop(0, `hsl(${foodHue}, 100%, 70%)`);
+            foodGradient.addColorStop(1, `hsl(${(foodHue + 30) % 360}, 100%, 50%)`);
+            
+            ctx.fillStyle = foodGradient;
+            ctx.shadowColor = `hsl(${foodHue}, 100%, 50%)`;
+            ctx.shadowBlur = 15 + Math.sin(Date.now() / 100) * 5;
+            
+            // Draw a diamond shape for the food
+            ctx.beginPath();
+            ctx.moveTo(0, -radius);
+            ctx.lineTo(radius/1.5, 0);
+            ctx.lineTo(0, radius);
+            ctx.lineTo(-radius/1.5, 0);
+            ctx.closePath();
+            ctx.fill();
+            
+            ctx.restore();
+            
+            // Reset shadow
+            ctx.shadowBlur = 0;
+
+            // Update and draw particles
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+                p.x += p.dx;
+                p.y += p.dy;
+                p.life--;
+                
+                ctx.fillStyle = p.color;
+                ctx.globalAlpha = p.life / 20;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fill();
+                
+                if (p.life <= 0) {
+                    particles.splice(i, 1);
+                }
+            }
+            ctx.globalAlpha = 1;
+
+            // Move snake
+            const head = { x: snake[0].x + dx, y: snake[0].y + dy };
+            snake.unshift(head);
+
+            // Check if snake ate food
+            if (head.x === food.x && head.y === food.y) {
+                score += 10;
+                scoreElement.textContent = score;
+                
+                // Create particles when food is eaten
+                for (let i = 0; i < 15; i++) {
+                    particles.push({
+                        x: food.x * gridSize + gridSize / 2,
+                        y: food.y * gridSize + gridSize / 2,
+                        dx: (Math.random() - 0.5) * 5,
+                        dy: (Math.random() - 0.5) * 5,
+                        size: Math.random() * 3 + 1,
+                        color: '#e94560',
+                        life: 20
+                    });
+                }
+                
+                generateFood();
+
+                // Increase speed every 50 points
+                if (score % 50 === 0) {
+                    gameSpeed = Math.max(80, gameSpeed - 10);
+                    clearInterval(gameLoopId);
+                    gameLoopId = setInterval(draw, gameSpeed);
+                }
+            } else {
+                snake.pop();
+            }
+
+            // Check collisions
+            checkCollisions();
+        }
+
+        // Check for collisions
+        function checkCollisions() {
+            const head = snake[0];
+
+            // Wall collision
+            if (head.x < 0 || head.x >= tileCount || head.y < 0 || head.y >= tileCount) {
+                gameOver();
+                return;
+            }
+
+            // Self collision
+            for (let i = 1; i < snake.length; i++) {
+                if (head.x === snake[i].x && head.y === snake[i].y) {
+                    gameOver();
+                    return;
+                }
+            }
+        }
+
+        // Game over
+        function gameOver() {
+            clearInterval(gameLoopId);
+            isGameRunning = false;
+            finalScoreElement.textContent = score;
+            gameOverScreen.style.display = 'block';
+
+            // Update high score
+            if (score > highScore) {
+                highScore = score;
+                localStorage.setItem('snakeHighScore', highScore);
+                highScoreElement.textContent = highScore;
+            }
+        }
+
+        // Change direction
+        function changeDirection(newDirection) {
+            const oppositeDirections = {
+                up: 'down',
+                down: 'up',
+                left: 'right',
+                right: 'left'
+            };
+
+            if (oppositeDirections[newDirection] !== getCurrentDirection()) {
+                switch (newDirection) {
+                    case 'up':
+                        dx = 0;
+                        dy = -1;
+                        break;
+                    case 'down':
+                        dx = 0;
+                        dy = 1;
+                        break;
+                    case 'left':
+                        dx = -1;
+                        dy = 0;
+                        break;
+                    case 'right':
+                        dx = 1;
+                        dy = 0;
+                        break;
+                }
+            }
+        }
+
+        // Get current direction
+        function getCurrentDirection() {
+            if (dx === 1 && dy === 0) return 'right';
+            if (dx === -1 && dy === 0) return 'left';
+            if (dx === 0 && dy === 1) return 'down';
+            if (dx === 0 && dy === -1) return 'up';
+        }
+
+        // Start game
+        function startGame() {
+            startScreen.style.display = 'none';
+            gameOverScreen.style.display = 'none';
+            initSnake();
+            generateFood();
+            clearInterval(gameLoopId);
+            gameLoopId = setInterval(draw, gameSpeed);
+            isGameRunning = true;
+        }
+
+        // Restart game
+        function restartGame() {
+            gameOverScreen.style.display = 'none';
+            initSnake();
+            generateFood();
+            clearInterval(gameLoopId);
+            gameLoopId = setInterval(draw, gameSpeed);
+            isGameRunning = true;
+        }
+
+        // Keyboard controls (without Enter key functionality)
+        document.addEventListener('keydown', (e) => {
+            if (!isGameRunning) return;
+
+            switch (e.code) {
+                case 'ArrowUp':
+                case 'KeyW':
+                    changeDirection('up');
+                    break;
+                case 'ArrowDown':
+                case 'KeyS':
+                    changeDirection('down');
+                    break;
+                case 'ArrowLeft':
+                case 'KeyA':
+                    changeDirection('left');
+                    break;
+                case 'ArrowRight':
+                case 'KeyD':
+                    changeDirection('right');
+                    break;
+            }
+        });
+
+        // Submit feedback function
+        function submitFeedback() {
+            const name = document.getElementById('feedback-name').value;
+            const content = document.getElementById('feedback-content').value;
+            const messageElement = document.getElementById('feedback-message');
+            
+            if (!name || !content) {
+                messageElement.textContent = '请填写所有字段 / Please fill in all fields';
+                messageElement.style.color = '#e94560';
+                messageElement.classList.add('show');
+                
+                // Hide message after 3 seconds
+                setTimeout(() => {
+                    messageElement.classList.remove('show');
+                }, 3000);
+                return;
+            }
+            
+            // In a real application, you would send the feedback to a server here
+            // For this demo, we'll just show a success message
+            messageElement.textContent = '感谢您的反馈! / Thank you for your feedback!';
+            messageElement.style.color = '#00ff9d';
+            messageElement.classList.add('show');
+            
+            // Clear form
+            document.getElementById('feedback-name').value = '';
+            document.getElementById('feedback-content').value = '';
+            
+            // Hide message after 3 seconds
+            setTimeout(() => {
+                messageElement.classList.remove('show');
+            }, 3000);
+        }
+
+        // Toggle feedback panel function
+        function toggleFeedback() {
+            const feedbackPanel = document.querySelector('.feedback-panel');
+            if (feedbackPanel.style.display === 'block') {
+                feedbackPanel.style.display = 'none';
+            } else {
+                feedbackPanel.style.display = 'block';
+            }
+        }
+
+        // Toggle changelog panel function
+        function toggleChangelog() {
+            const changelogPanel = document.getElementById('changelog-panel');
+            if (changelogPanel.style.display === 'block') {
+                changelogPanel.style.display = 'none';
+            } else {
+                changelogPanel.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>
