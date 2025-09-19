@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qwen Chat</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #201e1e;
+        }
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        #apiKey {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        #chatHistory {
+            height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            background-color: #fafafa;
+        }
+        .message {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .user-message {
+            background-color: #e3f2fd;
+            text-align: right;
+        }
+        .ai-message {
+            background-color: #f1f8e9;
+        }
+        #userInput {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+        button {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        .loading {
+            color: #999;
+            font-style: italic;
+        }
+                /* 添加水印样式 */
+                .watermark {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.3);
+            z-index: 1000;
+            pointer-events: none;
+        }
+                        /* 添加水印样式 */
+                .watermark {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.3);
+            z-index: 1000;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Qwen Chat</h1><br>
+        <p>如果您在使用中发现有bug或建议，请将建议发送至gamefeedback@126.com<br>
+            If you encounter any bugs or have suggestions, please send them to gamefeedback@126.com</p>
+        <input type="password" id="apiKey" placeholder="请输入硅基流动API密钥 Silicon-based Flow API Key">
+        <div id="chatHistory"></div>
+        <input type="text" id="userInput" placeholder="输入消息 Typing a message" onkeypress="handleKeyPress(event)">
+        <button id="sendButton" onclick="sendMessage()">发送  Send</button>
+    </div>
+        <!-- 添加水印 -->
+        <div class="watermark"><h3>@zicong<br>versions1.1.4<h3</div>
+
+    <script>
+        // 硅基流动API配置
+        const API_URL = "https://api.siliconflow.cn/v1/chat/completions";
+        
+        // DOM元素
+        const apiKeyInput = document.getElementById("apiKey");
+        const chatHistory = document.getElementById("chatHistory");
+        const userInput = document.getElementById("userInput");
+        const sendButton = document.getElementById("sendButton");
+        
+        // 处理回车键发送消息
+        function handleKeyPress(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        }
+        
+        // 发送消息到AI
+        async function sendMessage() {
+            const message = userInput.value.trim();
+            const apiKey = apiKeyInput.value.trim();
+            
+            // 验证输入
+            if (!message) {
+                alert("请输入消息内容 Enter the message content");
+                return;
+            }
+            
+            if (!apiKey) {
+                alert("请输入API密钥 Enter the API Key");
+                return;
+            }
+            
+            // 禁用发送按钮
+            sendButton.disabled = true;
+            sendButton.textContent = "发送中...";
+            
+            try {
+                // 显示用户消息
+                addMessageToChat("user", message);
+                userInput.value = "";
+                
+                // 显示AI正在输入
+                const loadingElement = addMessageToChat("ai", "通义千问正在输入... Qwen is typing...");
+                loadingElement.classList.add("loading");
+                
+                // 调用硅基流动API
+                const response = await fetch(API_URL, {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${apiKey}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        model: "Qwen/Qwen3-8B",
+                        messages: [
+                            { role: "user", content: message }
+                        ],
+                        stream: false
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`API请求失败 API request failed: ${response.status} ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                const aiMessage = data.choices[0].message.content;
+                
+                // 移除加载提示并显示AI回复
+                chatHistory.removeChild(loadingElement);
+                addMessageToChat("ai", aiMessage);
+                
+            } catch (error) {
+                console.error("Error:", error);
+                // 移除加载提示并显示错误消息
+                const loadingElement = chatHistory.lastChild;
+                if (loadingElement && loadingElement.classList.contains("loading")) {
+                    chatHistory.removeChild(loadingElement);
+                }
+                addMessageToChat("ai", `错误 Error: ${error.message}`);
+            } finally {
+                // 重新启用发送按钮
+                sendButton.disabled = false;
+                sendButton.textContent = "发送 Send";
+            }
+        }
+        
+        // 添加消息到聊天历史
+        function addMessageToChat(role, content) {
+            const messageElement = document.createElement("div");
+            messageElement.classList.add("message");
+            messageElement.classList.add(`${role}-message`);
+            
+            // 处理换行符
+            messageElement.innerHTML = content.replace(/\n/g, "<br>");
+            
+            chatHistory.appendChild(messageElement);
+            
+            // 滚动到底部
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+            
+            return messageElement;
+        }
+    </script>
+</body>
+</html>
