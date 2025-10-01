@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>贪吃蛇 Gluttonous Snake</title>
+    <title>贪吃蛇 | Gluttonous Snake</title>
     <style>
         * {
             margin: 0;
@@ -32,7 +32,7 @@
         .score-panel {
             display: flex;
             justify-content: space-between;
-            width: 400px;
+            width: 800px;
             margin-bottom: 15px;
             font-size: 1.2rem;
         }
@@ -90,7 +90,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             background: rgba(0, 0, 0, 0.7);
-            padding: 30px;
+            padding: 20px;
             border-radius: 10px;
             text-align: center;
             display: none;
@@ -198,37 +198,12 @@
             transform: scale(1.1);
         }
         
-        /* 添加更新日志按钮样式 */
-        .changelog-button {
-            position: fixed;
-            top: 110px;
-            right: 10px;
-            width: 100px;
-            height: 70px;
-            border-radius: 25px;
-            background: rgba(0, 255, 157, 0.8);
-            color: #0f3460;
-            font-size: 1rem;
-            font-weight: bold;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-            z-index: 1001;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+       
         
-        .changelog-button:hover {
-            background: rgba(0, 255, 157, 1);
-            transform: scale(1.1);
-        }
-        
-        /* 添加反馈栏样式 */
         .feedback-panel {
             position: fixed;
-            top: 80px;
+            top: 80px;        /* 添加反馈栏样式 */
+
             right: 100px;
             width: 400px;
             background: rgba(255, 255, 255, 0.1);
@@ -259,52 +234,7 @@
             gap: 15px;
         }
         
-        /* 添加更新日志栏样式 */
-        .changelog-panel {
-            position: fixed;
-            top: 100px; /* 调整位置到反馈按钮下方 */
-            right: 100px; /* 更改位置到右侧与反馈按钮对齐 */
-            width: 400px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-            z-index: 1000;
-            display: none;
-        }
         
-        .changelog-panel:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: translateY(-5px);
-        }
-        
-        .changelog-panel h3 {
-            text-align: center;
-            margin-bottom: 15px;
-            color: #00ff9d;
-            font-size: 1.3rem;
-        }
-        
-        .changelog-content {
-            max-height: 300px;
-            overflow-y: auto;
-        }
-        
-        .changelog-content h4 {
-            color: #00ff9d;
-            margin-top: 15px;
-            margin-bottom: 5px;
-        }
-        
-        .changelog-content ul {
-            padding-left: 20px;
-        }
-        
-        .changelog-content li {
-            margin-bottom: 5px;
-        }
         
         .feedback-form input,
         .feedback-form textarea {
@@ -365,6 +295,8 @@
             opacity: 1;
         }
         
+
+        
         @media (max-width: 768px) {
             .feedback-panel {
                 width: 300px;
@@ -375,19 +307,19 @@
 <body>
     <div class="game-container">
         <div class="score-panel">
-            <div>当前得分<br>score: <span id="score">0</span></div>
-            <div>最高得分<br>high score: <span id="high-score">0</span></div>
+            <div>当前得分 Score<br><span id="score">0</span></div>
+            <div>最高得分 High Score<br><span id="high-score">0</span></div>
         </div>
-        <canvas id="gameCanvas" width="400" height="400"></canvas>
+        <canvas id="gameCanvas" width="800" height="400"></canvas>
         <div class="game-over">
-            <h2>游戏结束<br>gameover</h2>
-            <p>你的得分<br>score: <span id="final-score">0</span></p>
+            <h2>游戏结束Game Over</h2>
+            <p>得分 | Score:<span id="final-score">0</span></p>
             <button onclick="restartGame()">重新开始<br>Restart</button>
         </div>
         <div class="start-screen" id="start-screen">
             <h1>贪吃蛇<br>Gluttonous Snake</h1>
-            <p>使用方向键，WASD，或屏幕上的方向按钮来控制贪吃蛇的移动。<br>吃到食物可以增加得分，避免撞到墙壁或自己。<br>Use the arrow keys, WASD, or the directional buttons on the screen to control the movement of the snake.<br>Eating food increases your score; avoid hitting the walls or the snake itself.</p>
-            <button onclick="startGame()">开始游戏<br>startGame</button>
+            <p>使用方向键或WASD键控制贪吃蛇移动。吃到食物可以增加得分，避免撞到墙壁或自己的身体。<br>Use arrow keys or WASD to control the snake.Eat food to increase score, avoid hitting walls or yourself.</p>
+            <button onclick="startGame()">开始游戏<br>Start Game</button>
         </div>
     </div>
     <div class="controls">
@@ -399,9 +331,8 @@
     
     <!-- 添加反馈栏 -->
     <div class="feedback-panel">
-        <h3>游戏反馈 | Game Feedback</h3>
-        <p>如果您在游玩中发现有bug或建议，请将建议发送至gamefeedback@126.com<br>
-        If you encounter any bugs or have suggestions, please send them to gamefeedback@126.com</p>
+        <h3>游戏反馈<br>Game Feedback</h3>
+        <p>如果您在游玩中发现有bug或建议，请将建议发送至gamefeedback@126.com<br>If you find bugs or have suggestions, please send to gamefeedback@126.com</p>
         <div class="feedback-message" id="feedback-message"></div>
     </div>
 
@@ -409,51 +340,12 @@
 
     <button class="feedback-button" onclick="toggleFeedback()">游戏反馈<br>Game Feedback</button>
     
-    <!-- 添加更新日志按钮 -->
-    <button class="changelog-button" onclick="toggleChangelog()">更新日志<br>Changelog</button>
+   
     
-    <!-- 添加更新日志栏 -->
-    <div class="changelog-panel" id="changelog-panel">
-        <h3>更新日志 | Changelog</h3>
-        <h3>(年/月/日)<br>（Year/Month/Day）</h3>
-        <div class="changelog-content">
-            <h4>versions 1.1.8 (2025-09-13)</h4>
-            <ul>
-                <li>增加了WASD控制</li>
-                <li>Add WASD controls for easier gameplay</li>
-            </ul>
-            <h4>versions 1.1.7 (2025-09-12)</h4>
-            <ul>
-                <li>蛇的头部增加眼睛，用于辨认方向</li>
-                <li>修复了偶尔出现的显示错误</li>
-                <li>改进了移动端操作体验</li>
-                 <li>Add eyes to the snake's head to help identify direction</li>
-                 <li>Fix occasional display errors</li>
-                 <li>Add mobile controls for easier gameplay</li>
-            </ul>
-            <h4>versions 1.1.6 (2025-09-11)</h4>
-            <ul>
-                <li>新增了反馈功能</li>
-                <li>优化了界面视差效果</li>
-                <li>修复了已知bug</li>
-                <li>feedback functionality</li>
-                <li>Optimize interface parallax effect</li>
-                <li>Fix known bugs</li>
-            </ul>
-            <h4>versions 1.1.5 (2025-09-10)</h4>
-            <ul>
-                <li>首次发布</li>
-                <li>实现了基本贪吃蛇游戏功能</li>
-                <li>添加了得分系统</li>
-                <li>First release</li>
-                <li>Implemented basic snake game functionality</li>
-                <li>Added scoring system</li>
-            </ul>
-        </div>
-    </div>
+
     
     <!-- 添加水印 -->
-    <div class="watermark"><h3>@zicong<br>versions1.1.8<h3</div>
+    <div class="watermark"><h3>@zicong<br>困难|Normal</h3></div>
 
     <script>
         const canvas = document.getElementById('gameCanvas');
@@ -466,19 +358,29 @@
 
         // Game settings
         const gridSize = 20;
-        const tileCount = 20;
+        const tileCountX = 40; // 水平方向格子数 (800/20)
+        const tileCountY = 20; // 垂直方向格子数 (400/20)
         let snake = [];
         let food = {};
+        let obstacles = [];
         let dx = 1;
         let dy = 0;
         let score = 0;
         let highScore = localStorage.getItem('snakeHighScore') || 0;
         let gameLoopId;
-        let gameSpeed = 150;
+        let gameSpeed = 100;
         let isGameRunning = false;
         let particles = [];
 
         highScoreElement.textContent = highScore;
+        
+
+        
+        // 页面加载时初始化语言
+        window.addEventListener('load', function() {
+            document.querySelector('.language-toggle').textContent = currentLanguage === 'zh' ? 'EN' : '中文';
+            updateLanguage();
+        });
 
         // Initialize snake
         function initSnake() {
@@ -494,6 +396,9 @@
             
             // Clear particles when restarting
             particles = [];
+            
+            // Generate obstacles based on score
+            generateObstacles();
         }
 
         // Add particle effect
@@ -513,15 +418,80 @@
             return particles;
         }
 
+        // Generate obstacles
+        function generateObstacles() {
+            obstacles = [];
+            
+            // Calculate number of obstacles based on score (increases with score)
+            const baseObstacles = 8;
+            const additionalObstacles = Math.floor(score / 100) * 2;
+            const totalObstacles = baseObstacles + additionalObstacles;
+            
+            for (let i = 0; i < totalObstacles; i++) {
+                let obstacle;
+                let attempts = 0;
+                do {
+                    obstacle = {
+                        x: Math.floor(Math.random() * tileCountX),
+                        y: Math.floor(Math.random() * tileCountY)
+                    };
+                    attempts++;
+                } while (attempts < 100 && (
+                    // Avoid spawning on snake
+                    snake.some(segment => segment.x === obstacle.x && segment.y === obstacle.y) ||
+                    // Avoid spawning too close to snake head
+                    (Math.abs(obstacle.x - snake[0].x) < 3 && Math.abs(obstacle.y - snake[0].y) < 3) ||
+                    // Avoid spawning on other obstacles
+                    obstacles.some(existing => existing.x === obstacle.x && existing.y === obstacle.y)
+                ));
+                
+                if (attempts < 100) {
+                    obstacles.push(obstacle);
+                }
+            }
+        }
+
+        // Relocate obstacles after eating food
+        function relocateObstacles() {
+            const oldObstacleCount = obstacles.length;
+            obstacles = [];
+            
+            for (let i = 0; i < oldObstacleCount; i++) {
+                let obstacle;
+                let attempts = 0;
+                do {
+                    obstacle = {
+                        x: Math.floor(Math.random() * tileCountX),
+                        y: Math.floor(Math.random() * tileCountY)
+                    };
+                    attempts++;
+                } while (attempts < 100 && (
+                    // Avoid spawning on snake
+                    snake.some(segment => segment.x === obstacle.x && segment.y === obstacle.y) ||
+                    // Avoid spawning too close to snake head
+                    (Math.abs(obstacle.x - snake[0].x) < 3 && Math.abs(obstacle.y - snake[0].y) < 3) ||
+                    // Avoid spawning on food
+                    (food.x === obstacle.x && food.y === obstacle.y) ||
+                    // Avoid spawning on other obstacles
+                    obstacles.some(existing => existing.x === obstacle.x && existing.y === obstacle.y)
+                ));
+                
+                if (attempts < 100) {
+                    obstacles.push(obstacle);
+                }
+            }
+        }
+
         // Generate random food position
         function generateFood() {
             food = {
-                x: Math.floor(Math.random() * tileCount),
-                y: Math.floor(Math.random() * tileCount)
+                x: Math.floor(Math.random() * tileCountX),
+                y: Math.floor(Math.random() * tileCountY)
             };
 
-            // Check if food spawns on snake
-            if (snake.some(segment => segment.x === food.x && segment.y === food.y)) {
+            // Check if food spawns on snake or obstacles
+            if (snake.some(segment => segment.x === food.x && segment.y === food.y) ||
+                obstacles.some(obstacle => obstacle.x === food.x && obstacle.y === food.y)) {
                 generateFood();
             }
         }
@@ -539,7 +509,7 @@
             // Draw animated grid
             ctx.strokeStyle = `rgba(255, 255, 255, ${0.03 + Math.sin(Date.now() / 1000) * 0.02})`;
             ctx.lineWidth = 0.5;
-            for (let i = 0; i < tileCount; i++) {
+            for (let i = 0; i < tileCountX; i++) {
                 ctx.beginPath();
                 ctx.moveTo(i * gridSize, 0);
                 ctx.lineTo(i * gridSize, canvas.height);
@@ -645,6 +615,39 @@
                 ctx.shadowBlur = 0;
             });
 
+            // Draw obstacles with crack texture effect
+            obstacles.forEach(obstacle => {
+                // Set obstacle color to neon green with transparency
+                ctx.fillStyle = 'rgba(0, 255, 157, 0.8)';
+                ctx.shadowColor = '#8B0000';
+                ctx.shadowBlur = 8;
+                
+                // Draw obstacle block
+                ctx.fillRect(obstacle.x * gridSize + 1, obstacle.y * gridSize + 1, gridSize - 2, gridSize - 2);
+                
+                // Draw crack lines
+                ctx.strokeStyle = '#330000';
+                ctx.lineWidth = 1;
+                ctx.shadowBlur = 0;
+                
+                // Draw random crack lines
+                ctx.beginPath();
+                ctx.moveTo(obstacle.x * gridSize + 3, obstacle.y * gridSize + 3);
+                ctx.lineTo(obstacle.x * gridSize + gridSize - 3, obstacle.y * gridSize + gridSize - 3);
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.moveTo(obstacle.x * gridSize + gridSize - 3, obstacle.y * gridSize + 3);
+                ctx.lineTo(obstacle.x * gridSize + 3, obstacle.y * gridSize + gridSize - 3);
+                ctx.stroke();
+                
+                // Add some smaller cracks
+                ctx.beginPath();
+                ctx.moveTo(obstacle.x * gridSize + gridSize/2, obstacle.y * gridSize + 2);
+                ctx.lineTo(obstacle.x * gridSize + gridSize/2, obstacle.y * gridSize + gridSize - 2);
+                ctx.stroke();
+            });
+
             // Draw food with pulsing and rotating effect
             const pulse = Math.sin(Date.now() / 200) * 0.5 + 0.5;
             const radius = (gridSize / 2 - 2) * (0.8 + pulse * 0.2);
@@ -720,6 +723,9 @@
                 }
                 
                 generateFood();
+                
+                // Relocate obstacles after eating food
+                relocateObstacles();
 
                 // Increase speed every 50 points
                 if (score % 50 === 0) {
@@ -740,7 +746,7 @@
             const head = snake[0];
 
             // Wall collision
-            if (head.x < 0 || head.x >= tileCount || head.y < 0 || head.y >= tileCount) {
+            if (head.x < 0 || head.x >= tileCountX || head.y < 0 || head.y >= tileCountY) {
                 gameOver();
                 return;
             }
@@ -748,6 +754,14 @@
             // Self collision
             for (let i = 1; i < snake.length; i++) {
                 if (head.x === snake[i].x && head.y === snake[i].y) {
+                    gameOver();
+                    return;
+                }
+            }
+
+            // Obstacle collision
+            for (let obstacle of obstacles) {
+                if (head.x === obstacle.x && head.y === obstacle.y) {
                     gameOver();
                     return;
                 }
@@ -766,6 +780,153 @@
                 highScore = score;
                 localStorage.setItem('snakeHighScore', highScore);
                 highScoreElement.textContent = highScore;
+        
+        // 语言配置
+        const translations = {
+            'zh': {
+                'title': '贪吃蛇',
+                'current-score': '当前得分',
+                'high-score': '最高得分',
+                'game-over': '游戏结束',
+                'your-score': '��的得分',
+                'restart': '重新开始',
+                'start-game': '开始游戏',
+                'game-instructions': '使用方向键或WASD键控制贪吃蛇移动<br>吃到食物可以增加得分，避免撞到墙壁或自己的身体',
+                'feedback': '游戏反馈',
+                'feedback-text': '如果您在游玩中发现有bug或建议，请将建议发送至gamefeedback@126.com',
+
+            },
+            'en': {
+                'title': 'Snake Game',
+                'current-score': 'Current Score',
+                'high-score': 'High Score',
+                'game-over': 'Game Over',
+                'your-score': 'Your Score',
+                'restart': 'Restart',
+                'start-game': 'Start Game',
+                'game-instructions': 'Use arrow keys or WASD to control the snake<br>Eat food to increase score, avoid hitting walls or yourself',
+                'feedback': 'Game Feedback',
+                'feedback-text': 'If you find bugs or have suggestions during gameplay, please send them to gamefeedback@126.com',
+
+            }
+        };
+        
+        let currentLanguage = localStorage.getItem('gameLanguage') || 'zh';
+        
+        // 切换语言函数
+        function toggleLanguage() {
+            currentLanguage = currentLanguage === 'zh' ? 'en' : 'zh';
+            localStorage.setItem('gameLanguage', currentLanguage);
+            updateLanguage();
+            document.querySelector('.language-toggle').textContent = currentLanguage === 'zh' ? 'EN' : '中文';
+        }
+        
+        // 更新语言显示
+        function updateLanguage() {
+            const t = translations[currentLanguage];
+            
+            // 更新开始界面
+            document.querySelector('.start-screen h1').textContent = t['title'];
+            document.querySelector('.start-screen p').innerHTML = t['game-instructions'];
+            document.querySelector('.start-screen button').textContent = t['start-game'];
+            
+            // 更新得分面板
+            document.querySelector('.score-panel div:first-child').innerHTML = t['current-score'] + '<br><span id="score">' + score + '</span>';
+            document.querySelector('.score-panel div:last-child').innerHTML = t['high-score'] + '<br><span id="high-score">' + highScore + '</span>';
+            
+            // 更新游戏结束界面
+            document.querySelector('.game-over h2').textContent = t['game-over'];
+            document.querySelector('.game-over p').innerHTML = t['your-score'] + '<br><span id="final-score">' + score + '</span>';
+            document.querySelector('.game-over button').textContent = t['restart'];
+            
+            // 更新反馈面板
+            document.querySelector('.feedback-panel h3').textContent = t['feedback'];
+            document.querySelector('.feedback-panel p').textContent = t['feedback-text'];
+            document.querySelector('.feedback-button').textContent = t['feedback'];
+            
+            // 更新更新日志
+            document.querySelector('.changelog-panel h3').textContent = t['changelog'];
+            document.querySelector('.changelog-button').textContent = t['changelog'];
+            
+            // 更新更新日志内容
+            updateChangelogLanguage();
+        }
+        
+        // 更新更新日志语言
+        function updateChangelogLanguage() {
+            const t = translations[currentLanguage];
+            const changelogContent = document.querySelector('.changelog-content');
+            
+            if (currentLanguage === 'en') {
+                changelogContent.innerHTML = `
+                    <h4>Version 1.1.9 (2025-10-1)</h4>
+                    <ul>
+                        <li>${t['new-obstacles']}</li>
+                        <li>${t['obstacles-change']}</li>
+                        <li>${t['fixed-bugs']}</li>
+                    </ul>
+                    <h4>Version 1.1.8 (2025-09-13)</h4>
+                    <ul>
+                        <li>${t['wasd-control']}</li>
+                    </ul>
+                    <h4>Version 1.1.7 (2025-09-12)</h4>
+                    <ul>
+                        <li>${t['snake-eyes']}</li>
+                        <li>${t['fixed-display']}</li>
+                        <li>${t['improved-mobile']}</li>
+                    </ul>
+                    <h4>Version 1.1.6 (2025-09-11)</h4>
+                    <ul>
+                        <li>${t['new-feedback']}</li>
+                        <li>${t['optimized-ui']}</li>
+                        <li>${t['fixed-known-bugs']}</li>
+                    </ul>
+                    <h4>Version 1.1.5 (2025-09-10)</h4>
+                    <ul>
+                        <li>${t['first-release']}</li>
+                        <li>${t['basic-features']}</li>
+                        <li>${t['added-scoring']}</li>
+                    </ul>
+                `;
+            } else {
+                changelogContent.innerHTML = `
+                    <h4>版本1.1.9 (2025-10-1)</h4>
+                    <ul>
+                        <li>${t['new-obstacles']}</li>
+                        <li>${t['obstacles-change']}</li>
+                        <li>${t['fixed-bugs']}</li>
+                    </ul>
+                    <h4>版本1.1.8 (2025-09-13)</h4>
+                    <ul>
+                        <li>${t['wasd-control']}</li>
+                    </ul>
+                    <h4>版本1.1.7 (2025-09-12)</h4>
+                    <ul>
+                        <li>${t['snake-eyes']}</li>
+                        <li>${t['fixed-display']}</li>
+                        <li>${t['improved-mobile']}</li>
+                    </ul>
+                    <h4>版本1.1.6 (2025-09-11)</h4>
+                    <ul>
+                        <li>${t['new-feedback']}</li>
+                        <li>${t['optimized-ui']}</li>
+                        <li>${t['fixed-known-bugs']}</li>
+                    </ul>
+                    <h4>版本1.1.5 (2025-09-10)</h4>
+                    <ul>
+                        <li>${t['first-release']}</li>
+                        <li>${t['basic-features']}</li>
+                        <li>${t['added-scoring']}</li>
+                    </ul>
+                `;
+            }
+        }
+        
+        // 页面加载时初始化语言
+        window.addEventListener('load', function() {
+            document.querySelector('.language-toggle').textContent = currentLanguage === 'zh' ? 'EN' : '中文';
+            updateLanguage();
+        });
             }
         }
 
@@ -860,7 +1021,7 @@
             const messageElement = document.getElementById('feedback-message');
             
             if (!name || !content) {
-                messageElement.textContent = '请填写所有字段 / Please fill in all fields';
+                messageElement.textContent = '请填写所有���段 / Please fill in all fields';
                 messageElement.style.color = '#e94560';
                 messageElement.classList.add('show');
                 
