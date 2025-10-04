@@ -6,6 +6,134 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>首页 | Homepage</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* 添加反馈按钮样式 */
+        .feedback-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 120px;
+            height: 60px;
+            border-radius: 25px;
+            background: rgba(0, 255, 157, 0.8);
+            color: #0f3460;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            z-index: 1001;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .feedback-button:hover {
+            background: rgba(0, 255, 157, 1);
+            transform: scale(1.1);
+        }
+        
+        .feedback-panel {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            width: 400px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .feedback-panel:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
+        }
+        
+        .feedback-panel h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #00ff9d;
+            font-size: 1.3rem;
+        }
+        
+        .feedback-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .feedback-form input,
+        .feedback-form textarea {
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+        
+        .feedback-form input:focus,
+        .feedback-form textarea:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 10px rgba(0, 255, 157, 0.5);
+        }
+        
+        .feedback-form input::placeholder,
+        .feedback-form textarea::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .feedback-form textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .feedback-form button {
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: #00ff9d;
+            color: #0f3460;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .feedback-form button:hover {
+            background: #00e68a;
+            transform: scale(1.03);
+        }
+        
+        .feedback-message {
+            margin-top: 15px;
+            text-align: center;
+            min-height: 24px;
+            color: #00ff9d;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .feedback-message.show {
+            opacity: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .feedback-panel {
+                width: 300px;
+                right: 10px;
+                top: 90px;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- 加载动画 -->
@@ -48,6 +176,16 @@
         </div>
     </div>
 
+    <!-- 添加反馈栏 -->
+    <div class="feedback-panel">
+        <h3>游戏反馈<br>Game Feedback</h3>
+        <p>如果您在游玩中发现有bug或建议，请将建议发送至gamefeedback@126.com<br>If you find bugs or have suggestions, please send to gamefeedback@126.com</p>
+        <div class="feedback-message" id="feedback-message"></div>
+    </div>
+
+    <!-- 添加反馈按钮 -->
+    <button class="feedback-button" onclick="toggleFeedback()">游戏反馈<br>Game Feedback</button>
+
     <script>
         // 生成星空粒子
         function createStars() {
@@ -76,6 +214,12 @@
                 }, 500);
             }, 1000);
         });
+        
+        // Toggle feedback panel
+        function toggleFeedback() {
+            const panel = document.querySelector('.feedback-panel');
+            panel.style.display = panel.style.display === 'none' || !panel.style.display ? 'block' : 'none';
+        }
     </script>
 </body>
 </html>
