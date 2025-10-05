@@ -125,6 +125,21 @@ body {
 .game-card:nth-child(2) {
     animation-delay: 0.4s;
 }
+/* 卡片 */
+.join {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    animation: fadeInUp 1s ease-out;
+    animation-fill-mode: both;
+}
 
 @keyframes fadeInUp {
     from {
