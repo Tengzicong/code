@@ -20,6 +20,7 @@
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             color: #fff;
         }
+        
         .game-container {
             position: relative;
             margin-bottom: 20px;
@@ -695,10 +696,6 @@
             document.querySelector('.feedback-panel h3').textContent = t['feedback'];
             document.querySelector('.feedback-panel p').textContent = t['feedback-text'];
             document.querySelector('.feedback-button').textContent = t['feedback'];
-            
-            // 更新更新日志
-            document.querySelector('.changelog-panel h3').textContent = t['changelog'];
-            document.querySelector('.changelog-button').textContent = t['changelog'];
             
             // 更新更新日志内容
             updateChangelogLanguage();
