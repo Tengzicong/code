@@ -44,42 +44,14 @@
             border-radius: 5px;
         }
         
-        /* Music Control Button */
-        .music-control {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            z-index: 10;
-        }
-        
-        .music-button {
-            width: 40px;
-            height: 40px;
-            border: none;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
-        }
-        
-        .music-button:hover {
-            background: rgba(255, 255, 255, 0.25);
-            transform: scale(1.1);
-        }
-        
-        .music-button.playing {
-            background: rgba(0, 255, 157, 0.3);
-        }
+       
         .controls {
             display: none;
             gap: 10px;
             margin-top: 20px;
         }
         .controls button {
-            width: 60px;
+            width: 70px;
             height: 60px;
             border: none;
             border-radius: 8px;
@@ -228,10 +200,7 @@
             <div>生命 Lives<br><span id="lives">9</span></div>
             <div>最高得分 High Score<br><span id="high-score">0</span></div>
         </div>
-        <!-- Music Control Button -->
-        <div class="music-control">
-            <button id="music-btn" class="music-button">🔊</button>
-        </div>
+       
         <canvas id="gameCanvas" width="800" height="400"></canvas>
         <div class="game-over">
             <h2>游戏结束Game Over</h2>
@@ -262,11 +231,7 @@
     <!-- 添加水印 -->
     <div class="watermark"><h3>@zicong<br>困难|Normal</h3></div>
 
-    <!-- Audio element for background music -->
-    <audio id="background-music" loop>
-        <source src="background-music.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
+
 
     <script>
         const canvas = document.getElementById('gameCanvas');
