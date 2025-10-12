@@ -43,6 +43,36 @@
             padding: 8px 15px;
             border-radius: 5px;
         }
+        
+        /* Music Control Button */
+        .music-control {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 10;
+        }
+        
+        .music-button {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .music-button:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.1);
+        }
+        
+        .music-button.playing {
+            background: rgba(0, 255, 157, 0.3);
+        }
         .controls {
             display: none;
             gap: 10px;
@@ -198,6 +228,10 @@
             <div>生命 Lives<br><span id="lives">9</span></div>
             <div>最高得分 High Score<br><span id="high-score">0</span></div>
         </div>
+        <!-- Music Control Button -->
+        <div class="music-control">
+            <button id="music-btn" class="music-button">🔊</button>
+        </div>
         <canvas id="gameCanvas" width="800" height="400"></canvas>
         <div class="game-over">
             <h2>游戏结束Game Over</h2>
@@ -228,6 +262,12 @@
     <!-- 添加水印 -->
     <div class="watermark"><h3>@zicong<br>困难|Normal</h3></div>
 
+    <!-- Audio element for background music -->
+    <audio id="background-music" loop>
+        <source src="background-music.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
     <script>
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
@@ -237,6 +277,8 @@
         const finalScoreElement = document.getElementById('final-score');
         const gameOverScreen = document.querySelector('.game-over');
         const startScreen = document.getElementById('start-screen');
+        const musicButton = document.getElementById('music-btn');
+        const backgroundMusic = document.getElementById('background-music');
 
         // Game settings
         const playerSize = 40;
@@ -265,6 +307,7 @@
         let particles = [];
         let rightPressed = false;
         let leftPressed = false;
+        let isMusicPlaying = false;
 
         highScoreElement.textContent = highScore;
 
@@ -577,6 +620,11 @@
             isGameRunning = true;
             initEnemies();
             gameLoop();
+            
+            // Start music when game starts
+            if (!isMusicPlaying) {
+                toggleMusic();
+            }
         }
 
         // Game over
@@ -609,6 +657,11 @@
             initEnemies();
             isGameRunning = true;
             gameLoop();
+            
+            // Start music when game restarts
+            if (!isMusicPlaying) {
+                toggleMusic();
+            }
         }
 
         // Toggle feedback panel
@@ -617,7 +670,29 @@
             panel.style.display = panel.style.display === 'none' || !panel.style.display ? 'block' : 'none';
         }
 
+        // Music control function
+        function toggleMusic() {
+            if (isMusicPlaying) {
+                backgroundMusic.pause();
+                musicButton.textContent = '🔇';
+                musicButton.classList.remove('playing');
+                isMusicPlaying = false;
+            } else {
+                backgroundMusic.play().then(() => {
+                    musicButton.textContent = '🔊';
+                    musicButton.classList.add('playing');
+                    isMusicPlaying = true;
+                }).catch(error => {
+                    console.log('Auto-play prevented:', error);
+                    // Handle auto-play prevention
+                    musicButton.textContent = '🔇';
+                    musicButton.classList.remove('playing');
+                });
+            }
+        }
 
+        // Event listener for music button
+        musicButton.addEventListener('click', toggleMusic);
 
         // 初始化
         draw();
