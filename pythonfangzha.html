@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PythonPro学院 | 30天成为Python编程专家</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --text: #34495e;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a3a 0%, #2c3e50 100%);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 0 20px;
+            color: white;
+            position: relative;
+        }
+        
+        .logo {
+            font-size: 2.8rem;
+            font-weight: bold;
+            color: #FFD43B;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            font-size: 2.5rem;
+        }
+        
+        header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+            background: linear-gradient(to right, #FFD43B, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        header .subtitle {
+            font-size: 1.4rem;
+            opacity: 0.9;
+            margin-bottom: 15px;
+            color: var(--light);
+        }
+        
+        .badges {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .badge {
+            background: rgba(255,255,255,0.1);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .badge i {
+            color: #FFD43B;
+        }
+        
+        .countdown {
+            background: rgba(231, 76, 60, 0.2);
+            border: 1px solid rgba(231, 76, 60, 0.5);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 25px auto;
+            max-width: 500px;
+            text-align: center;
+            color: white;
+        }
+        
+        .countdown h3 {
+            margin-bottom: 10px;
+            color: #ff9f43;
+        }
+        
+        .timer {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .timer-unit {
+            background: rgba(0,0,0,0.3);
+            padding: 10px;
+            border-radius: 5px;
+            min-width: 60px;
+        }
+        
+        .timer-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ff9f43;
+        }
+        
+        .timer-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+        
+        .main-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin: 20px 0;
+        }
+        
+        .course-info {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .course-info:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, #3498db, #2ecc71);
+        }
+        
+        .course-info h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .course-info h2 i {
+            color: var(--secondary);
+        }
+        
+        .features {
+            list-style: none;
+            margin: 25px 0;
+        }
+        
+        .features li {
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            transition: transform 0.2s;
+        }
+        
+        .features li:hover {
+            transform: translateX(5px);
+        }
+        
+        .features li:before {
+            content: "✓";
+            color: var(--success);
+            font-weight: bold;
+            margin-right: 12px;
+            background: #eafaf1;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .instructors {
+            margin-top: 30px;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        .instructors h3 {
+            margin-bottom: 15px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .instructor {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eaeaea;
+        }
+        
+        .instructor:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .instructor-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        
+        .instructor-info h4 {
+            margin-bottom: 5px;
+            color: var(--primary);
+        }
+        
+        .instructor-info p {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        .testimonials {
+            margin-top: 30px;
+        }
+        
+        .testimonials h3 {
+            margin-bottom: 15px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .testimonial {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        .testimonial:before {
+            content: """;
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            font-size: 3rem;
+            color: #e0e0e0;
+            font-family: Georgia, serif;
+        }
+        
+        .testimonial p {
+            font-style: italic;
+            margin-bottom: 10px;
+            padding-left: 20px;
+        }
+        
+        .author {
+            text-align: right;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .registration-form {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .registration-form:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, #e74c3c, #e67e22);
+        }
+        
+        .form-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .form-header h2 {
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .discount-badge {
+            background: linear-gradient(to right, #e74c3c, #e67e22);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .form-group label i {
+            color: var(--secondary);
+            width: 20px;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 14px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--secondary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        
+        .checkbox-group input {
+            width: auto;
+            margin-right: 10px;
+            margin-top: 5px;
+        }
+        
+        .checkbox-group label {
+            font-weight: normal;
+            font-size: 0.9rem;
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(to right, #FF8C00, #FFA500);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .btn:hover {
+            background: linear-gradient(to right, #e67e00, #e69500);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(0,0,0,0.15);
+        }
+        
+        .btn:active {
+            transform: translateY(-1px);
+        }
+        
+        .result-section {
+            display: none;
+            margin-top: 40px;
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 900px;
+        }
+        
+        .result-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .result-header h2 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .result-header p {
+            color: #7f8c8d;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .risk-level {
+            text-align: center;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 25px 0;
+            font-weight: bold;
+            font-size: 1.3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .risk-level i {
+            font-size: 2.5rem;
+        }
+        
+        .low-risk {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 2px solid #c8e6c9;
+        }
+        
+        .medium-risk {
+            background: #fff3e0;
+            color: #ef6c00;
+            border: 2px solid #ffcc80;
+        }
+        
+        .high-risk {
+            background: #ffebee;
+            color: #c62828;
+            border: 2px solid #ffcdd2;
+        }
+        
+        .analysis-result {
+            margin: 30px 0;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid var(--secondary);
+        }
+        
+        .analysis-result h3 {
+            margin-bottom: 15px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .red-flags {
+            margin: 30px 0;
+        }
+        
+        .red-flags h3 {
+            margin-bottom: 15px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .red-flags ul {
+            list-style-type: none;
+        }
+        
+        .red-flags li {
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .red-flags li:before {
+            content: "⚠️";
+            margin-right: 12px;
+            font-size: 1.2rem;
+        }
+        
+        .tips {
+            margin-top: 30px;
+        }
+        
+        .tips h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .tip-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid var(--success);
+        }
+        
+        .tip-card h4 {
+            margin-bottom: 10px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .tip-card p {
+            color: #5a6c7d;
+            font-size: 0.95rem;
+        }
+        
+        .disclaimer {
+            margin-top: 40px;
+            text-align: center;
+            padding: 20px;
+            background: #fff3e0;
+            border-radius: 10px;
+            border: 1px solid #ffcc80;
+        }
+        
+        .disclaimer h3 {
+            margin-bottom: 10px;
+            color: #e67e22;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            color: white;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            padding: 20px 0;
+            width: 100%;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .timer {
+                flex-wrap: wrap;
+            }
+            
+            .tips-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            header h1 {
+                font-size: 2.2rem;
+            }
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(to right, #2ecc71, #3498db);
+            width: 0%;
+            transition: width 1s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fab fa-python"></i>
+                <span>PythonPro学院</span>
+            </div>
+            <h1>30天成为Python编程专家</h1>
+            <p class="subtitle">终极Python编程课程 - 限时免费优惠</p>
+            
+            <div class="badges">
+                <div class="badge"><i class="fas fa-user-graduate"></i> 56,145+ 学员已注册</div>
+                <div class="badge"><i class="fas fa-star"></i> 4.9/5 评分</div>
+                <div class="badge"><i class="fas fa-certificate"></i> 结业证书</div>
+            </div>
+            
+            <div class="countdown">
+                <h3><i class="fas fa-clock"></i> 限时优惠结束倒计时:</h3>
+                <div class="timer">
+                    <div class="timer-unit">
+                        <div class="timer-value" id="days">02</div>
+                        <div class="timer-label">天</div>
+                    </div>
+                    <div class="timer-unit">
+                        <div class="timer-value" id="hours">12</div>
+                        <div class="timer-label">小时</div>
+                    </div>
+                    <div class="timer-unit">
+                        <div class="timer-value" id="minutes">45</div>
+                        <div class="timer-label">分钟</div>
+                    </div>
+                    <div class="timer-unit">
+                        <div class="timer-value" id="seconds">30</div>
+                        <div class="timer-label">秒</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <div class="main-content">
+            <div class="course-info">
+                <h2><i class="fas fa-graduation-cap"></i> 课程特色</h2>
+                <ul class="features">
+                    <li>完整的Python编程基础</li>
+                    <li>使用Pandas和NumPy进行数据分析</li>
+                    <li>使用Django和Flask进行Web开发</li>
+                    <li>自动化和脚本编写技术</li>
+                    <li>使用Scikit-learn的机器学习基础</li>
+                    <li>与SQL和MongoDB的数据库集成</li>
+                    <li>为作品集构建真实项目</li>
+                    <li>工作面试准备和职业指导</li>
+                </ul>
+                
+                <div class="instructors">
+                    <h3><i class="fas fa-chalkboard-teacher"></i> 专家讲师</h3>
+                    <div class="instructor">
+                        <div class="instructor-img">张</div>
+                        <div class="instructor-info">
+                            <h4>张明博士</h4>
+                            <p>前Google工程师，拥有10年以上Python经验</p>
+                        </div>
+                    </div>
+                    <div class="instructor">
+                        <div class="instructor-img">李</div>
+                        <div class="instructor-info">
+                            <h4>李华教授</h4>
+                            <p>数据科学家和Python教育者，拥有8年以上经验</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonials">
+                    <h3><i class="fas fa-comments"></i> 学员成功故事</h3>
+                    <div class="testimonial">
+                        <p>这个课程彻底改变了我的职业生涯！我从零售工作转行，仅用3个月就找到了一份Python开发人员的工作。讲师太棒了！</p>
+                        <div class="author">- 王明, 前零售经理</div>
+                    </div>
+                    <div class="testimonial">
+                        <p>作为一个完全的初学者，我对学习编程感到紧张。但循序渐进的方法让我很容易跟上。现在我在构建自己的应用程序！</p>
+                        <div class="author">- 李芳, 市场营销专业人士</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="registration-form">
+                <div class="form-header">
+                    <h2><i class="fas fa-edit"></i> 立即注册 - 免费</h2>
+                    <div class="discount-badge">100% 优惠</div>
+                </div>
+                
+                <div class="progress-bar">
+                    <div class="progress" id="enrollmentProgress"></div>
+                </div>
+                <p style="text-align: center; margin-bottom: 20px; color: #e74c3c; font-weight: bold;">
+                    <i class="fas fa-exclamation-triangle"></i> 仅剩17个名额！
+                </p>
+                
+                <form id="registrationForm">
+                    <div class="form-group">
+                        <label for="fullName"><i class="fas fa-user"></i> 姓名</label>
+                        <input type="text" id="fullName" name="fullName" placeholder="请输入您的姓名" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email"><i class="fas fa-envelope"></i> 电子邮箱</label>
+                        <input type="email" id="email" name="email" placeholder="请输入您的邮箱" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone"><i class="fas fa-phone"></i> 手机号码</label>
+                        <input type="tel" id="phone" name="phone" placeholder="请输入您的手机号码" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="age"><i class="fas fa-birthday-cake"></i> 年龄</label>
+                        <input type="number" id="age" name="age" min="1" max="150" placeholder="请输入您的年龄" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="experience"><i class="fas fa-code"></i> 编程经验</label>
+                        <select id="experience" name="experience" required>
+                            <option value="">请选择您的经验水平</option>
+                            <option value="none">无经验</option>
+                            <option value="beginner">初学者（少于6个月）</option>
+                            <option value="intermediate">中级（6个月-2年）</option>
+                            <option value="advanced">高级（2年以上）</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="occupation"><i class="fas fa-briefcase"></i> 当前职业</label>
+                        <input type="text" id="occupation" name="occupation" placeholder="您从事什么工作？" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="income"><i class="fas fa-money-bill-wave"></i> 年收入</label>
+                        <select id="income" name="income" required>
+                            <option value="">请选择您的收入范围</option>
+                            <option value="0-20k">20,000元以下</option>
+                            <option value="20k-40k">20,000 - 40,000元</option>
+                            <option value="40k-60k">40,000 - 60,000元</option>
+                            <option value="60k-80k">60,000 - 80,000元</option>
+                            <option value="80k+">80,000元以上</option>
+                        </select>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="premium" name="premium">
+                        <label for="premium">是的，我想了解高级课程（包含一对一指导，推荐给转行者）</label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="terms" name="terms" required>
+                        <label for="terms">我同意服务条款和隐私政策，并同意接收促销邮件</label>
+                    </div>
+                    
+                    <button type="submit" class="btn">
+                        <i class="fas fa-lock"></i> 安全注册
+                    </button>
+                    <p style="text-align: center; margin-top: 15px; font-size: 0.9rem; color: #7f8c8d;">
+                        <i class="fas fa-shield-alt"></i> 您的信息100%安全
+                    </p>
+                </form>
+            </div>
+        </div>
+        
+        <div class="result-section" id="resultSection">
+            <div class="result-header">
+                <h2><i class="fas fa-shield-alt"></i> 在线安全分析</h2>
+                <p>根据您的注册信息，我们分析了您可能面临的在线优惠安全风险。</p>
+            </div>
+            
+            <div id="riskLevel" class="risk-level">
+                <!-- 风险等级将动态显示 -->
+            </div>
+            
+            <div class="analysis-result">
+                <h3><i class="fas fa-chart-bar"></i> 风险评估</h3>
+                <div id="analysisResult">
+                    <!-- 分析结果将动态显示 -->
+                </div>
+            </div>
+            
+            <div class="red-flags">
+                <h3><i class="fas fa-flag"></i> 此优惠中的危险信号</h3>
+                <ul>
+                    <li>紧迫感策略（限时优惠、倒计时器）</li>
+                    <li>好得令人难以置信的承诺（30天成为专家）</li>
+                    <li>虚假的学员评价和成功故事</li>
+                    <li>要求不必要的个人信息（收入、职业）</li>
+                    <li>虚假的稀缺性指标（"仅剩X个名额"）</li>
+                    <li>高级课程的追加销售尝试</li>
+                    <li>讲师信息无法核实</li>
+                </ul>
+            </div>
+            
+            <div class="tips">
+                <h3><i class="fas fa-lightbulb"></i> 在线安全提示</h3>
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <h4><i class="fas fa-search"></i> 全面调查</h4>
+                        <p>始终核实在线课程的合法性。在独立平台上查看评价，并寻找认证信息。</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4><i class="fas fa-user-shield"></i> 保护个人数据</h4>
+                        <p>谨慎与未经验证的平台分享敏感信息，如收入、职业或详细个人数据。</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4><i class="fas fa-exclamation-triangle"></i> 识别压力策略</h4>
+                        <p>合法企业不会使用高压销售策略，如倒计时器或虚假稀缺性指标。</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4><i class="fas fa-graduation-cap"></i> 核实证书</h4>
+                        <p>独立检查讲师证书。虚假专家通常声称有令人印象深刻但无法核实背景。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="disclaimer">
+                <h3><i class="fas fa-info-circle"></i> 重要声明</h3>
+                <p>这是一个关于在线安全的教育演示。您的信息 <strong style="color: #e74c3c;">未被存储或传输</strong>。此页面模拟了在线诈骗中常用的策略，以帮助您在未来识别和避免它们。</p>
+            </div>
+        </div>
+        
+    </div>
+
+    <script>
+        // 倒计时器
+        function updateCountdown() {
+            const days = document.getElementById('days');
+            const hours = document.getElementById('hours');
+            const minutes = document.getElementById('minutes');
+            const seconds = document.getElementById('seconds');
+            
+            let timeLeft = {
+                days: parseInt(days.textContent),
+                hours: parseInt(hours.textContent),
+                minutes: parseInt(minutes.textContent),
+                seconds: parseInt(seconds.textContent)
+            };
+            
+            if (timeLeft.seconds > 0) {
+                timeLeft.seconds--;
+            } else {
+                timeLeft.seconds = 59;
+                if (timeLeft.minutes > 0) {
+                    timeLeft.minutes--;
+                } else {
+                    timeLeft.minutes = 59;
+                    if (timeLeft.hours > 0) {
+                        timeLeft.hours--;
+                    } else {
+                        timeLeft.hours = 23;
+                        if (timeLeft.days > 0) {
+                            timeLeft.days--;
+                        } else {
+                            // 计时器结束
+                            clearInterval(timerInterval);
+                        }
+                    }
+                }
+            }
+            
+            days.textContent = timeLeft.days.toString().padStart(2, '0');
+            hours.textContent = timeLeft.hours.toString().padStart(2, '0');
+            minutes.textContent = timeLeft.minutes.toString().padStart(2, '0');
+            seconds.textContent = timeLeft.seconds.toString().padStart(2, '0');
+        }
+        
+        const timerInterval = setInterval(updateCountdown, 1000);
+        
+        // 注册进度动画
+        document.addEventListener('DOMContentLoaded', function() {
+            const progressBar = document.getElementById('enrollmentProgress');
+            let width = 0;
+            const interval = setInterval(function() {
+                if (width >= 85) {
+                    clearInterval(interval);
+                } else {
+                    width++;
+                    progressBar.style.width = width + '%';
+                }
+            }, 50);
+        });
+        
+        // 表单提交和风险分析
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // 收集表单数据
+            const formData = {
+                name: document.getElementById('fullName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                age: parseInt(document.getElementById('age').value),
+                experience: document.getElementById('experience').value,
+                occupation: document.getElementById('occupation').value,
+                income: document.getElementById('income').value,
+                premium: document.getElementById('premium').checked
+            };
+            
+            // 分析风险
+            const riskScore = calculateRiskScore(formData);
+            displayResults(riskScore, formData);
+            
+            // 显示结果区域
+            document.getElementById('resultSection').style.display = 'block';
+            
+            // 滚动到结果区域
+            document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        function calculateRiskScore(data) {
+            let score = 0;
+            
+            // 年龄风险 - 年轻人和老年人更容易受骗
+            if (data.age < 25) score += 2;
+            else if (data.age > 60) score += 2;
+            
+            // 经验风险 - 初学者更容易受骗
+            if (data.experience === 'none') score += 3;
+            else if (data.experience === 'beginner') score += 2;
+            
+            // 职业风险 - 学生、无业、退休人员更容易受骗
+            const riskyOccupations = ['学生', '无业', '退休', '待业'];
+            if (riskyOccupations.some(occ => data.occupation.includes(occ))) {
+                score += 2;
+            }
+            
+            // 收入风险 - 低收入用户更容易受骗
+            if (data.income === '0-20k') score += 2;
+            
+            // 高级课程兴趣 - 表现出支付意愿
+            if (data.premium) score += 3;
+            
+            return score;
+        }
+        
+        function displayResults(score, data) {
+            const riskLevelElement = document.getElementById('riskLevel');
+            const analysisElement = document.getElementById('analysisResult');
+            
+            let riskLevel, riskText, analysisText, icon;
+            
+            if (score <= 4) {
+                riskLevel = 'low-risk';
+                riskText = '低风险档案';
+                icon = '<i class="fas fa-check-circle"></i>';
+                analysisText = `<p>根据您的信息，您似乎对潜在的在线风险有良好的认识。您不太可能成为针对特定漏洞的常见在线诈骗的受害者。</p>
+                <p>您的${data.age < 30 ? '较年轻' : '较年长'}年龄和${data.experience === 'none' || data.experience === 'beginner' ? '有限的技术背景' : '技术经验'}不会显著增加您对此类优惠的脆弱性。</p>`;
+            } else if (score <= 8) {
+                riskLevel = 'medium-risk';
+                riskText = '中等风险档案';
+                icon = '<i class="fas fa-exclamation-triangle"></i>';
+                analysisText = `<p>根据您的信息，您可能对精心针对的在线诈骗有些脆弱。诈骗者经常寻找${data.age < 25 ? '生活经验有限' : '特定人口统计特征'}且${data.experience === 'none' ? '渴望学习新技能' : '希望推进职业生涯'}的人。</p>
+                <p>您的${data.income === '0-20k' ? '财务状况' : '职业状况'}可能使您成为承诺通过"简单"课程快速改善财务状况的骗局的目标。</p>`;
+            } else {
+                riskLevel = 'high-risk';
+                riskText = '高风险档案';
+                icon = '<i class="fas fa-radiation-alt"></i>';
+                analysisText = `<p>根据您的信息，您符合诈骗者经常针对在线课程骗局的档案。您的${data.age < 25 ? '年龄段' : '人口统计特征'}、${data.experience === 'none' ? '缺乏技术经验' : '技术背景'}和${data.income === '0-20k' ? '财务状况' : '职业'}使您容易受到快速职业转变或财务改善承诺的影响。</p>
+                <p>您对高级课程的兴趣表明您愿意投资于教育，诈骗者通过提供几乎没有实际价值的昂贵"指导"计划来利用这一点。</p>`;
+            }
+            
+            riskLevelElement.className = `risk-level ${riskLevel}`;
+            riskLevelElement.innerHTML = `${icon}<h3>${riskText}</h3><p>您对在线课程诈骗的脆弱性</p>`;
+            
+            analysisElement.innerHTML = analysisText;
+        }
+    </script>
+</body>
+</html>
