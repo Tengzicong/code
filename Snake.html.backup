@@ -538,7 +538,10 @@
             document.getElementById('startGameBtn').addEventListener('click', startGame);
             document.getElementById('restartGameBtn').addEventListener('click', restartGame);
         };
-        ('restartGameBtn').addEventListener('click', restartGame);
+    </script>
+</body>
+</html>('restartGameBtn').addEventListener('click', restartGame);
+        };
     </script>
 </body>
 </html>
