@@ -202,8 +202,7 @@
     </style>
 </head>
 <body>
-    <!-- ERROR logo 圆形图片 -->
-    <img src="error.png" alt="ERROR Logo" class="error-logo">
+    
     
     <div class="game-container">
         <div class="score-panel">
@@ -265,8 +264,7 @@
         
         // 页面加载时初始化语言
         window.addEventListener('load', function() {
-            document.querySelector('.language-toggle').textContent = currentLanguage === 'zh' ? 'EN' : '中文';
-            updateLanguage();
+
         });
 
         // Initialize snake
@@ -667,6 +665,8 @@
                 highScore = score;
                 localStorage.setItem('snakeHighScore', highScore);
                 highScoreElement.textContent = highScore;
+            }
+        }
         
         // 语言配置
         const translations = {
@@ -679,8 +679,7 @@
                 'restart': '重新开始',
                 'start-game': '开始游戏',
                 'game-instructions': '使用方向键或WASD键控制贪吃蛇移动<br>吃到食物可以增加得分，避免撞到墙壁或自己的身体',
-                'feedback': '游戏反馈',
-                'feedback-text': '如果您在游玩中发现有bug或建议，请将建议发送至gamefeedback@126.com',
+
 
             },
             'en': {
@@ -692,8 +691,7 @@
                 'restart': 'Restart',
                 'start-game': 'Start Game',
                 'game-instructions': 'Use arrow keys or WASD to control the snake<br>Eat food to increase score, avoid hitting walls or yourself',
-                'feedback': 'Game Feedback',
-                'feedback-text': 'If you find bugs or have suggestions during gameplay, please send them to gamefeedback@126.com',
+
 
             }
         };
@@ -701,49 +699,6 @@
         let currentLanguage = localStorage.getItem('gameLanguage') || 'zh';
         
         // 切换语言函数
-        function toggleLanguage() {
-            currentLanguage = currentLanguage === 'zh' ? 'en' : 'zh';
-            localStorage.setItem('gameLanguage', currentLanguage);
-            updateLanguage();
-            document.querySelector('.language-toggle').textContent = currentLanguage === 'zh' ? 'EN' : '中文';
-        }
-        
-        // 更新语言显示
-        function updateLanguage() {
-            const t = translations[currentLanguage];
-            
-            // 更新开始界面
-            document.querySelector('.start-screen h1').textContent = t['title'];
-            document.querySelector('.start-screen p').innerHTML = t['game-instructions'];
-            document.querySelector('.start-screen button').textContent = t['start-game'];
-            
-            // 更新得分面板
-            document.querySelector('.score-panel div:first-child').innerHTML = t['current-score'] + '<br><span id="score">' + score + '</span>';
-            document.querySelector('.score-panel div:last-child').innerHTML = t['high-score'] + '<br><span id="high-score">' + highScore + '</span>';
-            
-            // 更新游戏结束界面
-            document.querySelector('.game-over h2').textContent = t['game-over'];
-            document.querySelector('.game-over p').innerHTML = t['your-score'] + '<br><span id="final-score">' + score + '</span>';
-            document.querySelector('.game-over button').textContent = t['restart'];
-            
-            // 更新反馈面板
-            document.querySelector('.feedback-panel h3').textContent = t['feedback'];
-            document.querySelector('.feedback-panel p').textContent = t['feedback-text'];
-            document.querySelector('.feedback-button').textContent = t['feedback'];
-            
-            // 更新更新日志内容
-            updateChangelogLanguage();
-        }
-        
-        
-        
-        // 页面加载时初始化语言
-        window.addEventListener('load', function() {
-            document.querySelector('.language-toggle').textContent = currentLanguage === 'zh' ? 'EN' : '中文';
-            updateLanguage();
-        });
-            }
-        }
 
         // Change direction
         function changeDirection(newDirection) {
@@ -829,59 +784,6 @@
             }
         });
 
-        // Submit feedback function
-        function submitFeedback() {
-            const name = document.getElementById('feedback-name').value;
-            const content = document.getElementById('feedback-content').value;
-            const messageElement = document.getElementById('feedback-message');
-            
-            if (!name || !content) {
-                messageElement.textContent = '请填写所有���段 / Please fill in all fields';
-                messageElement.style.color = '#e94560';
-                messageElement.classList.add('show');
-                
-                // Hide message after 3 seconds
-                setTimeout(() => {
-                    messageElement.classList.remove('show');
-                }, 3000);
-                return;
-            }
-            
-            // In a real application, you would send the feedback to a server here
-            // For this demo, we'll just show a success message
-            messageElement.textContent = '感谢您的反馈! / Thank you for your feedback!';
-            messageElement.style.color = '#00ff9d';
-            messageElement.classList.add('show');
-            
-            // Clear form
-            document.getElementById('feedback-name').value = '';
-            document.getElementById('feedback-content').value = '';
-            
-            // Hide message after 3 seconds
-            setTimeout(() => {
-                messageElement.classList.remove('show');
-            }, 3000);
-        }
 
         // Toggle feedback panel function
-        function toggleFeedback() {
-            const feedbackPanel = document.querySelector('.feedback-panel');
-            if (feedbackPanel.style.display === 'block') {
-                feedbackPanel.style.display = 'none';
-            } else {
-                feedbackPanel.style.display = 'block';
-            }
-        }
-
         // Toggle changelog panel function
-        function toggleChangelog() {
-            const changelogPanel = document.getElementById('changelog-panel');
-            if (changelogPanel.style.display === 'block') {
-                changelogPanel.style.display = 'none';
-            } else {
-                changelogPanel.style.display = 'block';
-            }
-        }
-    </script>
-</body>
-</html>
