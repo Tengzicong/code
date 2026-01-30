@@ -7,15 +7,220 @@
     <title>ERROR小游戏 | ERROR Games</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        .error-logo {
+        .logo-container {
             position: fixed;
             top: 20px;
             left: 20px;
+            display: flex;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .toolbar-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .error-logo {
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            z-index: 1000;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            margin-right: 10px;
+        }
+        
+        .toolbar {
+            position: relative;
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 0, 0, 0.85);
+            border-radius: 50%;
+            border: 2px solid #ffd700;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+            cursor: pointer;
+            transition: all 0.4s ease;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .toolbar:hover {
+            width: 200px;
+            height: auto;
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
+        }
+        
+        .toolbar-icon {
+            color: #ffd700;
+            font-size: 1.5rem;
+            transition: all 0.4s ease;
+            z-index: 3;
+        }
+        
+        .toolbar:hover .toolbar-icon {
+            opacity: 0;
+            transform: scale(0.5);
+        }
+        
+        .toolbar-content {
+            display: none;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 8px;
+            opacity: 0;
+            transform: translateX(20px);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .toolbar:hover .toolbar-content {
+            display: flex;
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .toolbar-item, .social-item {
+            opacity: 0;
+            transform: translateX(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .toolbar:hover .toolbar-item, 
+        .toolbar:hover .social-item {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .toolbar-item:nth-child(1), .social-item:nth-child(1) {
+            transition-delay: 0.1s;
+        }
+        
+        .toolbar-item:nth-child(2), .social-item:nth-child(2) {
+            transition-delay: 0.2s;
+        }
+        
+        .toolbar-item:nth-child(3), .social-item:nth-child(3) {
+            transition-delay: 0.3s;
+        }
+        
+        .expanded-toolbar-icon {
+            color: #ffd700;
+            font-size: 1.5rem;
+            transition: transform 0.8s linear;
+            align-self: flex-end; /* 将图标放在右侧 */
+            margin-top: 5px;
+        }
+        
+        .toolbar:hover .expanded-toolbar-icon {
+            animation: rotate360 0.8s linear;
+        }
+        
+        @keyframes rotate360 {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .toolbar-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 215, 0, 0.9);
+            color: #8b0000;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            font-size: 0.9rem;
+            min-width: 150px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .toolbar-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: 0.5s;
+        }
+        
+        .toolbar-item:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+        
+        .toolbar-item:hover::before {
+            left: 100%;
+        }
+        
+        .toolbar-item:active {
+            transform: translateY(1px) scale(0.98);
+        }
+        
+        .social-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            background: white;
+            color: #333;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            font-size: 0.9rem;
+            min-width: 150px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .social-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: 0.5s;
+        }
+        
+        .social-item:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+        
+        .social-item:hover::before {
+            left: 100%;
+        }
+        
+        .social-item:active {
+            transform: translateY(1px) scale(0.98);
+        }
+        
+        .social-item.douyin {
+            background: linear-gradient(135deg, #fb5b3e, #ff0050);
+            color: white;
+        }
+        
+        .social-icon-small {
+            width: 20px;
+            height: 20px;
         }
         
         /* 社交媒体链接样式 */
@@ -91,7 +296,31 @@
 </head>
 <body>
     <!-- ERROR logo 圆形图片 -->
-    <img src="picture/error.png" alt="ERROR Logo" class="error-logo">
+    <div class="logo-container">
+        <img src="picture/error.png" alt="ERROR Logo" class="error-logo">
+    </div>
+    
+    <!-- 右上角工具栏 -->
+    <div class="toolbar-container">
+        <div class="toolbar">
+            <div class="toolbar-icon">⚙️</div>
+            <div class="toolbar-content">
+                <a href="theme.html" class="toolbar-item">
+                    <span>🎨</span>
+                    <span>主题介绍<br>Theme</span>
+                </a>
+                <a href="https://space.bilibili.com/3546631121144154?spm_id_from=333.1007.0.0" class="social-item" target="_blank">
+                    <img src="picture/bilibili.svg" alt="Bilibili" class="social-icon-small">
+                    <span>Bilibili<br>哔哩哔哩</span>
+                </a>
+                <a href="https://www.douyin.com/user/MS4wLjABAAAA0cxdKFB-D6ucvm2i3AE92bzBC-xSHgmW0ew1iwh0Isx-DwXKsMF499VcAle9571J?from_tab_name=main" class="social-item douyin" target="_blank">
+                    <img src="picture/douyin.svg" alt="抖音" class="social-icon-small">
+                    <span>抖音<br>Douyin</span>
+                </a>
+                <div class="expanded-toolbar-icon">⚙️</div>
+            </div>
+        </div>
+    </div>
     
     <!-- 加载动画 -->
     <div class="loading-overlay" id="loadingOverlay">
@@ -140,18 +369,6 @@
             </a>
 
 
-
-
-    <!-- 社交媒体链接 -->
-    <div class="social-links">
-        <a href="https://space.bilibili.com/3546631121144154?spm_id_from=333.1007.0.0" class="social-link bilibili" title="Bilibili" target="_blank">
-            <img src="picture/bilibili.svg" alt="Bilibili" class="social-icon">
-        </a>
-        <a href="https://www.douyin.com/user/MS4wLjABAAAA0cxdKFB-D6ucvm2i3AE92bzBC-xSHgmW0ew1iwh0Isx-DwXKsMF499VcAle9571J?from_tab_name=main" class="social-link douyin" title="抖音" target="_blank">
-            <img src="picture/douyin.svg" alt="抖音" class="social-icon">
-        </a>
-    </div>
-    
 
 
     <script>
