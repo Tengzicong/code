@@ -214,9 +214,38 @@
                 width: 300px;
             }
         }
+        
+        .home-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background: linear-gradient(45deg, #4CAF50, #2E7D32);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .home-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            background: linear-gradient(45deg, #66BB6A, #388E3C);
+        }
+        
+        .home-button:active {
+            transform: translateY(1px);
+        }
     </style>
 </head>
 <body>
+    <button class="home-button" onclick="goHome()">返回首页<br>Home</button>
     <!-- ERROR logo 圆形图片 -->
     
     
@@ -600,6 +629,10 @@
             
             initBricks();
             startGame();
+        };
+        
+        function goHome() {
+            window.location.href = 'index.html';
         }
     </script>
 </body>
