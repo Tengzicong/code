@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERROR-CORE小游戏 - 足球大战 | ERROR-CORE Games - Soccer</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .error-logo {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            z-index: 1000;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #ffd700, #ffa500, #ff8c00);
+            color: #333;
+        }
+        
+        .game-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        canvas {
+            border-radius: 10px;
+            background: #2ecc71;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            border: 4px solid #8B4513; /* 足球场边界 */
+        }
+        .score-panel {
+            display: flex;
+            justify-content: space-between;
+            width: 800px;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        .score-panel div {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 8px 15px;
+            border-radius: 5px;
+            color: #333;
+            font-weight: bold;
+            text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.5);
+        }
+        
+       
+        .controls {
+            display: none;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .controls button {
+            width: 60px;
+            height: 60px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .controls button:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+        @media (max-width: 768px) {
+            .score-panel {
+                width: 300px;
+            }
+            .controls {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .controls button:nth-child(1) {
+                grid-column: 2;
+            }
+            .controls button:nth-child(2) {
+                grid-column: 1;
+                grid-row: 2;
+            }
+            .controls button:nth-child(3) {
+                grid-column: 2;
+                grid-row: 2;
+            }
+            .controls button:nth-child(4) {
+                grid-column: 3;
+                grid-row: 2;
+            }
+        }
+        .game-over {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            display: none;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+            border: 3px solid #ff0000;
+            z-index: 10;
+        }
+        .game-over h2 {
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+            color: #ff0000;
+            text-shadow: 2px 2px 0 #ffff00;
+        }
+        .game-over p {
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            color: #333;
+        }
+        .game-over button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(45deg, #ff0000, #ff4500);
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
+        }
+        .game-over button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 0, 0, 0.6);
+        }
+        .start-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 215, 0, 0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            z-index: 5;
+        }
+        .start-screen h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #8b0000;
+            text-shadow: 2px 2px 0 #ffd700;
+        }
+        .start-screen p {
+            margin-bottom: 30px;
+            font-size: 1.2rem;
+            text-align: center;
+            max-width: 500px;
+            color: #333;
+        }
+        .start-screen button {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(45deg, #ff0000, #ff4500);
+            color: white;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
+        }
+        .start-screen button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(255, 0, 0, 0.6);
+        }
+        
+        /* 添加水印样式 */
+        .watermark {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            font-size: 0.8rem;
+            color: #8b0000;
+            z-index: 1000;
+            pointer-events: none;
+            background: rgba(255, 215, 0, 0.7);
+            padding: 5px 10px;
+            border-radius: 5px;
+            border: 1px solid #ff0000;
+        }
+        
+        /* 社交媒体链接样式 */
+        .social-links {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .social-link.bilibili {
+            background: white;
+        }
+
+        .social-link.douyin {
+            background: linear-gradient(135deg, #fb5b3e, #ff0050);
+        }
+
+        .social-icon {
+            width: 60%;
+            height: 60%;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            transform: scale(1.2) rotate(10deg);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .social-link:hover .social-icon {
+            transform: scale(1.1);
+        }
+        
+        @media (max-width: 480px) {
+            .social-links {
+                bottom: 15px;
+                right: 15px;
+            }
+            
+            .social-link {
+                width: 45px;
+                height: 45px;
+            }
+            
+            .social-icon {
+                width: 60%;
+                height: 60%;
+            }
+        }
+        
+        /* 场地标记线 */
+        .field-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        .home-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background: linear-gradient(45deg, #4CAF50, #2E7D32);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .home-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            background: linear-gradient(45deg, #66BB6A, #388E3C);
+        }
+        
+        .home-button:active {
+            transform: translateY(1px);
+        }
+    </style>
+</head>
+<body>
+    <button class="home-button" onclick="goHome()">返回首页<br>Home</button>
+    
+    <div class="game-container">
+        <div class="score-panel">
+            <div>玩家1得分 Player 1 Score<br><span id="score1">0</span></div>
+            <div>时间 Time<br><span id="timer">0</span>s</div>
+            <div>玩家2得分 Player 2 Score<br><span id="score2">0</span></div>
+        </div>
+        <canvas id="gameCanvas" width="800" height="400"></canvas>
+        <div class="game-over">
+            <h2>比赛结束</h2>
+            <p>获胜者 Winner: <span id="winner">Player</span></p>
+            <button onclick="restartGame()">重新开始<br>Restart</button>
+        </div>
+        <div class="start-screen" id="startScreen">
+            <h1>足球大战</h1>
+            <p>玩家1(Player 1): W/A/S/D 控制球员移动<br>玩家2(Player 2): ↑/↓/←/→ 方向键控制球员移动<br>左Shift键(P1) 和 右Shift键(P2) 用于疾跑<br>将球踢进对方球门得分!<br>Player 1: Use W/A/S/D to move<br>Player 2: Use arrow keys to move<br>Left Shift (P1) and Right Shift (P2) for sprint<br>Score by kicking the ball into the opponent's goal!</p>
+            <button onclick="startGame()">开始游戏<br>Start Game</button>
+        </div>
+    </div>
+    
+    <!-- 添加水印 -->
+    <div class="watermark"><h3>@zicong<br>Soccer Battle</h3></div>
+    
+    
+    
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        // 游戏常量
+        const FIELD_WIDTH = 800;
+        const FIELD_HEIGHT = 400;
+        const PLAYER_RADIUS = 20;
+        const BALL_RADIUS = 12;
+        const GOAL_WIDTH = 40;
+        const GOAL_HEIGHT = 150;
+        const MAX_SCORE = 5;
+        
+        // 游戏对象
+        let player1 = { x: 150, y: FIELD_HEIGHT / 2, radius: PLAYER_RADIUS, speed: 5, sprintSpeed: 8, color: '#FF0000' }; // 红色
+        let player2 = { x: FIELD_WIDTH - 150, y: FIELD_HEIGHT / 2, radius: PLAYER_RADIUS, speed: 5, sprintSpeed: 8, color: '#0000FF' }; // 蓝色
+        let ball = { x: FIELD_WIDTH / 2, y: FIELD_HEIGHT / 2, radius: BALL_RADIUS, vx: 0, vy: 0, speed: 0 };
+        let score1 = 0;
+        let score2 = 0;
+        let gameStarted = false;
+        let gameRunning = false;
+        let gameStartTime = 0;
+        let gameTime = 0;
+        let gameInterval = null;
+        
+        // 疾跑状态
+        let p1Sprint = false;
+        let p2Sprint = false;
+        
+        // 获取DOM元素
+        const score1Element = document.getElementById('score1');
+        const score2Element = document.getElementById('score2');
+        const timerElement = document.getElementById('timer');
+        const winnerElement = document.getElementById('winner');
+        const gameOverScreen = document.querySelector('.game-over');
+        const startScreen = document.getElementById('startScreen');
+        
+        // 键盘控制
+        const keys = {};
+        
+        // 初始化游戏
+        function initGame() {
+            player1.x = 150;
+            player1.y = FIELD_HEIGHT / 2;
+            player2.x = FIELD_WIDTH - 150;
+            player2.y = FIELD_HEIGHT / 2;
+            ball.x = FIELD_WIDTH / 2;
+            ball.y = FIELD_HEIGHT / 2;
+            ball.vx = 0;
+            ball.vy = 0;
+            ball.speed = 0;
+        }
+        
+        // 开始游戏
+        function startGame() {
+            initGame();
+            startScreen.style.display = 'none';
+            gameRunning = true;
+            gameStartTime = Date.now();
+            
+            // 开始计时
+            clearInterval(gameInterval);
+            gameInterval = setInterval(updateTimer, 1000);
+            
+            // 开始游戏循环
+            requestAnimationFrame(gameLoop);
+        }
+        
+        // 重新开始游戏
+        function restartGame() {
+            score1 = 0;
+            score2 = 0;
+            score1Element.textContent = '0';
+            score2Element.textContent = '0';
+            startGame();
+        }
+        
+        // 更新计时器
+        function updateTimer() {
+            if (gameRunning) {
+                gameTime = Math.floor((Date.now() - gameStartTime) / 1000);
+                timerElement.textContent = gameTime;
+            }
+        }
+        
+        // 键盘事件监听
+        window.addEventListener('keydown', (e) => {
+            keys[e.key] = true;
+            
+            // 检测Shift键用于疾跑
+            if(e.key === 'Shift' && e.location === 1) { // 左Shift
+                p1Sprint = true;
+            } else if(e.key === 'Shift' && e.location === 2) { // 右Shift
+                p2Sprint = true;
+            }
+        });
+        
+        window.addEventListener('keyup', (e) => {
+            keys[e.key] = false;
+            
+            // 释放Shift键
+            if(e.key === 'Shift') {
+                if(e.location === 1) { // 左Shift
+                    p1Sprint = false;
+                } else if(e.location === 2) { // 右Shift
+                    p2Sprint = false;
+                }
+            }
+        });
+        
+        // 更新玩家位置
+        function updatePlayers() {
+            // 确定当前速度（普通速度或疾跑速度）
+            const p1CurrentSpeed = p1Sprint ? player1.sprintSpeed : player1.speed;
+            const p2CurrentSpeed = p2Sprint ? player2.sprintSpeed : player2.speed;
+            
+            // 玩家1控制 (WASD)
+            if (keys['w'] || keys['W']) player1.y -= p1CurrentSpeed;
+            if (keys['s'] || keys['S']) player1.y += p1CurrentSpeed;
+            if (keys['a'] || keys['A']) player1.x -= p1CurrentSpeed;
+            if (keys['d'] || keys['D']) player1.x += p1CurrentSpeed;
+            
+            // 玩家2控制 (方向键)
+            if (keys['ArrowUp']) player2.y -= p2CurrentSpeed;
+            if (keys['ArrowDown']) player2.y += p2CurrentSpeed;
+            if (keys['ArrowLeft']) player2.x -= p2CurrentSpeed;
+            if (keys['ArrowRight']) player2.x += p2CurrentSpeed;
+            
+            // 边界检查
+            // 玩家1
+            player1.x = Math.max(player1.radius, Math.min(FIELD_WIDTH - player1.radius, player1.x));
+            player1.y = Math.max(player1.radius, Math.min(FIELD_HEIGHT - player1.radius, player1.y));
+            
+            // 玩家2
+            player2.x = Math.max(player2.radius, Math.min(FIELD_WIDTH - player2.radius, player2.x));
+            player2.y = Math.max(player2.radius, Math.min(FIELD_HEIGHT - player2.radius, player2.y));
+        }
+        
+        // 更新球的位置
+        function updateBall() {
+            ball.x += ball.vx;
+            ball.y += ball.vy;
+            
+            // 减速摩擦力
+            ball.vx *= 0.98;
+            ball.vy *= 0.98;
+            
+            // 如果速度太小则停止
+            if (Math.abs(ball.vx) < 0.1) ball.vx = 0;
+            if (Math.abs(ball.vy) < 0.1) ball.vy = 0;
+            
+            // 边界反弹
+            if (ball.y - ball.radius <= 0 || ball.y + ball.radius >= FIELD_HEIGHT) {
+                ball.vy = -ball.vy;
+            }
+            
+            // 球员与球的碰撞
+            handleCollision(player1, ball);
+            handleCollision(player2, ball);
+            
+            // 检查进球
+            checkGoal();
+        }
+        
+        // 处理碰撞
+        function handleCollision(player, ball) {
+            const dx = ball.x - player.x;
+            const dy = ball.y - player.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            if (distance < player.radius + ball.radius) {
+                // 计算碰撞角度
+                const angle = Math.atan2(dy, dx);
+                
+                // 分离距离
+                const overlap = player.radius + ball.radius - distance;
+                
+                // 移动球以避免重叠
+                ball.x += Math.cos(angle) * overlap;
+                ball.y += Math.sin(angle) * overlap;
+                
+                // 计算速度传递
+                const speed = Math.sqrt(ball.vx * ball.vx + ball.vy * ball.vy);
+                const power = 0.8; // 力度系数
+                
+                // 传球给球
+                ball.vx = Math.cos(angle) * speed * power + (dx / distance) * player.speed;
+                ball.vy = Math.sin(angle) * speed * power + (dy / distance) * player.speed;
+            }
+        }
+        
+        // 检查进球
+        function checkGoal() {
+            // 左侧球门 (player2 得分)
+            if (ball.x - ball.radius <= 0 && 
+                ball.y >= FIELD_HEIGHT/2 - GOAL_HEIGHT/2 && 
+                ball.y <= FIELD_HEIGHT/2 + GOAL_HEIGHT/2) {
+                score2++;
+                score2Element.textContent = score2;
+                resetBall();
+                
+                if (score2 >= MAX_SCORE) {
+                    endGame();
+                }
+            }
+            
+            // 右侧球门 (player1 得分)
+            if (ball.x + ball.radius >= FIELD_WIDTH && 
+                ball.y >= FIELD_HEIGHT/2 - GOAL_HEIGHT/2 && 
+                ball.y <= FIELD_HEIGHT/2 + GOAL_HEIGHT/2) {
+                score1++;
+                score1Element.textContent = score1;
+                resetBall();
+                
+                if (score1 >= MAX_SCORE) {
+                    endGame();
+                }
+            }
+        }
+        
+        // 重置球位置
+        function resetBall() {
+            ball.x = FIELD_WIDTH / 2;
+            ball.y = FIELD_HEIGHT / 2;
+            ball.vx = 0;
+            ball.vy = 0;
+            
+            // 重置玩家位置
+            player1.x = 150;
+            player1.y = FIELD_HEIGHT / 2;
+            player2.x = FIELD_WIDTH - 150;
+            player2.y = FIELD_HEIGHT / 2;
+        }
+        
+        // 结束游戏
+        function endGame() {
+            gameRunning = false;
+            clearInterval(gameInterval);
+            
+            // 确定获胜者
+            let winner = '';
+            if (score1 > score2) {
+                winner = 'Player 1';
+            } else if (score2 > score1) {
+                winner = 'Player 2';
+            } else {
+                winner = 'Draw';
+            }
+            
+            // 跳转到庆祝页面
+            window.location.href = 'Celebration.html?winner=' + encodeURIComponent(winner);
+        }
+        
+        // 绘制游戏场地
+        function drawField() {
+            // 绘制草地
+            ctx.fillStyle = '#2ecc71';
+            ctx.fillRect(0, 0, FIELD_WIDTH, FIELD_HEIGHT);
+            
+            // 绘制中线
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([10, 10]);
+            ctx.beginPath();
+            ctx.moveTo(FIELD_WIDTH/2, 0);
+            ctx.lineTo(FIELD_WIDTH/2, FIELD_HEIGHT);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            
+            // 绘制中圈
+            ctx.beginPath();
+            ctx.arc(FIELD_WIDTH/2, FIELD_HEIGHT/2, 50, 0, Math.PI * 2);
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            // 绘制球门区域
+            ctx.fillStyle = '#ffffff';
+            ctx.globalAlpha = 0.1;
+            // 左侧球门区域
+            ctx.fillRect(0, FIELD_HEIGHT/2 - GOAL_HEIGHT/2 - 30, 60, GOAL_HEIGHT + 60);
+            // 右侧球门区域
+            ctx.fillRect(FIELD_WIDTH - 60, FIELD_HEIGHT/2 - GOAL_HEIGHT/2 - 30, 60, GOAL_HEIGHT + 60);
+            ctx.globalAlpha = 1;
+            
+            // 绘制球门
+            // 左侧球门
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, FIELD_HEIGHT/2 - GOAL_HEIGHT/2, GOAL_WIDTH, GOAL_HEIGHT);
+            
+            // 右侧球门
+            ctx.fillRect(FIELD_WIDTH - GOAL_WIDTH, FIELD_HEIGHT/2 - GOAL_HEIGHT/2, GOAL_WIDTH, GOAL_HEIGHT);
+        }
+        
+        // 绘制玩家
+        function drawPlayers() {
+            // 玩家1
+            ctx.beginPath();
+            ctx.arc(player1.x, player1.y, player1.radius, 0, Math.PI * 2);
+            ctx.fillStyle = player1.color;
+            ctx.fill();
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            // 玩家1标签
+            ctx.font = 'bold 16px Arial';
+            ctx.fillStyle = '#ffffff';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('1', player1.x, player1.y);
+            
+            // 玩家2
+            ctx.beginPath();
+            ctx.arc(player2.x, player2.y, player2.radius, 0, Math.PI * 2);
+            ctx.fillStyle = player2.color;
+            ctx.fill();
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            // 玩家2标签
+            ctx.font = 'bold 16px Arial';
+            ctx.fillStyle = '#ffffff';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('2', player2.x, player2.y);
+        }
+        
+        // 绘制球
+        function drawBall() {
+            ctx.beginPath();
+            ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+            ctx.fillStyle = '#ffffff'; // 白色足球
+            ctx.fill();
+            ctx.strokeStyle = '#000000';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+        }
+        
+        // 游戏主循环
+        function gameLoop() {
+            if (!gameRunning) return;
+            
+            // 清空画布
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // 绘制场地
+            drawField();
+            
+            // 更新游戏对象
+            updatePlayers();
+            updateBall();
+            
+            // 绘制游戏对象
+            drawPlayers();
+            drawBall();
+            
+            // 继续循环
+            requestAnimationFrame(gameLoop);
+        }
+        
+        // 页面加载完成后初始化
+        window.onload = function() {
+            // 设置初始分数显示
+            score1Element.textContent = score1;
+            score2Element.textContent = score2;
+        };
+        
+        function goHome() {
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
