@@ -138,76 +138,7 @@
             z-index: 1;
         }
         
-        /* 新年装饰元素 */
-        .lantern {
-            position: fixed;
-            width: 60px;
-            height: 80px;
-            background: radial-gradient(circle at center, #ff3300, #cc0000);
-            border-radius: 50% 50% 40% 40%;
-            z-index: 999;
-            animation: swing 4s ease-in-out infinite;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.7);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-weight: bold;
-            font-size: 20px;
-        }
-        
-        .lantern::before {
-            content: '';
-            position: absolute;
-            top: -10px;
-            width: 15px;
-            height: 30px;
-            background: linear-gradient(to bottom, #ffd700, #ffa500);
-            border-radius: 5px 5px 0 0;
-        }
-        
-        .lantern::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            width: 20px;
-            height: 20px;
-            background: linear-gradient(to bottom, #ffd700, #ffa500);
-            border-radius: 50%;
-        }
-        
-        .lantern-gold {
-            background: radial-gradient(circle at center, #ffd700, #ffaa00);
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.7);
-            color: #8b0000;
-        }
-        
-        @keyframes swing {
-            0%, 100% { transform: rotate(-5deg); }
-            50% { transform: rotate(5deg); }
-        }
-        
-        .fortune-symbol {
-            position: fixed;
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #cc0000, #ff3300);
-            color: #ffd700;
-            font-size: 20px;
-            font-weight: bold;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 5px;
-            z-index: 998;
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
-            animation: float 6s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
+
         
         @keyframes twinkle {
             0%, 100% { opacity: 0.2; }
@@ -219,17 +150,9 @@
     <!-- 动态星空背景 -->
     <div id="stars"></div>
     
-    <!-- 新年装饰元素 -->
-    <div class="lantern" style="position: fixed; left: 10%; top: 10%; z-index: 100;">福</div>
-    <div class="lantern lantern-gold" style="position: fixed; left: 85%; top: 15%; z-index: 100;">年</div>
-    <div class="lantern" style="position: fixed; left: 5%; top: 30%; z-index: 100;">新</div>
-    <div class="lantern lantern-gold" style="position: fixed; left: 90%; top: 40%; z-index: 100;">乐</div>
-    <div class="fortune-symbol" style="position: fixed; left: 20%; top: 20%; z-index: 99;">恭</div>
-    <div class="fortune-symbol" style="position: fixed; left: 75%; top: 25%; z-index: 99;">喜</div>
-    
     <div class="theme-container">
-        <h1>🏮 新年快乐 🧧<br>ERROR-CORE Theme Introduction</h1>
-        <p>🎉 欢迎来到 ERROR-CORE 游戏世界，这里是一个充满活力和动感的娱乐空间。<br>Welcome to the ERROR-CORE gaming world, a vibrant and dynamic entertainment space. 🎊</p>
+        <h1>ERROR-CORE<br>Theme Introduction</h1>
+        <p>欢迎来到 ERROR-CORE 游戏世界，这里是一个充满活力和动感的娱乐空间。<br>Welcome to the ERROR-CORE gaming world, a vibrant and dynamic entertainment space.</p>
         
         <h2>主题特色<br>Features</h2>
         <ul class="feature-list">

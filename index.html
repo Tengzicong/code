@@ -2,426 +2,432 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ERROR小游戏 | ERROR Games</title>
-    <link rel="stylesheet" href="style.css">
+    <title>人机验证 | Slider CAPTCHA</title>
     <style>
-        .logo-container {
-            position: fixed;
-            top: 20px;
-            left: 20px;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
             display: flex;
+            justify-content: center;
             align-items: center;
-            z-index: 1000;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            padding: 20px;
         }
         
-        .toolbar-container {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-        }
-        
-        .error-logo {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-            margin-right: 10px;
-        }
-        
-        .toolbar {
+        .slider-captcha-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
             position: relative;
+            z-index: 10;
+            backdrop-filter: blur(10px);
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: #333;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .captcha-description {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        .slider-captcha {
+            position: relative;
+            width: 100%;
+            height: 50px;
+            background: #e0e0e0;
+            border-radius: 25px;
+            margin: 30px 0;
+            overflow: hidden;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        
+        .slider-track {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #45a049);
+            width: 0%;
+            transition: width 0.1s;
+            border-radius: 25px;
+        }
+        
+        .slider-handle {
+            position: absolute;
+            top: 5px;
+            left: 0;
             width: 40px;
             height: 40px;
-            background: rgba(0, 0, 0, 0.85);
+            background: white;
             border-radius: 50%;
-            border: 2px solid #ffd700;
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
-            cursor: pointer;
-            transition: all 0.4s ease;
-            overflow: hidden;
+            cursor: grab;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.2s;
+            border: 2px solid #667eea;
         }
         
-        .toolbar:hover {
-            width: 200px;
-            height: auto;
-            border-radius: 15px;
-            padding: 15px;
-            box-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
-        }
-        
-        .toolbar-icon {
-            color: #ffd700;
-            font-size: 1.5rem;
-            transition: all 0.4s ease;
-            z-index: 3;
-        }
-        
-        .toolbar:hover .toolbar-icon {
-            opacity: 0;
-            transform: scale(0.5);
-        }
-        
-        .toolbar-content {
-            display: none;
-            flex-direction: column;
-            align-items: stretch;
-            gap: 8px;
-            opacity: 0;
-            transform: translateX(20px);
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        
-        .toolbar:hover .toolbar-content {
-            display: flex;
-            opacity: 1;
-            transform: translateX(0);
-        }
-        
-        .toolbar-item, .social-item {
-            opacity: 0;
-            transform: translateX(10px);
-            transition: all 0.3s ease;
-        }
-        
-        .toolbar:hover .toolbar-item, 
-        .toolbar:hover .social-item {
-            opacity: 1;
-            transform: translateX(0);
-        }
-        
-        .toolbar-item:nth-child(1), .social-item:nth-child(1) {
-            transition-delay: 0.1s;
-        }
-        
-        .toolbar-item:nth-child(2), .social-item:nth-child(2) {
-            transition-delay: 0.2s;
-        }
-        
-        .toolbar-item:nth-child(3), .social-item:nth-child(3) {
-            transition-delay: 0.3s;
-        }
-        
-        .expanded-toolbar-icon {
-            color: #ffd700;
-            font-size: 1.5rem;
-            transition: transform 0.8s linear;
-            align-self: flex-end; /* 将图标放在右侧 */
-            margin-top: 5px;
-        }
-        
-        .toolbar:hover .expanded-toolbar-icon {
-            animation: rotate360 0.8s linear;
-        }
-        
-        @keyframes rotate360 {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        
-        .toolbar-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 215, 0, 0.9);
-            color: #8b0000;
-            border: none;
-            border-radius: 5px;
-            padding: 8px 15px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            font-size: 0.9rem;
-            min-width: 150px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            text-decoration: none;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .toolbar-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            transition: 0.5s;
-        }
-        
-        .toolbar-item:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
-        }
-        
-        .toolbar-item:hover::before {
-            left: 100%;
-        }
-        
-        .toolbar-item:active {
-            transform: translateY(1px) scale(0.98);
-        }
-        
-        .social-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            width: 100%;
-            background: white;
-            color: #333;
-            border: none;
-            border-radius: 5px;
-            padding: 8px 15px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            font-size: 0.9rem;
-            min-width: 150px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            text-decoration: none;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .social-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            transition: 0.5s;
-        }
-        
-        .social-item:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
-        }
-        
-        .social-item:hover::before {
-            left: 100%;
-        }
-        
-        .social-item:active {
-            transform: translateY(1px) scale(0.98);
-        }
-        
-        .social-item.douyin {
-            background: linear-gradient(135deg, #fb5b3e, #ff0050);
-            color: white;
-        }
-        
-        .social-icon-small {
-            width: 20px;
-            height: 20px;
-        }
-        
-        /* 社交媒体链接样式 */
-        .social-links {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            display: flex;
-            gap: 15px;
-            z-index: 1000;
-        }
-
-        .social-link {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            color: white;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-        }
-
-        .social-link.bilibili {
-            background: white;
-        }
-
-        .social-link.douyin {
-            background: linear-gradient(135deg, #fb5b3e, #ff0050);
-        }
-        
-        .social-icon {
-            width: 60%;
-            height: 60%;
-            transition: all 0.3s ease;
-        }
-        
-        .social-link.douyin .social-icon {
-            filter: invert(1); /* 让SVG图标变为白色 */
-        }
-
-        .social-link:hover {
-            transform: scale(1.2) rotate(10deg);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-        }
-
-        .social-link:hover .social-icon {
+        .slider-handle:hover {
             transform: scale(1.1);
         }
         
-        @media (max-width: 480px) {
-            .social-links {
-                bottom: 15px;
-                right: 15px;
-            }
-            
-            .social-link {
-                width: 45px;
-                height: 45px;
-            }
-            
-            .social-icon {
-                width: 60%;
-                height: 60%;
-            }
+        .slider-handle.dragging {
+            cursor: grabbing;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            transform: scale(1.15);
         }
         
-
+        .slider-text {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-weight: bold;
+            font-size: 1rem;
+            pointer-events: none;
+        }
+        
+        .success-message {
+            display: none;
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 25px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            animation: successPulse 2s infinite;
+            box-shadow: 0 10px 30px rgba(76, 175, 80, 0.4);
+        }
+        
+        @keyframes successPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+        
+        .reset-btn {
+            padding: 12px 30px;
+            font-size: 1rem;
+            background: linear-gradient(45deg, #ff9a9e, #fecfef);
+            color: #333;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(255, 154, 158, 0.4);
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        
+        .reset-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(255, 154, 158, 0.6);
+        }
+        
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: float 6s infinite linear;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- ERROR logo 圆形图片 -->
-    <div class="logo-container">
-        <img src="picture/error.png" alt="ERROR Logo" class="error-logo">
-    </div>
+    <div class="particles" id="particles"></div>
     
-    <!-- 右上角工具栏 -->
-    <div class="toolbar-container">
-        <div class="toolbar">
-            <div class="toolbar-icon">⚙️</div>
-            <div class="toolbar-content">
-                <a href="theme.html" class="toolbar-item">
-                    <span>🎨</span>
-                    <span>主题介绍<br>Theme</span>
-                </a>
-                <a href="https://space.bilibili.com/3546631121144154?spm_id_from=333.1007.0.0" class="social-item" target="_blank">
-                    <img src="picture/bilibili.svg" alt="Bilibili" class="social-icon-small">
-                    <span>Bilibili<br>哔哩哔哩</span>
-                </a>
-                <a href="https://www.douyin.com/user/MS4wLjABAAAA0cxdKFB-D6ucvm2i3AE92bzBC-xSHgmW0ew1iwh0Isx-DwXKsMF499VcAle9571J?from_tab_name=main" class="social-item douyin" target="_blank">
-                    <img src="picture/douyin.svg" alt="抖音" class="social-icon-small">
-                    <span>抖音<br>Douyin</span>
-                </a>
-                <div class="expanded-toolbar-icon">⚙️</div>
-            </div>
+    <div class="slider-captcha-container">
+        <h1>🛡️ 人机验证</h1>
+        <p class="captcha-description">请拖动滑块完成验证<br>Please slide to verify</p>
+        
+        <div class="slider-captcha">
+            <div class="slider-track" id="sliderTrack"></div>
+            <div class="slider-text" id="sliderText">拖动滑块验证 / Slide to verify</div>
+            <div class="slider-handle" id="sliderHandle">⮞</div>
         </div>
-    </div>
-    
-    <!-- 加载动画 -->
-    <div class="loading-overlay" id="loadingOverlay">
-        <div class="loading-spinner"></div>
-    </div>
-
-    <!-- 新年装饰元素 -->
-    <div class="lantern" style="left: 10%; top: 10%;">福</div>
-    <div class="lantern lantern-gold" style="left: 85%; top: 15%;">年</div>
-    <div class="lantern" style="left: 5%; top: 30%;">新</div>
-    <div class="lantern lantern-gold" style="left: 90%; top: 40%;">乐</div>
-    <div class="fortune-symbol" style="left: 20%; top: 20%;">恭</div>
-    <div class="fortune-symbol" style="left: 75%; top: 25%;">喜</div>
-    <div class="fortune-symbol" style="left: 15%; top: 60%;">发</div>
-    <div class="fortune-symbol" style="left: 80%; top: 70%;">财</div>
-    
-    <!-- 鞭炮装饰 -->
-    <div class="firecracker" style="left: 30%; top: 12%;"></div>
-    <div class="firecracker" style="left: 32%; top: 12%;"></div>
-    <div class="firecracker" style="left: 34%; top: 12%;"></div>
-    <div class="firecracker" style="left: 65%; top: 18%;"></div>
-    <div class="firecracker" style="left: 67%; top: 18%;"></div>
-    <div class="firecracker" style="left: 69%; top: 18%;"></div>
-
-    <!-- 星空粒子 -->
-    <div class="stars" id="stars"></div>
-
-    <!-- 主容器 -->
-    <div class="container">
-        <!-- 标题区域 -->
-        <div class="header">
-            <h1 class="main-title">ERROR小游戏<br>ERROR Games</h1>
-            <p class="sub-title">您的游玩之地。<br>Your place of recreation.</p>
+        
+        <div class="success-message" id="successMessage">
+            ✅ 验证成功！Verification successful!<br>正在跳转到主页... / Redirecting to homepage...
         </div>
-
-        <!-- 游戏卡片网格 -->
-        <div class="game-grid">
-            <!-- 贪吃蛇游戏卡片 -->
-            <a href="Snake.html" class="game-card">
-                <div class="game-icon snake-icon">🐍</div>
-                <h2 class="game-title">贪吃蛇</h2>
-                <p class="game-subtitle">Gluttonous Snake</p>
-            </a>
-
-            <!-- 射击游戏卡片 -->
-            <a href="ShootingGame.html" class="game-card">
-                <div class="game-icon shooting-icon">🎯</div>
-                <h2 class="game-title">射击游戏</h2>
-                <p class="game-subtitle">Shooting Game</p>
-            </a>
-
-            <!-- 打砖块游戏卡片 -->
-            <a href="BreakoutGame.html" class="game-card">
-                <div class="game-icon">🧱</div>
-                <h2 class="game-title">打砖块游戏</h2>
-                <p class="game-subtitle">Breakout Game</p>
-            </a>
-
-            <!-- 足球大战游戏卡片 -->
-            <a href="FootballGame.html" class="game-card">
-                <div class="game-icon">⚽</div>
-                <h2 class="game-title">足球大战</h2>
-                <p class="game-subtitle">Soccer Battle</p>
-            </a>
-
-
+        
+        <button class="reset-btn" id="resetBtn">🔄 重新验证 / Reset</button>
+    </div>
 
     <script>
-        // 生成星空粒子
-        function createStars() {
-            const starsContainer = document.getElementById('stars');
-            const starCount = 100;
-
-            for (let i = 0; i < starCount; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                star.style.left = Math.random() * 100 + '%';
-                star.style.top = Math.random() * 100 + '%';
-                star.style.animationDelay = Math.random() * 3 + 's';
-                star.style.animationDuration = (Math.random() * 3 + 2) + 's';
-                starsContainer.appendChild(star);
+        document.addEventListener('DOMContentLoaded', function() {
+            const sliderHandle = document.getElementById('sliderHandle');
+            const sliderTrack = document.getElementById('sliderTrack');
+            const sliderText = document.getElementById('sliderText');
+            const sliderCaptcha = document.querySelector('.slider-captcha');
+            const successMessage = document.getElementById('successMessage');
+            const resetBtn = document.getElementById('resetBtn');
+            const particlesContainer = document.getElementById('particles');
+            
+            let isDragging = false;
+            let startX;
+            let sliderStartX;
+            let success = false;
+            
+            // 创建背景粒子效果
+            function createParticles() {
+                const particleCount = 30;
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div');
+                    particle.classList.add('particle');
+                    
+                    // 随机位置
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.top = Math.random() * 100 + '%';
+                    
+                    // 随机动画延迟和持续时间
+                    particle.style.animationDelay = Math.random() * 6 + 's';
+                    particle.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                    
+                    particlesContainer.appendChild(particle);
+                }
             }
-        }
-
-        // 页面加载完成后隐藏加载动画
-        window.addEventListener('load', function() {
-            createStars();
-            setTimeout(function() {
-                const loadingOverlay = document.getElementById('loadingOverlay');
-                loadingOverlay.style.opacity = '0';
+            
+            // 初始化粒子效果
+            createParticles();
+            
+            // 鼠标按下事件
+            sliderHandle.addEventListener('mousedown', function(e) {
+                if (success) return; // 如果已成功则不允许再操作
+                
+                isDragging = true;
+                sliderHandle.classList.add('dragging');
+                
+                startX = e.clientX;
+                sliderStartX = parseFloat(sliderHandle.style.left) || 0;
+                
+                e.preventDefault();
+            });
+            
+            // 触摸开始事件（移动端支持）
+            sliderHandle.addEventListener('touchstart', function(e) {
+                if (success) return; // 如果已成功则不允许再操作
+                
+                isDragging = true;
+                sliderHandle.classList.add('dragging');
+                
+                const touch = e.touches[0];
+                startX = touch.clientX;
+                sliderStartX = parseFloat(sliderHandle.style.left) || 0;
+                
+                e.preventDefault();
+            });
+            
+            // 鼠标移动事件
+            document.addEventListener('mousemove', function(e) {
+                if (!isDragging) return;
+                
+                const containerRect = sliderCaptcha.getBoundingClientRect();
+                const containerWidth = containerRect.width - sliderHandle.offsetWidth;
+                
+                // 计算新位置
+                let newX = sliderStartX + (e.clientX - startX);
+                
+                // 限制在滑块轨道范围内
+                newX = Math.max(0, Math.min(newX, containerWidth));
+                
+                // 更新滑块位置
+                sliderHandle.style.left = newX + 'px';
+                
+                // 更新进度条
+                const progress = (newX / containerWidth) * 100;
+                sliderTrack.style.width = progress + '%';
+                
+                // 更新文本
+                if (progress < 90) {
+                    sliderText.textContent = `拖动滑块验证 / Slide to verify (${Math.round(progress)}%)`;
+                }
+                
+                // 检查是否完成验证
+                if (progress >= 95 && !success) {
+                    verifySuccess();
+                }
+            });
+            
+            // 触摸移动事件（移动端支持）
+            document.addEventListener('touchmove', function(e) {
+                if (!isDragging) return;
+                
+                const touch = e.touches[0];
+                const containerRect = sliderCaptcha.getBoundingClientRect();
+                const containerWidth = containerRect.width - sliderHandle.offsetWidth;
+                
+                // 计算新位置
+                let newX = sliderStartX + (touch.clientX - startX);
+                
+                // 限制在滑块轨道范围内
+                newX = Math.max(0, Math.min(newX, containerWidth));
+                
+                // 更新滑块位置
+                sliderHandle.style.left = newX + 'px';
+                
+                // 更新进度条
+                const progress = (newX / containerWidth) * 100;
+                sliderTrack.style.width = progress + '%';
+                
+                // 更新文本
+                if (progress < 90) {
+                    sliderText.textContent = `拖动滑块验证 / Slide to verify (${Math.round(progress)}%)`;
+                }
+                
+                // 检查是否完成验证
+                if (progress >= 95 && !success) {
+                    verifySuccess();
+                }
+                
+                e.preventDefault(); // 防止页面滚动
+            });
+            
+            // 鼠标释放事件
+            document.addEventListener('mouseup', function() {
+                if (!isDragging) return;
+                
+                isDragging = false;
+                sliderHandle.classList.remove('dragging');
+                
+                // 如果没有达到验证要求，重置位置
+                if (!success) {
+                    const containerRect = sliderCaptcha.getBoundingClientRect();
+                    const containerWidth = containerRect.width - sliderHandle.offsetWidth;
+                    const progress = (parseFloat(sliderHandle.style.left) || 0) / containerWidth * 100;
+                    
+                    if (progress < 95) {
+                        resetSlider();
+                    }
+                }
+            });
+            
+            // 触摸结束事件
+            document.addEventListener('touchend', function() {
+                if (!isDragging) return;
+                
+                isDragging = false;
+                sliderHandle.classList.remove('dragging');
+                
+                // 如果没有达到验证要求，重置位置
+                if (!success) {
+                    const containerRect = sliderCaptcha.getBoundingClientRect();
+                    const containerWidth = containerRect.width - sliderHandle.offsetWidth;
+                    const progress = (parseFloat(sliderHandle.style.left) || 0) / containerWidth * 100;
+                    
+                    if (progress < 95) {
+                        resetSlider();
+                    }
+                }
+            });
+            
+            // 验证成功
+            function verifySuccess() {
+                success = true;
+                sliderText.textContent = '验证成功！Verification successful!';
+                successMessage.style.display = 'block';
+                
+                // 播放成功音效（如果浏览器支持）
+                try {
+                    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    const oscillator = audioContext.createOscillator();
+                    const gainNode = audioContext.createGain();
+                    
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+                    
+                    oscillator.type = 'sine';
+                    oscillator.frequency.value = 800;
+                    gainNode.gain.value = 0.3;
+                    
+                    oscillator.start();
+                    setTimeout(() => {
+                        oscillator.stop();
+                    }, 500);
+                } catch (e) {
+                    console.log("Audio not supported");
+                }
+                
+                // 2秒后跳转到homepage.html
                 setTimeout(function() {
-                    loadingOverlay.style.display = 'none';
-                }, 500);
-            }, 1000);
+                    window.location.href = 'homepage.html';
+                }, 2000);
+            }
+            
+            // 重置滑块
+            function resetSlider() {
+                sliderHandle.style.left = '0px';
+                sliderTrack.style.width = '0%';
+                sliderText.textContent = '拖动滑块验证 / Slide to verify';
+                success = false;
+                successMessage.style.display = 'none';
+            }
+            
+            // 重置按钮事件
+            resetBtn.addEventListener('click', resetSlider);
+            
+            // 初始化滑块位置
+            sliderHandle.style.left = '0px';
         });
-        
-        // Toggle feedback panel
-        function toggleFeedback() {
-            const panel = document.querySelector('.feedback-panel');
-            panel.style.display = panel.style.display === 'none' || !panel.style.display ? 'block' : 'none';
-        }
     </script>
 </body>
 </html>
