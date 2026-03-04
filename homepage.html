@@ -23,13 +23,13 @@
             padding: 20px;
         }
         
-        .portfolio-container {
+        .home-container {
             background: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
-            padding: 50px;
+            padding: 60px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
             text-align: center;
-            max-width: 600px;
+            max-width: 700px;
             width: 100%;
             position: relative;
             z-index: 10;
@@ -38,7 +38,7 @@
         
         h1 {
             font-size: 2.5rem;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             color: #333;
             background: linear-gradient(45deg, #667eea, #764ba2);
             -webkit-background-clip: text;
@@ -46,32 +46,60 @@
             background-clip: text;
         }
         
-        .portfolio-description {
+        .subtitle {
             font-size: 1.2rem;
             margin-bottom: 40px;
             color: #555;
             line-height: 1.6;
         }
         
-        .portfolio-link {
-            display: inline-block;
-            padding: 15px 40px;
-            font-size: 1.2rem;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        .button-container {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
         }
         
-        .portfolio-link:hover {
+        .home-button {
+            padding: 20px 50px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .portfolio-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+        
+        .portfolio-btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 12px 25px rgba(102, 126, 234, 0.6);
         }
         
-        .portfolio-link:active {
+        .portfolio-btn:active {
+            transform: translateY(1px);
+        }
+        
+        .game-btn {
+            background: linear-gradient(45deg, #ffd700, #ffa500);
+            color: #8b0000;
+        }
+        
+        .game-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(255, 215, 0, 0.6);
+        }
+        
+        .game-btn:active {
             transform: translateY(1px);
         }
         
@@ -115,17 +143,19 @@
 <body>
     <div class="particles" id="particles"></div>
     
-    <div class="portfolio-container">
-        <h1>👋 欢迎访问我的作品集</h1>
-        <p class="portfolio-description">点击下方按钮前往我的作品集网站<br>Click the button below to visit my portfolio website</p>
+    <div class="home-container">
+        <h1>👋 欢迎来到ERROR游戏世界</h1>
+        <p class="subtitle">选择您想要的操作<br>Choose your desired action</p>
         
-        <a href="https://4dzsz9znww.coze.site/" class="portfolio-link" target="_blank">
-            🚀 访问作品集 / Visit Portfolio
-        </a>
-        
-        <p style="margin-top: 30px; color: #888; font-size: 0.9rem;">
-            即将跳转到游戏中心... / Redirecting to game center...
-        </p>
+        <div class="button-container">
+            <a href="https://4dzsz9znww.coze.site/" class="home-button portfolio-btn" target="_blank">
+                🚀 访问作品集 / Portfolio
+            </a>
+            
+            <a href="gamecenter.html" class="home-button game-btn">
+                🎮 开始玩游戏 / Play Games
+            </a>
+        </div>
     </div>
 
     <script>
@@ -149,10 +179,6 @@
             }
             
             createParticles();
-            
-            setTimeout(function() {
-                window.location.href = 'gamecenter.html';
-            }, 3000);
         });
     </script>
 </body>
