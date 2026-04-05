@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ERROR-CORE</title>
+    <title>联系我们 | ERROR-CORE</title>
     <style>
         * {
             margin: 0;
@@ -108,10 +108,6 @@
             .navbar {
                 padding: 15px 20px;
             }
-            
-            .slider-captcha-container {
-                padding: 30px 20px;
-            }
         }
         
         /* 主内容区域 */
@@ -123,8 +119,8 @@
             padding: 20px;
         }
         
-        /* 首页内容样式 */
-        .hero-section {
+        /* 联系页面样式 */
+        .contact-section {
             background: rgba(255, 255, 255, 0.95);
             border-radius: 15px;
             padding: 60px 40px;
@@ -137,7 +133,7 @@
             backdrop-filter: blur(10px);
         }
         
-        .hero-title {
+        .contact-title {
             font-size: 2.5rem;
             margin-bottom: 20px;
             color: #333;
@@ -147,15 +143,98 @@
             background-clip: text;
         }
         
-        .hero-subtitle {
+        .contact-subtitle {
             font-size: 1.2rem;
             margin-bottom: 40px;
             color: #555;
             line-height: 1.6;
         }
         
-        .cta-button {
-            padding: 15px 40px;
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+        
+        .contact-item.full-width {
+            width: 100%;
+            max-width: 600px;
+        }
+        
+        .contact-item {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .contact-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .contact-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .contact-item h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .contact-item p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .contact-form {
+            margin-top: 40px;
+            text-align: left;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: bold;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
             font-size: 1.1rem;
             background: linear-gradient(45deg, #667eea, #764ba2);
             color: white;
@@ -165,65 +244,25 @@
             transition: all 0.3s ease;
             box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
             font-weight: bold;
-            text-decoration: none;
-            display: inline-block;
-            margin: 10px;
         }
         
-        .cta-button:hover {
+        .submit-btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 12px 25px rgba(102, 126, 234, 0.6);
         }
         
-        .cta-button.secondary {
-            background: linear-gradient(45deg, #ff9a9e, #fecfef);
-            color: #333;
+        .contact-note {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
         
-        .features-section {
-            display: flex;
-            justify-content: center;
-            margin-top: 60px;
-        }
-        
-        .feature-card {
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-            max-width: 400px;
-            width: 100%;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-            background: rgba(255, 255, 255, 0.95);
-        }
-        
-        .feature-icon {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .feature-title {
-            font-size: 1.3rem;
-            margin-bottom: 15px;
-            color: #333;
-        }
-        
-        .feature-description {
+        .contact-note p {
             color: #666;
             line-height: 1.6;
+            text-align: center;
         }
         
         .particles {
@@ -268,8 +307,8 @@
     <nav class="navbar">
         <a href="index.html" class="navbar-logo">⚡ ERROR-CORE</a>
         <ul class="navbar-links">
-            <li><a href="index.html" class="active">首页</a></li>
-            <li><a href="contact.html">联系我们</a></li>
+            <li><a href="index.html">首页</a></li>
+            <li><a href="contact.html" class="active">联系我们</a></li>
         </ul>
         <div class="navbar-toggle">☰</div>
     </nav>
@@ -277,16 +316,20 @@
     <div class="particles" id="particles"></div>
     
     <div class="main-content">
-        <div class="hero-section">
-            <h1 class="hero-title">⚡ ERROR-CORE</h1>
-            <p class="hero-subtitle">欢迎来到ERROR-CORE！这里有各种有趣的小游戏，让你在闲暇时光享受乐趣。</p>
+        <div class="contact-section">
+            <h1 class="contact-title">📧 联系我们</h1>
+            <p class="contact-subtitle">如果您有任何问题或建议，欢迎随时联系我们，我们会尽快回复您。</p>
             
-            <div class="features-section">
-                <a href="gamecenter.html" class="feature-card">
-                    <div class="feature-icon">🎮🎯</div>
-                    <h3 class="feature-title">游戏中心</h3>
-                    <p class="feature-description">浏览和玩各种有趣的小游戏，包括益智、休闲、动作等多种类型。</p>
-                </a>
+            <div class="contact-info">
+                <div class="contact-item full-width">
+                    <div class="contact-icon">✉️</div>
+                    <h3>邮箱</h3>
+                    <p>error-core@163.com</p>
+                </div>
+            </div>
+            
+            <div class="contact-note">
+                <p>请通过邮箱联系我们，我们会尽快回复您的咨询。</p>
             </div>
         </div>
     </div>
