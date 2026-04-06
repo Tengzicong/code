@@ -322,10 +322,7 @@
         </div>
     </div>
     
-    <!-- 加载动画 -->
-    <div class="loading-overlay" id="loadingOverlay">
-        <div class="loading-spinner"></div>
-    </div>
+
 
     <!-- 星空粒子 -->
     <div class="stars" id="stars"></div>
@@ -387,16 +384,9 @@
             }
         }
 
-        // 页面加载完成后隐藏加载动画
+        // 页面加载完成后生成星空粒子
         window.addEventListener('load', function() {
             createStars();
-            setTimeout(function() {
-                const loadingOverlay = document.getElementById('loadingOverlay');
-                loadingOverlay.style.opacity = '0';
-                setTimeout(function() {
-                    loadingOverlay.style.display = 'none';
-                }, 500);
-            }, 1000);
         });
         
         // Toggle feedback panel
