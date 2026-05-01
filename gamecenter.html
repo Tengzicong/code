@@ -15,14 +15,14 @@
             align-items: center;
             z-index: 1000;
         }
-        
+
         .toolbar-container {
             position: fixed;
             top: 20px;
             right: 20px;
             z-index: 1000;
         }
-        
+
         .error-logo {
             width: 80px;
             height: 80px;
@@ -30,7 +30,7 @@
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
             margin-right: 10px;
         }
-        
+
         .toolbar {
             position: relative;
             width: 40px;
@@ -46,27 +46,27 @@
             align-items: center;
             justify-content: center;
         }
-        
+
         .toolbar:hover {
-            width: 200px;
+            width: 220px;
             height: auto;
             border-radius: 15px;
             padding: 15px;
             box-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
         }
-        
+
         .toolbar-icon {
             color: #ffd700;
             font-size: 1.5rem;
             transition: all 0.4s ease;
             z-index: 3;
         }
-        
+
         .toolbar:hover .toolbar-icon {
             opacity: 0;
             transform: scale(0.5);
         }
-        
+
         .toolbar-content {
             display: none;
             flex-direction: column;
@@ -76,55 +76,48 @@
             transform: translateX(20px);
             transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        
+
         .toolbar:hover .toolbar-content {
             display: flex;
             opacity: 1;
             transform: translateX(0);
         }
-        
-        .toolbar-item, .social-item {
+
+        .toolbar-item {
             opacity: 0;
             transform: translateX(10px);
             transition: all 0.3s ease;
         }
-        
-        .toolbar:hover .toolbar-item, 
+
+        .toolbar:hover .toolbar-item,
         .toolbar:hover .social-item {
             opacity: 1;
             transform: translateX(0);
         }
-        
-        .toolbar-item:nth-child(1), .social-item:nth-child(1) {
-            transition-delay: 0.1s;
-        }
-        
-        .toolbar-item:nth-child(2), .social-item:nth-child(2) {
-            transition-delay: 0.2s;
-        }
-        
-        .toolbar-item:nth-child(3), .social-item:nth-child(3) {
-            transition-delay: 0.3s;
-        }
-        
+
+        .toolbar-item:nth-child(1) { transition-delay: 0.1s; }
+        .toolbar-item:nth-child(2) { transition-delay: 0.15s; }
+        .toolbar-item:nth-child(3) { transition-delay: 0.2s; }
+        .toolbar-item:nth-child(4) { transition-delay: 0.25s; }
+
         .expanded-toolbar-icon {
             color: #ffd700;
             font-size: 1.5rem;
             transition: transform 0.8s linear;
-            align-self: flex-end; /* 将图标放在右侧 */
+            align-self: flex-end;
             margin-top: 5px;
         }
-        
+
         .toolbar:hover .expanded-toolbar-icon {
             animation: rotate360 0.8s linear;
         }
-        
+
         @keyframes rotate360 {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
-        
-        .toolbar-item {
+
+        .toolbar-item, .social-item {
             display: flex;
             align-items: center;
             gap: 8px;
@@ -143,8 +136,8 @@
             position: relative;
             overflow: hidden;
         }
-        
-        .toolbar-item::before {
+
+        .toolbar-item::before, .social-item::before {
             content: '';
             position: absolute;
             top: 0;
@@ -154,166 +147,48 @@
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
             transition: 0.5s;
         }
-        
-        .toolbar-item:hover {
+
+        .toolbar-item:hover, .social-item:hover {
             transform: translateY(-3px) scale(1.05);
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
         }
-        
-        .toolbar-item:hover::before {
+
+        .toolbar-item:hover::before, .social-item:hover::before {
             left: 100%;
         }
-        
-        .toolbar-item:active {
+
+        .toolbar-item:active, .social-item:active {
             transform: translateY(1px) scale(0.98);
         }
-        
-        .social-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            width: 100%;
-            background: white;
-            color: #333;
-            border: none;
-            border-radius: 5px;
-            padding: 8px 15px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            font-size: 0.9rem;
-            min-width: 150px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            text-decoration: none;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .social-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            transition: 0.5s;
-        }
-        
-        .social-item:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
-        }
-        
-        .social-item:hover::before {
-            left: 100%;
-        }
-        
-        .social-item:active {
-            transform: translateY(1px) scale(0.98);
-        }
-        
-        .social-item.douyin {
-            background: linear-gradient(135deg, #fb5b3e, #ff0050);
-            color: white;
-        }
-        
+
         .social-icon-small {
             width: 20px;
             height: 20px;
         }
-        
-        /* 社交媒体链接样式 */
-        .social-links {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            display: flex;
-            gap: 15px;
-            z-index: 1000;
-        }
-
-        .social-link {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            color: white;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-        }
-
-        .social-link.bilibili {
-            background: white;
-        }
-
-        .social-link.douyin {
-            background: linear-gradient(135deg, #fb5b3e, #ff0050);
-        }
-        
-        .social-icon {
-            width: 60%;
-            height: 60%;
-            transition: all 0.3s ease;
-        }
-        
-        .social-link.douyin .social-icon {
-            filter: invert(1); /* 让SVG图标变为白色 */
-        }
-
-        .social-link:hover {
-            transform: scale(1.2) rotate(10deg);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-        }
-
-        .social-link:hover .social-icon {
-            transform: scale(1.1);
-        }
-        
-        @media (max-width: 480px) {
-            .social-links {
-                bottom: 15px;
-                right: 15px;
-            }
-            
-            .social-link {
-                width: 45px;
-                height: 45px;
-            }
-            
-            .social-icon {
-                width: 60%;
-                height: 60%;
-            }
-        }
-        
-
     </style>
 </head>
 <body>
-    <!-- ERROR logo 圆形图片 -->
     <div class="logo-container">
         <img src="picture/error.png" alt="ERROR Logo" class="error-logo">
     </div>
-    
-    <!-- 右上角工具栏 -->
+
     <div class="toolbar-container">
         <div class="toolbar">
             <div class="toolbar-icon">⚙️</div>
             <div class="toolbar-content">
-                <a href="theme.html" class="toolbar-item">
-                    <span>🎨</span>
-                    <span>主题介绍<br>Theme</span>
+                <a href="index.html" class="toolbar-item">
+                    <span>🏠</span>
+                    <span>首页<br>Home</span>
                 </a>
-                <a href="https://space.bilibili.com/3546631121144154?spm_id_from=333.1007.0.0" class="social-item" target="_blank">
+                <a href="contact.html" class="toolbar-item">
+                    <span>📞</span>
+                    <span>联系我们<br>Contact</span>
+                </a>
+                <a href="https://space.bilibili.com/3546631121144154" class="social-item" target="_blank">
                     <img src="picture/bilibili.svg" alt="Bilibili" class="social-icon-small">
-                    <span>Bilibili<br>哔哩哔哩</span>
+                    <span>B站<br>Bilibili</span>
                 </a>
-                <a href="https://www.douyin.com/user/MS4wLjABAAAA0cxdKFB-D6ucvm2i3AE92bzBC-xSHgmW0ew1iwh0Isx-DwXKsMF499VcAle9571J?from_tab_name=main" class="social-item douyin" target="_blank">
+                <a href="https://www.douyin.com/user/MS4wLjABAAAA0cxdKFB-D6ucvm2i3AE92bzBC-xSHgmW0ew1iwh0Isx-DwXKsMF499VcAle9571J" class="social-item" target="_blank">
                     <img src="picture/douyin.svg" alt="抖音" class="social-icon-small">
                     <span>抖音<br>Douyin</span>
                 </a>
@@ -321,54 +196,43 @@
             </div>
         </div>
     </div>
-    
 
-
-    <!-- 星空粒子 -->
     <div class="stars" id="stars"></div>
 
-    <!-- 主容器 -->
     <div class="container">
-        <!-- 标题区域 -->
         <div class="header">
             <h1 class="main-title">ERROR小游戏<br>ERROR Games</h1>
             <p class="sub-title">您的游玩之地。<br>Your place of recreation.</p>
         </div>
 
-        <!-- 游戏卡片网格 -->
         <div class="game-grid">
-            <!-- 贪吃蛇游戏卡片 -->
-            <a href="Snake.html" class="game-card">
+            <a href="snake.html" class="game-card">
                 <div class="game-icon snake-icon">🐍</div>
                 <h2 class="game-title">贪吃蛇</h2>
                 <p class="game-subtitle">Gluttonous Snake</p>
             </a>
 
-            <!-- 射击游戏卡片 -->
             <a href="ShootingGame.html" class="game-card">
                 <div class="game-icon shooting-icon">🎯</div>
                 <h2 class="game-title">射击游戏</h2>
                 <p class="game-subtitle">Shooting Game</p>
             </a>
 
-            <!-- 打砖块游戏卡片 -->
             <a href="BreakoutGame.html" class="game-card">
                 <div class="game-icon">🧱</div>
                 <h2 class="game-title">打砖块游戏</h2>
                 <p class="game-subtitle">Breakout Game</p>
             </a>
 
-            <!-- 足球大战游戏卡片 -->
             <a href="FootballGame.html" class="game-card">
                 <div class="game-icon">⚽</div>
                 <h2 class="game-title">足球大战</h2>
                 <p class="game-subtitle">Soccer Battle</p>
             </a>
-
-
+        </div>
+    </div>
 
     <script>
-        // 生成星空粒子
         function createStars() {
             const starsContainer = document.getElementById('stars');
             const starCount = 100;
@@ -384,16 +248,9 @@
             }
         }
 
-        // 页面加载完成后生成星空粒子
         window.addEventListener('load', function() {
             createStars();
         });
-        
-        // Toggle feedback panel
-        function toggleFeedback() {
-            const panel = document.querySelector('.feedback-panel');
-            panel.style.display = panel.style.display === 'none' || !panel.style.display ? 'block' : 'none';
-        }
     </script>
 </body>
 </html>

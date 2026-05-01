@@ -14,14 +14,14 @@
             align-items: center;
             z-index: 1000;
         }
-        
+
         .toolbar-container {
             position: fixed;
             top: 20px;
             right: 20px;
             z-index: 1000;
         }
-        
+
         .error-logo {
             width: 80px;
             height: 80px;
@@ -29,7 +29,7 @@
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
             margin-right: 10px;
         }
-        
+
         .toolbar {
             position: relative;
             width: 40px;
@@ -45,27 +45,27 @@
             align-items: center;
             justify-content: center;
         }
-        
+
         .toolbar:hover {
-            width: 200px;
+            width: 220px;
             height: auto;
             border-radius: 15px;
             padding: 15px;
             box-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
         }
-        
+
         .toolbar-icon {
             color: #ffd700;
             font-size: 1.5rem;
             transition: all 0.4s ease;
             z-index: 3;
         }
-        
+
         .toolbar:hover .toolbar-icon {
             opacity: 0;
             transform: scale(0.5);
         }
-        
+
         .toolbar-content {
             display: none;
             flex-direction: column;
@@ -75,55 +75,48 @@
             transform: translateX(20px);
             transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        
+
         .toolbar:hover .toolbar-content {
             display: flex;
             opacity: 1;
             transform: translateX(0);
         }
-        
-        .toolbar-item, .social-item {
+
+        .toolbar-item {
             opacity: 0;
             transform: translateX(10px);
             transition: all 0.3s ease;
         }
-        
-        .toolbar:hover .toolbar-item, 
+
+        .toolbar:hover .toolbar-item,
         .toolbar:hover .social-item {
             opacity: 1;
             transform: translateX(0);
         }
-        
-        .toolbar-item:nth-child(1), .social-item:nth-child(1) {
-            transition-delay: 0.1s;
-        }
-        
-        .toolbar-item:nth-child(2), .social-item:nth-child(2) {
-            transition-delay: 0.2s;
-        }
-        
-        .toolbar-item:nth-child(3), .social-item:nth-child(3) {
-            transition-delay: 0.3s;
-        }
-        
+
+        .toolbar-item:nth-child(1) { transition-delay: 0.1s; }
+        .toolbar-item:nth-child(2) { transition-delay: 0.15s; }
+        .toolbar-item:nth-child(3) { transition-delay: 0.2s; }
+        .toolbar-item:nth-child(4) { transition-delay: 0.25s; }
+
         .expanded-toolbar-icon {
             color: #ffd700;
             font-size: 1.5rem;
             transition: transform 0.8s linear;
-            align-self: flex-end; /* 将图标放在右侧 */
+            align-self: flex-end;
             margin-top: 5px;
         }
-        
+
         .toolbar:hover .expanded-toolbar-icon {
             animation: rotate360 0.8s linear;
         }
-        
+
         @keyframes rotate360 {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
-        
-        .toolbar-item {
+
+        .toolbar-item, .social-item {
             display: flex;
             align-items: center;
             gap: 8px;
@@ -142,8 +135,8 @@
             position: relative;
             overflow: hidden;
         }
-        
-        .toolbar-item::before {
+
+        .toolbar-item::before, .social-item::before {
             content: '';
             position: absolute;
             top: 0;
@@ -153,246 +146,85 @@
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
             transition: 0.5s;
         }
-        
-        .toolbar-item:hover {
+
+        .toolbar-item:hover, .social-item:hover {
             transform: translateY(-3px) scale(1.05);
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
         }
-        
-        .toolbar-item:hover::before {
+
+        .toolbar-item:hover::before, .social-item:hover::before {
             left: 100%;
         }
-        
-        .toolbar-item:active {
+
+        .toolbar-item:active, .social-item:active {
             transform: translateY(1px) scale(0.98);
         }
-        
-        .social-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            width: 100%;
-            background: white;
-            color: #333;
-            border: none;
-            border-radius: 5px;
-            padding: 8px 15px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            font-size: 0.9rem;
-            min-width: 150px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            text-decoration: none;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .social-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            transition: 0.5s;
-        }
-        
-        .social-item:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
-        }
-        
-        .social-item:hover::before {
-            left: 100%;
-        }
-        
-        .social-item:active {
-            transform: translateY(1px) scale(0.98);
-        }
-        
-        .social-item.douyin {
-            background: linear-gradient(135deg, #fb5b3e, #ff0050);
-            color: white;
-        }
-        
+
         .social-icon-small {
             width: 20px;
             height: 20px;
         }
-        
-        /* 社交媒体链接样式 */
-        .social-links {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            display: flex;
-            gap: 15px;
-            z-index: 1000;
-        }
 
-        .social-link {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            color: white;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-        }
-
-        .social-link.bilibili {
-            background: white;
-        }
-
-        .social-link.douyin {
-            background: linear-gradient(135deg, #fb5b3e, #ff0050);
-        }
-        
-        .social-icon {
-            width: 60%;
-            height: 60%;
-            transition: all 0.3s ease;
-        }
-        
-        .social-link.douyin .social-icon {
-            filter: invert(1); /* 让SVG图标变为白色 */
-        }
-
-        .social-link:hover {
-            transform: scale(1.2) rotate(10deg);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-        }
-
-        .social-link:hover .social-icon {
-            transform: scale(1.1);
-        }
-        
-        @media (max-width: 480px) {
-            .social-links {
-                bottom: 15px;
-                right: 15px;
-            }
-            
-            .social-link {
-                width: 45px;
-                height: 45px;
-            }
-            
-            .social-icon {
-                width: 60%;
-                height: 60%;
-            }
-        }
-        
-        /* 联系页面样式 */
         .contact-section {
             background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 15px;
             padding: 40px;
-            text-align: center;
-            max-width: 600px;
             width: 100%;
-            position: relative;
-            overflow: hidden;
+            max-width: 800px;
             animation: fadeInUp 1s ease-out;
         }
-        
+
         .contact-title {
             font-size: 2.5rem;
             font-weight: 800;
             color: #fff;
             text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
-            margin-bottom: 10px;
+            margin-bottom: 40px;
+            text-align: center;
             animation: pulse 2s infinite;
         }
-        
-        .contact-subtitle {
-            font-size: 1.2rem;
-            color: rgba(51, 51, 51, 0.8);
-            font-weight: 300;
-            margin-bottom: 30px;
-        }
-        
-        .contact-info {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 30px;
-        }
-        
-        .contact-item.full-width {
-            width: 100%;
-            max-width: 400px;
-        }
-        
+
         .contact-item {
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 10px;
-            padding: 30px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-        
-        .contact-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-        }
-        
-        .contact-icon {
-            width: 60px;
-            height: 60px;
-            margin: 0 auto 15px;
-            border-radius: 50%;
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            background: linear-gradient(135deg, #ff9a00, #ff6a00, #ff9a00);
-            box-shadow: 0 8px 20px rgba(255, 154, 0, 0.4);
-        }
-        
-        .contact-item h3 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: #333;
-        }
-        
-        .contact-item p {
-            font-size: 1rem;
-            color: rgba(51, 51, 51, 0.8);
-            font-weight: 300;
-        }
-        
-        .contact-note {
-            margin-top: 30px;
-            padding: 20px;
+            gap: 20px;
+            padding: 25px;
             background: rgba(255, 255, 255, 0.8);
-            border-radius: 10px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
         }
-        
-        .contact-note p {
+
+        .contact-item:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .contact-icon {
+            font-size: 3rem;
+            animation: bounce 2s infinite;
+        }
+
+        .contact-item h3 {
+            color: #333;
+            margin: 0 0 5px 0;
+            font-size: 1.3rem;
+        }
+
+        .contact-item p {
             color: #666;
-            line-height: 1.6;
-            text-align: center;
+            margin: 0;
+            font-size: 1.2rem;
         }
     </style>
 </head>
 <body>
-    <!-- ERROR logo 圆形图片 -->
     <div class="logo-container">
         <img src="picture/error.png" alt="ERROR Logo" class="error-logo">
     </div>
-    
-    <!-- 右上角工具栏 -->
+
     <div class="toolbar-container">
         <div class="toolbar">
             <div class="toolbar-icon">⚙️</div>
@@ -405,11 +237,11 @@
                     <span>📞</span>
                     <span>联系我们<br>Contact</span>
                 </a>
-                <a href="https://space.bilibili.com/3546631121144154?spm_id_from=333.1007.0.0" class="social-item" target="_blank">
+                <a href="https://space.bilibili.com/3546631121144154" class="social-item" target="_blank">
                     <img src="picture/bilibili.svg" alt="Bilibili" class="social-icon-small">
-                    <span>Bilibili<br>哔哩哔哩</span>
+                    <span>B站<br>Bilibili</span>
                 </a>
-                <a href="https://www.douyin.com/user/MS4wLjABAAAA0cxdKFB-D6ucvm2i3AE92bzBC-xSHgmW0ew1iwh0Isx-DwXKsMF499VcAle9571J?from_tab_name=main" class="social-item douyin" target="_blank">
+                <a href="https://www.douyin.com/user/MS4wLjABAAAA0cxdKFB-D6ucvm2i3AE92bzBC-xSHgmW0ew1iwh0Isx-DwXKsMF499VcAle9571J" class="social-item" target="_blank">
                     <img src="picture/douyin.svg" alt="抖音" class="social-icon-small">
                     <span>抖音<br>Douyin</span>
                 </a>
@@ -417,46 +249,24 @@
             </div>
         </div>
     </div>
-    
-    <!-- 加载动画 -->
-    <div class="loading-overlay" id="loadingOverlay">
-        <div class="loading-spinner"></div>
-    </div>
 
-    <!-- 星空粒子 -->
     <div class="stars" id="stars"></div>
-    
+
     <div class="container">
         <div class="contact-section">
             <h1 class="contact-title">📧 联系我们<br>Contact Us</h1>
-            <p class="contact-subtitle">如果您有任何问题或建议，欢迎随时联系我们，我们会尽快回复您。<br>If you have any questions or suggestions, please feel free to contact us, we will reply to you as soon as possible.</p>
-            
-            <div class="contact-info">
-                <div class="contact-item full-width">
-                    <div class="contact-icon">✉️</div>
+
+            <div class="contact-item">
+                <div class="contact-icon">✉️</div>
+                <div>
                     <h3>邮箱</h3>
                     <p>error-core@163.com</p>
                 </div>
             </div>
-            
-            <div class="contact-note">
-                <p>请通过邮箱联系我们，我们会尽快回复您的咨询。</p>
-            </div>
         </div>
-    </div>
-    
-    <!-- 社交媒体链接 -->
-    <div class="social-links">
-        <a href="https://space.bilibili.com/3546631121144154?spm_id_from=333.1007.0.0" class="social-link bilibili" target="_blank">
-            <img src="picture/bilibili.svg" alt="Bilibili" class="social-icon">
-        </a>
-        <a href="https://www.douyin.com/user/MS4wLjABAAAA0cxdKFB-D6ucvm2i3AE92bzBC-xSHgmW0ew1iwh0Isx-DwXKsMF499VcAle9571J?from_tab_name=main" class="social-link douyin" target="_blank">
-            <img src="picture/douyin.svg" alt="抖音" class="social-icon">
-        </a>
     </div>
 
     <script>
-        // 生成星空粒子
         function createStars() {
             const starsContainer = document.getElementById('stars');
             const starCount = 100;
@@ -472,16 +282,8 @@
             }
         }
 
-        // 页面加载完成后隐藏加载动画
         window.addEventListener('load', function() {
             createStars();
-            setTimeout(function() {
-                const loadingOverlay = document.getElementById('loadingOverlay');
-                loadingOverlay.style.opacity = '0';
-                setTimeout(function() {
-                    loadingOverlay.style.display = 'none';
-                }, 500);
-            }, 1000);
         });
     </script>
 </body>

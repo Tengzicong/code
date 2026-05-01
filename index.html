@@ -4,326 +4,238 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ERROR-CORE</title>
+    <link rel="stylesheet" href="style.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            font-family: 'Arial', sans-serif;
-            overflow: hidden;
-            padding: 0;
-        }
-        
-        /* 导航栏样式 */
-        .navbar {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 100;
-        }
-        
-        .navbar-logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-decoration: none;
+        .logo-container {
+            position: fixed;
+            top: 20px;
+            left: 20px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            z-index: 1000;
         }
-        
-        .navbar-links {
-            display: flex;
-            gap: 25px;
-            list-style: none;
+
+        .toolbar-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
         }
-        
-        .navbar-links a {
-            color: #333;
-            text-decoration: none;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            padding: 8px 16px;
-            border-radius: 20px;
+
+        .error-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            margin-right: 10px;
         }
-        
-        .navbar-links a:hover {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-        }
-        
-        .navbar-links a.active {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
-        }
-        
-        .navbar-toggle {
-            display: none;
-            cursor: pointer;
-            font-size: 1.5rem;
-            color: #333;
-        }
-        
-        /* 响应式设计 */
-        @media (max-width: 768px) {
-            .navbar-links {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background: rgba(255, 255, 255, 0.95);
-                backdrop-filter: blur(10px);
-                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-                padding: 20px;
-                gap: 15px;
-                z-index: 99;
-            }
-            
-            .navbar-links.show {
-                display: flex;
-            }
-            
-            .navbar-toggle {
-                display: block;
-            }
-            
-            .navbar {
-                padding: 15px 20px;
-            }
-            
-            .slider-captcha-container {
-                padding: 30px 20px;
-            }
-        }
-        
-        /* 主内容区域 */
-        .main-content {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        
-        /* 首页内容样式 */
-        .hero-section {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            padding: 60px 40px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            max-width: 800px;
-            width: 100%;
+
+        .toolbar {
             position: relative;
-            z-index: 10;
-            backdrop-filter: blur(10px);
-        }
-        
-        .hero-title {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            color: #333;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .hero-subtitle {
-            font-size: 1.2rem;
-            margin-bottom: 40px;
-            color: #555;
-            line-height: 1.6;
-        }
-        
-        .cta-button {
-            padding: 15px 40px;
-            font-size: 1.1rem;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
-            border: none;
-            border-radius: 50px;
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 0, 0, 0.85);
+            border-radius: 50%;
+            border: 2px solid #ffd700;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
-            font-weight: bold;
-            text-decoration: none;
-            display: inline-block;
-            margin: 10px;
-        }
-        
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(102, 126, 234, 0.6);
-        }
-        
-        .cta-button.secondary {
-            background: linear-gradient(45deg, #ff9a9e, #fecfef);
-            color: #333;
-        }
-        
-        .features-section {
+            transition: all 0.4s ease;
+            overflow: hidden;
             display: flex;
+            align-items: center;
             justify-content: center;
-            margin-top: 60px;
         }
-        
-        .feature-card {
-            background: rgba(255, 255, 255, 0.9);
+
+        .toolbar:hover {
+            width: 220px;
+            height: auto;
             border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(10px);
+            padding: 15px;
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
+        }
+
+        .toolbar-icon {
+            color: #ffd700;
+            font-size: 1.5rem;
+            transition: all 0.4s ease;
+            z-index: 3;
+        }
+
+        .toolbar:hover .toolbar-icon {
+            opacity: 0;
+            transform: scale(0.5);
+        }
+
+        .toolbar-content {
+            display: none;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 8px;
+            opacity: 0;
+            transform: translateX(20px);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .toolbar:hover .toolbar-content {
+            display: flex;
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .toolbar-item {
+            opacity: 0;
+            transform: translateX(10px);
             transition: all 0.3s ease;
+        }
+
+        .toolbar:hover .toolbar-item,
+        .toolbar:hover .social-item {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .toolbar-item:nth-child(1) { transition-delay: 0.1s; }
+        .toolbar-item:nth-child(2) { transition-delay: 0.15s; }
+        .toolbar-item:nth-child(3) { transition-delay: 0.2s; }
+        .toolbar-item:nth-child(4) { transition-delay: 0.25s; }
+
+        .expanded-toolbar-icon {
+            color: #ffd700;
+            font-size: 1.5rem;
+            transition: transform 0.8s linear;
+            align-self: flex-end;
+            margin-top: 5px;
+        }
+
+        .toolbar:hover .expanded-toolbar-icon {
+            animation: rotate360 0.8s linear;
+        }
+
+        @keyframes rotate360 {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .toolbar-item, .social-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 215, 0, 0.9);
+            color: #8b0000;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            font-size: 0.9rem;
+            min-width: 150px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             text-decoration: none;
-            color: inherit;
-            display: block;
-            max-width: 400px;
-            width: 100%;
+            position: relative;
+            overflow: hidden;
         }
-        
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-            background: rgba(255, 255, 255, 0.95);
-        }
-        
-        .feature-icon {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .feature-title {
-            font-size: 1.3rem;
-            margin-bottom: 15px;
-            color: #333;
-        }
-        
-        .feature-description {
-            color: #666;
-            line-height: 1.6;
-        }
-        
-        .particles {
+
+        .toolbar-item::before, .social-item::before {
+            content: '';
             position: absolute;
             top: 0;
-            left: 0;
+            left: -100%;
             width: 100%;
             height: 100%;
-            z-index: 1;
-            pointer-events: none;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: 0.5s;
         }
-        
-        .particle {
-            position: absolute;
-            width: 3px;
-            height: 3px;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 50%;
-            animation: float 6s infinite linear;
+
+        .toolbar-item:hover, .social-item:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
         }
-        
-        @keyframes float {
-            0% {
-                transform: translateY(0) translateX(0);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100vh) translateX(100px);
-                opacity: 0;
-            }
+
+        .toolbar-item:hover::before, .social-item:hover::before {
+            left: 100%;
+        }
+
+        .toolbar-item:active, .social-item:active {
+            transform: translateY(1px) scale(0.98);
+        }
+
+        .social-icon-small {
+            width: 20px;
+            height: 20px;
         }
     </style>
 </head>
 <body>
-    <!-- 导航栏 -->
-    <nav class="navbar">
-        <a href="index.html" class="navbar-logo">⚡ ERROR-CORE</a>
-        <ul class="navbar-links">
-            <li><a href="index.html" class="active">首页</a></li>
-            <li><a href="contact.html">联系我们</a></li>
-        </ul>
-        <div class="navbar-toggle">☰</div>
-    </nav>
-    
-    <div class="particles" id="particles"></div>
-    
-    <div class="main-content">
-        <div class="hero-section">
-            <h1 class="hero-title">⚡ ERROR-CORE</h1>
-            <p class="hero-subtitle">欢迎来到ERROR-CORE！这里有各种有趣的小游戏，让你在闲暇时光享受乐趣。</p>
-            
-            <div class="features-section">
-                <a href="gamecenter.html" class="feature-card">
-                    <div class="feature-icon">🎮🎯</div>
-                    <h3 class="feature-title">游戏中心</h3>
-                    <p class="feature-description">浏览和玩各种有趣的小游戏，包括益智、休闲、动作等多种类型。</p>
+    <div class="logo-container">
+        <img src="picture/error.png" alt="ERROR Logo" class="error-logo">
+    </div>
+
+    <div class="toolbar-container">
+        <div class="toolbar">
+            <div class="toolbar-icon">⚙️</div>
+            <div class="toolbar-content">
+                <a href="index.html" class="toolbar-item">
+                    <span>🏠</span>
+                    <span>首页<br>Home</span>
                 </a>
+                <a href="contact.html" class="toolbar-item">
+                    <span>📞</span>
+                    <span>联系我们<br>Contact</span>
+                </a>
+                <a href="https://space.bilibili.com/3546631121144154" class="social-item" target="_blank">
+                    <img src="picture/bilibili.svg" alt="Bilibili" class="social-icon-small">
+                    <span>B站<br>Bilibili</span>
+                </a>
+                <a href="https://www.douyin.com/user/MS4wLjABAAAA0cxdKFB-D6ucvm2i3AE92bzBC-xSHgmW0ew1iwh0Isx-DwXKsMF499VcAle9571J" class="social-item" target="_blank">
+                    <img src="picture/douyin.svg" alt="抖音" class="social-icon-small">
+                    <span>抖音<br>Douyin</span>
+                </a>
+                <div class="expanded-toolbar-icon">⚙️</div>
             </div>
         </div>
     </div>
 
+    <div class="stars" id="stars"></div>
+
+    <div class="container">
+        <div class="header">
+            <h1 class="main-title">ERROR-CORE小游戏<br>ERROR-CORE Mini-Games</h1>
+            <p class="sub-title">欢迎来到ERROR-CORE！这里有各种有趣的小游戏，让你在闲暇时光享受乐趣。<br>Welcome to ERROR-CORE! Here are various interesting mini-games to enjoy your leisure time.</p>
+        </div>
+
+        <div class="features-section">
+            <a href="gamecenter.html" class="feature-card">
+                <div class="feature-icon">🎮🎯</div>
+                <h2 class="feature-title">游戏中心</h2>
+                <p class="feature-subtitle">Game Center</p>
+            </a>
+            <a href="drawing.html" class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h2 class="feature-title">画板</h2>
+                <p class="feature-subtitle">Drawing Board</p>
+            </a>
+        </div>
+    </div>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // 导航栏响应式处理
-            const navbarToggle = document.querySelector('.navbar-toggle');
-            const navbarLinks = document.querySelector('.navbar-links');
-            
-            navbarToggle.addEventListener('click', function() {
-                navbarLinks.classList.toggle('show');
-            });
-            
-            // 创建背景粒子效果
-            const particlesContainer = document.getElementById('particles');
-            
-            function createParticles() {
-                const particleCount = 30;
-                for (let i = 0; i < particleCount; i++) {
-                    const particle = document.createElement('div');
-                    particle.classList.add('particle');
-                    
-                    // 随机位置
-                    particle.style.left = Math.random() * 100 + '%';
-                    particle.style.top = Math.random() * 100 + '%';
-                    
-                    // 随机动画延迟和持续时间
-                    particle.style.animationDelay = Math.random() * 6 + 's';
-                    particle.style.animationDuration = (Math.random() * 3 + 4) + 's';
-                    
-                    particlesContainer.appendChild(particle);
-                }
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starCount = 100;
+
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                starsContainer.appendChild(star);
             }
-            
-            // 初始化粒子效果
-            createParticles();
+        }
+
+        window.addEventListener('load', function() {
+            createStars();
         });
     </script>
 </body>
