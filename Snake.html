@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ERROR-CORE小游戏 - 贪吃蛇 | ERROR-CORE Games - Snake</title>
+    <title>ERROR-CORE 小游戏 - 贪吃蛇 | ERROR-CORE Games - Snake</title>
     <link rel="stylesheet" href="style.css">
+    <script src="js/device-detect.js" defer></script>
+    <script src="js/touch-controls.js" defer></script>
     <style>
 
         body {
@@ -62,14 +64,43 @@
         }
         @media (max-width: 768px) {
             .score-panel {
-                width: 300px;
+                width: 90%;
+                max-width: 350px;
+                font-size: 0.9rem;
             }
+            
+            .score-panel div {
+                padding: 6px 10px;
+                font-size: 0.85rem;
+            }
+            
             .controls {
                 display: grid;
                 grid-template-columns: repeat(3, 1fr);
+                grid-template-rows: repeat(2, 1fr);
+                gap: 10px;
+                margin-top: 15px;
             }
+            
+            .controls button {
+                width: 55px;
+                height: 55px;
+                font-size: 1.5rem;
+                background: rgba(255, 255, 255, 0.2);
+                border: 2px solid rgba(255, 255, 255, 0.5);
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+                cursor: pointer;
+                touch-action: manipulation;
+            }
+            
+            .controls button:active {
+                background: rgba(255, 255, 255, 0.4);
+                transform: scale(0.95);
+            }
+            
             .controls button:nth-child(1) {
                 grid-column: 2;
+                grid-row: 1;
             }
             .controls button:nth-child(2) {
                 grid-column: 1;
@@ -84,7 +115,37 @@
                 grid-row: 2;
             }
             
-            /* 移动端社交媒体链接样式 */
+            /* 游戏标题适配 */
+            h1 {
+                font-size: 1.3rem;
+                padding: 0 10px;
+                text-align: center;
+            }
+            
+            /* 开始屏幕适配 */
+            .start-screen {
+                padding: 20px;
+                text-align: center;
+            }
+            
+            .start-screen p {
+                font-size: 0.85rem;
+                margin: 10px 0;
+            }
+            
+            .start-screen button {
+                padding: 12px 25px;
+                font-size: 1rem;
+                margin-top: 10px;
+            }
+            
+            /* 画布适配 */
+            canvas {
+                max-width: 100%;
+                height: auto;
+            }
+            
+            /* 社交媒体链接适配 */
             .social-links {
                 bottom: 15px;
                 right: 15px;
@@ -235,11 +296,36 @@
         </div>
     </div>
     <div class="controls">
-        <button onclick="changeDirection('up')">&#8593;</button>
-        <button onclick="changeDirection('left')">&#8592;</button>
-        <button onclick="changeDirection('down')">&#8595;</button>
-        <button onclick="changeDirection('right')">&#8594;</button>
+        <button id="btn-up" onclick="changeDirection('up')">&#8593;</button>
+        <button id="btn-left" onclick="changeDirection('left')">&#8592;</button>
+        <button id="btn-down" onclick="changeDirection('down')">&#8595;</button>
+        <button id="btn-right" onclick="changeDirection('right')">&#8594;</button>
     </div>
+    
+    <script>
+        // 移动端按钮长按连续触发
+        window.addEventListener('load', function() {
+            const device = detectDevice();
+            if (device.isMobile) {
+                // 绑定方向按钮
+                touchControls.bindHoldButton('btn-up', function() {
+                    changeDirection('up');
+                }, 150);
+                
+                touchControls.bindHoldButton('btn-left', function() {
+                    changeDirection('left');
+                }, 150);
+                
+                touchControls.bindHoldButton('btn-down', function() {
+                    changeDirection('down');
+                }, 150);
+                
+                touchControls.bindHoldButton('btn-right', function() {
+                    changeDirection('right');
+                }, 150);
+            }
+        });
+    </script>
     
    
     

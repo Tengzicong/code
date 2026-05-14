@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ERROR-CORE小游戏 - 足球大战 | ERROR-CORE Games - Soccer</title>
+    <title>ERROR-CORE 小游戏 - 足球射门 | ERROR-CORE Games - Football</title>
     <link rel="stylesheet" href="style.css">
+    <script src="js/device-detect.js" defer></script>
+    <script src="js/touch-controls.js" defer></script>
     <style>
         .error-logo {
             position: fixed;
@@ -81,26 +83,89 @@
         }
         @media (max-width: 768px) {
             .score-panel {
-                width: 300px;
+                width: 90%;
+                max-width: 350px;
+                font-size: 0.9rem;
             }
+            
+            .score-panel div {
+                padding: 6px 10px;
+                font-size: 0.85rem;
+            }
+            
             .controls {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+                margin-top: 15px;
             }
-            .controls button:nth-child(1) {
-                grid-column: 2;
+            
+            .controls button {
+                width: 55px;
+                height: 55px;
+                font-size: 1.5rem;
+                background: rgba(255, 255, 255, 0.2);
+                border: 2px solid rgba(255, 255, 255, 0.5);
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+                cursor: pointer;
+                touch-action: manipulation;
             }
-            .controls button:nth-child(2) {
-                grid-column: 1;
-                grid-row: 2;
+            
+            .controls button:active {
+                background: rgba(255, 255, 255, 0.4);
+                transform: scale(0.95);
             }
-            .controls button:nth-child(3) {
-                grid-column: 2;
-                grid-row: 2;
+            
+            /* 游戏标题适配 */
+            h1 {
+                font-size: 1.3rem;
+                padding: 0 10px;
+                text-align: center;
             }
-            .controls button:nth-child(4) {
-                grid-column: 3;
-                grid-row: 2;
+            
+            /* 开始屏幕适配 */
+            .start-screen {
+                padding: 15px;
+                text-align: center;
+                max-width: 100%;
+                overflow-x: hidden;
+            }
+            
+            .start-screen h1 {
+                font-size: 1.3rem;
+                padding: 0 10px;
+                margin-bottom: 15px;
+                word-wrap: break-word;
+                white-space: normal;
+            }
+            
+            .start-screen p {
+                font-size: 0.75rem;
+                margin: 8px 0;
+                padding: 0 5px;
+                word-wrap: break-word;
+                white-space: normal;
+                line-height: 1.4;
+            }
+            
+            .start-screen button {
+                padding: 12px 25px;
+                font-size: 0.9rem;
+                margin-top: 15px;
+                max-width: 100%;
+            }
+            
+            #game-mode-desc {
+                max-width: 100%;
+                overflow-wrap: break-word;
+                word-break: break-word;
+            }
+            
+            /* 画布适配 */
+            canvas {
+                max-width: 100%;
+                height: auto;
             }
         }
         .game-over {
@@ -335,9 +400,42 @@
         </div>
         <div class="start-screen" id="startScreen">
             <h1>足球大战</h1>
-            <p>玩家1(Player 1): W/A/S/D 控制球员移动<br>玩家2(Player 2): ↑/↓/←/→ 方向键控制球员移动<br>左Shift键(P1) 和 右Shift键(P2) 用于疾跑<br>将球踢进对方球门得分!<br>Player 1: Use W/A/S/D to move<br>Player 2: Use arrow keys to move<br>Left Shift (P1) and Right Shift (P2) for sprint<br>Score by kicking the ball into the opponent's goal!</p>
+            <p id="game-mode-desc">
+                <strong>💻 电脑端：</strong><br>
+                玩家 1: W/A/S/D 移动<br>
+                玩家 2: 方向键移动<br>
+                Shift 键疾跑<br><br>
+                
+                <strong>📱 移动端：</strong><br>
+                人机对战 - 你 vs 电脑<br>
+                W/A/S/D 控制移动<br>
+                💡 按住方向键连续移动<br><br>
+                
+                <span style="color: #ff6b6b; font-size: 0.8rem;">⚠️ 移动端双人模式开发中</span><br><br>
+                
+                将球踢进对方球门得分!<br><br>
+                
+                <span style="font-size: 0.75rem; opacity: 0.8;">
+                    Player 1: WASD<br>
+                    Player 2: Arrows<br>
+                    Mobile: Human vs AI<br>
+                    Score goals!
+                </span>
+            </p>
             <button onclick="startGame()">开始游戏<br>Start Game</button>
         </div>
+    </div>
+    
+    <!-- 移动端控制按钮 - 人机模式 -->
+    <div class="controls" id="mobile-controls-player" style="display: none;">
+        <h3 style="color: white; text-align: center; margin-bottom: 10px; font-size: 0.9rem;">你 (You) - WASD</h3>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; max-width: 200px; margin: 0 auto;">
+            <button id="btn-p-up" style="grid-column: 2;">⬆️</button>
+            <button id="btn-p-left" style="grid-column: 1;">⬅️</button>
+            <button id="btn-p-down" style="grid-column: 2;">⬇️</button>
+            <button id="btn-p-right" style="grid-column: 3;">➡️</button>
+        </div>
+        <p style="color: #ffd700; text-align: center; margin-top: 10px; font-size: 0.8rem;">💡 提示：按住方向键连续移动</p>
     </div>
     
     <!-- 添加水印 -->
@@ -370,6 +468,11 @@
         let gameTime = 0;
         let gameInterval = null;
         
+        // 发球权控制
+        let servingPlayer = 1; // 1 = 玩家 1 发球，2 = 玩家 2/AI 发球
+        let waitingForMovement = false; // 是否等待发球者移动
+        let lastTouchPlayer = 1; // 最后触球的玩家
+        
         // 疾跑状态
         let p1Sprint = false;
         let p2Sprint = false;
@@ -384,6 +487,40 @@
         
         // 键盘控制
         const keys = {};
+        
+        // 移动端按钮长按连续触发
+        window.addEventListener('load', function() {
+            const device = detectDevice();
+            if (device.isMobile) {
+                // 显示移动端控制按钮
+                document.getElementById('mobile-controls-player').style.display = 'block';
+                
+                // 玩家控制 (WASD)
+                touchControls.bindHoldButton('btn-p-up', function() {
+                    keys['w'] = true;
+                }, 50);
+                
+                touchControls.bindHoldButton('btn-p-down', function() {
+                    keys['s'] = true;
+                }, 50);
+                
+                touchControls.bindHoldButton('btn-p-left', function() {
+                    keys['a'] = true;
+                }, 50);
+                
+                touchControls.bindHoldButton('btn-p-right', function() {
+                    keys['d'] = true;
+                }, 50);
+                
+                // 触摸结束时释放按键
+                document.addEventListener('touchend', function() {
+                    keys['w'] = false;
+                    keys['s'] = false;
+                    keys['a'] = false;
+                    keys['d'] = false;
+                });
+            }
+        });
         
         // 初始化游戏
         function initGame() {
@@ -457,30 +594,186 @@
         
         // 更新玩家位置
         function updatePlayers() {
+            const device = detectDevice();
+            const isMobile = device.isMobile;
+            
+            // 如果在等待发球，禁止移动
+            if (waitingForMovement) {
+                return;
+            }
+            
             // 确定当前速度（普通速度或疾跑速度）
             const p1CurrentSpeed = p1Sprint ? player1.sprintSpeed : player1.speed;
             const p2CurrentSpeed = p2Sprint ? player2.sprintSpeed : player2.speed;
             
-            // 玩家1控制 (WASD)
+            // 玩家 1 控制 (WASD) - 移动端由玩家控制
             if (keys['w'] || keys['W']) player1.y -= p1CurrentSpeed;
             if (keys['s'] || keys['S']) player1.y += p1CurrentSpeed;
             if (keys['a'] || keys['A']) player1.x -= p1CurrentSpeed;
             if (keys['d'] || keys['D']) player1.x += p1CurrentSpeed;
             
-            // 玩家2控制 (方向键)
-            if (keys['ArrowUp']) player2.y -= p2CurrentSpeed;
-            if (keys['ArrowDown']) player2.y += p2CurrentSpeed;
-            if (keys['ArrowLeft']) player2.x -= p2CurrentSpeed;
-            if (keys['ArrowRight']) player2.x += p2CurrentSpeed;
+            // 玩家 2 控制 - 移动端使用 AI，桌面端使用方向键
+            if (isMobile) {
+                // AI 控制逻辑
+                updateAIPlayer();
+            } else {
+                // 桌面端：玩家 2 使用方向键
+                if (keys['ArrowUp']) player2.y -= p2CurrentSpeed;
+                if (keys['ArrowDown']) player2.y += p2CurrentSpeed;
+                if (keys['ArrowLeft']) player2.x -= p2CurrentSpeed;
+                if (keys['ArrowRight']) player2.x += p2CurrentSpeed;
+            }
             
             // 边界检查
-            // 玩家1
+            // 玩家 1
             player1.x = Math.max(player1.radius, Math.min(FIELD_WIDTH - player1.radius, player1.x));
             player1.y = Math.max(player1.radius, Math.min(FIELD_HEIGHT - player1.radius, player1.y));
             
-            // 玩家2
+            // 玩家 2
             player2.x = Math.max(player2.radius, Math.min(FIELD_WIDTH - player2.radius, player2.x));
             player2.y = Math.max(player2.radius, Math.min(FIELD_HEIGHT - player2.radius, player2.y));
+        }
+        
+        // AI 玩家控制逻辑
+        function updateAIPlayer() {
+            // 如果 AI 还没准备好，不移动
+            if (!aiReadyToMove && servingPlayer === 2) {
+                return;
+            }
+            
+            // ==================== 球门定义 ====================
+            // 玩家1（左侧）防守 LEFT_GOAL，进攻 RIGHT_GOAL
+            // AI（玩家2，右侧）防守 RIGHT_GOAL，进攻 LEFT_GOAL
+            const LEFT_GOAL_X = GOAL_WIDTH;           // 左侧球门位置
+            const RIGHT_GOAL_X = FIELD_WIDTH - GOAL_WIDTH; // 右侧球门位置
+            const GOAL_Y = FIELD_HEIGHT / 2;            // 球门中心Y
+            
+            // AI 防守的是 RIGHT_GOAL，进攻的是 LEFT_GOAL
+            
+            // ==================== AI 速度设置 ====================
+            const aiBaseSpeed = player2.speed * 0.8;
+            const aiSprintSpeed = player2.sprintSpeed * 0.75;
+            let aiCurrentSpeed = aiBaseSpeed;
+            
+            // ==================== 状态计算 ====================
+            const dx = ball.x - player2.x;
+            const dy = ball.y - player2.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            // AI 状态机
+            const isBallInAIDefenseZone = ball.x > FIELD_WIDTH * 0.5;      // 球在AI防守区
+            const isBallNearAIGoal = ball.x > FIELD_WIDTH * 0.65;           // 球接近AI球门
+            const isBallInAIOffenseZone = ball.x < FIELD_WIDTH * 0.4;       // 球在AI进攻区
+            
+            // 动态速度调整
+            if (isBallNearAIGoal || distance < 35) {
+                aiCurrentSpeed = aiSprintSpeed;
+            }
+            
+            // ==================== 目标位置计算 ====================
+            let targetX = player2.x;
+            let targetY = player2.y;
+            
+            if (isBallInAIDefenseZone) {
+                // 防守模式：保护右侧球门
+                if (isBallNearAIGoal) {
+                    // 紧急回防：站在球和右侧球门之间
+                    const interceptX = Math.max(ball.x + 12, FIELD_WIDTH * 0.55);
+                    const safeX = Math.min(interceptX, RIGHT_GOAL_X - 30); // 不要太靠近球门
+                    targetX = safeX;
+                    targetY = ball.y;
+                } else {
+                    // 正常防守：保持在防守区域
+                    const defenseLineX = FIELD_WIDTH * 0.6;
+                    targetX = defenseLineX + (ball.x - defenseLineX) * 0.25;
+                    targetY = ball.y * 0.5 + GOAL_Y * 0.5;
+                }
+            } else {
+                // 进攻模式：进攻左侧球门
+                if (isBallInAIOffenseZone) {
+                    // 积极进攻：接近球准备射门
+                    targetX = ball.x - 8;  // 站在球后方
+                    targetY = ball.y;
+                } else {
+                    // 组织进攻：保持在中场
+                    const midX = FIELD_WIDTH * 0.45;
+                    targetX = midX + (ball.x - midX) * 0.4;
+                    targetY = ball.y;
+                }
+            }
+            
+            // ==================== 边界限制 ====================
+            const minX = player2.radius + 5;
+            const maxX = FIELD_WIDTH - player2.radius - 5;
+            const minY = player2.radius + 5;
+            const maxY = FIELD_HEIGHT - player2.radius - 5;
+            
+            targetX = Math.max(minX, Math.min(maxX, targetX));
+            targetY = Math.max(minY, Math.min(maxY, targetY));
+            
+            // AI 不会越过中线太多（至少保持在20%位置）
+            targetX = Math.max(targetX, FIELD_WIDTH * 0.15);
+            
+            // ==================== 平滑移动 ====================
+            const targetDx = targetX - player2.x;
+            const targetDy = targetY - player2.y;
+            const targetDistance = Math.sqrt(targetDx * targetDx + targetDy * targetDy);
+            
+            if (targetDistance > 4) {
+                const moveX = targetDx / targetDistance;
+                const moveY = targetDy / targetDistance;
+                const speedFactor = Math.min(targetDistance / 25, 1);
+                const actualSpeed = aiCurrentSpeed * speedFactor;
+                
+                player2.x += moveX * actualSpeed;
+                player2.y += moveY * actualSpeed;
+            }
+            
+            // ==================== 最终边界限制 ====================
+            player2.x = Math.max(minX, Math.min(maxX, player2.x));
+            player2.y = Math.max(minY, Math.min(maxY, player2.y));
+            
+            // 禁止进入右侧球门区域（AI自己的球门）
+            if (player2.x + player2.radius > RIGHT_GOAL_X && 
+                player2.y > GOAL_Y - GOAL_HEIGHT/2 - player2.radius &&
+                player2.y < GOAL_Y + GOAL_HEIGHT/2 + player2.radius) {
+                player2.x = RIGHT_GOAL_X - player2.radius;
+            }
+            
+            // ==================== AI 触球逻辑 ====================
+            const distToBall = Math.sqrt(
+                Math.pow(ball.x - player2.x, 2) + 
+                Math.pow(ball.y - player2.y, 2)
+            );
+            
+            if (distToBall < player2.radius + ball.radius + 10) {
+                // 判断AI是否在球的右侧（远离自己球门的一侧）
+                const isAISafe = player2.x > ball.x + 6;
+                
+                if (ball.x < FIELD_WIDTH / 2) {
+                    // 球在对方半场（左侧）- AI进攻！
+                    // 射门方向：朝向左侧球门（LEFT_GOAL_X）
+                    const goalDirection = (LEFT_GOAL_X - ball.x) > 0 ? -1 : 1;
+                    ball.vx = -Math.abs(Math.abs(ball.vx) * 0.85 + 2.8); // 向左踢！
+                    ball.vy = (GOAL_Y - ball.y) * 0.04;
+                } else {
+                    // 球在AI半场（右侧）- AI防守！
+                    if (!isAISafe) {
+                        // 危险！AI在球左侧（靠近自己球门）
+                        // 轻轻推球向左（远离自己球门）
+                        ball.vx = -Math.min(2.5, Math.abs(ball.vx) + 0.6); // 向左推
+                        ball.vy = (ball.y < GOAL_Y) ? 
+                            (Math.abs(ball.vy) * 0.5 + 0.9) : 
+                            (-Math.abs(ball.vy) * 0.5 - 0.9);
+                    } else {
+                        // 安全位置：强力解围向左
+                        ball.vx = -Math.max(Math.abs(ball.vx) * 0.9 + 2.5, 2.5); // 向左踢！
+                        ball.vy = (ball.y < GOAL_Y) ? 
+                            (Math.abs(ball.vy) * 0.75 + 1.3) : 
+                            (-Math.abs(ball.vy) * 0.75 - 1.3);
+                    }
+                }
+            }
         }
         
         // 更新球的位置
@@ -496,7 +789,7 @@
             if (Math.abs(ball.vx) < 0.1) ball.vx = 0;
             if (Math.abs(ball.vy) < 0.1) ball.vy = 0;
             
-            // 边界反弹
+            // 上下边界反弹
             if (ball.y - ball.radius <= 0 || ball.y + ball.radius >= FIELD_HEIGHT) {
                 ball.vy = -ball.vy;
             }
@@ -507,6 +800,44 @@
             
             // 检查进球
             checkGoal();
+            
+            // 检查球是否出界（左右边界，非球门区域）
+            if (ball.x - ball.radius <= 0 || ball.x + ball.radius >= FIELD_WIDTH) {
+                // 检查是否在球门区域
+                const isInGoalArea = ball.y >= FIELD_HEIGHT/2 - GOAL_HEIGHT/2 && 
+                                    ball.y <= FIELD_HEIGHT/2 + GOAL_HEIGHT/2;
+                
+                // 如果不是球门区域，则是出界
+                if (!isInGoalArea) {
+                    // 重置球到中线
+                    ball.x = FIELD_WIDTH / 2;
+                    ball.y = FIELD_HEIGHT / 2;
+                    ball.vx = 0;
+                    ball.vy = 0;
+                    
+                    // 重置玩家位置到中场
+                    player1.x = 150;
+                    player1.y = FIELD_HEIGHT / 2;
+                    player2.x = FIELD_WIDTH - 150;
+                    player2.y = FIELD_HEIGHT / 2;
+                    
+                    // 设置发球权 - 最后触球的是对方，所以由另一方发球
+                    if (lastTouchPlayer === 1) {
+                        servingPlayer = 2; // 玩家 1 出界，AI 发球
+                    } else {
+                        servingPlayer = 1; // AI 出界，玩家 1 发球
+                    }
+                    
+                    // 重置 AI 发球状态
+                    aiReadyToMove = false;
+                    
+                    // 设置等待移动状态
+                    waitingForMovement = true;
+                    
+                    // 显示发球提示（确保显示正确的方向键提示）
+                    showServingNotice();
+                }
+            }
         }
         
         // 处理碰撞
@@ -516,6 +847,13 @@
             const distance = Math.sqrt(dx * dx + dy * dy);
             
             if (distance < player.radius + ball.radius) {
+                // 记录最后触球的玩家
+                if (player === player1) {
+                    lastTouchPlayer = 1;
+                } else {
+                    lastTouchPlayer = 2;
+                }
+                
                 // 计算碰撞角度
                 const angle = Math.atan2(dy, dx);
                 
@@ -577,6 +915,97 @@
             player1.y = FIELD_HEIGHT / 2;
             player2.x = FIELD_WIDTH - 150;
             player2.y = FIELD_HEIGHT / 2;
+            
+            // 重置发球权和等待状态
+            servingPlayer = 1;
+            waitingForMovement = false;
+            aiReadyToMove = false; // 重置 AI 准备状态
+        }
+        
+        // 显示发球提示
+        function showServingNotice() {
+            const device = detectDevice();
+            const isMobile = device.isMobile;
+            
+            // 创建或获取提示元素
+            let notice = document.getElementById('serving-notice');
+            if (!notice) {
+                notice = document.createElement('div');
+                notice.id = 'serving-notice';
+                notice.style.cssText = `
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background: rgba(0, 0, 0, 0.85);
+                    color: #ffd700;
+                    padding: 20px 30px;
+                    border-radius: 15px;
+                    text-align: center;
+                    z-index: 3000;
+                    box-shadow: 0 4px 20px rgba(255, 215, 0, 0.4);
+                    max-width: 90%;
+                `;
+                document.body.appendChild(notice);
+            }
+            
+            // 设置提示内容
+            if (servingPlayer === 1) {
+                notice.innerHTML = `
+                    <h3 style="margin: 0 0 10px 0; font-size: 1.2rem;">🎾 你的发球</h3>
+                    <p style="margin: 0; font-size: 0.9rem;">移动后开始比赛</p>
+                    ${isMobile ? '<p style="margin: 10px 0 0 0; font-size: 0.8rem; color: #fff;">按方向键移动</p>' : '<p style="margin: 10px 0 0 0; font-size: 0.8rem; color: #fff;">按 W/A/S/D 移动</p>'}
+                `;
+            } else {
+                notice.innerHTML = `
+                    <h3 style="margin: 0 0 10px 0; font-size: 1.2rem;">🎾 AI 发球</h3>
+                    <p style="margin: 0; font-size: 0.9rem;">等待对手准备</p>
+                    <p style="margin: 10px 0 0 0; font-size: 0.8rem; color: #fff;">AI 将在 2 秒后发球</p>
+                `;
+            }
+            
+            // AI 发球时，延迟 2 秒后自动移动
+            if (servingPlayer === 2) {
+                setTimeout(() => {
+                    if (waitingForMovement && servingPlayer === 2) {
+                        // AI 开始移动
+                        waitingForMovement = false;
+                        hideServingNotice();
+                        // AI 开始追球
+                        aiReadyToMove = true;
+                    }
+                }, 2000);
+            }
+        }
+        
+        // AI 发球准备状态
+        let aiReadyToMove = false;
+        
+        // 检查玩家是否已移动
+        function checkPlayerMovement() {
+            if (!waitingForMovement) return;
+            
+            const device = detectDevice();
+            const isMobile = device.isMobile;
+            
+            // 检查发球方是否移动
+            if (servingPlayer === 1) {
+                // 玩家 1 发球，检测 WASD
+                if (keys['w'] || keys['a'] || keys['s'] || keys['d'] ||
+                    keys['W'] || keys['A'] || keys['S'] || keys['D']) {
+                    waitingForMovement = false;
+                    hideServingNotice();
+                }
+            }
+            // AI 发球由定时器控制，不需要检测
+        }
+        
+        // 隐藏发球提示
+        function hideServingNotice() {
+            const notice = document.getElementById('serving-notice');
+            if (notice) {
+                notice.style.display = 'none';
+            }
         }
         
         // 结束游戏
@@ -695,9 +1124,14 @@
             // 绘制场地
             drawField();
             
-            // 更新游戏对象
-            updatePlayers();
-            updateBall();
+            // 检查玩家是否已移动（如果在等待发球）
+            checkPlayerMovement();
+            
+            // 更新游戏对象（如果在等待发球，则不更新）
+            if (!waitingForMovement) {
+                updatePlayers();
+                updateBall();
+            }
             
             // 绘制游戏对象
             drawPlayers();

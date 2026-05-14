@@ -391,6 +391,16 @@ body {
     border: 1px solid #ff0000;
 }
 
+/* 底部版权信息 */
+.copyright {
+    text-align: center;
+    font-size: 0.85rem;
+    padding: 15px;
+    margin-top: 30px;
+    color: rgba(255, 255, 255, 0.8);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
 /* ========== 移动端适配样式 ========== */
 @media (max-width: 768px) {
     /* 全局容器适配 */
@@ -545,6 +555,32 @@ body {
     .card {
         padding: 15px;
         margin: 10px;
+    }
+    
+    /* 水印/版权信息适配 */
+    .watermark {
+        bottom: 15px;
+        right: 15px;
+        font-size: 0.7rem;
+        padding: 4px 8px;
+        white-space: nowrap;
+    }
+    
+    .watermark h3 {
+        font-size: 0.7rem;
+        line-height: 1.2;
+        text-align: right;
+    }
+    
+    /* 底部版权信息适配 */
+    .copyright {
+        text-align: center;
+        font-size: 0.75rem;
+        padding: 10px;
+        margin-top: 20px;
+        color: rgba(255, 255, 255, 0.8);
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        white-space: nowrap;
     }
 }
 
