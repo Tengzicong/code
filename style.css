@@ -390,3 +390,179 @@ body {
     border-radius: 5px;
     border: 1px solid #ff0000;
 }
+
+/* ========== 移动端适配样式 ========== */
+@media (max-width: 768px) {
+    /* 全局容器适配 */
+    .container {
+        padding: 15px;
+    }
+
+    /* 标题适配 */
+    .main-title {
+        font-size: 1.8rem;
+        text-shadow: 2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+    }
+
+    .sub-title {
+        font-size: 0.9rem;
+        padding: 0 10px;
+    }
+
+    /* 特性卡片适配 */
+    .features-section {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .feature-card {
+        padding: 20px;
+    }
+
+    .feature-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+
+    .feature-title {
+        font-size: 1.3rem;
+    }
+
+    .feature-subtitle {
+        font-size: 0.9rem;
+    }
+
+    /* 工具栏适配 */
+    .toolbar-container {
+        top: 10px;
+        right: 10px;
+    }
+
+    .logo-container {
+        top: 10px;
+        left: 10px;
+    }
+
+    .error-logo {
+        width: 50px;
+        height: 50px;
+    }
+
+    .toolbar {
+        width: 45px;
+        height: 45px;
+        cursor: pointer;
+    }
+
+    /* 移动端禁用 hover 效果，改为点击展开 */
+    .toolbar:hover {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        padding: 0;
+        box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+    }
+
+    .toolbar:hover .toolbar-icon {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    .toolbar:hover .toolbar-content {
+        display: none;
+        opacity: 0;
+        transform: translateX(20px);
+    }
+
+    /* 点击展开状态 */
+    .toolbar.expanded {
+        width: 100%;
+        border-radius: 10px;
+        padding: 10px;
+        box-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
+    }
+
+    .toolbar.expanded .toolbar-icon {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+
+    .toolbar.expanded .toolbar-content {
+        display: flex;
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .toolbar.expanded .toolbar-title {
+        display: block;
+        font-size: 1rem;
+    }
+
+    .toolbar.expanded .toolbar-item,
+    .toolbar.expanded .social-item {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    /* 游戏卡片适配 */
+    .games-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .game-card {
+        padding: 15px;
+    }
+
+    .game-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+    }
+
+    .game-title {
+        font-size: 1.2rem;
+    }
+
+    .game-description {
+        font-size: 0.85rem;
+    }
+
+    /* 画布适配 */
+    canvas {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+
+    /* 按钮适配 */
+    button, .btn {
+        padding: 12px 20px;
+        font-size: 1rem;
+    }
+
+    /* 卡片通用适配 */
+    .card {
+        padding: 15px;
+        margin: 10px;
+    }
+}
+
+/* 平板适配 */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .container {
+        padding: 20px;
+    }
+
+    .main-title {
+        font-size: 2rem;
+    }
+
+    .features-section {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .games-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
