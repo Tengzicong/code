@@ -491,33 +491,42 @@
         // 移动端按钮长按连续触发
         window.addEventListener('load', function() {
             const device = detectDevice();
-            if (device.isMobile) {
+            // 移动端和平板都显示控制按钮
+            if (device.isMobile || device.isTablet) {
                 // 显示移动端控制按钮
                 document.getElementById('mobile-controls-player').style.display = 'block';
                 
-                // 玩家控制 (WASD)
-                touchControls.bindHoldButton('btn-p-up', function() {
-                    keys['w'] = true;
-                }, 50);
+                // 玩家控制 (WASD) - 使用闭包保存按键状态
+                const keyStates = {
+                    'btn-p-up': 'w',
+                    'btn-p-down': 's',
+                    'btn-p-left': 'a',
+                    'btn-p-right': 'd'
+                };
                 
-                touchControls.bindHoldButton('btn-p-down', function() {
-                    keys['s'] = true;
-                }, 50);
-                
-                touchControls.bindHoldButton('btn-p-left', function() {
-                    keys['a'] = true;
-                }, 50);
-                
-                touchControls.bindHoldButton('btn-p-right', function() {
-                    keys['d'] = true;
-                }, 50);
-                
-                // 触摸结束时释放按键
-                document.addEventListener('touchend', function() {
-                    keys['w'] = false;
-                    keys['s'] = false;
-                    keys['a'] = false;
-                    keys['d'] = false;
+                // 绑定每个按钮的按下和释放
+                Object.keys(keyStates).forEach(buttonId => {
+                    const key = keyStates[buttonId];
+                    const button = document.getElementById(buttonId);
+                    if (!button) return;
+                    
+                    // 触摸开始：设置按键为按下
+                    button.addEventListener('touchstart', (e) => {
+                        if (e.cancelable) e.preventDefault();
+                        keys[key] = true;
+                    });
+                    
+                    // 触摸结束：释放按键
+                    button.addEventListener('touchend', (e) => {
+                        if (e.cancelable) e.preventDefault();
+                        keys[key] = false;
+                    });
+                    
+                    // 触摸取消：释放按键
+                    button.addEventListener('touchcancel', (e) => {
+                        if (e.cancelable) e.preventDefault();
+                        keys[key] = false;
+                    });
                 });
             }
         });
