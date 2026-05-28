@@ -402,7 +402,239 @@ body {
 }
 
 /* ========== 移动端适配样式 ========== */
-@media (max-width: 768px) {
+/* 小屏幕手机适配 */
+@media (max-width: 480px) {
+    /* 全局容器适配 */
+    .container {
+        padding: 10px;
+    }
+
+    /* 标题适配 */
+    .main-title {
+        font-size: 1.5rem;
+        text-shadow: 2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+    }
+
+    .sub-title {
+        font-size: 0.85rem;
+        padding: 0 10px;
+        line-height: 1.4;
+    }
+
+    /* 游戏网格适配 */
+    .game-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    /* 游戏卡片适配 */
+    .game-card {
+        padding: 20px 15px;
+        border-radius: 12px;
+    }
+
+    .game-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 1.2rem;
+    }
+
+    .game-title {
+        font-size: 1.1rem;
+    }
+
+    .game-subtitle {
+        font-size: 0.85rem;
+    }
+
+    /* 特性卡片适配 */
+    .features-section {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .feature-card {
+        padding: 18px 15px;
+        border-radius: 12px;
+    }
+
+    .feature-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 1.1rem;
+    }
+
+    .feature-title {
+        font-size: 1.1rem;
+    }
+
+    .feature-subtitle {
+        font-size: 0.85rem;
+    }
+
+    /* 工具栏适配 */
+    .toolbar-container {
+        top: 10px;
+        right: 10px;
+    }
+
+    .logo-container {
+        top: 10px;
+        left: 10px;
+    }
+
+    .error-logo {
+        width: 40px;
+        height: 40px;
+    }
+
+    .toolbar {
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+    }
+
+    /* 移动端禁用 hover 效果，改为点击展开 */
+    .toolbar:hover {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        padding: 0;
+        box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+    }
+
+    .toolbar:hover .toolbar-icon {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    .toolbar:hover .toolbar-content {
+        display: none;
+        opacity: 0;
+        transform: translateX(20px);
+    }
+
+    /* 点击展开状态 */
+    .toolbar.expanded {
+        width: 100%;
+        border-radius: 10px;
+        padding: 10px;
+        box-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
+    }
+
+    .toolbar.expanded .toolbar-icon {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+
+    .toolbar.expanded .toolbar-content {
+        display: flex;
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .toolbar.expanded .toolbar-title {
+        display: block;
+        font-size: 0.9rem;
+    }
+
+    .toolbar.expanded .toolbar-item,
+    .toolbar.expanded .social-item {
+        opacity: 1;
+        transform: translateX(0);
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* 游戏卡片适配 */
+    .games-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    /* 画布适配 */
+    canvas {
+        max-width: 100% !important;
+        height: auto !important;
+        touch-action: none;
+    }
+
+    /* 按钮适配 - 触摸友好 */
+    button, .btn {
+        padding: 14px 24px;
+        font-size: 1rem;
+        min-height: 44px;
+        border-radius: 12px;
+    }
+
+    /* 卡片通用适配 */
+    .card {
+        padding: 15px;
+        margin: 10px;
+        border-radius: 12px;
+    }
+    
+    /* 水印/版权信息适配 */
+    .watermark {
+        bottom: 10px;
+        right: 10px;
+        font-size: 0.65rem;
+        padding: 4px 8px;
+        white-space: nowrap;
+    }
+    
+    .watermark h3 {
+        font-size: 0.65rem;
+        line-height: 1.2;
+        text-align: right;
+    }
+    
+    /* 底部版权信息适配 */
+    .copyright {
+        text-align: center;
+        font-size: 0.7rem;
+        padding: 10px;
+        margin-top: 15px;
+        color: rgba(255, 255, 255, 0.8);
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        white-space: normal;
+        line-height: 1.4;
+    }
+
+    /* 触摸友好 - 更大的点击区域 */
+    a, button, .game-card, .feature-card {
+        min-height: 44px;
+        min-width: 44px;
+    }
+
+    /* 反馈按钮适配 */
+    .feedback-button {
+        top: 15px;
+        right: 60px;
+        width: 80px;
+        height: 40px;
+        font-size: 0.85rem;
+        border-radius: 20px;
+    }
+
+    .feedback-panel {
+        width: calc(100% - 20px);
+        right: 10px;
+        left: 10px;
+        top: 65px;
+        padding: 15px;
+    }
+
+    /* 改善触摸滚动体验 */
+    * {
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+/* 中等手机适配 */
+@media (max-width: 768px) and (min-width: 481px) {
     /* 全局容器适配 */
     .container {
         padding: 15px;
@@ -419,9 +651,30 @@ body {
         padding: 0 10px;
     }
 
+    /* 游戏网格适配 */
+    .game-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    /* 游戏卡片适配 */
+    .game-card {
+        padding: 25px 20px;
+    }
+
+    .game-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.3rem;
+    }
+
+    .game-title {
+        font-size: 1.2rem;
+    }
+
     /* 特性卡片适配 */
     .features-section {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
         gap: 20px;
     }
 
@@ -436,7 +689,7 @@ body {
     }
 
     .feature-title {
-        font-size: 1.3rem;
+        font-size: 1.2rem;
     }
 
     .feature-subtitle {
@@ -513,42 +766,27 @@ body {
     .toolbar.expanded .social-item {
         opacity: 1;
         transform: translateX(0);
+        min-height: 44px;
     }
 
     /* 游戏卡片适配 */
     .games-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
         gap: 15px;
-    }
-
-    .game-card {
-        padding: 15px;
-    }
-
-    .game-icon {
-        width: 50px;
-        height: 50px;
-        font-size: 1.5rem;
-    }
-
-    .game-title {
-        font-size: 1.2rem;
-    }
-
-    .game-description {
-        font-size: 0.85rem;
     }
 
     /* 画布适配 */
     canvas {
         max-width: 100% !important;
         height: auto !important;
+        touch-action: none;
     }
 
     /* 按钮适配 */
     button, .btn {
         padding: 12px 20px;
         font-size: 1rem;
+        min-height: 44px;
     }
 
     /* 卡片通用适配 */
@@ -575,12 +813,17 @@ body {
     /* 底部版权信息适配 */
     .copyright {
         text-align: center;
-        font-size: 0.75rem;
+        font-size: 0.8rem;
         padding: 10px;
         margin-top: 20px;
         color: rgba(255, 255, 255, 0.8);
         text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-        white-space: nowrap;
+    }
+
+    /* 触摸友好 */
+    a, button, .game-card, .feature-card {
+        min-height: 44px;
+        min-width: 44px;
     }
 }
 
