@@ -4,518 +4,101 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ERROR-CORE</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="js/device-detect.js" defer></script>
     <style>
-        /* Cookie协议弹窗样式 */
-        .cookie-modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(5px);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            z-index: 9999;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+            padding: 20px;
         }
 
-        .cookie-modal-overlay.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .cookie-modal {
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(245, 245, 245, 0.95));
-            border-radius: 20px;
-            padding: 30px;
-            max-width: 500px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            transform: scale(0.9);
-            transition: transform 0.3s ease;
-        }
-
-        .cookie-modal-overlay.show .cookie-modal {
-            transform: scale(1);
-        }
-
-        .cookie-modal h2 {
-            color: #333;
-            margin-bottom: 20px;
-            font-size: 1.5rem;
+        .container {
             text-align: center;
+            max-width: 800px;
         }
 
-        .cookie-modal-content {
-            color: #555;
-            line-height: 1.6;
-            font-size: 0.95rem;
+        h1 {
+            font-size: 3rem;
             margin-bottom: 20px;
+            background: linear-gradient(135deg, #ffd700, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        .cookie-modal-content h3 {
-            color: #333;
-            margin-top: 15px;
-            margin-bottom: 10px;
-            font-size: 1.1rem;
+        .description {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            line-height: 1.6;
         }
 
-        .cookie-modal-content ul {
-            margin-left: 20px;
-            margin-bottom: 10px;
-        }
-
-        .cookie-modal-content li {
-            margin-bottom: 5px;
-        }
-
-        .cookie-modal-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-        }
-
-        .cookie-btn {
-            padding: 12px 30px;
-            border: none;
-            border-radius: 30px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .cookie-btn.accept {
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
             background: linear-gradient(135deg, #ff6b6b, #ee5a24);
             color: white;
-            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
-        }
-
-        .cookie-btn.accept:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.5);
-        }
-
-        .cookie-btn.decline {
-            background: rgba(200, 200, 200, 0.5);
-            color: #555;
-        }
-
-        .cookie-btn.decline:hover {
-            background: rgba(200, 200, 200, 0.8);
-        }
-
-        /* 同意复选框样式 */
-        .cookie-consent-checkbox {
-            margin-bottom: 20px;
-            padding: 15px;
-            background: rgba(0, 0, 0, 0.03);
-            border-radius: 10px;
-        }
-
-        .cookie-consent-checkbox label {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            color: #555;
-        }
-
-        .cookie-consent-checkbox input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-            accent-color: #ff6b6b;
-        }
-
-        .privacy-link {
-            color: #2196F3;
             text-decoration: none;
-            font-weight: 500;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
         }
 
-        .privacy-link:hover {
-            text-decoration: underline;
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(255, 107, 107, 0.5);
         }
 
-        /* 禁用状态的同意按钮 */
-        .cookie-btn.accept:disabled {
-            background: rgba(200, 200, 200, 0.5);
-            color: #999;
-            cursor: not-allowed;
-            box-shadow: none;
-            transform: none;
+        .footer {
+            position: fixed;
+            bottom: 20px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
         }
 
         @media (max-width: 768px) {
-            .cookie-modal {
-                padding: 20px;
-                margin: 15px;
+            h1 {
+                font-size: 2rem;
             }
 
-            .cookie-modal h2 {
-                font-size: 1.3rem;
+            .description {
+                font-size: 1rem;
+                padding: 0 20px;
             }
 
-            .cookie-modal-buttons {
-                flex-direction: column;
+            .btn {
+                padding: 12px 30px;
+                font-size: 1rem;
             }
-
-            .cookie-btn {
-                width: 100%;
-            }
-        }
-
-        .logo-container {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            z-index: 100;
-        }
-
-        .copyright {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.9rem;
-            font-family: Arial, sans-serif;
-            z-index: 1000;
-            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-
-        .toolbar-container {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-        }
-
-        .error-logo {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-            margin-right: 10px;
-        }
-
-        .toolbar {
-            position: relative;
-            width: 40px;
-            height: 40px;
-            background: rgba(0, 0, 0, 0.85);
-            border-radius: 50%;
-            border: 2px solid #ffd700;
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
-            cursor: pointer;
-            transition: all 0.4s ease;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .toolbar:hover {
-            width: 220px;
-            height: auto;
-            border-radius: 15px;
-            padding: 15px;
-            box-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
-        }
-
-        .toolbar-icon {
-            color: #ffd700;
-            font-size: 1.5rem;
-            transition: all 0.4s ease;
-            z-index: 3;
-        }
-
-        .toolbar:hover .toolbar-icon {
-            opacity: 0;
-            transform: scale(0.5);
-        }
-
-        .toolbar-content {
-            display: none;
-            flex-direction: column;
-            align-items: stretch;
-            gap: 8px;
-            opacity: 0;
-            transform: translateX(20px);
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .toolbar:hover .toolbar-content {
-            display: flex;
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .toolbar-item {
-            opacity: 0;
-            transform: translateX(10px);
-            transition: all 0.3s ease;
-        }
-
-        .toolbar:hover .toolbar-item,
-        .toolbar:hover .social-item {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .toolbar-item:nth-child(1) { transition-delay: 0.1s; }
-        .toolbar-item:nth-child(2) { transition-delay: 0.15s; }
-        .toolbar-item:nth-child(3) { transition-delay: 0.2s; }
-        .toolbar-item:nth-child(4) { transition-delay: 0.25s; }
-
-        .toolbar-title {
-            color: #ffd700;
-            font-size: 1.1rem;
-            font-weight: bold;
-            text-align: center;
-            padding: 8px 0;
-            margin-bottom: 8px;
-            border-bottom: 1px solid rgba(255, 215, 0, 0.3);
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-        }
-
-        .expanded-toolbar-icon {
-            color: #ffd700;
-            font-size: 1.5rem;
-            transition: transform 0.8s linear;
-            align-self: flex-end;
-            margin-top: 5px;
-        }
-
-        .toolbar:hover .expanded-toolbar-icon {
-            animation: rotate360 0.8s linear;
-        }
-
-        @keyframes rotate360 {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .toolbar-item, .social-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 215, 0, 0.9);
-            color: #8b0000;
-            border: none;
-            border-radius: 5px;
-            padding: 8px 15px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            font-size: 0.9rem;
-            min-width: 150px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            text-decoration: none;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .toolbar-item::before, .social-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            transition: 0.5s;
-        }
-
-        .toolbar-item:hover, .social-item:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
-        }
-
-        .toolbar-item:hover::before, .social-item:hover::before {
-            left: 100%;
-        }
-
-        .toolbar-item:active, .social-item:active {
-            transform: translateY(1px) scale(0.98);
-        }
-
-        .social-icon-small {
-            width: 20px;
-            height: 20px;
         }
     </style>
 </head>
 <body>
-    <!-- Cookie协议弹窗 -->
-    <div class="cookie-modal-overlay" id="cookieOverlay">
-        <div class="cookie-modal">
-            <h2>🍪 Cookie 政策</h2>
-            <div class="cookie-modal-content">
-                <p>ERROR-CORE 尊重您的隐私，并致力于保护您的个人信息安全。本 Cookie 政策说明我们如何使用 Cookie 和类似技术。</p>
-                
-                <h3>什么是 Cookie</h3>
-                <p>Cookie 是网站发送到您浏览器的小型文本文件，存储在您的设备上。它们用于使网站正常运行、改善用户体验、分析网站流量和行为。</p>
-                
-                <h3>我们使用的 Cookie 类型</h3>
-                <ul>
-                    <li><strong>必要 Cookie</strong>：对于网站的基本功能是必需的</li>
-                    <li><strong>分析 Cookie</strong>：收集有关访客如何使用网站的信息</li>
-                    <li><strong>功能性 Cookie</strong>：允许网站记住您的偏好设置</li>
-                </ul>
-                
-                <h3>Cookie 的使用目的</h3>
-                <ul>
-                    <li>确保网站正常运行</li>
-                    <li>分析网站流量</li>
-                    <li>优化用户体验</li>
-                </ul>
-            </div>
-            
-            <!-- 同意复选框 -->
-            <div class="cookie-consent-checkbox">
-                <label>
-                    <input type="checkbox" id="cookieConsentCheckbox">
-                    <span>我已阅读并同意 <a href="cookie-policy.md" target="_blank" class="privacy-link">《Cookie隐私协议》</a></span>
-                </label>
-            </div>
-            
-            <div class="cookie-modal-buttons">
-                <button class="cookie-btn decline" id="declineCookie">拒绝</button>
-                <button class="cookie-btn accept" id="acceptCookie" disabled>同意</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="logo-container">
-        <img src="picture/error.png" alt="ERROR Logo" class="error-logo">
-    </div>
-
-    <div class="toolbar-container">
-        <div class="toolbar">
-            <div class="toolbar-icon">⚙️</div>
-            <div class="toolbar-content">
-                <div class="toolbar-title">工具栏<br>Toolbar</div>
-                <a href="index.html" class="toolbar-item">
-                    <span>🏠</span>
-                    <span>首页<br>Home</span>
-                </a>
-                <a href="download.html" class="toolbar-item">
-                    <span>⬇️</span>
-                    <span>下载<br>Download</span>
-                </a>
-                <a href="contact.html" class="toolbar-item">
-                    <span>📞</span>
-                    <span>联系我们<br>Contact</span>
-                </a>
-                <a href="https://space.bilibili.com/3546631121144154" class="social-item" target="_blank">
-                    <img src="picture/bilibili.svg" alt="Bilibili" class="social-icon-small">
-                    <span>B 站<br>Bilibili</span>
-                </a>
-                <a href="https://www.douyin.com/user/MS4wLjABAAAA0cxdKFB-D6ucvm2i3AE92bzBC-xSHgmW0ew1iwh0Isx-DwXKsMF499VcAle9571J" class="social-item" target="_blank">
-                    <img src="picture/douyin.svg" alt="抖音" class="social-icon-small">
-                    <span>抖音<br>Douyin</span>
-                </a>
-                <div class="expanded-toolbar-icon">⚙️</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="stars" id="stars"></div>
-
     <div class="container">
-        <div class="header">
-            <h1 class="main-title">ERROR-CORE小游戏<br>ERROR-CORE Mini-Games</h1>
-            <p class="sub-title">欢迎来到ERROR-CORE！这里有各种有趣的小游戏，让你在闲暇时光享受乐趣。<br>Welcome to ERROR-CORE! Here are various interesting mini-games to enjoy your leisure time.</p>
-        </div>
-
-        <div class="features-section">
-            <a href="gamecenter.html" class="feature-card">
-                <div class="feature-icon">🎮🎯</div>
-                <h2 class="feature-title">游戏中心</h2>
-                <p class="feature-subtitle">Game Center</p>
-            </a>
-            <a href="drawing.html" class="feature-card">
-                <div class="feature-icon">🎨</div>
-                <h2 class="feature-title">画板</h2>
-                <p class="feature-subtitle">Drawing Board</p>
-            </a>
-        </div>
+        <h1>ERROR-CORE</h1>
+        <p class="description">
+            欢迎来到 ERROR-CORE 小游戏平台<br>
+            Welcome to ERROR-CORE Mini Games Platform
+        </p>
+        <a href="minigame/minigame.html" class="btn">
+            🎮 进入游戏中心 Enter Games
+        </a>
     </div>
-
-    <script>
-        // Cookie政策弹窗处理
-        function initCookieModal() {
-            const overlay = document.getElementById('cookieOverlay');
-            const acceptBtn = document.getElementById('acceptCookie');
-            const declineBtn = document.getElementById('declineCookie');
-            const consentCheckbox = document.getElementById('cookieConsentCheckbox');
-
-            // 检查用户是否已经同意过Cookie政策
-            const hasAccepted = localStorage.getItem('cookieAccepted');
-            
-            if (!hasAccepted) {
-                // 首次访问，显示弹窗
-                setTimeout(() => {
-                    overlay.classList.add('show');
-                }, 500);
-            }
-
-            // 复选框状态变化监听
-            consentCheckbox.addEventListener('change', () => {
-                acceptBtn.disabled = !consentCheckbox.checked;
-            });
-
-            // 同意按钮（只有勾选复选框才能点击）
-            acceptBtn.addEventListener('click', () => {
-                if (consentCheckbox.checked) {
-                    localStorage.setItem('cookieAccepted', 'true');
-                    overlay.classList.remove('show');
-                }
-            });
-
-            // 拒绝按钮
-            declineBtn.addEventListener('click', () => {
-                localStorage.setItem('cookieAccepted', 'false');
-                overlay.classList.remove('show');
-            });
-        }
-
-        function createStars() {
-            const starsContainer = document.getElementById('stars');
-            const starCount = 100;
-
-            for (let i = 0; i < starCount; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                star.style.left = Math.random() * 100 + '%';
-                star.style.top = Math.random() * 100 + '%';
-                star.style.animationDelay = Math.random() * 3 + 's';
-                star.style.animationDuration = (Math.random() * 3 + 2) + 's';
-                starsContainer.appendChild(star);
-            }
-        }
-
-        window.addEventListener('load', function() {
-            initCookieModal();
-            createStars();
-        });
-    </script>
-<div class="copyright">
-            © ERROR-CORE Team All Rights Reserved
-        </div>
-    </body>
+    <div class="footer">
+        © ERROR-CORE Team All Rights Reserved
+    </div>
+</body>
 </html>
