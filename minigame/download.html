@@ -83,7 +83,7 @@
             transform: translateX(0);
         }
 
-        .toolbar-item, .social-item {
+        .toolbar-item {
             opacity: 0;
             transform: translateX(10px);
             transition: all 0.3s ease;
@@ -99,6 +99,19 @@
         .toolbar-item:nth-child(2) { transition-delay: 0.15s; }
         .toolbar-item:nth-child(3) { transition-delay: 0.2s; }
         .toolbar-item:nth-child(4) { transition-delay: 0.25s; }
+        .social-item:nth-child(5) { transition-delay: 0.3s; }
+        .social-item:nth-child(6) { transition-delay: 0.35s; }
+
+        .toolbar-title {
+            color: #ffd700;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-align: center;
+            padding: 8px 0;
+            margin-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
 
         .expanded-toolbar-icon {
             color: #ffd700;
@@ -148,13 +161,17 @@
             transition: 0.5s;
         }
 
+        .toolbar-item:hover, .social-item:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+
         .toolbar-item:hover::before, .social-item:hover::before {
             left: 100%;
         }
 
-        .toolbar-item:hover, .social-item:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        .toolbar-item:active, .social-item:active {
+            transform: translateY(1px) scale(0.98);
         }
 
         .social-icon-small {
@@ -162,123 +179,56 @@
             height: 20px;
         }
 
-        .download-section {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-
-        .version-card {
-            background: rgba(255, 255, 255, 0.95);
+        /* 敬请期待容器 */
+        .coming-soon-container {
+            background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 215, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-            animation: fadeInUp 0.6s ease-out;
+            padding: 50px 30px;
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+            animation: fadeInUp 1s ease-out;
         }
 
-        .version-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 50px rgba(255, 215, 0, 0.3);
-        }
-
-        .version-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .coming-soon-icon {
+            font-size: 5rem;
             margin-bottom: 20px;
-            flex-wrap: wrap;
-            gap: 15px;
+            animation: pulse 2s infinite;
         }
 
-        .version-title {
-            font-size: 1.8rem;
-            color: #8b0000;
-            font-weight: bold;
-        }
-
-        .version-badge {
-            background: linear-gradient(135deg, #ffd700, #ff9900);
-            color: white;
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 0.9rem;
-        }
-
-        .download-buttons {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .download-btn {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            background: linear-gradient(135deg, #ffd700, #ff9900);
-            color: #8b0000;
-            padding: 25px 20px;
-            border-radius: 15px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
-        }
-
-        .download-btn:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.5);
-        }
-
-        .download-btn.disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            box-shadow: none;
-        }
-
-        .download-btn.disabled:hover {
-            transform: none;
-        }
-
-        .download-icon {
+        .coming-soon-title {
             font-size: 2.5rem;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+            margin-bottom: 15px;
         }
 
-        .download-label {
+        .coming-soon-subtitle {
+            font-size: 1.2rem;
+            color: rgba(51, 51, 51, 0.8);
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .coming-soon-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 30px;
             font-size: 1.1rem;
+            font-weight: bold;
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
+            animation: pulse 2s infinite;
         }
 
-        .download-subtitle {
-            font-size: 0.85rem;
-            color: #666;
-        }
-
-        .release-notes {
-            background: rgba(255, 248, 220, 0.5);
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 20px;
-        }
-
-        .release-notes h4 {
-            color: #8b0000;
-            margin-bottom: 10px;
-        }
-
-        .release-notes ul {
-            margin-left: 20px;
-            color: #333;
-        }
-
-        .release-notes li {
-            margin: 8px 0;
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
 
         @keyframes fadeInUp {
@@ -304,153 +254,82 @@
             text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
 
-        .system-requirements {
-            background: rgba(76, 175, 80, 0.1);
-            border-left: 4px solid #4CAF50;
-            padding: 15px 20px;
-            margin-top: 20px;
-            border-radius: 0 10px 10px 0;
-        }
-
-        .system-requirements h4 {
-            color: #333;
-            margin: 0 0 10px 0;
-            font-size: 1.1rem;
-        }
-
-        .system-requirements ul {
-            margin: 0;
-            padding-left: 20px;
-            color: #555;
-            font-size: 0.95rem;
-            line-height: 1.8;
-        }
-
-        .toolbar-item:nth-child(1) { transition-delay: 0.1s; }
-        .toolbar-item:nth-child(2) { transition-delay: 0.15s; }
-        .toolbar-item:nth-child(3) { transition-delay: 0.2s; }
-        .toolbar-item:nth-child(4) { transition-delay: 0.25s; }
-        .social-item:nth-child(5) { transition-delay: 0.3s; }
-        .social-item:nth-child(6) { transition-delay: 0.35s; }
-
-        .toolbar-title {
-            color: #ffd700;
-            font-size: 1.1rem;
-            font-weight: bold;
-            text-align: center;
-            padding: 8px 0;
-            margin-bottom: 8px;
-            border-bottom: 1px solid rgba(255, 215, 0, 0.3);
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-        }
-
-        .expanded-toolbar-icon {
-            color: #ffd700;
-            font-size: 1.5rem;
-            transition: transform 0.8s linear;
-            align-self: flex-end;
-            margin-top: 5px;
-        }
-
-        .toolbar:hover .expanded-toolbar-icon {
-            animation: rotate360 0.8s linear;
-        }
-
-        @keyframes rotate360 {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        /* 移动端适配样式 */
+        /* 移动端适配 */
         @media (max-width: 768px) {
-            .logo-container {
-                top: 10px;
-                left: 10px;
-            }
-
-            .error-logo {
-                width: 50px;
-                height: 50px;
-            }
-
             .toolbar-container {
                 top: 10px;
                 right: 10px;
             }
 
             .toolbar {
-                width: 35px;
-                height: 35px;
+                width: 45px;
+                height: 45px;
+                cursor: pointer;
             }
 
             .toolbar:hover {
+                width: 45px;
+                height: 45px;
+                border-radius: 50%;
+                padding: 0;
+                box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+            }
+
+            .toolbar:hover .toolbar-icon {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            .toolbar:hover .toolbar-content {
+                display: none;
+                opacity: 0;
+                transform: translateX(20px);
+            }
+
+            .toolbar.expanded {
                 width: 100%;
                 border-radius: 10px;
                 padding: 10px;
+                box-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
             }
 
-            .toolbar-item, .social-item {
-                font-size: 0.9rem;
+            .toolbar.expanded .toolbar-icon {
+                opacity: 0;
+                transform: scale(0.5);
             }
 
-            .toolbar-item span:first-child,
-            .social-item span:first-child {
-                font-size: 1.2rem;
+            .toolbar.expanded .toolbar-content {
+                display: flex;
+                opacity: 1;
+                transform: translateX(0);
             }
 
-            .download-container {
-                padding: 80px 15px 40px;
+            .toolbar.expanded .toolbar-item,
+            .toolbar.expanded .social-item {
+                opacity: 1;
+                transform: translateX(0);
             }
 
-            .version-card {
-                padding: 20px;
-                margin-bottom: 20px;
+            .coming-soon-container {
+                padding: 30px 20px;
             }
 
-            .version-title {
-                font-size: 1.5rem;
+            .coming-soon-icon {
+                font-size: 3rem;
             }
 
-            .download-btn {
-                width: 100%;
-                padding: 12px 20px;
+            .coming-soon-title {
+                font-size: 1.8rem;
+            }
+
+            .coming-soon-subtitle {
                 font-size: 1rem;
             }
 
-            .system-requirements {
-                padding: 10px 15px;
-            }
-
-            .system-requirements h4 {
+            .coming-soon-badge {
+                padding: 12px 30px;
                 font-size: 1rem;
             }
-
-            .system-requirements ul {
-                font-size: 0.85rem;
-            }
-        }
-
-        /* 电脑端适配样式 */
-        @media (min-width: 769px) {
-            .download-container {
-                max-width: 800px;
-                margin: 0 auto;
-            }
-        }
-
-        /* 设备类型指示器（调试用） */
-        .device-indicator {
-            position: fixed;
-            bottom: 60px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.8);
-            color: #ffd700;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            z-index: 999;
-            display: none;
         }
     </style>
 </head>
@@ -464,13 +343,13 @@
             <div class="toolbar-icon">⚙️</div>
             <div class="toolbar-content">
                 <div class="toolbar-title">工具栏<br>Toolbar</div>
-                <a href="index.html" class="toolbar-item">
+                <a href="minigame.html" class="toolbar-item">
                     <span>🏠</span>
                     <span>首页<br>Home</span>
                 </a>
-                <a href="gamecenter.html" class="toolbar-item">
-                    <span>🎮</span>
-                    <span>游戏中心<br>Game Center</span>
+                <a href="download.html" class="toolbar-item">
+                    <span>⬇️</span>
+                    <span>下载<br>Download</span>
                 </a>
                 <a href="contact.html" class="toolbar-item">
                     <span>📞</span>
@@ -492,73 +371,15 @@
     <div class="stars" id="stars"></div>
 
     <div class="container">
-        <div class="header">
-            <h1 class="main-title">下载 ERROR-CORE小游戏<br>Download</h1>
-            <p class="sub-title">选择适合你电脑的版本下载<br>Choose the version for your device</p>
-        </div>
-
-        <div class="download-section">
-            <div class="version-card">
-                <div class="version-header">
-                    <div>
-                        <h2 class="version-title">v1.0.0 正式版</h2>
-                    </div>
-                    <span class="version-badge">最新版</span>
-                </div>
-
-                <div class="download-buttons">
-                <a href="https://github.com/Tengzicong/code/releases/latest/download/ERROR-CORE.-1.0.0-mac.zip" class="download-btn">
-                    <span class="download-icon">🍎</span>
-                    <span class="download-label">macOS ZIP</span>
-                    <span class="download-subtitle">推荐下载（稳定）</span>
-                </a>
-
-                <button class="download-btn disabled" disabled>
-                    <span class="download-icon">🪟</span>
-                    <span class="download-label">Windows</span>
-                    <span class="download-subtitle">敬请期待</span>
-                </button>
-
-                <button class="download-btn disabled" disabled>
-                    <span class="download-icon">🐧</span>
-                    <span class="download-label">Linux</span>
-                    <span class="download-subtitle">敬请期待</span>
-                </button>
-            </div>
-
-                <div class="release-notes">
-                    <h4>📝 更新内容</h4>
-                    <ul>
-                        <li>✨ 全新的 UI 设计，阳光风格主题</li>
-                        <li>🎮 贪吃蛇、射击游戏、打砖块、足球大战四大游戏</li>
-                        <li>🎨 画板功能，支持保存为 PNG</li>
-                        <li>⭐ 炫酷星空粒子背景效果</li>
-                        <li>📱 响应式设计，适配各种屏幕</li>
-                        <li>🔗 外部链接自动打开默认浏览器</li>
-                    </ul>
-                </div>
-
-                <div class="system-requirements">
-                    <h4>💻 系统要求</h4>
-                    <ul>
-                        <li>macOS 10.15 (Catalina) 或更高版本</li>
-                        <li>支持 Apple Silicon (M1/M2/M3) 和 Intel 处理器</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="version-card" style="opacity: 0.7;">
-                <div class="version-header">
-                    <div>
-                        <h2 class="version-title">旧版本</h2>
-                    </div>
-                </div>
-                <p style="text-align: center; color: #666;">历史版本请前往 GitHub Releases 查看</p>
-                <div style="display: flex; justify-content: center; margin-top: 15px;">
-                    <a href="https://github.com/Tengzicong/code/releases" target="_blank" class="download-btn" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 15px 30px;">
-                        <span>📂 查看所有版本</span>
-                    </a>
-                </div>
+        <div class="coming-soon-container">
+            <div class="coming-soon-icon">🔒</div>
+            <h1 class="coming-soon-title">敬请期待</h1>
+            <p class="coming-soon-subtitle">
+                下载功能正在开发中<br>
+                Download feature is under development
+            </p>
+            <div class="coming-soon-badge">
+                Coming Soon...
             </div>
         </div>
     </div>
@@ -580,11 +401,71 @@
         }
 
         window.addEventListener('load', function() {
+            // 设备检测逻辑
+            function detectDevice() {
+                const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                const isTablet = /iPad|Android|webOS|BlackBerry|PlayBook|IEMobile|Opera Mini/i.test(navigator.userAgent) && window.screen.width >= 768;
+                
+                return {
+                    isMobile: isMobile && !isTablet,
+                    isTablet: isTablet,
+                    isDesktop: !isMobile && !isTablet,
+                    userAgent: navigator.userAgent,
+                    screenWidth: window.screen.width,
+                    innerWidth: window.innerWidth
+                };
+            }
+
+            // 根据设备类型应用不同的样式
+            function applyDeviceStyles() {
+                const device = detectDevice();
+                
+                document.body.classList.remove('mobile-device', 'tablet-device', 'desktop-device');
+                
+                if (device.isMobile) {
+                    document.body.classList.add('mobile-device');
+                    console.log('📱 检测到移动设备');
+                } else if (device.isTablet) {
+                    document.body.classList.add('tablet-device');
+                    console.log('📱 检测到平板设备');
+                } else {
+                    document.body.classList.add('desktop-device');
+                    console.log('💻 检测到电脑设备');
+                }
+            }
+
+            applyDeviceStyles();
+
+            let resizeTimeout;
+            window.addEventListener('resize', function() {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(function() {
+                    applyDeviceStyles();
+                }, 250);
+            });
+
+            // 移动端工具栏点击展开功能
+            const toolbar = document.querySelector('.toolbar');
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            
+            if (isMobile && toolbar) {
+                toolbar.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    toolbar.classList.toggle('expanded');
+                });
+
+                document.addEventListener('click', function(e) {
+                    if (!toolbar.contains(e.target)) {
+                        toolbar.classList.remove('expanded');
+                    }
+                });
+            }
+
             createStars();
         });
     </script>
-<div class="copyright">
-            © ERROR-CORE'Team All Rights Reserved
-        </div>
-    </body>
+    <div class="copyright">
+        © ERROR-CORE'Team All Rights Reserved
+    </div>
+</body>
 </html>
