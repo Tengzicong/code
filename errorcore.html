@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERROR-CORE'Team - 开源项目简介</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+            line-height: 1.7;
+        }
+
+        .nav {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 24px 20px 0;
+        }
+
+        .nav a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav a:hover {
+            color: #ffd700;
+        }
+
+        .wrapper {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 44px 0 48px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border: 1px solid rgba(255, 215, 0, 0.5);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #ffd700;
+            margin-bottom: 24px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 18px;
+            background: linear-gradient(135deg, #ffd700, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto 12px;
+        }
+
+        .hero .sub {
+            font-size: 1rem;
+            opacity: 0.7;
+        }
+
+        section {
+            margin-bottom: 46px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            padding-left: 14px;
+            border-left: 4px solid #ff6b6b;
+        }
+
+        h3 {
+            font-size: 1.15rem;
+            margin-bottom: 10px;
+            color: #ffd700;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            opacity: 0.85;
+        }
+
+        .project {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            padding: 26px 28px;
+            margin-bottom: 22px;
+        }
+
+        .project-title {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 6px;
+        }
+
+        .project-title h3 {
+            font-size: 1.45rem;
+            margin-bottom: 0;
+        }
+
+        .tag {
+            font-size: 0.8rem;
+            padding: 4px 12px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            opacity: 0.85;
+            white-space: nowrap;
+        }
+
+        .project p.desc {
+            opacity: 0.9;
+            margin-bottom: 16px;
+        }
+
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 26px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 18px;
+            padding: 14px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .meta strong {
+            color: #ffd700;
+            font-weight: 600;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 8px 20px;
+            margin-bottom: 20px;
+            font-size: 0.93rem;
+            opacity: 0.88;
+        }
+
+        .features li {
+            list-style: none;
+            padding-left: 16px;
+            position: relative;
+        }
+
+        .features li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #ff6b6b;
+        }
+
+        .links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 11px 26px;
+            color: white;
+            text-decoration: none;
+            border-radius: 24px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            box-shadow: 0 6px 16px rgba(255, 107, 107, 0.35);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.45);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.45);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .text-block {
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            padding: 22px 26px;
+        }
+
+        .text-block p {
+            margin-bottom: 12px;
+            opacity: 0.9;
+        }
+
+        .text-block p:last-child {
+            margin-bottom: 0;
+        }
+
+        a.inline {
+            color: #ffd700;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 14px 18px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.95rem;
+        }
+
+        th {
+            background: rgba(255, 107, 107, 0.15);
+        }
+
+        td a {
+            color: #ffd700;
+        }
+
+        .notice {
+            background: rgba(255, 107, 107, 0.1);
+            border: 1px solid rgba(255, 107, 107, 0.4);
+            border-radius: 12px;
+            padding: 20px 24px;
+            font-size: 0.95rem;
+        }
+
+        .notice p {
+            margin-bottom: 10px;
+        }
+
+        .notice p:last-child {
+            margin-bottom: 0;
+        }
+
+        .notice a {
+            color: #ffd700;
+        }
+
+        .footer {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+            padding: 24px 0 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer a {
+            color: rgba(255, 255, 255, 0.75);
+            text-decoration: none;
+        }
+
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.1rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            h2 {
+                font-size: 1.3rem;
+            }
+
+            .project {
+                padding: 20px 18px;
+            }
+
+            th, td {
+                padding: 11px 12px;
+                font-size: 0.85rem;
+            }
+
+            .btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+        <header class="hero">
+            <span class="badge">ERROR-CORE'Team · 开源项目</span>
+            <h1>ERROR-CORE'Team</h1>
+            <p>我们是一个独立的技术团队，作品覆盖机器人编程工具与网页小游戏平台，相关项目均已公开源码。</p>
+            <p class="sub">An independent team building open-source robotics tooling and web mini-games.</p>
+        </header>
+
+        <section>
+            <h2>团队介绍</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>方向</h3>
+                    <p>机器人可视化编程、桌面应用打包与分发、网页游戏与交互体验。</p>
+                </div>
+                <div class="card">
+                    <h3>技术栈</h3>
+                    <p>Python、JavaScript、HTML / CSS，以及 PyQt 桌面端与 Blockly 可视化编辑器。</p>
+                </div>
+                <div class="card">
+                    <h3>开源方式</h3>
+                    <p>源码托管在 Gitee 与 GitHub，通过 Release 提供可安装版本，接受 Issue 反馈。</p>
+                </div>
+                <div class="card">
+                    <h3>联系方式</h3>
+                    <p>邮箱 <code>error_core@163.com</code>，也可通过下方 B 站 / 抖音账号找到我们。</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>开源软件</h2>
+
+            <div class="project">
+                <div class="project-title">
+                    <h3>Robot Blockly</h3>
+                    <span class="tag">v0.1.1 公测版 · MIT</span>
+                </div>
+                <p class="desc">宇树机器人可视化积木编程桌面软件。拖拽积木即可生成 Python 代码，一键运行对接 <code>unitree_sdk2py</code>，支持 Go2 四足机器人与 G1 人形机器人。</p>
+                <div class="meta">
+                    <span><strong>当前平台</strong> Linux amd64</span>
+                    <span><strong>许可证</strong> MIT License</span>
+                    <span><strong>仓库</strong> Gitee</span>
+                    <span><strong>语言构成</strong> Python 51.2% / JavaScript 26.9% / Shell 10.4% / HTML 8.0%</span>
+                </div>
+                <ul class="features">
+                    <li>积木编程：基于 Blockly，支持循环与条件嵌套</li>
+                    <li>代码生成：一键输出可读的 Python 脚本</li>
+                    <li>一键运行：执行生成脚本并输出到日志面板</li>
+                    <li>状态监控：DDS 订阅 <code>rt/lowstate</code>，显示 IMU / 电池 / 电机</li>
+                    <li>摄像头回传：实时显示机器人画面</li>
+                    <li>激光雷达：叠加 Go2 点云，支持测距标尺</li>
+                    <li>程序存取：Blockly XML 工程保存 / 加载 / 导出 <code>.py</code></li>
+                    <li>网络配置：内置网卡检测与一键静态 IP 配置</li>
+                </ul>
+                <div class="links">
+                    <a class="btn btn-primary"
+                       href="https://gitee.com/tengzicong/robot_blockly/releases#release-0.1.1%E5%85%AC%E6%B5%8B%E7%89%88"
+                       target="_blank" rel="noopener noreferrer">下载 Linux x64</a>
+                    <a class="btn btn-secondary"
+                       href="https://gitee.com/tengzicong/robot_blockly"
+                       target="_blank" rel="noopener noreferrer">Gitee 仓库</a>
+                    <a class="btn btn-secondary" href="robot-blockly.html">查看详细介绍</a>
+                </div>
+            </div>
+
+            <div class="project">
+                <div class="project-title">
+                    <h3>ERROR-CORE 小游戏平台</h3>
+                    <span class="tag">纯前端 · 源码公开</span>
+                </div>
+                <p class="desc">本站点本身。纯 HTML / CSS / JavaScript 实现的静态小游戏平台，无后端依赖，可直接部署到任意静态托管服务。</p>
+                <div class="meta">
+                    <span><strong>技术</strong> HTML5 Canvas / CSS3 / 原生 JavaScript</span>
+                    <span><strong>依赖</strong> 无框架</span>
+                    <span><strong>适配</strong> 桌面与移动端响应式</span>
+                </div>
+                <ul class="features">
+                    <li>贪吃蛇 Snake</li>
+                    <li>射击游戏 Shooting</li>
+                    <li>打砖块 Breakout</li>
+                    <li>足球射门 Football</li>
+                    <li>画板 Drawing</li>
+                    <li>触屏长按连续操控适配</li>
+                    <li>Cookie 政策与同意弹窗</li>
+                    <li>设备检测与移动端工具栏</li>
+                </ul>
+                <div class="links">
+                    <a class="btn btn-primary" href="minigame.html">进入小游戏平台</a>
+                    <a class="btn btn-secondary"
+                       href="https://github.com/Tengzicong/code"
+                       target="_blank" rel="noopener noreferrer">GitHub 仓库</a>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>使用的第三方组件</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>组件</th>
+                        <th>来源</th>
+                        <th>协议</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="https://github.com/unitreerobotics/unitree_sdk2_python" target="_blank" rel="noopener noreferrer">unitree_sdk2py</a></td>
+                        <td>宇树官方 Python SDK（Robot Blockly 运行时引用）</td>
+                        <td>BSD-3-Clause</td>
+                    </tr>
+                    <tr>
+                        <td><a href="https://developers.google.com/blockly" target="_blank" rel="noopener noreferrer">Blockly</a></td>
+                        <td>Google 开源积木编辑器（Robot Blockly 编辑器内核）</td>
+                        <td>Apache-2.0</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="margin-top:12px; font-size:0.9rem; opacity:0.7;">以上组件的版权归其各自作者所有，我们的项目仅在构建 / 运行时引用，不包含第三方代码的修改。</p>
+        </section>
+
+        <section>
+            <h2>说明与免责</h2>
+            <div class="notice">
+                <p>Robot Blockly 为作者独立创作，与宇树（Unitree）公司及其关联实体不存在任何隶属、合作或代理关系，亦未从该公司获得任何形式的授权、赞助或技术支持。完整声明见 <a href="https://gitee.com/tengzicong/robot_blockly/blob/main/DISCLAIMER.md" target="_blank" rel="noopener noreferrer">DISCLAIMER.md</a>。</p>
+                <p>使用本团队的工具操作任何机器人所产生的全部风险与后果，由使用者自行承担；相关项目主要面向技术研究、学习与交流。</p>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>© ERROR-CORE'Team All Rights Reserved</p>
+            <p>
+                <a href="https://space.bilibili.com/3546631121144154" target="_blank" rel="noopener noreferrer">B站 Bilibili</a> ·
+                <a href="https://www.douyin.com/user/MS4wLjABAAAA0cxdKFB-D6ucvm2i3AE92bzBC-xSHgmW0ew1iwh0Isx-DwXKsMF499VcAle9571J" target="_blank" rel="noopener noreferrer">抖音 Douyin</a> ·
+                <a href="contact.html">联系我们</a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

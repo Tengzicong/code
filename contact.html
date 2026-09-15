@@ -2,10 +2,10 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ERROR小游戏 | ERROR Games</title>
+    <title>联系我们 | ERROR-CORE</title>
     <link rel="stylesheet" href="style.css">
+    <script src="js/device-detect.js" defer></script>
     <style>
         .logo-container {
             position: fixed;
@@ -99,8 +99,6 @@
         .toolbar-item:nth-child(2) { transition-delay: 0.15s; }
         .toolbar-item:nth-child(3) { transition-delay: 0.2s; }
         .toolbar-item:nth-child(4) { transition-delay: 0.25s; }
-        .social-item:nth-child(5) { transition-delay: 0.3s; }
-        .social-item:nth-child(6) { transition-delay: 0.35s; }
 
         .toolbar-title {
             color: #ffd700;
@@ -179,6 +177,60 @@
             height: 20px;
         }
 
+        .contact-section {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 40px;
+            width: 100%;
+            max-width: 800px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .contact-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+            margin-bottom: 40px;
+            text-align: center;
+            animation: pulse 2s infinite;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .contact-icon {
+            font-size: 3rem;
+            animation: bounce 2s infinite;
+        }
+
+        .contact-item h3 {
+            color: #333;
+            margin: 0 0 5px 0;
+            font-size: 1.3rem;
+        }
+
+        .contact-item p {
+            color: #666;
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
         .copyright {
             position: fixed;
             bottom: 20px;
@@ -193,41 +245,37 @@
 
         /* 移动端适配样式 */
         @media (max-width: 768px) {
-            .games-container {
+            .contact-container {
                 padding: 80px 15px 40px;
             }
 
-            .games-section-title {
-                font-size: 1.5rem;
+            .contact-card {
+                padding: 20px;
                 margin-bottom: 20px;
             }
 
-            .games-grid {
-                grid-template-columns: 1fr;
-                gap: 15px;
-            }
-
-            .game-card {
-                padding: 15px;
-            }
-
-            .game-icon {
-                width: 50px;
-                height: 50px;
+            .contact-title {
                 font-size: 1.5rem;
             }
 
-            .game-title {
-                font-size: 1.2rem;
+            .contact-item {
+                padding: 15px;
             }
 
-            .game-description {
-                font-size: 0.85rem;
+            .contact-icon {
+                font-size: 2rem;
             }
 
-            .play-button {
-                padding: 10px 20px;
-                font-size: 0.9rem;
+            .contact-item h3 {
+                font-size: 1.1rem;
+            }
+
+            .contact-item p {
+                font-size: 1rem;
+            }
+
+            .contact-item a {
+                font-size: 0.95rem;
             }
         }
     </style>
@@ -245,10 +293,6 @@
                 <a href="index.html" class="toolbar-item">
                     <span>🏠</span>
                     <span>首页<br>Home</span>
-                </a>
-                <a href="download.html" class="toolbar-item">
-                    <span>⬇️</span>
-                    <span>下载<br>Download</span>
                 </a>
                 <a href="contact.html" class="toolbar-item">
                     <span>📞</span>
@@ -270,35 +314,16 @@
     <div class="stars" id="stars"></div>
 
     <div class="container">
-        <div class="header">
-            <h1 class="main-title">ERROR小游戏<br>ERROR Games</h1>
-            <p class="sub-title">您的游玩之地。<br>Your place of recreation.</p>
-        </div>
+        <div class="contact-section">
+            <h1 class="contact-title">📧 联系我们<br>Contact Us</h1>
 
-        <div class="game-grid">
-            <a href="Snake.html" class="game-card">
-                <div class="game-icon snake-icon">🐍</div>
-                <h2 class="game-title">贪吃蛇</h2>
-                <p class="game-subtitle">Gluttonous Snake</p>
-            </a>
-
-            <a href="ShootingGame.html" class="game-card">
-                <div class="game-icon shooting-icon">🎯</div>
-                <h2 class="game-title">射击游戏</h2>
-                <p class="game-subtitle">Shooting Game</p>
-            </a>
-
-            <a href="BreakoutGame.html" class="game-card">
-                <div class="game-icon">🧱</div>
-                <h2 class="game-title">打砖块游戏</h2>
-                <p class="game-subtitle">Breakout Game</p>
-            </a>
-
-            <a href="FootballGame.html" class="game-card">
-                <div class="game-icon">⚽</div>
-                <h2 class="game-title">足球大战</h2>
-                <p class="game-subtitle">Soccer Battle</p>
-            </a>
+            <div class="contact-item">
+                <div class="contact-icon">✉️</div>
+                <div>
+                    <h3>邮箱</h3>
+                    <p>error_core@163.com</p>
+                </div>
+            </div>
         </div>
     </div>
 

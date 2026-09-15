@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robot Blockly - ERROR-CORE</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+            line-height: 1.7;
+            padding-bottom: 60px;
+        }
+
+        .nav {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 24px 20px 0;
+        }
+
+        .nav a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav a:hover {
+            color: #ffd700;
+        }
+
+        .wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 40px 0 50px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border: 1px solid rgba(255, 215, 0, 0.5);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #ffd700;
+            margin-bottom: 24px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ffd700, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            opacity: 0.9;
+            max-width: 680px;
+            margin: 0 auto 12px;
+        }
+
+        .hero .sub {
+            font-size: 1rem;
+            opacity: 0.7;
+        }
+
+        .cta {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 36px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 1.05rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(255, 107, 107, 0.5);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.6);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .btn-note {
+            width: 100%;
+            text-align: center;
+            margin-top: 14px;
+            font-size: 0.85rem;
+            opacity: 0.6;
+        }
+
+        section {
+            margin-bottom: 48px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            padding-left: 14px;
+            border-left: 4px solid #ff6b6b;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 16px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: #ffd700;
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            opacity: 0.85;
+        }
+
+        pre {
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 18px 20px;
+            overflow-x: auto;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            margin-top: 12px;
+        }
+
+        code {
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .text-block {
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            padding: 20px 24px;
+        }
+
+        .text-block p {
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+
+        .text-block p:last-child {
+            margin-bottom: 0;
+        }
+
+        .text-block a {
+            color: #ffd700;
+        }
+
+        ul {
+            padding-left: 22px;
+            opacity: 0.9;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 14px 18px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.95rem;
+        }
+
+        th {
+            background: rgba(255, 107, 107, 0.15);
+        }
+
+        td a {
+            color: #ffd700;
+        }
+
+        .notice {
+            background: rgba(255, 107, 107, 0.1);
+            border: 1px solid rgba(255, 107, 107, 0.4);
+            border-radius: 12px;
+            padding: 20px 24px;
+            font-size: 0.95rem;
+        }
+
+        .notice p {
+            margin-bottom: 10px;
+        }
+
+        .notice p:last-child {
+            margin-bottom: 0;
+        }
+
+        .notice a {
+            color: #ffd700;
+        }
+
+        .footer {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer a {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .btn {
+                padding: 12px 28px;
+                font-size: 0.95rem;
+            }
+
+            h2 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="index.html">&larr; 返回首页</a>
+    </div>
+
+    <div class="wrapper">
+        <header class="hero">
+            <span class="badge">v0.1.1 公测版 · 当前仅提供 Linux amd64 安装包</span>
+            <h1>Robot Blockly</h1>
+            <p>适用于宇树机器人可视化积木编程桌面软件 —— 拖拽积木即可生成 Python 代码，一键运行对接 <code>unitree_sdk2py</code>。</p>
+            <p class="sub">支持 Go2 四足机器人与 G1 人形机器人，提供积木编程、代码生成、实时运行、状态监控、摄像头回传与激光雷达点云可视化。</p>
+            <div class="cta">
+                <a class="btn btn-primary"
+                   href="https://gitee.com/tengzicong/robot_blockly/releases#release-0.1.1%E5%85%AC%E6%B5%8B%E7%89%88"
+                   target="_blank" rel="noopener noreferrer">
+                    下载 Linux x64 版本
+                </a>
+                <a class="btn btn-secondary"
+                   href="https://gitee.com/tengzicong/robot_blockly"
+                   target="_blank" rel="noopener noreferrer">
+                    访问 Gitee 仓库
+                </a>
+            </div>
+            <p class="btn-note">下载将跳转至 Gitee Releases 页面（0.1.1 公测版）</p>
+        </header>
+
+        <section>
+            <h2>主要功能</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>积木编程</h3>
+                    <p>基于 Google Blockly，拖拽搭建动作序列，支持循环与条件嵌套。</p>
+                </div>
+                <div class="card">
+                    <h3>代码生成</h3>
+                    <p>一键生成可读的 Python 代码，对接 unitree_sdk2py。</p>
+                </div>
+                <div class="card">
+                    <h3>一键运行</h3>
+                    <p>直接执行生成的脚本，实时捕获输出到日志面板。</p>
+                </div>
+                <div class="card">
+                    <h3>实时状态监控</h3>
+                    <p>DDS 订阅 <code>rt/lowstate</code>，显示 IMU / 电池 / 电机状态。</p>
+                </div>
+                <div class="card">
+                    <h3>摄像头回传</h3>
+                    <p>实时显示机器人摄像头画面。</p>
+                </div>
+                <div class="card">
+                    <h3>激光雷达点云</h3>
+                    <p>叠加显示 Go2 激光雷达点云，支持测距标尺。</p>
+                </div>
+                <div class="card">
+                    <h3>程序存取</h3>
+                    <p>Blockly XML 工程文件保存 / 加载 / 导出 <code>.py</code>。</p>
+                </div>
+                <div class="card">
+                    <h3>跨平台设计</h3>
+                    <p>面向 Linux、Windows、macOS 设计；当前 v0.1.1 公测版仅提供 Linux amd64 安装包。</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>快速开始</h2>
+            <div class="text-block">
+                <p><strong>方式一：安装包安装</strong></p>
+                <p>下载 Linux x64 安装包：<a href="https://gitee.com/tengzicong/robot_blockly/releases#release-0.1.1%E5%85%AC%E6%B5%8B%E7%89%88" target="_blank" rel="noopener noreferrer">Gitee Releases（0.1.1 公测版）</a></p>
+                <p><strong>方式二：从源码运行</strong>（需 Python 3.10 与 conda 环境）</p>
+<pre><code># 1. 创建 conda 环境
+conda create -n unitree python=3.10 -y
+conda activate unitree
+
+# 2. 安装依赖
+cd blockly_unitree
+pip install -r requirements.txt
+
+# 3. 获取宇树官方 SDK（第三方组件）
+git clone https://github.com/unitreerobotics/unitree_sdk2_python.git ../unitree_sdk2_python
+pip install -e ../unitree_sdk2_python
+
+# 4. 启动
+python -m app.main</code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>网络配置（有线直连 Go2）</h2>
+            <div class="text-block">
+                <p>Go2 出厂固定 IP 为 <code>192.168.123.161</code>，不提供 DHCP。需将电脑网卡通配静态 IP <code>192.168.123.241/24</code>：</p>
+<pre><code># Linux
+sudo ip addr add 192.168.123.241/24 dev &lt;网卡名&gt;
+
+# macOS
+sudo ifconfig &lt;网卡名&gt; 192.168.123.241 netmask 255.255.255.0</code></pre>
+                <p>软件内置网卡检测与一键配置（Linux），选择正确的有线网口即可。</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>固件要求</h2>
+            <ul>
+                <li>Go2 固件 ≥ 1.1.6（MCF 模式）</li>
+                <li>运动控制需先调用 <code>BalanceStand()</code> 解锁，再发送 <code>Move</code> 指令</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>第三方组件</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>组件</th>
+                        <th>来源</th>
+                        <th>协议</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="https://github.com/unitreerobotics/unitree_sdk2_python" target="_blank" rel="noopener noreferrer">unitree_sdk2py</a></td>
+                        <td>宇树官方 Python SDK</td>
+                        <td>BSD-3-Clause</td>
+                    </tr>
+                    <tr>
+                        <td><a href="https://developers.google.com/blockly" target="_blank" rel="noopener noreferrer">Blockly</a></td>
+                        <td>Google 开源积木编辑器</td>
+                        <td>Apache-2.0</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="margin-top:12px; font-size:0.9rem; opacity:0.7;">以上组件的版权归其各自作者所有，本软件仅在构建 / 运行时引用，不包含第三方代码的修改。</p>
+        </section>
+
+        <section>
+            <h2>免责声明</h2>
+            <div class="notice">
+                <p>本软件为作者独立创作，与宇树（Unitree）公司及其关联实体不存在任何隶属、合作或代理关系，亦未从该公司获得任何形式的授权、赞助或技术支持。</p>
+                <p>本软件仅用于技术研究、学习与交流目的。使用本工具操作任何机器人所产生的全部风险与后果，均由使用者自行承担。使用前请务必阅读完整<a href="https://gitee.com/tengzicong/robot_blockly/blob/main/DISCLAIMER.md" target="_blank" rel="noopener noreferrer">免责声明</a>。</p>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>MIT License · Copyright © ERROR-CORE Team</p>
+            <p>项目地址：<a href="https://gitee.com/tengzicong/robot_blockly" target="_blank" rel="noopener noreferrer">gitee.com/tengzicong/robot_blockly</a></p>
+        </footer>
+    </div>
+</body>
+</html>

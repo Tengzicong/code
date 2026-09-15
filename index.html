@@ -62,6 +62,24 @@
             box-shadow: 0 12px 25px rgba(255, 107, 107, 0.5);
         }
 
+        .btn-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            box-shadow: none;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+        }
+
         .footer {
             position: fixed;
             bottom: 20px;
@@ -93,9 +111,14 @@
             欢迎来到 ERROR-CORE 小游戏平台<br>
             Welcome to ERROR-CORE Mini Games Platform
         </p>
-        <a href="minigame/minigame.html" class="btn">
-            🎮 进入游戏中心 Enter Games
-        </a>
+        <div class="btn-group">
+            <a href="minigame.html" class="btn">
+                🎮 进入游戏中心 Enter Games
+            </a>
+            <a href="robot-blockly.html" class="btn btn-secondary">
+                Robot Blockly 积木编程
+            </a>
+        </div>
     </div>
     <div class="footer">
         © ERROR-CORE Team All Rights Reserved
