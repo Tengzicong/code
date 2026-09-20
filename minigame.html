@@ -7,356 +7,190 @@
     <link rel="stylesheet" href="style.css">
     <script src="js/device-detect.js" defer></script>
     <style>
-        /* Cookie协议弹窗样式 */
-        .cookie-modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(5px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
+/* Cookie 政策弹窗 */
+.cookie-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-modal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--sp-4);
+    background: rgba(4, 7, 16, 0.72);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.24s var(--ease), visibility 0.24s var(--ease);
+}
 
-        .cookie-modal-overlay.show {
-            opacity: 1;
-            visibility: visible;
-        }
+.cookie-modal-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
 
-        .cookie-modal {
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(245, 245, 245, 0.95));
-            border-radius: 20px;
-            padding: 30px;
-            max-width: 500px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            transform: scale(0.9);
-            transition: transform 0.3s ease;
-        }
+.cookie-modal {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-4);
+    width: min(520px, 100%);
+    max-height: min(80vh, 640px);
+    padding: var(--sp-6);
+    background: var(--bg-raised);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--r-lg);
+    box-shadow: var(--sh-lg);
+    transform: translateY(8px) scale(0.985);
+    transition: transform 0.24s var(--ease);
+}
 
-        .cookie-modal-overlay.show .cookie-modal {
-            transform: scale(1);
-        }
+.cookie-modal-overlay.show .cookie-modal {
+    transform: none;
+}
 
-        .cookie-modal h2 {
-            color: #333;
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-            text-align: center;
-        }
+.cookie-modal h2 {
+    font-size: var(--fs-lg);
+    font-weight: 680;
+    letter-spacing: -0.018em;
+    text-align: left;
+    color: var(--fg);
+}
 
-        .cookie-modal-content {
-            color: #555;
-            line-height: 1.6;
-            font-size: 0.95rem;
-            margin-bottom: 20px;
-        }
+.cookie-modal-content {
+    overflow-y: auto;
+    padding-right: var(--sp-2);
+    font-size: var(--fs-sm);
+    line-height: 1.7;
+    color: var(--fg-muted);
+}
 
-        .cookie-modal-content h3 {
-            color: #333;
-            margin-top: 15px;
-            margin-bottom: 10px;
-            font-size: 1.1rem;
-        }
+.cookie-modal-content h3 {
+    margin-top: var(--sp-4);
+    margin-bottom: var(--sp-2);
+    font-size: var(--fs-base);
+    font-weight: 620;
+    color: var(--fg);
+}
 
-        .cookie-modal-content ul {
-            margin-left: 20px;
-            margin-bottom: 10px;
-        }
+.cookie-modal-content h3:first-child {
+    margin-top: 0;
+}
 
-        .cookie-modal-content li {
-            margin-bottom: 5px;
-        }
+.cookie-modal-content p {
+    margin-bottom: var(--sp-2);
+}
 
-        .cookie-modal-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-        }
+.cookie-modal-content ul {
+    margin: 0 0 var(--sp-3) 1.15rem;
+}
 
-        .cookie-btn {
-            padding: 12px 30px;
-            border: none;
-            border-radius: 30px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
+.cookie-modal-content li {
+    margin-bottom: var(--sp-1);
+}
 
-        .cookie-btn.accept {
-            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
-            color: white;
-            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
-        }
+.cookie-modal-content strong {
+    color: var(--fg);
+    font-weight: 600;
+}
 
-        .cookie-btn.accept:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.5);
-        }
+.privacy-link {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent-line);
+}
 
-        .cookie-btn.decline {
-            background: rgba(200, 200, 200, 0.5);
-            color: #555;
-        }
+.privacy-link:hover {
+    border-bottom-color: var(--accent);
+}
 
-        .cookie-btn.decline:hover {
-            background: rgba(200, 200, 200, 0.8);
-        }
+.cookie-consent-checkbox label {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--sp-3);
+    padding: var(--sp-3) var(--sp-4);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    font-size: var(--fs-sm);
+    color: var(--fg-muted);
+    cursor: pointer;
+    transition: border-color var(--dur) var(--ease);
+}
 
-        /* 同意复选框样式 */
-        .cookie-consent-checkbox {
-            margin-bottom: 20px;
-            padding: 15px;
-            background: rgba(0, 0, 0, 0.03);
-            border-radius: 10px;
-        }
+.cookie-consent-checkbox label:hover {
+    border-color: var(--border-strong);
+}
 
-        .cookie-consent-checkbox label {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            color: #555;
-        }
+.cookie-consent-checkbox input[type="checkbox"] {
+    width: 17px;
+    height: 17px;
+    margin-top: 2px;
+    flex-shrink: 0;
+    accent-color: var(--accent);
+    cursor: pointer;
+}
 
-        .cookie-consent-checkbox input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-            accent-color: #ff6b6b;
-        }
+.cookie-modal-buttons {
+    display: flex;
+    gap: var(--sp-3);
+    justify-content: flex-end;
+}
 
-        .privacy-link {
-            color: #2196F3;
-            text-decoration: none;
-            font-weight: 500;
-        }
+.cookie-btn {
+    padding: 10px 22px;
+    min-height: 42px;
+    border: 1px solid transparent;
+    border-radius: var(--r-md);
+    font-family: inherit;
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color var(--dur) var(--ease),
+                border-color var(--dur) var(--ease),
+                color var(--dur) var(--ease);
+}
 
-        .privacy-link:hover {
-            text-decoration: underline;
-        }
+.cookie-btn.accept {
+    background: var(--accent);
+    color: var(--accent-ink);
+}
 
-        /* 禁用状态的同意按钮 */
-        .cookie-btn.accept:disabled {
-            background: rgba(200, 200, 200, 0.5);
-            color: #999;
-            cursor: not-allowed;
-            box-shadow: none;
-            transform: none;
-        }
+.cookie-btn.accept:hover {
+    background: var(--accent-hover);
+}
 
-        @media (max-width: 768px) {
-            .cookie-modal {
-                padding: 20px;
-                margin: 15px;
-            }
+.cookie-btn.accept:disabled {
+    background: var(--surface);
+    border-color: var(--border);
+    color: var(--fg-subtle);
+    cursor: not-allowed;
+}
 
-            .cookie-modal h2 {
-                font-size: 1.3rem;
-            }
+.cookie-btn.decline {
+    background: transparent;
+    border-color: var(--border-strong);
+    color: var(--fg-muted);
+}
 
-            .cookie-modal-buttons {
-                flex-direction: column;
-            }
+.cookie-btn.decline:hover {
+    background: var(--surface-hover);
+    color: var(--fg);
+}
 
-            .cookie-btn {
-                width: 100%;
-            }
-        }
+@media (max-width: 520px) {
+    .cookie-modal {
+        padding: var(--sp-5);
+        max-height: 86vh;
+    }
 
-        .logo-container {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            z-index: 100;
-        }
+    .cookie-modal-buttons {
+        flex-direction: column-reverse;
+    }
 
-        .copyright {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.9rem;
-            font-family: Arial, sans-serif;
-            z-index: 1000;
-            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-
-        .toolbar-container {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-        }
-
-        .error-logo {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-            margin-right: 10px;
-        }
-
-        .toolbar {
-            position: relative;
-            width: 40px;
-            height: 40px;
-            background: rgba(0, 0, 0, 0.85);
-            border-radius: 50%;
-            border: 2px solid #ffd700;
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
-            cursor: pointer;
-            transition: all 0.4s ease;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .toolbar:hover {
-            width: 220px;
-            height: auto;
-            border-radius: 15px;
-            padding: 15px;
-            box-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
-        }
-
-        .toolbar-icon {
-            color: #ffd700;
-            font-size: 1.5rem;
-            transition: all 0.4s ease;
-            z-index: 3;
-        }
-
-        .toolbar:hover .toolbar-icon {
-            opacity: 0;
-            transform: scale(0.5);
-        }
-
-        .toolbar-content {
-            display: none;
-            flex-direction: column;
-            align-items: stretch;
-            gap: 8px;
-            opacity: 0;
-            transform: translateX(20px);
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .toolbar:hover .toolbar-content {
-            display: flex;
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .toolbar-item {
-            opacity: 0;
-            transform: translateX(10px);
-            transition: all 0.3s ease;
-        }
-
-        .toolbar:hover .toolbar-item,
-        .toolbar:hover .social-item {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .toolbar-item:nth-child(1) { transition-delay: 0.1s; }
-        .toolbar-item:nth-child(2) { transition-delay: 0.15s; }
-        .toolbar-item:nth-child(3) { transition-delay: 0.2s; }
-        .toolbar-item:nth-child(4) { transition-delay: 0.25s; }
-
-        .toolbar-title {
-            color: #ffd700;
-            font-size: 1.1rem;
-            font-weight: bold;
-            text-align: center;
-            padding: 8px 0;
-            margin-bottom: 8px;
-            border-bottom: 1px solid rgba(255, 215, 0, 0.3);
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-        }
-
-        .expanded-toolbar-icon {
-            color: #ffd700;
-            font-size: 1.5rem;
-            transition: transform 0.8s linear;
-            align-self: flex-end;
-            margin-top: 5px;
-        }
-
-        .toolbar:hover .expanded-toolbar-icon {
-            animation: rotate360 0.8s linear;
-        }
-
-        @keyframes rotate360 {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .toolbar-item, .social-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 215, 0, 0.9);
-            color: #8b0000;
-            border: none;
-            border-radius: 5px;
-            padding: 8px 15px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            font-size: 0.9rem;
-            min-width: 150px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            text-decoration: none;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .toolbar-item::before, .social-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            transition: 0.5s;
-        }
-
-        .toolbar-item:hover, .social-item:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
-        }
-
-        .toolbar-item:hover::before, .social-item:hover::before {
-            left: 100%;
-        }
-
-        .toolbar-item:active, .social-item:active {
-            transform: translateY(1px) scale(0.98);
-        }
-
-        .social-icon-small {
-            width: 20px;
-            height: 20px;
-        }
+    .cookie-btn {
+        width: 100%;
+    }
+}
     </style>
 </head>
 <body>
@@ -400,57 +234,60 @@
         </div>
     </div>
 
-    <div class="logo-container">
-        <img src="picture/error.png" alt="ERROR Logo" class="error-logo">
-    </div>
-
-    <div class="toolbar-container">
-        <div class="toolbar">
-            <div class="toolbar-icon">⚙️</div>
-            <div class="toolbar-content">
-                <div class="toolbar-title">工具栏<br>Toolbar</div>
-                <a href="index.html" class="toolbar-item">
-                    <span>🏠</span>
-                    <span>首页<br>Home</span>
-                </a>
-                <a href="contact.html" class="toolbar-item">
-                    <span>📞</span>
-                    <span>联系我们<br>Contact</span>
-                </a>
-                <a href="https://space.bilibili.com/3546631121144154" class="social-item" target="_blank">
-                    <img src="picture/bilibili.svg" alt="Bilibili" class="social-icon-small">
-                    <span>B 站<br>Bilibili</span>
-                </a>
-                <a href="https://www.douyin.com/user/MS4wLjABAAAA0cxdKFB-D6ucvm2i3AE92bzBC-xSHgmW0ew1iwh0Isx-DwXKsMF499VcAle9571J" class="social-item" target="_blank">
-                    <img src="picture/douyin.svg" alt="抖音" class="social-icon-small">
-                    <span>抖音<br>Douyin</span>
-                </a>
-                <div class="expanded-toolbar-icon">⚙️</div>
-            </div>
-        </div>
-    </div>
+    <header class="appbar">
+        <a class="brand" href="minigame.html">
+            <img src="picture/error.png" alt="ERROR-CORE Logo" class="brand-mark">
+            <span class="brand-text">
+                <strong>ERROR-CORE</strong>
+                <small>Mini-Games</small>
+            </span>
+        </a>
+        <button type="button" class="nav-toggle" id="navToggle" aria-label="展开导航" aria-expanded="false" aria-controls="appbarNav">☰</button>
+        <nav class="appbar-nav" id="appbarNav" aria-label="主导航">
+            <a href="minigame.html" class="nav-link" aria-current="page">首页</a>
+            <a href="gamecenter.html" class="nav-link">游戏中心</a>
+            <a href="drawing.html" class="nav-link">画板</a>
+            <a href="contact.html" class="nav-link">联系我们</a>
+            <a href="https://space.bilibili.com/3546631121144154" class="nav-link" target="_blank" rel="noopener noreferrer">
+                <img src="picture/bilibili.svg" alt="" class="nav-icon">B 站
+            </a>
+            <a href="https://www.douyin.com/user/MS4wLjABAAAA0cxdKFB-D6ucvm2i3AE92bzBC-xSHgmW0ew1iwh0Isx-DwXKsMF499VcAle9571J" class="nav-link" target="_blank" rel="noopener noreferrer">
+                <img src="picture/douyin.svg" alt="" class="nav-icon">抖音
+            </a>
+        </nav>
+    </header>
 
     <div class="stars" id="stars"></div>
 
     <div class="container">
         <div class="header">
-            <h1 class="main-title">ERROR-CORE小游戏<br>ERROR-CORE Mini-Games</h1>
-            <p class="sub-title">欢迎来到ERROR-CORE！这里有各种有趣的小游戏，让你在闲暇时光享受乐趣。<br>Welcome to ERROR-CORE! Here are various interesting mini-games to enjoy your leisure time.</p>
+            <span class="eyebrow">开源 · 免费 · 无需安装</span>
+            <h1 class="main-title">ERROR-CORE 小游戏</h1>
+            <p class="sub-title">
+                浏览器里直接玩的经典小游戏，桌面与手机均可操作。
+                <span class="en">Play classic mini-games right in your browser.</span>
+            </p>
         </div>
 
         <div class="features-section">
             <a href="gamecenter.html" class="feature-card">
-                <div class="feature-icon">🎮🎯</div>
+                <div class="feature-icon">🎮</div>
                 <h2 class="feature-title">游戏中心</h2>
                 <p class="feature-subtitle">Game Center</p>
+                <p class="game-description">贪吃蛇、射击、打砖块、足球大战，四款游戏与最高分记录。</p>
+                <span class="play-button">进入 →</span>
             </a>
             <a href="drawing.html" class="feature-card">
-                <div class="feature-icon">🎨</div>
+                <div class="feature-icon draw-icon">🎨</div>
                 <h2 class="feature-title">画板</h2>
                 <p class="feature-subtitle">Drawing Board</p>
+                <p class="game-description">可调笔刷与颜色的手绘板，支持导出 PNG 保存到本地。</p>
+                <span class="play-button">开始绘制 →</span>
             </a>
         </div>
     </div>
+
+    <footer class="copyright">© ERROR-CORE Team All Rights Reserved</footer>
 
     <script>
         // Cookie政策弹窗处理
@@ -505,13 +342,33 @@
             }
         }
 
+        function initNavToggle() {
+            const toggle = document.getElementById('navToggle');
+            const nav = document.getElementById('appbarNav');
+            if (!toggle || !nav) return;
+
+            toggle.addEventListener('click', () => {
+                const open = nav.classList.toggle('is-open');
+                toggle.setAttribute('aria-expanded', String(open));
+                toggle.setAttribute('aria-label', open ? '收起导航' : '展开导航');
+                toggle.textContent = open ? '✕' : '☰';
+            });
+
+            // 点击导航项后自动收起，避免移动端菜单遮挡内容
+            nav.addEventListener('click', (e) => {
+                if (e.target.closest('a') && nav.classList.contains('is-open')) {
+                    nav.classList.remove('is-open');
+                    toggle.setAttribute('aria-expanded', 'false');
+                    toggle.textContent = '☰';
+                }
+            });
+        }
+
         window.addEventListener('load', function() {
             initCookieModal();
             createStars();
+            initNavToggle();
         });
     </script>
-<div class="copyright">
-            © ERROR-CORE Team All Rights Reserved
-        </div>
     </body>
 </html>

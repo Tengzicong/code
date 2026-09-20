@@ -4,315 +4,1134 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Robot Blockly - ERROR-CORE</title>
+    <link rel="icon" type="image/svg+xml" href="picture/blockly-unitree.svg">
+    <link rel="apple-touch-icon" href="picture/blockly-unitree.svg">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+/* ==========================================================================
+   ERROR-CORE 设计令牌 · 浅色专业风
+   单一强调色（coral）+ 深海军蓝品牌色；8px 间距网格；6 级字号阶梯
+   ========================================================================== */
+:root {
+    /* 色板 */
+    --bg:            #ffffff;
+    --bg-subtle:     #f7f8fa;
+    --bg-inset:      #eef1f5;
+    --fg:            #16202c;
+    --fg-muted:      #55636f;
+    --fg-subtle:     #7c8894;
+    --line:          #dfe3e8;
+    --line-strong:   #c3cbd4;
+    --brand:         #0f2c4d;
+    --brand-soft:    #1b3f68;
+    --accent:        #c8452f;
+    --accent-hover:  #a83825;
+    --accent-soft:   rgba(200, 69, 47, 0.10);
+    --accent-ring:   rgba(200, 69, 47, 0.22);
+    --warn-fg:       #7c2d12;
+    --warn-bg:       #fff5eb;
+    --warn-line:     #f0c9a4;
+    --warn-bar:      #c2610a;
+    --warn-code-bg:  rgba(124, 45, 18, 0.09);
+    --code-bg:       #10233b;
+    --code-fg:       #e4ecf5;
 
-        body {
-            min-height: 100vh;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: white;
-            line-height: 1.7;
-            padding-bottom: 60px;
-        }
+    /* 字号阶梯 */
+    --fs-xs:   0.8125rem;
+    --fs-sm:   0.875rem;
+    --fs-base: 1rem;
+    --fs-lg:   1.125rem;
+    --fs-xl:   1.375rem;
+    --fs-2xl:  1.75rem;
+    --fs-hero: clamp(2.25rem, 1.6rem + 2.6vw, 3.25rem);
 
-        .nav {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 24px 20px 0;
-        }
+    /* 间距（8px 网格） */
+    --sp-1: 4px;
+    --sp-2: 8px;
+    --sp-3: 16px;
+    --sp-4: 24px;
+    --sp-5: 32px;
+    --sp-6: 48px;
+    --sp-7: 64px;
+    --sp-8: 96px;
 
-        .nav a {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            font-size: 0.95rem;
-            transition: color 0.3s ease;
-        }
+    /* 圆角 */
+    --r-sm: 6px;
+    --r-md: 10px;
+    --r-lg: 16px;
+    --r-full: 999px;
 
-        .nav a:hover {
-            color: #ffd700;
-        }
+    /* 阴影（两档深度，克制使用） */
+    --sh-sm: 0 1px 2px rgba(16, 24, 40, 0.05), 0 1px 3px rgba(16, 24, 40, 0.08);
+    --sh-md: 0 4px 10px -2px rgba(16, 24, 40, 0.08), 0 2px 4px -2px rgba(16, 24, 40, 0.05);
+    --sh-lg: 0 16px 32px -12px rgba(16, 24, 40, 0.16);
 
-        .wrapper {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+    --on-accent:     #ffffff;
+    --topbar-bg:     rgba(255, 255, 255, 0.86);
+    --footer-fg:     rgba(228, 236, 245, 0.72);
+    --footer-fg-hi:  #ffffff;
+    --measure: 66ch;
+    --maxw: 1120px;
+    --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
 
-        .hero {
-            text-align: center;
-            padding: 40px 0 50px;
-        }
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        .badge {
-            display: inline-block;
-            padding: 6px 16px;
-            border: 1px solid rgba(255, 215, 0, 0.5);
-            border-radius: 20px;
-            font-size: 0.85rem;
-            color: #ffd700;
-            margin-bottom: 24px;
-        }
+html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+}
 
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #ffd700, #ff6b6b);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC",
+                 "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    font-size: var(--fs-base);
+    line-height: 1.7;
+    font-variant-numeric: tabular-nums;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
 
-        .hero p {
-            font-size: 1.15rem;
-            opacity: 0.9;
-            max-width: 680px;
-            margin: 0 auto 12px;
-        }
+/* ---------- 顶栏 ---------- */
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: var(--topbar-bg);
+    backdrop-filter: saturate(180%) blur(10px);
+    -webkit-backdrop-filter: saturate(180%) blur(10px);
+    border-bottom: 1px solid var(--line);
+}
 
-        .hero .sub {
-            font-size: 1rem;
-            opacity: 0.7;
-        }
+.topbar-inner {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 var(--sp-4);
+    height: 60px;
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+}
 
-        .cta {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 36px;
-        }
+.wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: var(--fs-base);
+    font-weight: 650;
+    letter-spacing: -0.01em;
+    color: var(--brand);
+    text-decoration: none;
+    white-space: nowrap;
+}
 
-        .btn {
-            display: inline-block;
-            padding: 15px 40px;
-            color: white;
-            text-decoration: none;
-            border-radius: 30px;
-            font-size: 1.05rem;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
+.logo {
+    flex: 0 0 auto;
+    width: 34px;
+    height: 34px;
+    border-radius: var(--r-md);
+    box-shadow: var(--sh-sm);
+}
 
-        .btn-primary {
-            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
-            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
-        }
+/* 全站图片统一圆角 */
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--r-md);
+}
 
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(255, 107, 107, 0.5);
-        }
+.topnav {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-1);
+    margin-left: auto;
+}
 
-        .btn-secondary {
-            background: transparent;
-            border: 2px solid rgba(255, 255, 255, 0.6);
-        }
+.topnav a {
+    padding: 7px 12px;
+    border-radius: var(--r-sm);
+    font-size: var(--fs-sm);
+    color: var(--fg-muted);
+    text-decoration: none;
+    transition: color 0.16s var(--ease), background 0.16s var(--ease);
+}
 
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-3px);
-        }
+.topnav a:hover {
+    color: var(--fg);
+    background: var(--bg-subtle);
+}
 
-        .btn-note {
-            width: 100%;
-            text-align: center;
-            margin-top: 14px;
-            font-size: 0.85rem;
-            opacity: 0.6;
-        }
+.topnav .btn {
+    padding: 7px 16px;
+    font-size: var(--fs-sm);
+}
 
-        section {
-            margin-bottom: 48px;
-        }
+/* ---------- 布局 ---------- */
+.wrap {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 var(--sp-4);
+}
 
-        h2 {
-            font-size: 1.6rem;
-            margin-bottom: 20px;
-            padding-left: 14px;
-            border-left: 4px solid #ff6b6b;
-        }
+.hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    gap: var(--sp-7) var(--sp-6);
+    align-items: start;
+    padding: var(--sp-8) 0 var(--sp-7);
+}
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 16px;
-        }
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-2);
+    padding: 5px 12px 5px 10px;
+    margin-bottom: var(--sp-4);
+    border: 1px solid var(--line);
+    border-radius: var(--r-full);
+    background: var(--bg-subtle);
+    font-size: var(--fs-xs);
+    font-weight: 550;
+    color: var(--fg-muted);
+    letter-spacing: 0.01em;
+}
 
-        .card {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 20px;
-            transition: transform 0.3s ease, background 0.3s ease;
-        }
+.eyebrow::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+}
 
-        .card:hover {
-            transform: translateY(-4px);
-            background: rgba(255, 255, 255, 0.1);
-        }
+h1 {
+    font-size: var(--fs-hero);
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+    font-weight: 700;
+    color: var(--brand);
+    margin-bottom: var(--sp-3);
+}
 
-        .card h3 {
-            font-size: 1.1rem;
-            margin-bottom: 8px;
-            color: #ffd700;
-        }
+.lede {
+    font-size: var(--fs-lg);
+    line-height: 1.62;
+    color: var(--fg-muted);
+    max-width: var(--measure);
+    margin-bottom: var(--sp-3);
+}
 
-        .card p {
-            font-size: 0.95rem;
-            opacity: 0.85;
-        }
+.lede-sub {
+    font-size: var(--fs-base);
+    line-height: 1.7;
+    color: var(--fg-subtle);
+    max-width: var(--measure);
+}
 
-        pre {
-            background: rgba(0, 0, 0, 0.35);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 18px 20px;
-            overflow-x: auto;
-            font-size: 0.9rem;
-            line-height: 1.8;
-            margin-top: 12px;
-        }
+.cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-3);
+    margin-top: var(--sp-5);
+}
 
-        code {
-            font-family: 'Courier New', Courier, monospace;
-        }
+.btn-note {
+    margin-top: var(--sp-3);
+    font-size: var(--fs-sm);
+    color: var(--fg-subtle);
+}
 
-        .text-block {
-            background: rgba(255, 255, 255, 0.06);
-            border-radius: 12px;
-            padding: 20px 24px;
-        }
+/* 首屏规格卡 */
+.spec {
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    background: var(--bg);
+    box-shadow: var(--sh-sm);
+    overflow: hidden;
+}
 
-        .text-block p {
-            margin-bottom: 10px;
-            opacity: 0.9;
-        }
+.spec h2 {
+    padding: var(--sp-3) var(--sp-4);
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--fg-subtle);
+    background: var(--bg-subtle);
+    border-bottom: 1px solid var(--line);
+}
 
-        .text-block p:last-child {
-            margin-bottom: 0;
-        }
+.spec dl {
+    margin: 0;
+    padding: var(--sp-1) var(--sp-4);
+}
 
-        .text-block a {
-            color: #ffd700;
-        }
+.spec-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--sp-3);
+    padding: 11px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: var(--fs-sm);
+}
 
-        ul {
-            padding-left: 22px;
-            opacity: 0.9;
-        }
+.spec-row:last-child {
+    border-bottom: none;
+}
 
-        li {
-            margin-bottom: 8px;
-        }
+.spec-row dt {
+    color: var(--fg-subtle);
+    font-weight: 500;
+}
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: rgba(255, 255, 255, 0.06);
-            border-radius: 12px;
-            overflow: hidden;
-        }
+.spec-row dd {
+    color: var(--fg);
+    font-weight: 600;
+    text-align: right;
+}
 
-        th, td {
-            padding: 14px 18px;
-            text-align: left;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 0.95rem;
-        }
+/* ---------- 按钮 ---------- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sp-2);
+    padding: 12px 24px;
+    border: 1px solid transparent;
+    border-radius: var(--r-sm);
+    font: inherit;
+    font-size: var(--fs-base);
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    text-decoration: none;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.16s var(--ease), border-color 0.16s var(--ease),
+                color 0.16s var(--ease), box-shadow 0.16s var(--ease),
+                transform 0.1s var(--ease);
+}
 
-        th {
-            background: rgba(255, 107, 107, 0.15);
-        }
+.btn:active {
+    transform: translateY(1px);
+}
 
-        td a {
-            color: #ffd700;
-        }
+.btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
 
-        .notice {
-            background: rgba(255, 107, 107, 0.1);
-            border: 1px solid rgba(255, 107, 107, 0.4);
-            border-radius: 12px;
-            padding: 20px 24px;
-            font-size: 0.95rem;
-        }
+.btn-primary {
+    background: var(--accent);
+    color: var(--on-accent);
+    box-shadow: var(--sh-sm);
+}
 
-        .notice p {
-            margin-bottom: 10px;
-        }
+.btn-primary:hover {
+    background: var(--accent-hover);
+    color: var(--on-accent);
+    box-shadow: var(--sh-md);
+}
 
-        .notice p:last-child {
-            margin-bottom: 0;
-        }
+.btn-secondary {
+    background: var(--bg);
+    border-color: var(--line-strong);
+    color: var(--fg);
+}
 
-        .notice a {
-            color: #ffd700;
-        }
+.btn-secondary:hover {
+    background: var(--bg-subtle);
+    border-color: var(--brand-soft);
+    color: var(--brand);
+}
 
-        .footer {
-            text-align: center;
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 0.9rem;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
+/* ---------- 区块 ---------- */
+section {
+    padding: var(--sp-7) 0;
+    border-top: 1px solid var(--line);
+    scroll-margin-top: 76px;
+}
 
-        .footer a {
-            color: rgba(255, 255, 255, 0.7);
-        }
+h2 {
+    font-size: var(--fs-2xl);
+    font-weight: 680;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    color: var(--brand);
+    margin-bottom: var(--sp-2);
+}
 
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.2rem;
-            }
+.section-desc {
+    font-size: var(--fs-base);
+    color: var(--fg-muted);
+    max-width: var(--measure);
+    margin-bottom: var(--sp-5);
+}
 
-            .hero p {
-                font-size: 1rem;
-            }
+h3 {
+    font-size: var(--fs-base);
+    font-weight: 650;
+    color: var(--fg);
+    letter-spacing: -0.008em;
+}
 
-            .btn {
-                padding: 12px 28px;
-                font-size: 0.95rem;
-            }
+a {
+    color: var(--accent);
+    text-decoration: none;
+}
 
-            h2 {
-                font-size: 1.3rem;
-            }
-        }
+a:hover {
+    text-decoration: underline;
+}
+
+/* ---------- 卡片网格：1px 发丝分隔 ---------- */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(272px, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    box-shadow: var(--sh-sm);
+}
+
+.card {
+    background: var(--bg);
+    padding: var(--sp-4);
+    transition: background 0.16s var(--ease);
+}
+
+.card:hover {
+    background: var(--bg-subtle);
+}
+
+.card h3 {
+    margin-bottom: 6px;
+}
+
+.card p {
+    font-size: var(--fs-sm);
+    line-height: 1.68;
+    color: var(--fg-muted);
+}
+
+/* ---------- 代码 ---------- */
+pre {
+    margin: var(--sp-3) 0;
+    padding: var(--sp-4);
+    background: var(--code-bg);
+    color: var(--code-fg);
+    border-radius: var(--r-md);
+    font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: var(--fs-xs);
+    line-height: 1.75;
+    overflow-x: auto;
+}
+
+pre code {
+    background: none;
+    color: inherit;
+    padding: 0;
+    font-size: inherit;
+}
+
+code {
+    font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.875em;
+    background: var(--bg-inset);
+    color: var(--brand);
+    padding: 2px 6px;
+    border-radius: var(--r-sm);
+}
+
+.text-block {
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    background: var(--bg-subtle);
+    padding: var(--sp-5);
+}
+
+.text-block > * + * {
+    margin-top: var(--sp-3);
+}
+
+.text-block p {
+    max-width: var(--measure);
+    color: var(--fg-muted);
+}
+
+.text-block p:first-child {
+    color: var(--fg);
+}
+
+ul {
+    padding-left: var(--sp-5);
+    color: var(--fg-muted);
+}
+
+li {
+    margin-bottom: var(--sp-2);
+}
+
+/* ---------- 表格 ---------- */
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    background: var(--bg);
+    box-shadow: var(--sh-sm);
+}
+
+th, td {
+    padding: 13px var(--sp-4);
+    text-align: left;
+    font-size: var(--fs-sm);
+    vertical-align: top;
+}
+
+th {
+    background: var(--bg-subtle);
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--fg-subtle);
+}
+
+td {
+    border-top: 1px solid var(--line);
+    color: var(--fg-muted);
+    line-height: 1.65;
+}
+
+td strong {
+    color: var(--fg);
+    font-weight: 600;
+}
+
+tbody tr {
+    transition: background 0.14s var(--ease);
+}
+
+tbody tr:hover {
+    background: var(--bg-subtle);
+}
+
+/* ---------- 提示块 ---------- */
+.notice {
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--brand-soft);
+    border-radius: var(--r-md);
+    background: var(--bg-subtle);
+    padding: var(--sp-4) var(--sp-5);
+    font-size: var(--fs-sm);
+    color: var(--fg-muted);
+}
+
+.notice p + p {
+    margin-top: var(--sp-2);
+}
+
+.footnote {
+    margin-top: var(--sp-3);
+    font-size: var(--fs-xs);
+    color: var(--fg-subtle);
+}
+
+/* ---------- 页脚 ---------- */
+.footer {
+    margin-top: var(--sp-7);
+    background: var(--brand);
+    color: var(--footer-fg);
+    font-size: var(--fs-sm);
+}
+
+.footer-inner {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: var(--sp-6) var(--sp-4);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-3) var(--sp-6);
+    align-items: center;
+    justify-content: space-between;
+}
+
+.footer a {
+    color: var(--on-accent);
+    opacity: 0.82;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+
+.footer-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2) var(--sp-4);
+}
+
+/* ==========================================================================
+   下载中心
+   ========================================================================== */
+.dlw {
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    background: var(--bg);
+    box-shadow: var(--sh-md);
+    overflow: hidden;
+}
+
+.dlw-head {
+    padding: var(--sp-5) var(--sp-5) var(--sp-4);
+    border-bottom: 1px solid var(--line);
+}
+
+.dlw-head h3 {
+    font-size: var(--fs-xl);
+    font-weight: 680;
+    letter-spacing: -0.018em;
+    color: var(--brand);
+    margin-bottom: var(--sp-1);
+}
+
+.dlw-head p {
+    font-size: var(--fs-sm);
+    color: var(--fg-muted);
+}
+
+.dlw-body {
+    padding: var(--sp-5);
+}
+
+.dlw-detect {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-2);
+    font-size: var(--fs-sm);
+    color: var(--fg-muted);
+    background: var(--bg-subtle);
+    border: 1px solid var(--line);
+    border-radius: var(--r-sm);
+    padding: 10px var(--sp-3);
+    margin-bottom: var(--sp-4);
+}
+
+.dlw-detect::before {
+    content: "";
+    flex: 0 0 7px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--fg-subtle);
+}
+
+.dlw-detect.ready::before {
+    background: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-ring);
+}
+
+.dlw-detect b {
+    color: var(--fg);
+    font-weight: 600;
+}
+
+.dlw-os {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(196px, 1fr));
+    gap: var(--sp-2);
+    margin-bottom: var(--sp-5);
+}
+
+.dlw-os button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 13px var(--sp-3);
+    font: inherit;
+    font-size: var(--fs-sm);
+    color: var(--fg);
+    text-align: left;
+    background: var(--bg);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--r-md);
+    cursor: pointer;
+    transition: border-color 0.16s var(--ease), box-shadow 0.16s var(--ease),
+                background 0.16s var(--ease);
+}
+
+.dlw-os button:hover {
+    border-color: var(--brand-soft);
+    background: var(--bg-subtle);
+}
+
+.dlw-os button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.dlw-os button[aria-pressed="true"] {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-ring);
+    background: var(--accent-soft);
+}
+
+.dlw-os svg {
+    flex: 0 0 18px;
+    width: 18px;
+    height: 18px;
+    color: var(--fg-subtle);
+    transition: color 0.16s var(--ease);
+}
+
+.dlw-os button[aria-pressed="true"] svg,
+.dlw-os button[aria-pressed="true"] .os-name {
+    color: var(--accent-hover);
+}
+
+.dlw-os .os-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.35;
+    min-width: 0;
+}
+
+.dlw-os .os-name {
+    font-weight: 600;
+    color: var(--fg);
+}
+
+.dlw-os button[aria-pressed="true"] .os-name {
+    font-weight: 650;
+}
+
+.dlw-os .os-text small {
+    font-size: var(--fs-xs);
+    font-weight: 400;
+    color: var(--fg-subtle);
+}
+
+.dlw-os .na {
+    position: absolute;
+    top: 7px;
+    right: 9px;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--fg-subtle);
+    letter-spacing: 0.01em;
+}
+
+.dlw-dl {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-4) var(--sp-5);
+    padding: var(--sp-4);
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    background: var(--bg-subtle);
+}
+
+.btn-dl {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 28px;
+    background: var(--accent);
+    color: var(--on-accent);
+    border: none;
+    border-radius: var(--r-sm);
+    font-size: var(--fs-base);
+    font-weight: 650;
+    letter-spacing: -0.008em;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: var(--sh-sm);
+    transition: background 0.16s var(--ease), box-shadow 0.16s var(--ease),
+                transform 0.1s var(--ease);
+}
+
+.btn-dl:hover {
+    background: var(--accent-hover);
+    color: var(--on-accent);
+    text-decoration: none;
+    box-shadow: var(--sh-md);
+}
+
+.btn-dl:active {
+    transform: translateY(1px);
+}
+
+.btn-dl:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+}
+
+.btn-dl svg {
+    width: 18px;
+    height: 18px;
+}
+
+.dlw-meta {
+    flex: 1;
+    min-width: 220px;
+    font-size: var(--fs-sm);
+    color: var(--fg-muted);
+    line-height: 1.6;
+}
+
+.dlw-meta .fname {
+    font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: var(--fs-xs);
+    color: var(--fg);
+    word-break: break-all;
+}
+
+.dlw-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-3);
+    font-size: var(--fs-sm);
+}
+
+.dlw-actions button {
+    font: inherit;
+    font-size: var(--fs-sm);
+    color: var(--accent);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: color 0.16s var(--ease);
+}
+
+.dlw-actions button:hover,
+.dlw-actions a:hover {
+    text-decoration: underline;
+}
+
+.dlw-actions button:focus-visible,
+.dlw a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 3px;
+}
+
+.dlw-na {
+    padding: var(--sp-4);
+    border: 1px dashed var(--line-strong);
+    border-radius: var(--r-md);
+    background: var(--bg-subtle);
+    font-size: var(--fs-sm);
+    color: var(--fg-muted);
+}
+
+.dlw-na strong {
+    color: var(--fg);
+    font-weight: 650;
+}
+
+.dlw-warn {
+    margin: 0 var(--sp-5) var(--sp-5);
+    background: var(--warn-bg);
+    border: 1px solid var(--warn-line);
+    border-left: 3px solid var(--warn-bar);
+    border-radius: var(--r-md);
+    padding: var(--sp-4);
+    font-size: var(--fs-sm);
+    color: var(--warn-fg);
+}
+
+.dlw-warn h4 {
+    font-size: var(--fs-base);
+    font-weight: 650;
+    color: var(--warn-fg);
+    margin-bottom: var(--sp-2);
+}
+
+.dlw-warn ol {
+    margin: var(--sp-2) 0 0 var(--sp-5);
+}
+
+.dlw-warn li {
+    margin-bottom: 5px;
+    color: var(--warn-fg);
+}
+
+.dlw-warn pre {
+    margin: 10px 0 0;
+    padding: 11px var(--sp-3);
+    background: var(--code-bg);
+    color: var(--code-fg);
+    border-radius: var(--r-sm);
+    font-size: var(--fs-xs);
+    overflow-x: auto;
+}
+
+.dlw-warn .install {
+    margin-top: var(--sp-3);
+    padding-top: var(--sp-3);
+    border-top: 1px solid var(--warn-line);
+}
+
+.dlw-warn code {
+    background: var(--warn-code-bg);
+    color: var(--warn-fg);
+}
+
+.dlw-req {
+    padding: var(--sp-5);
+    border-top: 1px solid var(--line);
+    background: var(--bg-subtle);
+}
+
+.dlw-req h4 {
+    font-size: var(--fs-lg);
+    font-weight: 650;
+    letter-spacing: -0.012em;
+    color: var(--brand);
+    margin-bottom: var(--sp-3);
+}
+
+.dlw-req table {
+    box-shadow: none;
+}
+
+.dlw-foot {
+    padding: var(--sp-3) var(--sp-5);
+    border-top: 1px solid var(--line);
+    font-size: var(--fs-xs);
+    color: var(--fg-subtle);
+    background: var(--bg);
+}
+
+/* ---------- 响应式 ---------- */
+@media (max-width: 900px) {
+    .hero {
+        grid-template-columns: 1fr;
+        gap: var(--sp-6);
+        padding-top: var(--sp-7);
+    }
+}
+
+@media (max-width: 720px) {
+    :root {
+        --fs-2xl: 1.45rem;
+    }
+
+    .topnav a:not(.btn) {
+        display: none;
+    }
+
+    .hero {
+        padding-top: var(--sp-6);
+        padding-bottom: var(--sp-6);
+    }
+
+    section {
+        padding: var(--sp-6) 0;
+    }
+
+/* 表格在窄屏改为横向滚动，避免 4 列内容撑破容器 */
+    table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        white-space: nowrap;
+    }
+
+    td {
+        white-space: normal;
+        min-width: 120px;
+    }
+
+    th:first-child,
+    td:first-child {
+        position: sticky;
+        left: 0;
+        background: var(--bg);
+        z-index: 1;
+    }
+
+    th:first-child {
+        background: var(--bg-subtle);
+    }
+
+    .cta .btn {
+        flex: 1 1 auto;
+    }
+
+    .dlw-head,
+    .dlw-body,
+    .dlw-req,
+    .dlw-foot {
+        padding-left: var(--sp-4);
+        padding-right: var(--sp-4);
+    }
+
+    .dlw-warn {
+        margin-left: var(--sp-4);
+        margin-right: var(--sp-4);
+    }
+
+    .btn-dl {
+        width: 100%;
+    }
+
+    .dlw-dl {
+        gap: var(--sp-3);
+    }
+
+    th, td {
+        padding: 11px var(--sp-3);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+}
     </style>
 </head>
 <body>
-    <div class="nav">
-        <a href="index.html">&larr; 返回首页</a>
-    </div>
-
-    <div class="wrapper">
-        <header class="hero">
-            <span class="badge">v0.1.1 公测版 · 当前仅提供 Linux amd64 安装包</span>
-            <h1>Robot Blockly</h1>
-            <p>适用于宇树机器人可视化积木编程桌面软件 —— 拖拽积木即可生成 Python 代码，一键运行对接 <code>unitree_sdk2py</code>。</p>
-            <p class="sub">支持 Go2 四足机器人与 G1 人形机器人，提供积木编程、代码生成、实时运行、状态监控、摄像头回传与激光雷达点云可视化。</p>
-            <div class="cta">
-                <a class="btn btn-primary"
-                   href="https://gitee.com/tengzicong/robot_blockly/releases#release-0.1.1%E5%85%AC%E6%B5%8B%E7%89%88"
-                   target="_blank" rel="noopener noreferrer">
-                    下载 Linux x64 版本
-                </a>
+    <header class="topbar">
+        <div class="topbar-inner">
+            <a class="wordmark" href="index.html"><img class="logo" src="picture/blockly-unitree.svg" alt="Robot Blockly 标识" width="34" height="34">Robot Blockly</a>
+            <nav class="topnav">
+                <a href="#download">下载</a>
+                <a href="#features">功能</a>
+                <a href="#quickstart">快速开始</a>
+                <a href="errorcore.html">关于我们</a>
                 <a class="btn btn-secondary"
-                   href="https://gitee.com/tengzicong/robot_blockly"
-                   target="_blank" rel="noopener noreferrer">
-                    访问 Gitee 仓库
-                </a>
+                   href="https://github.com/Tengzicong/Robot_Blockly"
+                   target="_blank" rel="noopener noreferrer">GitHub</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="wrap">
+        <header class="hero">
+            <div>
+                <span class="eyebrow">v0.1.1 公测版 · 支持 Intel 与 Apple Silicon</span>
+                <h1>Robot Blockly</h1>
+                <p class="lede">为宇树机器人设计的可视化积木编程桌面软件。拖拽积木即可生成 Python 代码，一键运行并直接对接 <code>unitree_sdk2py</code>。</p>
+                <p class="lede-sub">支持 Go2 四足机器人与 G1 人形机器人，覆盖积木编程、代码生成、实时运行、状态监控、摄像头回传与激光雷达点云可视化。</p>
+                <div class="cta">
+                    <a class="btn btn-primary" href="#download">下载 Robot Blockly</a>
+                    <a class="btn btn-secondary"
+                       href="https://github.com/Tengzicong/Robot_Blockly"
+                       target="_blank" rel="noopener noreferrer">访问 GitHub 仓库</a>
+                </div>
+                <p class="btn-note">自动识别操作系统与芯片架构，推荐对应的安装包</p>
             </div>
-            <p class="btn-note">下载将跳转至 Gitee Releases 页面（0.1.1 公测版）</p>
+
+            <aside class="spec">
+                <h2>版本信息</h2>
+                <dl>
+                    <div class="spec-row"><dt>当前版本</dt><dd>0.1.1 公测版</dd></div>
+                    <div class="spec-row"><dt>许可证</dt><dd>MIT License</dd></div>
+                    <div class="spec-row"><dt>macOS</dt><dd>Intel 可下载 · Apple Silicon 打包中</dd></div>
+                    <div class="spec-row"><dt>Linux</dt><dd>x86_64 (.deb)</dd></div>
+                    <div class="spec-row"><dt>运行环境</dt><dd>Python 3.10</dd></div>
+                    <div class="spec-row"><dt>适配机器人</dt><dd>Unitree Go2 / G1</dd></div>
+                </dl>
+            </aside>
         </header>
 
-        <section>
+        <section id="download">
+            <h2>下载</h2>
+            <p class="section-desc">我们会根据您的浏览器环境预选安装包；若判断不准确，请手动选择您的平台。</p>
+            <div class="dlw">
+                <div class="dlw-head">
+                    <h3>选择您的操作系统</h3>
+                    <p>Intel 与 Apple Silicon 的安装包互不通用，请按芯片型号选择。</p>
+                </div>
+
+                <div class="dlw-body">
+                    <div class="dlw-detect" id="dlw-detect">正在检测您的系统与芯片架构…</div>
+                    <div class="dlw-os" id="dlw-os" role="group" aria-label="操作系统选择"></div>
+                    <div id="dlw-slot"></div>
+                </div>
+
+                <div class="dlw-warn" id="dlw-warn" hidden>
+                    <h4>macOS 首次打开需要通过 Gatekeeper</h4>
+                    <p>本软件未做 Apple 开发者签名与公证（无开发者证书），首次打开会被系统拦截。任选一种方式即可正常运行：</p>
+                    <ol>
+                        <li><strong>右键</strong>点击应用图标 → <strong>打开</strong> → 在弹窗中再次点击<strong>打开</strong>（仅需一次）</li>
+                        <li>系统设置 → 隐私与安全性 → 在底部提示处点击<strong>仍要打开</strong></li>
+                        <li>或在终端移除隔离属性：</li>
+                    </ol>
+                    <pre>xattr -dr com.apple.quarantine /Applications/RobotBlockly.app</pre>
+                    <p class="install">安装步骤：双击挂载 <code>.dmg</code> → 将 <code>RobotBlockly.app</code> 拖入「应用程序」→ 弹出磁盘。</p>
+                </div>
+
+                <div class="dlw-req">
+                    <h4>系统要求</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">平台</th>
+                                <th scope="col">最低系统版本</th>
+                                <th scope="col">要求说明</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>macOS (Intel)</strong></td>
+                                <td>macOS 12 Monterey 及以上</td>
+                                <td>仅适用于 Intel x86_64 芯片机型，与 Apple Silicon 版本互不通用</td>
+                            </tr>
+                            <tr>
+                                <td><strong>macOS (Apple Silicon)</strong></td>
+                                <td>macOS 12 Monterey 及以上</td>
+                                <td>支持 M1 / M2 / M3 / M4 系列芯片，原生 arm64 安装包正在打包中</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Linux (x64)</strong></td>
+                                <td>主流发行版</td>
+                                <td>amd64 架构；需具备与机器人通信的有线网口</td>
+                            </tr>
+                            <tr>
+                                <td><strong>通用</strong></td>
+                                <td>—</td>
+                                <td>与机器人处于同网段；Go2 固件 ≥ 1.1.6（MCF 模式）</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="dlw-foot">安装包托管于 GitHub Releases。</div>
+            </div>
+        </section>
+
+        <section id="features">
             <h2>主要功能</h2>
+            <p class="section-desc">从积木搭建到真机运行，编辑器、代码生成与设备遥测在同一个桌面应用内完成。</p>
             <div class="grid">
                 <div class="card">
                     <h3>积木编程</h3>
@@ -320,19 +1139,19 @@
                 </div>
                 <div class="card">
                     <h3>代码生成</h3>
-                    <p>一键生成可读的 Python 代码，对接 unitree_sdk2py。</p>
+                    <p>一键生成可读的 Python 代码，直接对接 unitree_sdk2py 接口。</p>
                 </div>
                 <div class="card">
                     <h3>一键运行</h3>
-                    <p>直接执行生成的脚本，实时捕获输出到日志面板。</p>
+                    <p>在应用内执行生成的脚本，输出实时捕获到日志面板。</p>
                 </div>
                 <div class="card">
                     <h3>实时状态监控</h3>
-                    <p>DDS 订阅 <code>rt/lowstate</code>，显示 IMU / 电池 / 电机状态。</p>
+                    <p>DDS 订阅 <code>rt/lowstate</code>，显示 IMU、电池与电机状态。</p>
                 </div>
                 <div class="card">
                     <h3>摄像头回传</h3>
-                    <p>实时显示机器人摄像头画面。</p>
+                    <p>实时显示机器人摄像头画面，用于对位与调试。</p>
                 </div>
                 <div class="card">
                     <h3>激光雷达点云</h3>
@@ -340,20 +1159,21 @@
                 </div>
                 <div class="card">
                     <h3>程序存取</h3>
-                    <p>Blockly XML 工程文件保存 / 加载 / 导出 <code>.py</code>。</p>
+                    <p>Blockly XML 工程文件保存、加载，并可导出为 <code>.py</code>。</p>
                 </div>
                 <div class="card">
-                    <h3>跨平台设计</h3>
-                    <p>面向 Linux、Windows、macOS 设计；当前 v0.1.1 公测版仅提供 Linux amd64 安装包。</p>
+                    <h3>跨平台支持</h3>
+                    <p>支持 Intel（x86_64）与 Apple Silicon M 系列（arm64）芯片，以及 Linux x64。两种 Mac 架构安装包互不通用。</p>
                 </div>
             </div>
         </section>
 
-        <section>
+        <section id="quickstart">
             <h2>快速开始</h2>
+            <p class="section-desc">两种方式上手：直接使用打包好的安装包，或从源码运行以便修改积木定义。</p>
             <div class="text-block">
                 <p><strong>方式一：安装包安装</strong></p>
-                <p>下载 Linux x64 安装包：<a href="https://gitee.com/tengzicong/robot_blockly/releases#release-0.1.1%E5%85%AC%E6%B5%8B%E7%89%88" target="_blank" rel="noopener noreferrer">Gitee Releases（0.1.1 公测版）</a></p>
+                <p>macOS (Intel) 下载 <code>.dmg</code>，Linux 下载 <code>.deb</code>，请前往上方<a href="#download">下载中心</a>选择对应平台。</p>
                 <p><strong>方式二：从源码运行</strong>（需 Python 3.10 与 conda 环境）</p>
 <pre><code># 1. 创建 conda 环境
 conda create -n unitree python=3.10 -y
@@ -373,7 +1193,8 @@ python -m app.main</code></pre>
         </section>
 
         <section>
-            <h2>网络配置（有线直连 Go2）</h2>
+            <h2>网络配置</h2>
+            <p class="section-desc">有线直连 Go2 时需手动配置静态 IP，机器人出厂不提供 DHCP。</p>
             <div class="text-block">
                 <p>Go2 出厂固定 IP 为 <code>192.168.123.161</code>，不提供 DHCP。需将电脑网卡通配静态 IP <code>192.168.123.241/24</code>：</p>
 <pre><code># Linux
@@ -395,12 +1216,13 @@ sudo ifconfig &lt;网卡名&gt; 192.168.123.241 netmask 255.255.255.0</code></pr
 
         <section>
             <h2>第三方组件</h2>
+            <p class="section-desc">本项目在构建与运行时引用以下开源组件，其版权归各自作者所有。</p>
             <table>
                 <thead>
                     <tr>
-                        <th>组件</th>
-                        <th>来源</th>
-                        <th>协议</th>
+                        <th scope="col">组件</th>
+                        <th scope="col">来源</th>
+                        <th scope="col">协议</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -416,21 +1238,260 @@ sudo ifconfig &lt;网卡名&gt; 192.168.123.241 netmask 255.255.255.0</code></pr
                     </tr>
                 </tbody>
             </table>
-            <p style="margin-top:12px; font-size:0.9rem; opacity:0.7;">以上组件的版权归其各自作者所有，本软件仅在构建 / 运行时引用，不包含第三方代码的修改。</p>
+            <p class="footnote">本软件仅引用上述组件，不包含对第三方代码的修改与再分发。</p>
         </section>
 
         <section>
             <h2>免责声明</h2>
             <div class="notice">
                 <p>本软件为作者独立创作，与宇树（Unitree）公司及其关联实体不存在任何隶属、合作或代理关系，亦未从该公司获得任何形式的授权、赞助或技术支持。</p>
-                <p>本软件仅用于技术研究、学习与交流目的。使用本工具操作任何机器人所产生的全部风险与后果，均由使用者自行承担。使用前请务必阅读完整<a href="https://gitee.com/tengzicong/robot_blockly/blob/main/DISCLAIMER.md" target="_blank" rel="noopener noreferrer">免责声明</a>。</p>
+                <p>本软件仅用于技术研究、学习与交流目的。使用本工具操作任何机器人所产生的全部风险与后果，均由使用者自行承担。使用前请务必阅读完整<a href="https://github.com/Tengzicong/Robot_Blockly/blob/main/DISCLAIMER.md" target="_blank" rel="noopener noreferrer">免责声明</a>。</p>
             </div>
         </section>
-
-        <footer class="footer">
-            <p>MIT License · Copyright © ERROR-CORE Team</p>
-            <p>项目地址：<a href="https://gitee.com/tengzicong/robot_blockly" target="_blank" rel="noopener noreferrer">gitee.com/tengzicong/robot_blockly</a></p>
-        </footer>
     </div>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <p>MIT License · © ERROR-CORE Team</p>
+            <div class="footer-meta">
+                <a href="https://github.com/Tengzicong/Robot_Blockly" target="_blank" rel="noopener noreferrer">GitHub 仓库</a>
+                <a href="errorcore.html">关于 ERROR-CORE</a>
+            </div>
+        </div>
+    </footer>
+<script>
+/* ==========================================================================
+   下载中心
+   升级版本时只需改 RELEASE 对象：tag 为 Release 标签，assets 的键与 PLATFORMS 的 id 对应
+   ========================================================================== */
+const RELEASE = {
+    tag: 'v1.0.0_beta',
+    label: '0.1.1',
+    baseUrl: 'https://github.com/Tengzicong/Robot_Blockly/releases/download/',
+    releasesPage: 'https://github.com/Tengzicong/Robot_Blockly/releases',
+    assets: {
+        'mac-intel': { file: 'RobotBlockly-0.1.1-x86_64.dmg', size: '299 MB', note: 'x86_64 · macOS 12+' },
+        'mac-arm':   null,
+        'linux-x64': { file: 'Robot-blockly_0.1.2_amd64.deb', size: '248 KB', note: 'amd64 · .deb 安装包' },
+        'linux-arm': null,
+        'win-x64':   null
+    }
+};
+
+const PLATFORMS = [
+    { id: 'mac-intel', name: 'macOS (Intel)',         sub: 'x86_64 · macOS 12+', icon: 'apple'   },
+    { id: 'mac-arm',   name: 'macOS (Apple Silicon)', sub: 'arm64 · M1 / M2 / M3 / M4', icon: 'apple' },
+    { id: 'linux-x64', name: 'Linux (64-bit)',        sub: 'x86_64 / amd64 · deb', icon: 'linux' },
+    { id: 'linux-arm', name: 'Linux (Aarch64)',       sub: 'arm64 · deb',        icon: 'linux'   },
+    { id: 'win-x64',   name: 'Windows (64-bit)',      sub: 'x86_64',             icon: 'windows' }
+];
+
+const ICONS = {
+    apple: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.05 12.54c-.02-2.3 1.88-3.4 1.96-3.46-1.07-1.56-2.73-1.78-3.32-1.8-1.42-.14-2.76.83-3.48.83-.71 0-1.82-.81-2.99-.79-1.54.02-2.96.89-3.75 2.27-1.6 2.78-.41 6.9 1.15 9.16.76 1.11 1.67 2.36 2.86 2.31 1.15-.05 1.58-.74 2.97-.74 1.38 0 1.77.74 2.98.72 1.23-.02 2.01-1.13 2.76-2.25.87-1.29 1.23-2.54 1.25-2.6-.03-.02-2.39-.92-2.41-3.63zM14.77 5.3c.63-.77 1.06-1.83.94-2.89-.91.04-2.01.61-2.66 1.37-.58.68-1.09 1.77-.96 2.81 1.02.08 2.05-.51 2.68-1.29z"/></svg>',
+    linux: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.3 2c-1.9 0-3.2 1.6-3.4 3.7-.1 1.2.1 2.2.4 3-.9.5-2 1.7-2.8 3.2-.7 1.3-1 2.5-1.3 3.4-.1.4-.4.9-.7 1.4-.5.8-1 1.6-.8 2.3.1.6.7.9 1.5.9.4 0 .8-.1 1.1-.2.2-.1.4-.2.6-.2.3 0 .6.2 1 .5.7.5 1.6 1.1 3.1 1.1h.1c1.5 0 2.4-.6 3.1-1.1.4-.3.7-.5 1-.5.2 0 .4.1.6.2.3.1.7.2 1.1.2.8 0 1.4-.3 1.5-.9.2-.7-.3-1.5-.8-2.3-.3-.5-.6-1-.7-1.4-.3-.9-.6-2.1-1.3-3.4-.8-1.5-1.9-2.7-2.8-3.2.3-.8.5-1.8.4-3C15.5 3.6 14.2 2 12.3 2zm-1.6 3.4c.4 0 .7.4.8 1.1 0 .3-.1.6-.3.8-.2-.1-.4-.3-.5-.6-.1-.4-.2-1 .0-1.3zm3.2 0c.2.3.1.9 0 1.3-.1.3-.3.5-.5.6-.2-.2-.3-.5-.3-.8.1-.7.4-1.1.8-1.1zM10 9.4c.6 0 1.2.4 1.6 1.1.2.4.5.6.8.6s.6-.2.8-.6c.4-.7 1-1.1 1.6-1.1.3 0 .5.1.7.3-.6.3-1.3 1-1.6 2-.3-.2-.7-.4-1-.4-.5 0-.9.3-1.2.3-.3 0-.7-.3-1.2-.3-.4 0-.8.2-1.1.5-.3-.9-1-1.7-1.6-2 .2-.2.4-.4.7-.4zm-.6 3.2c.4 0 .7.4.9 1 .1.4.2.7.2 1-.3.2-.7.3-1.1.3-.6 0-1-.3-1.1-.7-.1-.5.2-1.2.7-1.5.2-.1.3-.1.4-.1zm3.6 0c.4 0 .8.4.8.9v2.9c0 .5-.4.9-.8.9s-.8-.4-.8-.9v-2.9c0-.5.4-.9.8-.9zm2.6 0c.1 0 .2 0 .4.1.5.3.8 1 .7 1.5-.1.4-.5.7-1.1.7-.4 0-.8-.1-1.1-.3 0-.3.1-.6.2-1 .2-.6.5-1 .9-1z"/></svg>',
+    windows: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 5.4 10.6 4.3v7.2H3zM11.4 4.2 21 3v8.5h-9.6zM3 12.5h7.6v7.2L3 18.6zM11.4 12.5H21V21l-9.6-1.3z"/></svg>',
+    download: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v13M6 11l6 6 6-6M4 21h16"/></svg>'
+};
+
+/* ==========================================================================
+   架构检测：返回 'arm64' / 'x86_64' / null
+
+   信号优先级：
+   1) Client Hints（Chromium 系）：navigator.userAgentData.getHighEntropyValues(['arch'])
+   2) WebGL 渲染器名称（Safari 等无 Client Hints 的浏览器）：
+      Apple Silicon 上报 "Apple GPU" / "Apple M1" 等，Intel Mac 上报 "Intel" / "AMD"，
+      据此可区分两类 Mac —— 这是浏览器侧唯一可行的判定手段。
+   3) UA 字符串中的架构字样（Linux 的 aarch64 / x86_64 等）
+   ========================================================================== */
+function archFromClientHints() {
+    return navigator.userAgentData
+        ? navigator.userAgentData.getHighEntropyValues(['platform', 'arch', 'bitness'])
+              .then(h => (h && h.arch) ? normalizeArch(h.arch) : null)
+              .catch(() => null)
+        : Promise.resolve(null);
+}
+
+function normalizeArch(raw) {
+    const a = String(raw).toLowerCase();
+    if (a === 'arm' || a === 'arm64' || a === 'aarch64') return 'arm64';
+    if (a === 'x86' || a === 'x86_64' || a === 'amd64')  return 'x86_64';
+    return null;
+}
+
+function archFromWebGL() {
+    try {
+        const canvas = document.createElement('canvas');
+        const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+        if (!gl) return null;
+        const ext = gl.getExtension('WEBGL_debug_renderer_info');
+        const renderer = String(
+            (ext && gl.getParameter(ext.UNMASKED_RENDERER_WEBGL)) ||
+            gl.getParameter(gl.RENDERER) || ''
+        );
+        // 主动释放上下文，避免占用浏览器有限的 WebGL context 数量
+        const lose = gl.getExtension('WEBGL_lose_context');
+        if (lose) lose.loseContext();
+
+        if (/apple\s+(gpu|m1|m2|m3|m4|m5)/i.test(renderer)) return 'arm64';
+        if (/\b(intel|amd|nvidia|geforce|radeon|iris)\b/i.test(renderer)) return 'x86_64';
+        return null;
+    } catch (e) {
+        return null;
+    }
+}
+
+async function detectArch() {
+    return (await archFromClientHints()) || archFromWebGL() || null;
+}
+
+function archFromUA() {
+    const ua = navigator.userAgent;
+    if (/aarch64|arm64|\barm\b/i.test(ua)) return 'arm64';
+    if (/x86_64|x64|amd64|wow64/i.test(ua)) return 'x86_64';
+    return null;
+}
+
+/* ==========================================================================
+   平台 + 架构 → 安装包
+   Intel 与 Apple Silicon 安装包互不通用，架构无法确认时不猜测，交由用户选择。
+   ========================================================================== */
+async function detectPlatform() {
+    const ua = navigator.userAgent;
+    const isIPad = /iPad|iPhone|iPod/.test(ua) ||
+        (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    const isMacLike = /Mac|iPhone|iPad|iPod/.test((navigator.platform || '') + ' ' + ua) && !isIPad;
+    const isLinux = /Linux|X11/.test(ua) && !/Android/.test(ua);
+
+    // 先取 UA 架构线索（Linux 最可靠），再取 Client Hints / WebGL
+    const arch = (isLinux ? archFromUA() : null) || await detectArch() || (isLinux ? archFromUA() : null);
+
+    if (isIPad)                          return { id: null,        os: 'iPadOS', arch: arch || 'arm64' };
+    if (/Windows NT/.test(ua))           return { id: 'win-x64',   os: 'Windows', arch: arch || 'x86_64' };
+    if (isMacLike) {
+        if (arch === 'arm64')            return { id: 'mac-arm',   os: 'macOS (Apple Silicon)', arch: 'arm64' };
+        if (arch === 'x86_64')           return { id: 'mac-intel', os: 'macOS (Intel)', arch: 'x86_64' };
+        return { id: null, os: 'macOS', arch: null };
+    }
+    if (/Android/.test(ua))              return { id: 'linux-arm', os: 'Android', arch: arch || 'arm64' };
+    if (isLinux) {
+        if (arch === 'arm64')            return { id: 'linux-arm', os: 'Linux (Aarch64)', arch: 'arm64' };
+        if (arch === 'x86_64')           return { id: 'linux-x64', os: 'Linux (64-bit)', arch: 'x86_64' };
+        return { id: null, os: 'Linux', arch: null };
+    }
+    return { id: null, os: null, arch: null };
+}
+
+let current = 'mac-intel';
+
+const assetFor = id => RELEASE.assets[id] || null;
+const urlFor = a => RELEASE.baseUrl + RELEASE.tag + '/' + a.file;
+
+function renderOsGrid() {
+    const grid = document.getElementById('dlw-os');
+    grid.innerHTML = '';
+    PLATFORMS.forEach(pf => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'os';
+        btn.dataset.id = pf.id;
+        btn.setAttribute('aria-pressed', String(pf.id === current));
+        btn.innerHTML =
+            ICONS[pf.icon] +
+            '<span class="os-text"><span class="os-name">' + pf.name + '</span><small>' + pf.sub + '</small></span>' +
+            (assetFor(pf.id) ? '' : '<span class="na">暂未提供</span>');
+        btn.addEventListener('click', () => select(pf.id));
+        grid.appendChild(btn);
+    });
+}
+
+function select(id) {
+    current = id;
+    document.querySelectorAll('#dlw-os .os').forEach(b =>
+        b.setAttribute('aria-pressed', String(b.dataset.id === id)));
+    document.getElementById('dlw-warn').hidden = !id.startsWith('mac');
+    renderDownload();
+}
+
+function renderDownload() {
+    const slot = document.getElementById('dlw-slot');
+    if (!current) {
+        slot.innerHTML = '<div class="dlw-na">请先在上方选择您的操作系统。</div>';
+        return;
+    }
+    const pf = PLATFORMS.find(x => x.id === current);
+    const a = assetFor(current);
+
+    if (!a) {
+        slot.innerHTML =
+            '<div class="dlw-na"><strong>' + pf.name + ' 版本正在打包中。</strong> ' +
+            'amd64 / x86_64 与 arm64 的安装包互不通用，需分别构建；该版本发布后可在本页直接下载。' +
+            ' 请关注 <a href="' + RELEASE.releasesPage + '" target="_blank" rel="noopener noreferrer">Releases</a> 获取更新。</div>';
+        return;
+    }
+
+    slot.innerHTML =
+        '<div class="dlw-dl">' +
+            '<a class="btn-dl" href="' + urlFor(a) + '" download="' + a.file + '">' +
+                ICONS.download + '<span>下载 ' + pf.name + ' 版</span></a>' +
+            '<div class="dlw-meta">' +
+                '<div>Robot Blockly ' + RELEASE.label + ' · ' + pf.name + '</div>' +
+                '<div class="fname">' + a.file + '</div>' +
+                '<div>' + a.size + ' · ' + a.note + '</div>' +
+            '</div>' +
+            '<div class="dlw-actions">' +
+                '<button type="button" id="dlw-copy">复制直链</button>' +
+                '<a href="' + RELEASE.releasesPage + '" target="_blank" rel="noopener noreferrer">发行说明</a>' +
+            '</div>' +
+        '</div>';
+
+    document.getElementById('dlw-copy').addEventListener('click', copyLink);
+}
+
+function copyLink() {
+    const btn = document.getElementById('dlw-copy');
+    const url = urlFor(assetFor(current));
+    const done = ok => {
+        btn.textContent = ok ? '已复制 ✓' : '复制失败';
+        setTimeout(() => { btn.textContent = '复制直链'; }, 1800);
+    };
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(url).then(() => done(true), () => done(false));
+    } else {
+        // file:// 或非安全上下文下 Clipboard API 不可用，退回临时输入框方案
+        const ta = document.createElement('textarea');
+        ta.value = url;
+        ta.style.cssText = 'position:fixed;top:-9999px;opacity:0';
+        document.body.appendChild(ta);
+        ta.select();
+        let ok = false;
+        try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+        document.body.removeChild(ta);
+        done(ok);
+    }
+}
+
+(async function initDownload() {
+    current = null;
+    renderOsGrid();
+    const note = document.getElementById('dlw-detect');
+    const d = await detectPlatform();
+    const archText = d.arch ? ' · ' + d.arch : '';
+
+    if (d.id && assetFor(d.id)) {
+        select(d.id);
+        note.innerHTML = '已检测到您正在使用 <b>' + d.os + archText + '</b>，已为您选中对应的安装包。';
+    } else if (d.id) {
+        select(d.id);
+        note.innerHTML = '已检测到您正在使用 <b>' + d.os + archText + '</b>，该架构的安装包正在打包中，也可手动选择其他平台。';
+    } else if (d.os) {
+        renderDownload();
+        note.innerHTML = '已检测到 <b>' + d.os + '</b>，但无法确认芯片架构（arm64 / x86_64），两者安装包不通用，请手动选择。';
+    } else {
+        renderDownload();
+        note.textContent = '未能识别您的系统，请在上方手动选择操作系统。';
+    }
+    note.classList.add('ready');
+})();
+</script>
 </body>
 </html>
