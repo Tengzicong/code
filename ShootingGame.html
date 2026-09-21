@@ -284,34 +284,6 @@
             }
         }
         
-        .home-button {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            padding: 10px 20px;
-            background: linear-gradient(45deg, #4CAF50, #2E7D32);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            z-index: 1000;
-            cursor: pointer;
-            border: none;
-            font-size: 16px;
-            transition: all 0.3s ease;
-        }
-        
-        .home-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-            background: linear-gradient(45deg, #66BB6A, #388E3C);
-        }
-        
-        .home-button:active {
-            transform: translateY(1px);
-        }
-
         .copyright {
             position: fixed;
             bottom: 20px;
@@ -326,7 +298,8 @@
     </style>
 </head>
 <body>
-    <button class="home-button" onclick="goHome()">返回首页<br>Home</button>
+    <button class="home-button" onclick="goHome()">返回游戏中心<br>Games</button>
+    <button class="home-button home-index" onclick="window.location.href='index.html'">站点主页<br>Site</button>
     <!-- ERROR logo 圆形图片 -->
     <!-- ERROR logo 圆形图片 -->
     
@@ -428,7 +401,7 @@
         let lastShootTime = 0;
         let score = 0;
         let lives = 9;
-        let highScore = localStorage.getItem('breakoutHighScore') || 0;
+        let highScore = localStorage.getItem('shootingHighScore') || 0;
         let gameLoopId;
         let isGameRunning = false;
         let particles = [];
@@ -595,7 +568,7 @@
                                 alert('恭喜！你赢了！\nCongratulations! You won!');
                                 if (score > highScore) {
                                     highScore = score;
-                                    localStorage.setItem('breakoutHighScore', highScore);
+                                    localStorage.setItem('shootingHighScore', highScore);
                                     highScoreElement.textContent = highScore;
                                 }
                                 restartGame();
@@ -763,7 +736,7 @@
             
             if (score > highScore) {
                 highScore = score;
-                localStorage.setItem('breakoutHighScore', highScore);
+                localStorage.setItem('shootingHighScore', highScore);
                 highScoreElement.textContent = highScore;
             }
         }
@@ -793,6 +766,7 @@
 
         // Music control function
         function toggleMusic() {
+            if (!musicButton || !backgroundMusic) return;
             if (isMusicPlaying) {
                 backgroundMusic.pause();
                 musicButton.textContent = '🔇';
@@ -813,7 +787,9 @@
         }
 
         // Event listener for music button
-        musicButton.addEventListener('click', toggleMusic);
+        if (musicButton) {
+            musicButton.addEventListener('click', toggleMusic);
+        }
 
         // 初始化
         draw();

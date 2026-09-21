@@ -342,34 +342,6 @@
             pointer-events: none;
         }
         
-        .home-button {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            padding: 10px 20px;
-            background: linear-gradient(45deg, #4CAF50, #2E7D32);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            z-index: 1000;
-            cursor: pointer;
-            border: none;
-            font-size: 16px;
-            transition: all 0.3s ease;
-        }
-        
-        .home-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-            background: linear-gradient(45deg, #66BB6A, #388E3C);
-        }
-        
-        .home-button:active {
-            transform: translateY(1px);
-        }
-
         .copyright {
             position: fixed;
             bottom: 20px;
@@ -384,7 +356,8 @@
     </style>
 </head>
 <body>
-    <button class="home-button" onclick="goHome()">返回首页<br>Home</button>
+    <button class="home-button" onclick="goHome()">返回游戏中心<br>Games</button>
+    <button class="home-button home-index" onclick="window.location.href='index.html'">站点主页<br>Site</button>
     
     <div class="game-container">
         <div class="score-panel">
@@ -464,6 +437,7 @@
         let score2 = 0;
         let gameStarted = false;
         let gameRunning = false;
+        let gameLoopId = null;
         let gameStartTime = 0;
         let gameTime = 0;
         let gameInterval = null;
@@ -556,7 +530,8 @@
             gameInterval = setInterval(updateTimer, 1000);
             
             // 开始游戏循环
-            requestAnimationFrame(gameLoop);
+            if (gameLoopId) cancelAnimationFrame(gameLoopId);
+            gameLoopId = requestAnimationFrame(gameLoop);
         }
         
         // 重新开始游戏
@@ -1147,7 +1122,7 @@
             drawBall();
             
             // 继续循环
-            requestAnimationFrame(gameLoop);
+            gameLoopId = requestAnimationFrame(gameLoop);
         }
         
         // 页面加载完成后初始化

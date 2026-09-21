@@ -240,28 +240,6 @@
             box-shadow: 0 8px 20px rgba(255, 0, 0, 0.6);
         }
         
-                .home-button {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            padding: 10px 20px;
-            background: linear-gradient(45deg, #4CAF50, #2E7D32);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            z-index: 1000;
-            cursor: pointer;
-            border: none;
-            font-size: 16px;
-            transition: all 0.3s ease;
-        }
-        .home-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-        }
-
         .copyright {
             position: fixed;
             bottom: 20px;
@@ -276,7 +254,8 @@
     </style>
 </head>
 <body>
-    <button class="home-button" onclick="goHome()">返回首页<br>Home</button>
+    <button class="home-button" onclick="goHome()">返回游戏中心<br>Games</button>
+    <button class="home-button home-index" onclick="window.location.href='index.html'">站点主页<br>Site</button>
 
     <div class="game-container">
         <div class="score-panel">
@@ -295,7 +274,7 @@
             <button onclick="startGame()">开始游戏<br>Start Game</button>
         </div>
     </div>
-    <div class="controls">
+    <div class="controls dpad">
         <button id="btn-up" onclick="changeDirection('up')">&#8593;</button>
         <button id="btn-left" onclick="changeDirection('left')">&#8592;</button>
         <button id="btn-down" onclick="changeDirection('down')">&#8595;</button>
@@ -358,14 +337,6 @@
         let particles = [];
 
         highScoreElement.textContent = highScore;
-        
-
-        
-        // 页面加载时初始化语言
-        window.addEventListener('load', function() {
-            document.querySelector('.language-toggle').textContent = currentLanguage === 'zh' ? 'EN' : '中文';
-            updateLanguage();
-        });
 
         // Initialize snake
         function initSnake() {
@@ -765,81 +736,6 @@
                 highScore = score;
                 localStorage.setItem('snakeHighScore', highScore);
                 highScoreElement.textContent = highScore;
-        
-        // 语言配置
-        const translations = {
-            'zh': {
-                'title': '贪吃蛇',
-                'current-score': '当前得分',
-                'high-score': '最高得分',
-                'game-over': '游戏结束',
-                'your-score': '��的得分',
-                'restart': '重新开始',
-                'start-game': '开始游戏',
-                'game-instructions': '使用方向键或WASD键控制贪吃蛇移动<br>吃到食物可以增加得分，避免撞到墙壁或自己的身体',
-                'feedback': '游戏反馈',
-                'feedback-text': '如果您在游玩中发现有bug或建议，请将建议发送至gamefeedback@126.com',
-
-            },
-            'en': {
-                'title': 'Snake Game',
-                'current-score': 'Current Score',
-                'high-score': 'High Score',
-                'game-over': 'Game Over',
-                'your-score': 'Your Score',
-                'restart': 'Restart',
-                'start-game': 'Start Game',
-                'game-instructions': 'Use arrow keys or WASD to control the snake<br>Eat food to increase score, avoid hitting walls or yourself',
-                'feedback': 'Game Feedback',
-                'feedback-text': 'If you find bugs or have suggestions during gameplay, please send them to gamefeedback@126.com',
-
-            }
-        };
-        
-        let currentLanguage = localStorage.getItem('gameLanguage') || 'zh';
-        
-        // 切换语言函数
-        function toggleLanguage() {
-            currentLanguage = currentLanguage === 'zh' ? 'en' : 'zh';
-            localStorage.setItem('gameLanguage', currentLanguage);
-            updateLanguage();
-            document.querySelector('.language-toggle').textContent = currentLanguage === 'zh' ? 'EN' : '中文';
-        }
-        
-        // 更新语言显示
-        function updateLanguage() {
-            const t = translations[currentLanguage];
-            
-            // 更新开始界面
-            document.querySelector('.start-screen h1').textContent = t['title'];
-            document.querySelector('.start-screen p').innerHTML = t['game-instructions'];
-            document.querySelector('.start-screen button').textContent = t['start-game'];
-            
-            // 更新得分面板
-            document.querySelector('.score-panel div:first-child').innerHTML = t['current-score'] + '<br><span id="score">' + score + '</span>';
-            document.querySelector('.score-panel div:last-child').innerHTML = t['high-score'] + '<br><span id="high-score">' + highScore + '</span>';
-            
-            // 更新游戏结束界面
-            document.querySelector('.game-over h2').textContent = t['game-over'];
-            document.querySelector('.game-over p').innerHTML = t['your-score'] + '<br><span id="final-score">' + score + '</span>';
-            document.querySelector('.game-over button').textContent = t['restart'];
-            
-            // 更新反馈面板
-            document.querySelector('.feedback-panel h3').textContent = t['feedback'];
-            document.querySelector('.feedback-panel p').textContent = t['feedback-text'];
-            document.querySelector('.feedback-button').textContent = t['feedback'];
-            
-            // 更新更新日志内容
-            updateChangelogLanguage();
-        }
-        
-        
-        
-        // 页面加载时初始化语言
-        window.addEventListener('load', function() {
-            document.querySelector('.language-toggle').textContent = currentLanguage === 'zh' ? 'EN' : '中文';
-            updateLanguage();
-        });
             }
         }
 
@@ -927,59 +823,6 @@
             }
         });
 
-        // Submit feedback function
-        function submitFeedback() {
-            const name = document.getElementById('feedback-name').value;
-            const content = document.getElementById('feedback-content').value;
-            const messageElement = document.getElementById('feedback-message');
-            
-            if (!name || !content) {
-                messageElement.textContent = '请填写所有���段 / Please fill in all fields';
-                messageElement.style.color = '#e94560';
-                messageElement.classList.add('show');
-                
-                // Hide message after 3 seconds
-                setTimeout(() => {
-                    messageElement.classList.remove('show');
-                }, 3000);
-                return;
-            }
-            
-            // In a real application, you would send the feedback to a server here
-            // For this demo, we'll just show a success message
-            messageElement.textContent = '感谢您的反馈! / Thank you for your feedback!';
-            messageElement.style.color = '#00ff9d';
-            messageElement.classList.add('show');
-            
-            // Clear form
-            document.getElementById('feedback-name').value = '';
-            document.getElementById('feedback-content').value = '';
-            
-            // Hide message after 3 seconds
-            setTimeout(() => {
-                messageElement.classList.remove('show');
-            }, 3000);
-        }
-
-        // Toggle feedback panel function
-        function toggleFeedback() {
-            const feedbackPanel = document.querySelector('.feedback-panel');
-            if (feedbackPanel.style.display === 'block') {
-                feedbackPanel.style.display = 'none';
-            } else {
-                feedbackPanel.style.display = 'block';
-            }
-        }
-
-        // Toggle changelog panel function
-        function toggleChangelog() {
-            const changelogPanel = document.getElementById('changelog-panel');
-            if (changelogPanel.style.display === 'block') {
-                changelogPanel.style.display = 'none';
-            } else {
-                changelogPanel.style.display = 'block';
-            }
-        }
 
                 function goHome() {
             window.location.href = 'gamecenter.html';

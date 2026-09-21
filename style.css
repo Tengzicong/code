@@ -594,9 +594,8 @@ a {
     background: #1d7a4f;
 }
 
-/* 覆盖层基础（开始屏 / 结束屏共用外观） */
-.start-screen,
-.game-over {
+/* 开始屏：全屏覆盖（JS 只置 display:none） */
+.start-screen {
     position: absolute;
     inset: 0;
     display: flex;
@@ -613,9 +612,21 @@ a {
     z-index: 5;
 }
 
-/* JS 将 game-over 置为 display:'block'，此时以居中卡片呈现 */
+/* 结束屏：JS 置 display:'block'，以居中卡片呈现 */
 .game-over {
     display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(460px, calc(100% - 48px));
+    padding: var(--sp-6) var(--sp-5);
+    text-align: center;
+    background: var(--surface-solid);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--r-md);
+    box-shadow: var(--sh-lg);
+    z-index: 5;
 }
 
 .game-over h1,
@@ -626,6 +637,7 @@ a {
     letter-spacing: -0.02em;
     color: var(--fg);
     line-height: 1.25;
+    margin-bottom: var(--sp-4);
 }
 
 .game-over h2 {
@@ -638,6 +650,7 @@ a {
     font-size: var(--fs-base);
     line-height: 1.7;
     color: var(--fg-muted);
+    margin: 0 auto var(--sp-4);
 }
 
 .game-over p span,
@@ -708,6 +721,12 @@ a {
     background: var(--surface-hover);
     border-color: var(--accent-line);
     color: var(--accent);
+}
+
+/* 返回站点主页：同款胶囊，固定右上 */
+.home-button.home-index {
+    left: auto;
+    right: var(--sp-4);
 }
 
 /* 触屏方向键：桌面隐藏，移动端由媒体查询或 JS 显示 */
@@ -947,8 +966,8 @@ a {
     }
 
     /* 游戏页：触屏方向键显示为十字九宫格 */
-    .game-shell {
-        padding: var(--sp-4) var(--sp-3) var(--sp-6);
+    .game-container {
+        padding: 0 var(--sp-1);
         gap: var(--sp-3);
     }
 
@@ -957,26 +976,41 @@ a {
         padding: var(--sp-2) var(--sp-3);
     }
 
+    /* 触屏方向键：默认横排（Breakout 2 键 / Shooting 左右+射击） */
     .controls {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: repeat(2, 1fr);
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
         gap: var(--sp-3);
-        width: min(240px, 80%);
+        width: 100%;
     }
 
     .controls button {
-        width: 100%;
-        height: 56px;
+        width: 60px;
+        height: 60px;
         font-size: var(--fs-lg);
     }
 
-    .controls button:nth-child(1) { grid-column: 2; grid-row: 1; }
-    .controls button:nth-child(2) { grid-column: 1; grid-row: 2; }
-    .controls button:nth-child(3) { grid-column: 2; grid-row: 2; }
-    .controls button:nth-child(4) { grid-column: 3; grid-row: 2; }
+    /* Snake 四键（.dpad）：十字九宫格 */
+    .controls.dpad {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        width: min(240px, 80%);
+        margin: 0 auto;
+    }
 
-    .game-overlay {
+    .controls.dpad button {
+        width: 100%;
+        height: 56px;
+    }
+
+    .controls.dpad button:nth-child(1) { grid-column: 2; grid-row: 1; }
+    .controls.dpad button:nth-child(2) { grid-column: 1; grid-row: 2; }
+    .controls.dpad button:nth-child(3) { grid-column: 2; grid-row: 2; }
+    .controls.dpad button:nth-child(4) { grid-column: 3; grid-row: 2; }
+
+    .start-screen {
         gap: var(--sp-3);
         padding: var(--sp-4);
     }
