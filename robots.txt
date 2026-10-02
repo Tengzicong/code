@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /Celebration.html
+
+Sitemap: https://tzc.yffyeah.top/sitemap.xml

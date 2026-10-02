@@ -3,125 +3,259 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ERROR-CORE</title>
+    <title>ERROR-CORE 小游戏平台 - 贪吃蛇/打砖块/射击/足球在线玩 | ERROR-CORE Games</title>
+    <meta name="description" content="ERROR-CORE 在线小游戏平台，免下载即开即玩：贪吃蛇、打砖块、飞机射击、足球射门 4 款经典游戏，支持键盘与手机触屏双操作，同时开源 Robot Blockly 机器人积木编程项目。">
+    <meta name="keywords" content="ERROR-CORE, 在线小游戏, 贪吃蛇, 打砖块, 射击游戏, 足球游戏, 免费游戏, Robot Blockly, 积木编程">
+    <link rel="canonical" href="https://tzc.yffyeah.top/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="ERROR-CORE">
+    <meta property="og:title" content="ERROR-CORE 小游戏平台 - 贪吃蛇/打砖块/射击/足球在线玩 | ERROR-CORE Games">
+    <meta property="og:description" content="ERROR-CORE 在线小游戏平台，免下载即开即玩：贪吃蛇、打砖块、飞机射击、足球射门 4 款经典游戏，支持键盘与手机触屏双操作，同时开源 Robot Blockly 机器人积木编程项目。">
+    <meta property="og:url" content="https://tzc.yffyeah.top/">
+    <meta property="og:image" content="https://tzc.yffyeah.top/picture/error.png">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="ERROR-CORE 小游戏平台 - 贪吃蛇/打砖块/射击/足球在线玩 | ERROR-CORE Games">
+    <meta name="twitter:description" content="ERROR-CORE 在线小游戏平台，免下载即开即玩：贪吃蛇、打砖块、飞机射击、足球射门 4 款经典游戏，支持键盘与手机触屏双操作，同时开源 Robot Blockly 机器人积木编程项目。">
+    <link rel="icon" href="picture/error.png">
+    <link rel="apple-touch-icon" href="picture/error.png">
+    <link rel="stylesheet" href="style.css">
+    <script src="js/device-detect.js" defer></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            min-height: 100vh;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: white;
-            padding: 20px;
-        }
-
-        .container {
+        .hero {
             text-align: center;
-            max-width: 800px;
+            max-width: 760px;
         }
 
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #ffd700, #ff6b6b);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .description {
-            font-size: 1.2rem;
-            margin-bottom: 40px;
-            opacity: 0.9;
-            line-height: 1.6;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 15px 40px;
-            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
-            color: white;
-            text-decoration: none;
-            border-radius: 30px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(255, 107, 107, 0.5);
-        }
-
-        .btn-group {
+        .hero-actions {
             display: flex;
-            gap: 20px;
+            gap: var(--sp-3);
             justify-content: center;
             flex-wrap: wrap;
+            margin-top: var(--sp-5);
         }
 
-        .btn-secondary {
-            background: transparent;
-            border: 2px solid rgba(255, 255, 255, 0.6);
-            box-shadow: none;
+        .sections {
+            display: flex;
+            flex-direction: column;
+            gap: var(--sp-7);
+            width: 100%;
+            max-width: 900px;
         }
 
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+        .section h2 {
+            font-size: var(--fs-lg);
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            margin-bottom: var(--sp-2);
         }
 
-        .footer {
-            position: fixed;
-            bottom: 20px;
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 0.9rem;
+        .section > p {
+            color: var(--fg-muted);
+            margin-bottom: var(--sp-4);
+            max-width: var(--measure);
         }
 
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem;
-            }
+        .section .game-grid,
+        .section .features-section {
+            max-width: none;
+        }
 
-            .description {
-                font-size: 1rem;
-                padding: 0 20px;
-            }
+        .game-card h3,
+        .feature-card h3 {
+            font-size: var(--fs-md);
+            font-weight: 650;
+        }
 
-            .btn {
-                padding: 12px 30px;
-                font-size: 1rem;
-            }
+        .game-card p,
+        .feature-card p {
+            font-size: var(--fs-sm);
+            color: var(--fg-muted);
+            line-height: 1.7;
+        }
+
+        .play-button {
+            margin-top: var(--sp-2);
+            align-self: flex-start;
+        }
+
+        .howto-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: var(--sp-3);
+        }
+
+        .howto-list li {
+            padding: var(--sp-4) var(--sp-5);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r-md);
+            color: var(--fg-muted);
+            font-size: var(--fs-base);
+            line-height: 1.7;
+        }
+
+        .howto-list li strong {
+            color: var(--fg);
+        }
+
+        .about-team {
+            padding: var(--sp-5);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r-lg);
+            color: var(--fg-muted);
+            line-height: 1.8;
+        }
+
+        .about-team a {
+            color: var(--accent);
+        }
+
+        .about-team a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>ERROR-CORE</h1>
-        <p class="description">
-            欢迎来到 ERROR-CORE 小游戏平台<br>
-            Welcome to ERROR-CORE Mini Games Platform
-        </p>
-        <div class="btn-group">
-            <a href="minigame.html" class="btn">
-                🎮 进入游戏中心 Enter Games
-            </a>
-            <a href="robot-blockly.html" class="btn btn-secondary">
-                Robot Blockly 积木编程
-            </a>
+    <div class="stars" aria-hidden="true"></div>
+
+    <header class="appbar">
+        <a href="index.html" class="brand">
+            <img src="picture/error.png" alt="ERROR-CORE 标志" class="brand-mark">
+            <span class="brand-text">
+                <strong>ERROR-CORE</strong>
+                <small>Mini-Games Platform</small>
+            </span>
+        </a>
+        <button class="nav-toggle" aria-label="展开导航" aria-expanded="false">☰</button>
+        <nav class="appbar-nav">
+            <a href="index.html" class="nav-link" aria-current="page">首页</a>
+            <a href="gamecenter.html" class="nav-link">游戏中心</a>
+            <a href="robot-blockly.html" class="nav-link">Robot Blockly</a>
+            <a href="drawing.html" class="nav-link">画板</a>
+            <a href="errorcore.html" class="nav-link">关于我们</a>
+            <a href="contact.html" class="nav-link">联系我们</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <span class="eyebrow">4 款经典游戏 · 免下载 · 手机电脑通用</span>
+            <h1 class="main-title">ERROR-CORE 小游戏平台</h1>
+            <p class="sub-title">
+                打开浏览器就能玩的经典小游戏合集，键盘与触屏双操作，最高分自动保存在本地。
+                <span class="en">Classic mini games, playable right in your browser.</span>
+            </p>
+            <div class="hero-actions">
+                <a href="gamecenter.html" class="btn">进入游戏中心</a>
+                <a href="robot-blockly.html" class="btn ghost">Robot Blockly 积木编程</a>
+            </div>
+        </section>
+
+        <div class="sections">
+            <section class="section">
+                <h2>游戏平台：四款经典，即开即玩</h2>
+                <p>每一款都经过手机与桌面浏览器适配，无需注册、无需下载，点击卡片即可开始游戏。</p>
+                <div class="game-grid">
+                    <a href="Snake.html" class="game-card">
+                        <h3>🐍 贪吃蛇</h3>
+                        <p>最经典的 Snake 玩法：方向键或滑动屏幕控制小蛇转向，吃掉食物身体变长、速度递增，撞墙或咬到自己即结束。看你能刷到多少分。</p>
+                        <span class="play-button">立即游玩</span>
+                    </a>
+                    <a href="BreakoutGame.html" class="game-card">
+                        <h3>🧱 打砖块</h3>
+                        <p>街机 Breakout 复刻：移动挡板反弹小球，逐层击碎彩色砖块。三条生命、关卡式砖块布局，考验角度计算与反应速度。</p>
+                        <span class="play-button">立即游玩</span>
+                    </a>
+                    <a href="ShootingGame.html" class="game-card">
+                        <h3>✈️ 飞机射击</h3>
+                        <p>纵版卷轴射击：操控战机左右机动，发射子弹拦截不断逼近的敌机群。敌机速度随时间提升，是纯粹的反应力考验。</p>
+                        <span class="play-button">立即游玩</span>
+                    </a>
+                    <a href="FootballGame.html" class="game-card">
+                        <h3>⚽ 足球射门</h3>
+                        <p>限时点球大战：瞄准球门空档起脚，骗过守门员扑救路线得分。支持单人与双人对战两种模式，进球后还有烟花庆祝画面。</p>
+                        <span class="play-button">立即游玩</span>
+                    </a>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>怎么玩：键盘 + 触屏双操作</h2>
+                <ul class="howto-list">
+                    <li><strong>电脑端：</strong>贪吃蛇使用 ↑ ↓ ← → 方向键；打砖块用 ← → 移动挡板；飞机射击用方向键移动、空格键开火；足球射管用方向键瞄准、回车键射门。</li>
+                    <li><strong>手机端：</strong>页面底部自动出现触屏方向键与射击按钮，横竖屏均可游玩，无需外接键盘。</li>
+                    <li><strong>成绩保存：</strong>每款游戏的最高分自动记录在浏览器本地（localStorage），换设备或清除缓存前成绩一直有效。</li>
+                </ul>
+            </section>
+
+            <section class="section">
+                <h2>开源项目：Robot Blockly 机器人积木编程</h2>
+                <p>除了小游戏，ERROR-CORE 团队还开源了机器人可视化编程工具。</p>
+                <div class="features-section">
+                    <a href="robot-blockly.html" class="feature-card">
+                        <h3>🤖 Robot Blockly v0.1.1</h3>
+                        <p>基于 Google Blockly 的拖拽式积木编程工具，面向 Unitree 宇树机器人。像搭积木一样编写动作指令，零代码基础也能让机器人动起来。提供 Linux 与 macOS 安装包，MIT 协议开源。</p>
+                        <span class="play-button">查看下载</span>
+                    </a>
+                    <a href="errorcore.html" class="feature-card">
+                        <h3>👥 关于 ERROR-CORE Team</h3>
+                        <p>团队成立于 2026 年 1 月，专注于开源教育与休闲网页工具。小游戏平台、画板工具与 Robot Blockly 均对社区开放，欢迎反馈与建议。</p>
+                        <span class="play-button">了解团队</span>
+                    </a>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>为什么选择 ERROR-CORE</h2>
+                <div class="about-team">
+                    ERROR-CORE 小游戏平台由个人开源团队维护，所有游戏均为纯前端实现（HTML5 Canvas + JavaScript），
+                    不依赖任何服务器后端：打开页面即完成全部资源加载，游玩过程零网络请求，你的操作数据与最高分只保存在自己的设备上。
+                    页面自适应手机、平板与桌面浏览器，并针对触屏设备提供了专门的方向键控件。
+                    如果你想反馈 Bug、提出新游戏创意，或参与 <a href="errorcore.html">开源项目</a> 共建，
+                    随时通过 <a href="contact.html">联系我们</a> 页面找到我们。
+                </div>
+            </section>
         </div>
-    </div>
-    <div class="footer">
-        © ERROR-CORE Team All Rights Reserved
-    </div>
+    </main>
+
+    <footer class="copyright">ERROR-CORE Team</footer>
+
+    <script>
+        function createStars() {
+            const container = document.querySelector('.stars');
+            if (!container) return;
+            for (let i = 0; i < 40; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 4 + 's';
+                container.appendChild(star);
+            }
+        }
+
+        function initNavToggle() {
+            const toggle = document.querySelector('.nav-toggle');
+            const nav = document.querySelector('.appbar-nav');
+            if (!toggle || !nav) return;
+            toggle.addEventListener('click', function () {
+                const open = nav.classList.toggle('is-open');
+                toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+            });
+            nav.addEventListener('click', function (e) {
+                if (e.target.closest('a') && nav.classList.contains('is-open')) {
+                    nav.classList.remove('is-open');
+                    toggle.setAttribute('aria-expanded', 'false');
+                }
+            });
+        }
+
+        window.addEventListener('load', function () {
+            createStars();
+            initNavToggle();
+        });
+    </script>
 </body>
 </html>

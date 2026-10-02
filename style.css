@@ -729,6 +729,44 @@ a {
     right: var(--sp-4);
 }
 
+/* 游戏说明文字区块（SEO 内容层） */
+.game-info {
+    width: 100%;
+    max-width: 860px;
+    margin: var(--sp-6) auto 0;
+    padding: 0 var(--sp-4);
+    position: relative;
+    z-index: var(--z-content);
+}
+
+.game-info h2 {
+    font-size: var(--fs-md);
+    font-weight: 700;
+    margin-bottom: var(--sp-3);
+    color: var(--fg);
+}
+
+.game-info h3 {
+    font-size: var(--fs-base);
+    font-weight: 650;
+    margin: var(--sp-4) 0 var(--sp-2);
+    color: var(--fg);
+}
+
+.game-info p,
+.game-info li {
+    font-size: var(--fs-sm);
+    line-height: 1.8;
+    color: var(--fg-muted);
+}
+
+.game-info ul {
+    padding-left: var(--sp-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-1);
+}
+
 /* 触屏方向键：桌面隐藏，移动端由媒体查询或 JS 显示 */
 .controls {
     display: none;

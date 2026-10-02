@@ -3,7 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ERROR-CORE 小游戏 - 打砖块 | ERROR-CORE Games - Breakout</title>
+    <meta name="description" content="ERROR-CORE 打砖块游戏：移动挡板反弹小球击碎所有砖块，3 条生命，得分与最高分实时记录，支持键盘左右方向键与手机触屏操作。">
+    <meta name="keywords" content="打砖块, breakout, 砖块游戏, 在线小游戏, ERROR-CORE">
+    <link rel="canonical" href="https://tzc.yffyeah.top/BreakoutGame.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="ERROR-CORE">
+    <meta property="og:title" content="打砖块 - 经典小游戏在线玩 | ERROR-CORE Breakout">
+    <meta property="og:description" content="ERROR-CORE 打砖块游戏：移动挡板反弹小球击碎所有砖块，3 条生命，得分与最高分实时记录，支持键盘左右方向键与手机触屏操作。">
+    <meta property="og:url" content="https://tzc.yffyeah.top/BreakoutGame.html">
+    <meta property="og:image" content="https://tzc.yffyeah.top/picture/error.png">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="打砖块 - 经典小游戏在线玩 | ERROR-CORE Breakout">
+    <meta name="twitter:description" content="ERROR-CORE 打砖块游戏：移动挡板反弹小球击碎所有砖块，3 条生命，得分与最高分实时记录，支持键盘左右方向键与手机触屏操作。">
+    <title>打砖块 - 经典小游戏在线玩 | ERROR-CORE Breakout</title>
     <link rel="stylesheet" href="style.css">
     <script src="js/device-detect.js" defer></script>
     <script src="js/touch-controls.js" defer></script>
@@ -289,6 +301,28 @@
             text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
     </style>
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoGame",
+  "name": "ERROR-CORE 打砖块",
+  "alternateName": "Breakout",
+  "genre": [
+    "Arcade",
+    "Casual"
+  ],
+  "playMode": "SinglePlayer",
+  "url": "https://tzc.yffyeah.top/BreakoutGame.html",
+  "applicationCategory": "Game",
+  "operatingSystem": "Any (Web browser)",
+  "publisher": {
+    "@type": "Organization",
+    "name": "ERROR-CORE Team"
+  },
+  "description": "ERROR-CORE 在线打砖块游戏，免下载即开即玩，支持键盘与移动端触屏双操作。"
+}
+    </script>
 </head>
 <body>
     <button class="home-button" onclick="goHome()">返回游戏中心<br>Games</button>
@@ -337,6 +371,19 @@
         });
     </script>
     
+    <section class="game-info">
+        <h2>打砖块游戏介绍</h2>
+        <p>打砖块（Breakout）源自雅达利 1976 年的经典街机作品，是电子游戏史上最具影响力的玩法之一：玩家控制屏幕底部的挡板，反弹小球击碎上方排列的彩色砖块，每块砖被击碎都会得分，全部清空即通关。ERROR-CORE 版本为纯前端 HTML5 Canvas 实现，手机与电脑浏览器均可直接游玩。</p>
+        <h3>操作方法</h3>
+        <ul>
+            <li>电脑端：按键盘 ← → 方向键左右移动挡板。</li>
+            <li>手机端：屏幕下方自动出现左右移动按钮，长按连续移动。</li>
+            <li>小球掉落会损失一条生命，共 3 条生命；生命耗尽后可重新开始。</li>
+        </ul>
+        <h3>得分技巧</h3>
+        <p>尽量让小球以较小角度擦过砖块边缘，可以一次穿透整排砖块；避免球长期在两侧垂直来回，适时用挡板中心区域改变弹道。</p>
+    </section>
+
     <!-- 添加水印 -->
     <div class="watermark"><h3>@zicong<br>Breakout Game</h3></div>
 

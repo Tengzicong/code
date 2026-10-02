@@ -3,7 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>联系我们 | ERROR-CORE</title>
+    <meta name="description" content="ERROR-CORE 团队联系方式：通过电子邮件 error_core@163.com 联系开发者，反馈 Bug、提出建议或探讨 Robot Blockly 机器人积木编程合作。">
+    <meta name="keywords" content="联系我们, ERROR-CORE 联系方式, 反馈, 合作">
+    <link rel="canonical" href="https://tzc.yffyeah.top/contact.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="ERROR-CORE">
+    <meta property="og:title" content="联系我们 - ERROR-CORE Team">
+    <meta property="og:description" content="ERROR-CORE 团队联系方式：通过电子邮件 error_core@163.com 联系开发者，反馈 Bug、提出建议或探讨 Robot Blockly 机器人积木编程合作。">
+    <meta property="og:url" content="https://tzc.yffyeah.top/contact.html">
+    <meta property="og:image" content="https://tzc.yffyeah.top/picture/error.png">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="联系我们 - ERROR-CORE Team">
+    <meta name="twitter:description" content="ERROR-CORE 团队联系方式：通过电子邮件 error_core@163.com 联系开发者，反馈 Bug、提出建议或探讨 Robot Blockly 机器人积木编程合作。">
+    <title>联系我们 - ERROR-CORE Team</title>
     <link rel="stylesheet" href="style.css">
     <script src="js/device-detect.js" defer></script>
     <style>
@@ -243,6 +255,26 @@
             text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
 
+        /* 白卡片内的说明文字改用深色 */
+        .game-info h2,
+        .game-info h3 {
+            color: #222;
+        }
+
+        .game-info p,
+        .game-info li {
+            color: #444;
+        }
+
+        .game-info {
+            margin-top: 30px;
+            padding: 0;
+        }
+
+        .game-info a {
+            color: #0066cc;
+        }
+
         /* 移动端适配样式 */
         @media (max-width: 768px) {
             .contact-container {
@@ -290,7 +322,7 @@
             <div class="toolbar-icon">⚙️</div>
             <div class="toolbar-content">
                 <div class="toolbar-title">工具栏<br>Toolbar</div>
-                <a href="minigame.html" class="toolbar-item">
+                <a href="index.html" class="toolbar-item">
                     <span>🏠</span>
                     <span>首页<br>Home</span>
                 </a>
@@ -328,6 +360,19 @@
                     <p>error_core@163.com</p>
                 </div>
             </div>
+
+            <div class="contact-item">
+                <div class="contact-icon">🐙</div>
+                <div>
+                    <h3>GitHub</h3>
+                    <p><a href="https://github.com/Tengzicong/Robot_Blockly" target="_blank">github.com/Tengzicong/Robot_Blockly</a></p>
+                </div>
+            </div>
+
+            <section class="game-info">
+                <h2>联系 ERROR-CORE Team</h2>
+                <p>无论你是想反馈小游戏平台的 Bug、提出新游戏创意，还是讨论 Robot Blockly 机器人积木编程的使用问题与合作，都欢迎通过上面的邮箱与我们联系。我们也开源了全部项目代码，你可以直接在 GitHub 上提交 Issue 或 Pull Request 参与共建。</p>
+            </section>
         </div>
     </div>
 
