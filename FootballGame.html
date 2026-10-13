@@ -16,6 +16,7 @@
     <meta name="twitter:title" content="足球射门 - 点球大战小游戏在线玩 | ERROR-CORE Football">
     <meta name="twitter:description" content="ERROR-CORE 足球射门游戏：限时点球大战，控制射门方向避开守门员进球得分，支持单人与双人对战模式，进球后触发烟花庆祝画面。">
     <title>足球射门 - 点球大战小游戏在线玩 | ERROR-CORE Football</title>
+    <script src="js/lang-theme.js"></script>
     <link rel="stylesheet" href="style.css">
     <script src="js/device-detect.js" defer></script>
     <script src="js/touch-controls.js" defer></script>
@@ -365,6 +366,55 @@
             z-index: 1000;
             text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
+
+        /* ===== 深浅色主题：深色为现状，以下为浅色覆盖（不动 canvas 球场配色） ===== */
+        body {
+            transition: background-color .35s ease, color .35s ease;
+        }
+        html[data-theme="light"] body {
+            background: #f5f5f7;
+            color: #1d1d1f;
+        }
+        html[data-theme="light"] .score-panel div {
+            background: #ffffff;
+            color: #1d1d1f;
+            border: 1px solid rgba(0, 0, 0, .12);
+            text-shadow: none;
+        }
+        html[data-theme="light"] .game-over {
+            background: rgba(245, 245, 247, .92);
+        }
+        html[data-theme="light"] .game-over p {
+            color: #1d1d1f;
+        }
+        html[data-theme="light"] .controls button {
+            background: #ffffff;
+            color: #1d1d1f;
+            border: 1px solid rgba(0, 0, 0, .12);
+        }
+        html[data-theme="light"] .controls button:hover {
+            background: #f0f0f3;
+        }
+        html[data-theme="light"] .watermark {
+            background: rgba(255, 255, 255, 0.85);
+        }
+        html[data-theme="light"] .copyright {
+            color: #6e6e78;
+            text-shadow: none;
+        }
+
+        /* 语言/主题控件融入记分栏 */
+        .score-panel .lt-mount {
+            display: inline-flex;
+            align-items: center;
+        }
+        @media (max-width: 768px) {
+            .score-panel {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 6px;
+            }
+        }
     </style>
 
     <script type="application/ld+json">
@@ -390,24 +440,25 @@
     </script>
 </head>
 <body>
-    <button class="home-button" onclick="goHome()">返回游戏中心<br>Games</button>
-    <button class="home-button home-index" onclick="window.location.href='index.html'">站点主页<br>Site</button>
+    <button class="home-button" data-i18n-html="home_games" onclick="goHome()">返回游戏中心<br>Games</button>
+    <button class="home-button home-index" data-i18n-html="home_index" onclick="window.location.href='index.html'">站点主页<br>Site</button>
     
     <div class="game-container">
         <div class="score-panel">
-            <div>玩家1得分 Player 1 Score<br><span id="score1">0</span></div>
-            <div>时间 Time<br><span id="timer">0</span>s</div>
-            <div>玩家2得分 Player 2 Score<br><span id="score2">0</span></div>
+            <div><span data-i18n="label_p1">玩家1得分 Player 1 Score</span><br><span id="score1">0</span></div>
+            <div><span data-i18n="label_time">时间 Time</span><br><span id="timer">0</span>s</div>
+            <div><span data-i18n="label_p2">玩家2得分 Player 2 Score</span><br><span id="score2">0</span></div>
+            <span class="lt-mount"></span>
         </div>
         <canvas id="gameCanvas" width="800" height="400"></canvas>
         <div class="game-over">
-            <h2>比赛结束</h2>
-            <p>获胜者 Winner: <span id="winner">Player</span></p>
-            <button onclick="restartGame()">重新开始<br>Restart</button>
+            <h2 data-i18n="go_title">比赛结束</h2>
+            <p><span data-i18n="go_winner">获胜者 Winner:</span> <span id="winner">Player</span></p>
+            <button data-i18n-html="btn_restart" onclick="restartGame()">重新开始<br>Restart</button>
         </div>
         <div class="start-screen" id="startScreen">
-            <h1>足球大战</h1>
-            <p id="game-mode-desc">
+            <h1 data-i18n="start_title">足球大战</h1>
+            <p id="game-mode-desc" data-i18n-html="mode_desc">
                 <strong>💻 电脑端：</strong><br>
                 玩家 1: W/A/S/D 移动<br>
                 玩家 2: 方向键移动<br>
@@ -429,40 +480,115 @@
                     Score goals!
                 </span>
             </p>
-            <button onclick="startGame()">开始游戏<br>Start Game</button>
+            <button data-i18n-html="btn_start" onclick="startGame()">开始游戏<br>Start Game</button>
         </div>
     </div>
     
     <!-- 移动端控制按钮 - 人机模式 -->
     <div class="controls" id="mobile-controls-player" style="display: none;">
-        <h3 style="color: white; text-align: center; margin-bottom: 10px; font-size: 0.9rem;">你 (You) - WASD</h3>
+        <h3 style="color: white; text-align: center; margin-bottom: 10px; font-size: 0.9rem;" data-i18n="mobile_you">你 (You) - WASD</h3>
         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; max-width: 200px; margin: 0 auto;">
             <button id="btn-p-up" style="grid-column: 2;">⬆️</button>
             <button id="btn-p-left" style="grid-column: 1;">⬅️</button>
             <button id="btn-p-down" style="grid-column: 2;">⬇️</button>
             <button id="btn-p-right" style="grid-column: 3;">➡️</button>
         </div>
-        <p style="color: #ffd700; text-align: center; margin-top: 10px; font-size: 0.8rem;">💡 提示：按住方向键连续移动</p>
+        <p style="color: #ffd700; text-align: center; margin-top: 10px; font-size: 0.8rem;" data-i18n="mobile_hint">💡 提示：按住方向键连续移动</p>
     </div>
     
     <section class="game-info">
-        <h2>足球射门游戏介绍</h2>
-        <p>足球射门（Football）是限时点球大战玩法：在倒计时内操控球员跑位并起脚射门，骗过守门员的扑救路线将球送入球门得分。支持单人限时挑战与双人对战两种模式，进球后会触发烟花庆祝画面。ERROR-CORE 版本基于 HTML5 Canvas 实现，打开即玩。</p>
-        <h3>操作方法</h3>
+        <h2 data-i18n="info_title">足球射门游戏介绍</h2>
+        <p data-i18n="info_desc">足球射门（Football）是限时点球大战玩法：在倒计时内操控球员跑位并起脚射门，骗过守门员的扑救路线将球送入球门得分。支持单人限时挑战与双人对战两种模式，进球后会触发烟花庆祝画面。ERROR-CORE 版本基于 HTML5 Canvas 实现，打开即玩。</p>
+        <h3 data-i18n="info_how">操作方法</h3>
         <ul>
-            <li>电脑端：方向键控制射门方向与角度，回车键起脚射门。</li>
-            <li>手机端：屏幕下方自动出现方向键与射门按钮，长按方向键连续移动。</li>
-            <li>对战模式中两位玩家轮流射门，进球多者获胜。</li>
+            <li data-i18n="info_li1">电脑端：方向键控制射门方向与角度，回车键起脚射门。</li>
+            <li data-i18n="info_li2">手机端：屏幕下方自动出现方向键与射门按钮，长按方向键连续移动。</li>
+            <li data-i18n="info_li3">对战模式中两位玩家轮流射门，进球多者获胜。</li>
         </ul>
-        <h3>得分技巧</h3>
-        <p>观察守门员的扑救习惯，瞄准球门上角或远角等扑救盲区；助跑节奏不要过快，射门前留半秒调整角度命中率更高。</p>
+        <h3 data-i18n="info_tips_h">得分技巧</h3>
+        <p data-i18n="info_tips">观察守门员的扑救习惯，瞄准球门上角或远角等扑救盲区；助跑节奏不要过快，射门前留半秒调整角度命中率更高。</p>
     </section>
 
     <!-- 添加水印 -->
     <div class="watermark"><h3>@zicong<br>Soccer Battle</h3></div>
-    
-    
-    
+
+    <script>
+        window.PAGE_I18N = {
+            zh: {
+                home_games: '返回游戏中心<br>Games',
+                home_index: '站点主页<br>Site',
+                label_p1: '玩家1得分 Player 1 Score',
+                label_time: '时间 Time',
+                label_p2: '玩家2得分 Player 2 Score',
+                go_title: '比赛结束',
+                go_winner: '获胜者 Winner:',
+                btn_restart: '重新开始<br>Restart',
+                start_title: '足球大战',
+                mode_desc: '<strong>💻 电脑端：</strong><br>玩家 1: W/A/S/D 移动<br>玩家 2: 方向键移动<br>Shift 键疾跑<br><br><strong>📱 移动端：</strong><br>人机对战 - 你 vs 电脑<br>W/A/S/D 控制移动<br>💡 按住方向键连续移动<br><br><span style="color: #ff6b6b; font-size: 0.8rem;">⚠️ 移动端双人模式开发中</span><br><br>将球踢进对方球门得分!<br><br><span style="font-size: 0.75rem; opacity: 0.8;">Player 1: WASD<br>Player 2: Arrows<br>Mobile: Human vs AI<br>Score goals!</span>',
+                btn_start: '开始游戏<br>Start Game',
+                mobile_you: '你 (You) - WASD',
+                mobile_hint: '💡 提示：按住方向键连续移动',
+                serve_you_title: '🎾 你的发球',
+                serve_you_sub: '移动后开始比赛',
+                serve_keys_mobile: '按方向键移动',
+                serve_keys_desktop: '按 W/A/S/D 移动',
+                serve_ai_title: '🎾 AI 发球',
+                serve_ai_sub: '等待对手准备',
+                serve_ai_delay: 'AI 将在 2 秒后发球',
+                info_title: '足球射门游戏介绍',
+                info_desc: '足球射门（Football）是限时点球大战玩法：在倒计时内操控球员跑位并起脚射门，骗过守门员的扑救路线将球送入球门得分。支持单人限时挑战与双人对战两种模式，进球后会触发烟花庆祝画面。ERROR-CORE 版本基于 HTML5 Canvas 实现，打开即玩。',
+                info_how: '操作方法',
+                info_li1: '电脑端：方向键控制射门方向与角度，回车键起脚射门。',
+                info_li2: '手机端：屏幕下方自动出现方向键与射门按钮，长按方向键连续移动。',
+                info_li3: '对战模式中两位玩家轮流射门，进球多者获胜。',
+                info_tips_h: '得分技巧',
+                info_tips: '观察守门员的扑救习惯，瞄准球门上角或远角等扑救盲区；助跑节奏不要过快，射门前留半秒调整角度命中率更高。'
+            },
+            en: {
+                home_games: 'Game<br>Center',
+                home_index: 'Site<br>Home',
+                label_p1: 'Player 1 Score',
+                label_time: 'Time',
+                label_p2: 'Player 2 Score',
+                go_title: 'Full Time',
+                go_winner: 'Winner:',
+                btn_restart: 'Restart',
+                start_title: 'Soccer Battle',
+                mode_desc: '<strong>💻 Desktop:</strong><br>Player 1: move with W/A/S/D<br>Player 2: move with arrow keys<br>Shift to sprint<br><br><strong>📱 Mobile:</strong><br>Human vs AI mode<br>Move with W/A/S/D<br>💡 Press and hold to keep moving<br><br><span style="color: #ff6b6b; font-size: 0.8rem;">⚠️ Two-player mode on mobile is in development</span><br><br>Kick the ball into the opponent\'s goal to score!<br><br><span style="font-size: 0.75rem; opacity: 0.8;">Player 1: WASD<br>Player 2: Arrows<br>Mobile: Human vs AI<br>Score goals!</span>',
+                btn_start: 'Start Game',
+                mobile_you: 'You - WASD',
+                mobile_hint: '💡 Tip: press and hold to keep moving',
+                serve_you_title: '🎾 Your Serve',
+                serve_you_sub: 'Move to start play',
+                serve_keys_mobile: 'Press the arrow buttons to move',
+                serve_keys_desktop: 'Press W/A/S/D to move',
+                serve_ai_title: '🎾 AI Serve',
+                serve_ai_sub: 'Waiting for opponent',
+                serve_ai_delay: 'AI will serve in 2 seconds',
+                info_title: 'About Football',
+                info_desc: 'Football is a timed penalty-shootout game: within the countdown, run your player into position and shoot, beating the goalkeeper\'s dive to score. It supports solo time-attack and two-player versus modes, and goals trigger a fireworks celebration. The ERROR-CORE version is built with HTML5 Canvas — play instantly.',
+                info_how: 'Controls',
+                info_li1: 'Desktop: arrow keys aim the shot, Enter kicks the ball.',
+                info_li2: 'Mobile: direction buttons and a shoot button appear below the screen; press and hold to keep moving.',
+                info_li3: 'In versus mode the two players take turns shooting; the one with more goals wins.',
+                info_tips_h: 'Tips',
+                info_tips: 'Watch the goalkeeper\'s diving habits and aim for the top or far corners outside their reach; do not rush the run-up — leaving half a second to adjust your angle before shooting raises the conversion rate.'
+            }
+        };
+        window.PAGE_META = {
+            zh: {
+                title: '足球射门 - 点球大战小游戏在线玩 | ERROR-CORE Football',
+                description: 'ERROR-CORE 足球射门游戏：限时点球大战，控制射门方向避开守门员进球得分，支持单人与双人对战模式，进球后触发烟花庆祝画面。',
+                keywords: '足球游戏, 点球大战, football, 射门游戏, ERROR-CORE'
+            },
+            en: {
+                title: 'Football Shooting - Penalty Shootout Online | ERROR-CORE Football',
+                description: 'ERROR-CORE Football: a timed penalty shootout on the web. Aim your shots past the goalkeeper to score, with solo and two-player versus modes and fireworks celebrations after every goal.',
+                keywords: 'football game, penalty shootout, shooting game, play online, ERROR-CORE'
+            }
+        };
+    </script>
+
     <script>
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
@@ -953,11 +1079,30 @@
             aiReadyToMove = false; // 重置 AI 准备状态
         }
         
-        // 显示发球提示
-        function showServingNotice() {
+        // 按当前语言渲染发球提示文案（仅文案，不改显隐与定时逻辑）
+        function updateServingNoticeContent() {
+            const notice = document.getElementById('serving-notice');
+            if (!notice) return;
             const device = detectDevice();
             const isMobile = device.isMobile;
-            
+
+            if (servingPlayer === 1) {
+                notice.innerHTML = `
+                    <h3 style="margin: 0 0 10px 0; font-size: 1.2rem;">${LT.t('serve_you_title')}</h3>
+                    <p style="margin: 0; font-size: 0.9rem;">${LT.t('serve_you_sub')}</p>
+                    <p style="margin: 10px 0 0 0; font-size: 0.8rem; color: #fff;">${isMobile ? LT.t('serve_keys_mobile') : LT.t('serve_keys_desktop')}</p>
+                `;
+            } else {
+                notice.innerHTML = `
+                    <h3 style="margin: 0 0 10px 0; font-size: 1.2rem;">${LT.t('serve_ai_title')}</h3>
+                    <p style="margin: 0; font-size: 0.9rem;">${LT.t('serve_ai_sub')}</p>
+                    <p style="margin: 10px 0 0 0; font-size: 0.8rem; color: #fff;">${LT.t('serve_ai_delay')}</p>
+                `;
+            }
+        }
+
+        // 显示发球提示
+        function showServingNotice() {
             // 创建或获取提示元素
             let notice = document.getElementById('serving-notice');
             if (!notice) {
@@ -979,21 +1124,9 @@
                 `;
                 document.body.appendChild(notice);
             }
-            
+
             // 设置提示内容
-            if (servingPlayer === 1) {
-                notice.innerHTML = `
-                    <h3 style="margin: 0 0 10px 0; font-size: 1.2rem;">🎾 你的发球</h3>
-                    <p style="margin: 0; font-size: 0.9rem;">移动后开始比赛</p>
-                    ${isMobile ? '<p style="margin: 10px 0 0 0; font-size: 0.8rem; color: #fff;">按方向键移动</p>' : '<p style="margin: 10px 0 0 0; font-size: 0.8rem; color: #fff;">按 W/A/S/D 移动</p>'}
-                `;
-            } else {
-                notice.innerHTML = `
-                    <h3 style="margin: 0 0 10px 0; font-size: 1.2rem;">🎾 AI 发球</h3>
-                    <p style="margin: 0; font-size: 0.9rem;">等待对手准备</p>
-                    <p style="margin: 10px 0 0 0; font-size: 0.8rem; color: #fff;">AI 将在 2 秒后发球</p>
-                `;
-            }
+            updateServingNoticeContent();
             
             // AI 发球时，延迟 2 秒后自动移动
             if (servingPlayer === 2) {
@@ -1178,6 +1311,13 @@
             score1Element.textContent = score1;
             score2Element.textContent = score2;
         };
+
+        // 切换语言时，若正在等待发球则即时重渲染提示文案
+        window.addEventListener('langchange', function () {
+            if (waitingForMovement) {
+                updateServingNoticeContent();
+            }
+        });
         
         function goHome() {
             window.location.href = 'gamecenter.html';

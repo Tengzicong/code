@@ -16,6 +16,7 @@
     <meta name="twitter:title" content="飞机射击 - 经典小游戏在线玩 | ERROR-CORE Shooting">
     <meta name="twitter:description" content="ERROR-CORE 飞机射击游戏：左右移动躲避敌机并射击得分，触屏与键盘双操作模式，考验反应与操作技巧的经典街机玩法。">
     <title>飞机射击 - 经典小游戏在线玩 | ERROR-CORE Shooting</title>
+    <script src="js/lang-theme.js"></script>
     <link rel="stylesheet" href="style.css">
     <script src="js/device-detect.js" defer></script>
     <script src="js/touch-controls.js" defer></script>
@@ -307,6 +308,52 @@
             z-index: 1000;
             text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
+
+        /* ===== 深浅色主题：深色为现状，以下为浅色覆盖（不动 canvas 游戏世界配色） ===== */
+        body {
+            transition: background-color .35s ease, color .35s ease;
+        }
+        html[data-theme="light"] body {
+            background: #f5f5f7;
+            color: #1d1d1f;
+        }
+        html[data-theme="light"] .score-panel div {
+            background: #ffffff;
+            color: #1d1d1f;
+            border: 1px solid rgba(0, 0, 0, .12);
+            text-shadow: none;
+        }
+        html[data-theme="light"] .game-over {
+            background: rgba(245, 245, 247, .92);
+        }
+        html[data-theme="light"] .game-over p {
+            color: #1d1d1f;
+        }
+        html[data-theme="light"] .controls button {
+            background: #ffffff;
+            color: #1d1d1f;
+            border: 1px solid rgba(0, 0, 0, .12);
+        }
+        html[data-theme="light"] .controls button:hover {
+            background: #f0f0f3;
+        }
+        html[data-theme="light"] .copyright {
+            color: #6e6e78;
+            text-shadow: none;
+        }
+
+        /* 语言/主题控件融入记分栏 */
+        .score-panel .lt-mount {
+            display: inline-flex;
+            align-items: center;
+        }
+        @media (max-width: 768px) {
+            .score-panel {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 6px;
+            }
+        }
     </style>
 
     <script type="application/ld+json">
@@ -332,29 +379,30 @@
     </script>
 </head>
 <body>
-    <button class="home-button" onclick="goHome()">返回游戏中心<br>Games</button>
-    <button class="home-button home-index" onclick="window.location.href='index.html'">站点主页<br>Site</button>
+    <button class="home-button" data-i18n-html="home_games" onclick="goHome()">返回游戏中心<br>Games</button>
+    <button class="home-button home-index" data-i18n-html="home_index" onclick="window.location.href='index.html'">站点主页<br>Site</button>
     <!-- ERROR logo 圆形图片 -->
     <!-- ERROR logo 圆形图片 -->
     
     
     <div class="game-container">
         <div class="score-panel">
-            <div>当前得分 Score<br><span id="score">0</span></div>
-            <div>生命 Lives<br><span id="lives">9</span></div>
-            <div>最高得分 High Score<br><span id="high-score">0</span></div>
+            <div><span data-i18n="label_score">当前得分 Score</span><br><span id="score">0</span></div>
+            <div><span data-i18n="label_lives">生命 Lives</span><br><span id="lives">9</span></div>
+            <div><span data-i18n="label_high">最高得分 High Score</span><br><span id="high-score">0</span></div>
+            <span class="lt-mount"></span>
         </div>
        
         <canvas id="gameCanvas" width="800" height="400"></canvas>
         <div class="game-over">
-            <h2>游戏结束Game Over</h2>
-            <p>得分 | Score:<span id="final-score">0</span></p>
-            <button onclick="restartGame()">重新开始<br>Restart</button>
+            <h2 data-i18n="go_title">游戏结束Game Over</h2>
+            <p><span data-i18n="go_score">得分 | Score:</span><span id="final-score">0</span></p>
+            <button data-i18n-html="btn_restart" onclick="restartGame()">重新开始<br>Restart</button>
         </div>
         <div class="start-screen" id="start-screen">
-            <h1>射击游戏<br>Shooting Game</h1>
-            <p>使用WASD或方向键移动角色，空格键发射子弹消灭敌人！<br>Use WASD or arrow keys to move character, spacebar to shoot bullets and destroy enemies!</p>
-            <button onclick="startGame()">开始游戏<br>Start Game</button>
+            <h1 data-i18n-html="start_title">射击游戏<br>Shooting Game</h1>
+            <p data-i18n-html="start_desc">使用WASD或方向键移动角色，空格键发射子弹消灭敌人！<br>Use WASD or arrow keys to move character, spacebar to shoot bullets and destroy enemies!</p>
+            <button data-i18n-html="btn_start" onclick="startGame()">开始游戏<br>Start Game</button>
         </div>
     </div>
     <div class="controls">
@@ -398,22 +446,81 @@
     
     
     <section class="game-info">
-        <h2>飞机射击游戏介绍</h2>
-        <p>飞机射击（Shooting）是经典纵版街机射击玩法：玩家操控战机在屏幕底部左右机动，发射子弹拦截从上方不断逼近的敌机群。敌机数量与速度会随时间提升，撞上敌机即游戏结束。ERROR-CORE 版本基于 HTML5 Canvas 实现，无需下载注册，打开浏览器即可开始战斗。</p>
-        <h3>操作方法</h3>
+        <h2 data-i18n="info_title">飞机射击游戏介绍</h2>
+        <p data-i18n="info_desc">飞机射击（Shooting）是经典纵版街机射击玩法：玩家操控战机在屏幕底部左右机动，发射子弹拦截从上方不断逼近的敌机群。敌机数量与速度会随时间提升，撞上敌机即游戏结束。ERROR-CORE 版本基于 HTML5 Canvas 实现，无需下载注册，打开浏览器即可开始战斗。</p>
+        <h3 data-i18n="info_how">操作方法</h3>
         <ul>
-            <li>电脑端：← → 方向键移动战机，空格键发射子弹。</li>
-            <li>手机端：屏幕下方自动出现左右移动键与大号射击按钮，支持长按连续触发。</li>
-            <li>每击落一架敌机获得分数，最高分自动保存在本地。</li>
+            <li data-i18n="info_li1">电脑端：← → 方向键移动战机，空格键发射子弹。</li>
+            <li data-i18n="info_li2">手机端：屏幕下方自动出现左右移动键与大号射击按钮，支持长按连续触发。</li>
+            <li data-i18n="info_li3">每击落一架敌机获得分数，最高分自动保存在本地。</li>
         </ul>
-        <h3>得分技巧</h3>
-        <p>保持在屏幕底部中央活动可获得最大的左右机动空间；优先清理贴近的敌机而不是追打远处的目标，稳定的节奏比快速扫射更容易拿高分。</p>
+        <h3 data-i18n="info_tips_h">得分技巧</h3>
+        <p data-i18n="info_tips">保持在屏幕底部中央活动可获得最大的左右机动空间；优先清理贴近的敌机而不是追打远处的目标，稳定的节奏比快速扫射更容易拿高分。</p>
     </section>
 
     <!-- 添加水印 -->
     <div class="watermark"><h3>@zicong<br>Shooting Game</h3></div>
 
-
+    <script>
+        window.PAGE_I18N = {
+            zh: {
+                home_games: '返回游戏中心<br>Games',
+                home_index: '站点主页<br>Site',
+                label_score: '当前得分 Score',
+                label_lives: '生命 Lives',
+                label_high: '最高得分 High Score',
+                go_title: '游戏结束Game Over',
+                go_score: '得分 | Score:',
+                btn_restart: '重新开始<br>Restart',
+                start_title: '射击游戏<br>Shooting Game',
+                start_desc: '使用WASD或方向键移动角色，空格键发射子弹消灭敌人！<br>Use WASD or arrow keys to move character, spacebar to shoot bullets and destroy enemies!',
+                btn_start: '开始游戏<br>Start Game',
+                win_alert: '恭喜！你赢了！\nCongratulations! You won!',
+                info_title: '飞机射击游戏介绍',
+                info_desc: '飞机射击（Shooting）是经典纵版街机射击玩法：玩家操控战机在屏幕底部左右机动，发射子弹拦截从上方不断逼近的敌机群。敌机数量与速度会随时间提升，撞上敌机即游戏结束。ERROR-CORE 版本基于 HTML5 Canvas 实现，无需下载注册，打开浏览器即可开始战斗。',
+                info_how: '操作方法',
+                info_li1: '电脑端：← → 方向键移动战机，空格键发射子弹。',
+                info_li2: '手机端：屏幕下方自动出现左右移动键与大号射击按钮，支持长按连续触发。',
+                info_li3: '每击落一架敌机获得分数，最高分自动保存在本地。',
+                info_tips_h: '得分技巧',
+                info_tips: '保持在屏幕底部中央活动可获得最大的左右机动空间；优先清理贴近的敌机而不是追打远处的目标，稳定的节奏比快速扫射更容易拿高分。'
+            },
+            en: {
+                home_games: 'Game<br>Center',
+                home_index: 'Site<br>Home',
+                label_score: 'Score',
+                label_lives: 'Lives',
+                label_high: 'High Score',
+                go_title: 'Game Over',
+                go_score: 'Score: ',
+                btn_restart: 'Restart',
+                start_title: 'Shooting Game',
+                start_desc: 'Use WASD or arrow keys to move your fighter, spacebar to shoot bullets and destroy enemies!',
+                btn_start: 'Start Game',
+                win_alert: 'Congratulations! You won!',
+                info_title: 'About Shooting',
+                info_desc: 'Shooting is a classic vertical arcade shooter: pilot your fighter along the bottom of the screen and shoot down waves of enemies closing in from above. Enemy numbers and speed ramp up over time, and colliding with an enemy ends the game. The ERROR-CORE version is built with HTML5 Canvas — no download or sign-up, open the browser and start fighting.',
+                info_how: 'Controls',
+                info_li1: 'Desktop: use ← → arrow keys to move the fighter, spacebar to shoot.',
+                info_li2: 'Mobile: left/right buttons and a large fire button appear below the screen; press and hold for continuous fire.',
+                info_li3: 'Each enemy shot down earns points; the high score is saved locally.',
+                info_tips_h: 'Tips',
+                info_tips: 'Staying near the bottom center gives you the most room to dodge left and right; clear nearby enemies first instead of chasing distant targets — a steady rhythm beats spray-and-pray for a high score.'
+            }
+        };
+        window.PAGE_META = {
+            zh: {
+                title: '飞机射击 - 经典小游戏在线玩 | ERROR-CORE Shooting',
+                description: 'ERROR-CORE 飞机射击游戏：左右移动躲避敌机并射击得分，触屏与键盘双操作模式，考验反应与操作技巧的经典街机玩法。',
+                keywords: '飞机射击, 射击游戏, shooting, 街机游戏, ERROR-CORE'
+            },
+            en: {
+                title: 'Shooting Game - Classic Mini Game Online | ERROR-CORE Shooting',
+                description: 'ERROR-CORE Shooting: a classic arcade shooter on the web. Move left and right to dodge enemy planes and shoot them down for points. Works with both touch and keyboard controls.',
+                keywords: 'shooting game, plane shooter, arcade game, play online, ERROR-CORE'
+            }
+        };
+    </script>
 
     <script>
         const canvas = document.getElementById('gameCanvas');
@@ -612,7 +719,7 @@
                         // Check if all enemies are destroyed
                         if (enemies.every(enemy => !enemy.alive)) {
                             setTimeout(() => {
-                                alert('恭喜！你赢了！\nCongratulations! You won!');
+                                alert(LT.t('win_alert'));
                                 if (score > highScore) {
                                     highScore = score;
                                     localStorage.setItem('shootingHighScore', highScore);

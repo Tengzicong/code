@@ -3,24 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ERROR-CORE 小游戏平台 - 贪吃蛇/打砖块/射击/足球在线玩 | ERROR-CORE Games</title>
-    <meta name="description" content="ERROR-CORE 在线小游戏平台，免下载即开即玩：贪吃蛇、打砖块、飞机射击、足球射门 4 款经典游戏，支持键盘与手机触屏双操作，同时开源 Robot Blockly 机器人积木编程项目。">
-    <meta name="keywords" content="ERROR-CORE, 在线小游戏, 贪吃蛇, 打砖块, 射击游戏, 足球游戏, 免费游戏, Robot Blockly, 积木编程">
+    <title>ERROR-CORE Studio - Robot Blockly 机器人编程与在线小游戏 | ERROR-CORE 开源团队</title>
+    <meta name="description" content="ERROR-CORE Studio 是开源团队 ERROR-CORE Team 的官方站点：提供 Robot Blockly 宇树机器人积木编程工具下载，以及贪吃蛇、打砖块、飞机射击、足球射门 4 款免下载在线小游戏和网页画板工具。">
+    <meta name="keywords" content="ERROR-CORE, ERROR-CORE Studio, 开源团队, 在线小游戏, 贪吃蛇, 打砖块, 射击游戏, 足球游戏, Robot Blockly, 积木编程, Unitree">
     <link rel="canonical" href="https://tzc.yffyeah.top/">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="ERROR-CORE">
-    <meta property="og:title" content="ERROR-CORE 小游戏平台 - 贪吃蛇/打砖块/射击/足球在线玩 | ERROR-CORE Games">
-    <meta property="og:description" content="ERROR-CORE 在线小游戏平台，免下载即开即玩：贪吃蛇、打砖块、飞机射击、足球射门 4 款经典游戏，支持键盘与手机触屏双操作，同时开源 Robot Blockly 机器人积木编程项目。">
+    <meta property="og:title" content="ERROR-CORE Studio - Robot Blockly 机器人编程与在线小游戏">
+    <meta property="og:description" content="ERROR-CORE Studio 是开源团队 ERROR-CORE Team 的官方站点：提供 Robot Blockly 宇树机器人积木编程工具下载，以及贪吃蛇、打砖块、飞机射击、足球射门 4 款免下载在线小游戏和网页画板工具。">
     <meta property="og:url" content="https://tzc.yffyeah.top/">
     <meta property="og:image" content="https://tzc.yffyeah.top/picture/error.png">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="ERROR-CORE 小游戏平台 - 贪吃蛇/打砖块/射击/足球在线玩 | ERROR-CORE Games">
-    <meta name="twitter:description" content="ERROR-CORE 在线小游戏平台，免下载即开即玩：贪吃蛇、打砖块、飞机射击、足球射门 4 款经典游戏，支持键盘与手机触屏双操作，同时开源 Robot Blockly 机器人积木编程项目。">
+    <meta name="twitter:title" content="ERROR-CORE Studio - Robot Blockly 机器人编程与在线小游戏">
+    <meta name="twitter:description" content="ERROR-CORE Studio 是开源团队 ERROR-CORE Team 的官方站点：提供 Robot Blockly 宇树机器人积木编程工具下载，以及贪吃蛇、打砖块、飞机射击、足球射门 4 款免下载在线小游戏和网页画板工具。">
     <link rel="icon" href="picture/error.png">
     <link rel="apple-touch-icon" href="picture/error.png">
     <link rel="stylesheet" href="style.css">
+    <script src="js/lang-theme.js"></script>
     <script src="js/device-detect.js" defer></script>
     <style>
+        .appbar .lt-mount {
+            margin-left: auto;
+        }
+
         .hero {
             text-align: center;
             max-width: 760px;
@@ -125,92 +130,93 @@
             <img src="picture/error.png" alt="ERROR-CORE 标志" class="brand-mark">
             <span class="brand-text">
                 <strong>ERROR-CORE</strong>
-                <small>Mini-Games Platform</small>
+                <small>Studio</small>
             </span>
         </a>
+        <span class="lt-mount"></span>
         <button class="nav-toggle" aria-label="展开导航" aria-expanded="false">☰</button>
         <nav class="appbar-nav">
-            <a href="index.html" class="nav-link" aria-current="page">首页</a>
-            <a href="gamecenter.html" class="nav-link">游戏中心</a>
+            <a href="index.html" class="nav-link" aria-current="page" data-i18n="nav_home">首页</a>
+            <a href="gamecenter.html" class="nav-link" data-i18n="nav_games">游戏中心</a>
             <a href="robot-blockly.html" class="nav-link">Robot Blockly</a>
-            <a href="drawing.html" class="nav-link">画板</a>
-            <a href="errorcore.html" class="nav-link">关于我们</a>
-            <a href="contact.html" class="nav-link">联系我们</a>
+            <a href="drawing.html" class="nav-link" data-i18n="nav_draw">画板</a>
+            <a href="errorcore.html" class="nav-link" data-i18n="nav_about">关于我们</a>
+            <a href="contact.html" class="nav-link" data-i18n="nav_contact">联系我们</a>
         </nav>
     </header>
 
     <main class="container">
         <section class="hero">
-            <span class="eyebrow">4 款经典游戏 · 免下载 · 手机电脑通用</span>
-            <h1 class="main-title">ERROR-CORE 小游戏平台</h1>
-            <p class="sub-title">
-                打开浏览器就能玩的经典小游戏合集，键盘与触屏双操作，最高分自动保存在本地。
-                <span class="en">Classic mini games, playable right in your browser.</span>
+            <span class="eyebrow" data-i18n="hero_eyebrow">开源工具 · 在线游戏 · 免下载</span>
+            <h1 class="main-title">ERROR-CORE Studio</h1>
+            <p class="sub-title" data-i18n-html="hero_sub">
+                ERROR-CORE 开源团队的作品站：机器人积木编程工具 Robot Blockly，加上打开浏览器就能玩的经典小游戏合集。
+                <span class="en">Open-source robotics tooling and browser mini-games by ERROR-CORE Team.</span>
             </p>
             <div class="hero-actions">
-                <a href="gamecenter.html" class="btn">进入游戏中心</a>
-                <a href="robot-blockly.html" class="btn ghost">Robot Blockly 积木编程</a>
+                <a href="gamecenter.html" class="btn" data-i18n="hero_btn_games">进入游戏中心</a>
+                <a href="robot-blockly.html" class="btn ghost" data-i18n="hero_btn_blockly">Robot Blockly 积木编程</a>
             </div>
         </section>
 
         <div class="sections">
             <section class="section">
-                <h2>游戏平台：四款经典，即开即玩</h2>
-                <p>每一款都经过手机与桌面浏览器适配，无需注册、无需下载，点击卡片即可开始游戏。</p>
+                <h2 data-i18n="sec_games_h2">游戏平台：四款经典，即开即玩</h2>
+                <p data-i18n="sec_games_p">每一款都经过手机与桌面浏览器适配，无需注册、无需下载，点击卡片即可开始游戏。</p>
                 <div class="game-grid">
                     <a href="Snake.html" class="game-card">
-                        <h3>🐍 贪吃蛇</h3>
-                        <p>最经典的 Snake 玩法：方向键或滑动屏幕控制小蛇转向，吃掉食物身体变长、速度递增，撞墙或咬到自己即结束。看你能刷到多少分。</p>
-                        <span class="play-button">立即游玩</span>
+                        <h3 data-i18n="card_snake_h3">🐍 贪吃蛇</h3>
+                        <p data-i18n="card_snake_p">最经典的 Snake 玩法：方向键或滑动屏幕控制小蛇转向，吃掉食物身体变长、速度递增，撞墙或咬到自己即结束。看你能刷到多少分。</p>
+                        <span class="play-button" data-i18n="play_now">立即游玩</span>
                     </a>
                     <a href="BreakoutGame.html" class="game-card">
-                        <h3>🧱 打砖块</h3>
-                        <p>街机 Breakout 复刻：移动挡板反弹小球，逐层击碎彩色砖块。三条生命、关卡式砖块布局，考验角度计算与反应速度。</p>
-                        <span class="play-button">立即游玩</span>
+                        <h3 data-i18n="card_breakout_h3">🧱 打砖块</h3>
+                        <p data-i18n="card_breakout_p">街机 Breakout 复刻：移动挡板反弹小球，逐层击碎彩色砖块。三条生命、关卡式砖块布局，考验角度计算与反应速度。</p>
+                        <span class="play-button" data-i18n="play_now">立即游玩</span>
                     </a>
                     <a href="ShootingGame.html" class="game-card">
-                        <h3>✈️ 飞机射击</h3>
-                        <p>纵版卷轴射击：操控战机左右机动，发射子弹拦截不断逼近的敌机群。敌机速度随时间提升，是纯粹的反应力考验。</p>
-                        <span class="play-button">立即游玩</span>
+                        <h3 data-i18n="card_shoot_h3">✈️ 飞机射击</h3>
+                        <p data-i18n="card_shoot_p">纵版卷轴射击：操控战机左右机动，发射子弹拦截不断逼近的敌机群。敌机速度随时间提升，是纯粹的反应力考验。</p>
+                        <span class="play-button" data-i18n="play_now">立即游玩</span>
                     </a>
                     <a href="FootballGame.html" class="game-card">
-                        <h3>⚽ 足球射门</h3>
-                        <p>限时点球大战：瞄准球门空档起脚，骗过守门员扑救路线得分。支持单人与双人对战两种模式，进球后还有烟花庆祝画面。</p>
-                        <span class="play-button">立即游玩</span>
+                        <h3 data-i18n="card_foot_h3">⚽ 足球射门</h3>
+                        <p data-i18n="card_foot_p">限时点球大战：瞄准球门空档起脚，骗过守门员扑救路线得分。支持单人与双人对战两种模式，进球后还有烟花庆祝画面。</p>
+                        <span class="play-button" data-i18n="play_now">立即游玩</span>
                     </a>
                 </div>
             </section>
 
             <section class="section">
-                <h2>怎么玩：键盘 + 触屏双操作</h2>
+                <h2 data-i18n="sec_howto_h2">怎么玩：键盘 + 触屏双操作</h2>
                 <ul class="howto-list">
-                    <li><strong>电脑端：</strong>贪吃蛇使用 ↑ ↓ ← → 方向键；打砖块用 ← → 移动挡板；飞机射击用方向键移动、空格键开火；足球射管用方向键瞄准、回车键射门。</li>
-                    <li><strong>手机端：</strong>页面底部自动出现触屏方向键与射击按钮，横竖屏均可游玩，无需外接键盘。</li>
-                    <li><strong>成绩保存：</strong>每款游戏的最高分自动记录在浏览器本地（localStorage），换设备或清除缓存前成绩一直有效。</li>
+                    <li data-i18n-html="howto_desktop"><strong>电脑端：</strong>贪吃蛇使用 ↑ ↓ ← → 方向键；打砖块用 ← → 移动挡板；飞机射击用方向键移动、空格键开火；足球射管用方向键瞄准、回车键射门。</li>
+                    <li data-i18n-html="howto_mobile"><strong>手机端：</strong>页面底部自动出现触屏方向键与射击按钮，横竖屏均可游玩，无需外接键盘。</li>
+                    <li data-i18n-html="howto_scores"><strong>成绩保存：</strong>每款游戏的最高分自动记录在浏览器本地（localStorage），换设备或清除缓存前成绩一直有效。</li>
                 </ul>
             </section>
 
             <section class="section">
-                <h2>开源项目：Robot Blockly 机器人积木编程</h2>
-                <p>除了小游戏，ERROR-CORE 团队还开源了机器人可视化编程工具。</p>
+                <h2 data-i18n="sec_blockly_h2">开源项目：Robot Blockly 机器人积木编程</h2>
+                <p data-i18n="sec_blockly_p">除了小游戏，ERROR-CORE 团队还开源了机器人可视化编程工具。</p>
                 <div class="features-section">
                     <a href="robot-blockly.html" class="feature-card">
                         <h3>🤖 Robot Blockly v0.1.1</h3>
-                        <p>基于 Google Blockly 的拖拽式积木编程工具，面向 Unitree 宇树机器人。像搭积木一样编写动作指令，零代码基础也能让机器人动起来。提供 Linux 与 macOS 安装包，MIT 协议开源。</p>
-                        <span class="play-button">查看下载</span>
+                        <p data-i18n="card_blockly_p">基于 Google Blockly 的拖拽式积木编程工具，面向 Unitree 宇树机器人。像搭积木一样编写动作指令，零代码基础也能让机器人动起来。提供 Linux 与 macOS 安装包，MIT 协议开源。</p>
+                        <span class="play-button" data-i18n="card_blockly_btn">查看下载</span>
                     </a>
                     <a href="errorcore.html" class="feature-card">
-                        <h3>👥 关于 ERROR-CORE Team</h3>
-                        <p>团队成立于 2026 年 1 月，专注于开源教育与休闲网页工具。小游戏平台、画板工具与 Robot Blockly 均对社区开放，欢迎反馈与建议。</p>
-                        <span class="play-button">了解团队</span>
+                        <h3 data-i18n="card_team_h3">👥 关于 ERROR-CORE Team</h3>
+                        <p data-i18n="card_team_p">团队成立于 2026 年 1 月，专注于开源教育与休闲网页工具。ERROR-CORE Studio 上的小游戏、画板工具与 Robot Blockly 均对社区开放，欢迎反馈与建议。</p>
+                        <span class="play-button" data-i18n="card_team_btn">了解团队</span>
                     </a>
                 </div>
             </section>
 
             <section class="section">
-                <h2>为什么选择 ERROR-CORE</h2>
-                <div class="about-team">
-                    ERROR-CORE 小游戏平台由个人开源团队维护，所有游戏均为纯前端实现（HTML5 Canvas + JavaScript），
+                <h2 data-i18n="sec_why_h2">为什么选择 ERROR-CORE</h2>
+                <div class="about-team" data-i18n-html="sec_why_body">
+                    ERROR-CORE Studio 由个人开源团队维护，所有游戏均为纯前端实现（HTML5 Canvas + JavaScript），
                     不依赖任何服务器后端：打开页面即完成全部资源加载，游玩过程零网络请求，你的操作数据与最高分只保存在自己的设备上。
                     页面自适应手机、平板与桌面浏览器，并针对触屏设备提供了专门的方向键控件。
                     如果你想反馈 Bug、提出新游戏创意，或参与 <a href="errorcore.html">开源项目</a> 共建，
@@ -221,6 +227,97 @@
     </main>
 
     <footer class="copyright">ERROR-CORE Team</footer>
+
+    <script>
+        window.PAGE_META = {
+            zh: {
+                title: 'ERROR-CORE Studio - Robot Blockly 机器人编程与在线小游戏 | ERROR-CORE 开源团队',
+                description: 'ERROR-CORE Studio 是开源团队 ERROR-CORE Team 的官方站点：提供 Robot Blockly 宇树机器人积木编程工具下载，以及贪吃蛇、打砖块、飞机射击、足球射门 4 款免下载在线小游戏和网页画板工具。',
+                keywords: 'ERROR-CORE, ERROR-CORE Studio, 开源团队, 在线小游戏, 贪吃蛇, 打砖块, 射击游戏, 足球游戏, Robot Blockly, 积木编程, Unitree'
+            },
+            en: {
+                title: 'ERROR-CORE Studio - Robot Blockly Programming & Online Mini-Games | ERROR-CORE Open-Source Team',
+                description: 'ERROR-CORE Studio is the official site of the open-source ERROR-CORE Team: download Robot Blockly visual programming for Unitree robots, and play 4 no-install online mini-games — Snake, Breakout, Shooting and Soccer — plus a web drawing board.',
+                keywords: 'ERROR-CORE, ERROR-CORE Studio, open-source team, online mini-games, Snake, Breakout, shooting game, soccer game, Robot Blockly, visual programming, Unitree'
+            }
+        };
+        window.PAGE_I18N = {
+            zh: {
+                nav_home: '首页',
+                nav_games: '游戏中心',
+                nav_draw: '画板',
+                nav_about: '关于我们',
+                nav_contact: '联系我们',
+                hero_eyebrow: '开源工具 · 在线游戏 · 免下载',
+                hero_sub: 'ERROR-CORE 开源团队的作品站：机器人积木编程工具 Robot Blockly，加上打开浏览器就能玩的经典小游戏合集。<span class="en">Open-source robotics tooling and browser mini-games by ERROR-CORE Team.</span>',
+                nav_expand: '展开导航',
+                nav_collapse: '收起导航',
+                hero_btn_games: '进入游戏中心',
+                hero_btn_blockly: 'Robot Blockly 积木编程',
+                sec_games_h2: '游戏平台：四款经典，即开即玩',
+                sec_games_p: '每一款都经过手机与桌面浏览器适配，无需注册、无需下载，点击卡片即可开始游戏。',
+                card_snake_h3: '🐍 贪吃蛇',
+                card_snake_p: '最经典的 Snake 玩法：方向键或滑动屏幕控制小蛇转向，吃掉食物身体变长、速度递增，撞墙或咬到自己即结束。看你能刷到多少分。',
+                card_breakout_h3: '🧱 打砖块',
+                card_breakout_p: '街机 Breakout 复刻：移动挡板反弹小球，逐层击碎彩色砖块。三条生命、关卡式砖块布局，考验角度计算与反应速度。',
+                card_shoot_h3: '✈️ 飞机射击',
+                card_shoot_p: '纵版卷轴射击：操控战机左右机动，发射子弹拦截不断逼近的敌机群。敌机速度随时间提升，是纯粹的反应力考验。',
+                card_foot_h3: '⚽ 足球射门',
+                card_foot_p: '限时点球大战：瞄准球门空档起脚，骗过守门员扑救路线得分。支持单人与双人对战两种模式，进球后还有烟花庆祝画面。',
+                play_now: '立即游玩',
+                sec_howto_h2: '怎么玩：键盘 + 触屏双操作',
+                howto_desktop: '<strong>电脑端：</strong>贪吃蛇使用 ↑ ↓ ← → 方向键；打砖块用 ← → 移动挡板；飞机射击用方向键移动、空格键开火；足球射管用方向键瞄准、回车键射门。',
+                howto_mobile: '<strong>手机端：</strong>页面底部自动出现触屏方向键与射击按钮，横竖屏均可游玩，无需外接键盘。',
+                howto_scores: '<strong>成绩保存：</strong>每款游戏的最高分自动记录在浏览器本地（localStorage），换设备或清除缓存前成绩一直有效。',
+                sec_blockly_h2: '开源项目：Robot Blockly 机器人积木编程',
+                sec_blockly_p: '除了小游戏，ERROR-CORE 团队还开源了机器人可视化编程工具。',
+                card_blockly_p: '基于 Google Blockly 的拖拽式积木编程工具，面向 Unitree 宇树机器人。像搭积木一样编写动作指令，零代码基础也能让机器人动起来。提供 Linux 与 macOS 安装包，MIT 协议开源。',
+                card_blockly_btn: '查看下载',
+                card_team_h3: '👥 关于 ERROR-CORE Team',
+                card_team_p: '团队成立于 2026 年 1 月，专注于开源教育与休闲网页工具。ERROR-CORE Studio 上的小游戏、画板工具与 Robot Blockly 均对社区开放，欢迎反馈与建议。',
+                card_team_btn: '了解团队',
+                sec_why_h2: '为什么选择 ERROR-CORE',
+                sec_why_body: 'ERROR-CORE Studio 由个人开源团队维护，所有游戏均为纯前端实现（HTML5 Canvas + JavaScript），不依赖任何服务器后端：打开页面即完成全部资源加载，游玩过程零网络请求，你的操作数据与最高分只保存在自己的设备上。页面自适应手机、平板与桌面浏览器，并针对触屏设备提供了专门的方向键控件。如果你想反馈 Bug、提出新游戏创意，或参与 <a href="errorcore.html">开源项目</a> 共建，随时通过 <a href="contact.html">联系我们</a> 页面找到我们。'
+            },
+            en: {
+                nav_home: 'Home',
+                nav_games: 'Game Center',
+                nav_draw: 'Drawing',
+                nav_about: 'About Us',
+                nav_contact: 'Contact',
+                hero_eyebrow: 'Open-Source Tools · Online Games · No Downloads',
+                hero_sub: 'The showcase site by the open-source ERROR-CORE Team: Robot Blockly, a visual programming tool for robots, plus a collection of classic mini-games you can play right in your browser.',
+                nav_expand: 'Expand navigation',
+                nav_collapse: 'Collapse navigation',
+                hero_btn_games: 'Enter Game Center',
+                hero_btn_blockly: 'Robot Blockly Programming',
+                sec_games_h2: 'Game Platform: Four Classics, Ready to Play',
+                sec_games_p: 'Every title is tuned for mobile and desktop browsers. No sign-up, no downloads — just click a card and start playing.',
+                card_snake_h3: '🐍 Snake',
+                card_snake_p: 'The timeless Snake: steer with arrow keys or swipes, eat food to grow longer and faster, and the run ends when you hit a wall or bite yourself. See how high you can score.',
+                card_breakout_h3: '🧱 Breakout',
+                card_breakout_p: 'An arcade Breakout remake: move the paddle to bounce the ball and smash colored bricks layer by layer. Three lives and level-style brick layouts put your angles and reflexes to the test.',
+                card_shoot_h3: '✈️ Shooting',
+                card_shoot_p: 'A vertical-scrolling shooter: weave your fighter left and right and blast waves of closing enemies. Enemy speed climbs over time — a pure test of reaction.',
+                card_foot_h3: '⚽ Soccer Shootout',
+                card_foot_p: 'A timed penalty shootout: aim for the gap in the goal and fool the keeper to score. Solo and two-player versus modes, with fireworks after every goal.',
+                play_now: 'Play Now',
+                sec_howto_h2: 'How to Play: Keyboard + Touch Controls',
+                howto_desktop: '<strong>Desktop:</strong> Snake uses the ↑ ↓ ← → arrow keys; Breakout moves the paddle with ← →; Shooting moves with arrow keys and fires with Space; in the soccer shootout, aim with arrow keys and shoot with Enter.',
+                howto_mobile: '<strong>Mobile:</strong> on-screen D-pads and fire buttons appear automatically at the bottom of the page. Play in portrait or landscape — no external keyboard needed.',
+                howto_scores: '<strong>Score saving:</strong> each game records your high score locally in the browser (localStorage), so it stays valid across sessions until you switch devices or clear the cache.',
+                sec_blockly_h2: 'Open-Source Project: Robot Blockly Visual Programming',
+                sec_blockly_p: 'Beyond the mini-games, the ERROR-CORE Team has also open-sourced a visual programming tool for robots.',
+                card_blockly_p: 'A drag-and-drop block programming tool built on Google Blockly, designed for Unitree robots. Compose motion commands like stacking blocks — even with zero coding experience you can get a robot moving. Linux and macOS installers available, released under the MIT license.',
+                card_blockly_btn: 'View Downloads',
+                card_team_h3: '👥 About ERROR-CORE Team',
+                card_team_p: 'Founded in January 2026, the team focuses on open-source education and casual web tools. The mini-games, drawing board and Robot Blockly on ERROR-CORE Studio are all open to the community — feedback and suggestions welcome.',
+                card_team_btn: 'Meet the Team',
+                sec_why_h2: 'Why Choose ERROR-CORE',
+                sec_why_body: 'ERROR-CORE Studio is maintained by a solo open-source team, and every game is a pure front-end implementation (HTML5 Canvas + JavaScript) with no server backend: loading the page fetches all resources, gameplay makes zero network requests, and your input data and high scores stay on your own device. Pages adapt to phones, tablets and desktop browsers, with dedicated on-screen D-pads for touch devices. To report a bug, pitch a new game idea, or join our <a href="errorcore.html">open-source projects</a>, reach us anytime through the <a href="contact.html">Contact</a> page.'
+            }
+        };
+    </script>
 
     <script>
         function createStars() {
@@ -240,9 +337,17 @@
             const toggle = document.querySelector('.nav-toggle');
             const nav = document.querySelector('.appbar-nav');
             if (!toggle || !nav) return;
+            const syncToggleLabel = function () {
+                const open = nav.classList.contains('is-open');
+                toggle.setAttribute('aria-label', open ? LT.t('nav_collapse') : LT.t('nav_expand'));
+            };
+            syncToggleLabel();
+            window.addEventListener('langchange', syncToggleLabel);
+
             toggle.addEventListener('click', function () {
                 const open = nav.classList.toggle('is-open');
                 toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+                syncToggleLabel();
             });
             nav.addEventListener('click', function (e) {
                 if (e.target.closest('a') && nav.classList.contains('is-open')) {

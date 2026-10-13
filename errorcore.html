@@ -3,735 +3,444 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="ERROR-CORE 团队官方介绍页：开源机器人积木编程工具 Robot Blockly（基于 Google Blockly 与 Unitree SDK）与 ERROR-CORE 小游戏平台的项目详情、版本信息与开源协议说明。">
+    <meta name="description" content="ERROR-CORE 团队官方介绍页：开源机器人积木编程工具 Robot Blockly（基于 Google Blockly 与 Unitree SDK）与 ERROR-CORE Games 小游戏合集的项目详情、版本信息与开源协议说明。">
     <meta name="keywords" content="ERROR-CORE, 开源团队, Robot Blockly, Unitree, 宇树, Blockly, 机器人编程">
     <link rel="canonical" href="https://tzc.yffyeah.top/errorcore.html">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="ERROR-CORE">
-    <meta property="og:title" content="ERROR-CORE Team 开源项目介绍 - Robot Blockly 与小游戏平台">
-    <meta property="og:description" content="ERROR-CORE 团队官方介绍页：开源机器人积木编程工具 Robot Blockly（基于 Google Blockly 与 Unitree SDK）与 ERROR-CORE 小游戏平台的项目详情、版本信息与开源协议说明。">
+    <meta property="og:title" content="ERROR-CORE Team 开源项目介绍 - Robot Blockly 与 ERROR-CORE Games">
+    <meta property="og:description" content="ERROR-CORE 团队官方介绍页：开源机器人积木编程工具 Robot Blockly（基于 Google Blockly 与 Unitree SDK）与 ERROR-CORE Games 小游戏合集的项目详情、版本信息与开源协议说明。">
     <meta property="og:url" content="https://tzc.yffyeah.top/errorcore.html">
     <meta property="og:image" content="https://tzc.yffyeah.top/picture/error.png">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="ERROR-CORE Team 开源项目介绍 - Robot Blockly 与小游戏平台">
-    <meta name="twitter:description" content="ERROR-CORE 团队官方介绍页：开源机器人积木编程工具 Robot Blockly（基于 Google Blockly 与 Unitree SDK）与 ERROR-CORE 小游戏平台的项目详情、版本信息与开源协议说明。">
-    <title>ERROR-CORE Team 开源项目介绍 - Robot Blockly 与小游戏平台</title>
+    <meta name="twitter:title" content="ERROR-CORE Team 开源项目介绍 - Robot Blockly 与 ERROR-CORE Games">
+    <meta name="twitter:description" content="ERROR-CORE 团队官方介绍页：开源机器人积木编程工具 Robot Blockly（基于 Google Blockly 与 Unitree SDK）与 ERROR-CORE Games 小游戏合集的项目详情、版本信息与开源协议说明。">
+    <title>ERROR-CORE Team 开源项目介绍 - Robot Blockly 与 ERROR-CORE Games</title>
     <link rel="icon" type="image/png" href="picture/error.png">
     <link rel="apple-touch-icon" href="picture/error.png">
+    <script>document.documentElement.classList.add('js');</script>
+    <script>
+    /* 主题与语言：先于渲染设置，避免闪烁；默认跟随系统，不做任何本地存储 */
+    (function () {
+        try {
+            var h = document.documentElement;
+            var theme = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            h.setAttribute('data-theme', theme);
+            var lang = (navigator.language || 'zh-CN').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en';
+            if (lang === 'en') h.setAttribute('lang', 'en');
+        } catch (e) {}
+    })();
+    </script>
     <style>
 /* ==========================================================================
-   ERROR-CORE 设计令牌 · 浅色专业风
-   单一强调色（coral）+ 深海军蓝品牌色；8px 间距网格；6 级字号阶梯
+   Apple · 白色画廊排版（支持深色模式）
+   Gallery White / Studio Mist 交替色带；大圆角卡片、无阴影、克制字重(≤600)
+   Action Blue 仅用于紧凑 CTA 按钮；文字链接用 Apple Blue
    ========================================================================== */
 :root {
-    /* 色板 */
-    --bg:            #ffffff;
-    --bg-subtle:     #f7f8fa;
-    --bg-inset:      #eef1f5;
-    --fg:            #16202c;
-    --fg-muted:      #55636f;
-    --fg-subtle:     #7c8894;
-    --line:          #dfe3e8;
-    --line-strong:   #c3cbd4;
-    --brand:         #0f2c4d;
-    --brand-soft:    #1b3f68;
-    --accent:        #c8452f;
-    --accent-hover:  #a83825;
-    --accent-soft:   rgba(200, 69, 47, 0.10);
-    --accent-ring:   rgba(200, 69, 47, 0.22);
-    --warn-fg:       #7c2d12;
-    --warn-bg:       #fff5eb;
-    --warn-line:     #f0c9a4;
-    --warn-bar:      #c2610a;
-    --code-bg:       #10233b;
-    --code-fg:       #e4ecf5;
+    --white:        #ffffff;
+    --mist:         #f5f5f7;
+    --hairline:     #d6d6d6;
+    --control:      #e6e6e8;
+    --ink:          #1d1d1f;
+    --secondary:    #6e6e73;
+    --steel:        #86868b;
+    --link:         #0066cc;
+    --action:       #0071e3;
+    --action-hover: #0077ed;
+    --topbar-bg:    rgba(255, 255, 255, 0.92);
 
-    /* 字号阶梯 */
-    --fs-xs:   0.8125rem;
-    --fs-sm:   0.875rem;
-    --fs-base: 1rem;
-    --fs-lg:   1.125rem;
-    --fs-xl:   1.375rem;
-    --fs-2xl:  1.75rem;
-    --fs-hero: clamp(2.25rem, 1.6rem + 2.6vw, 3.25rem);
+    --display: 'SF Pro Display', ui-sans-serif, system-ui, -apple-system,
+               BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC",
+               "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    --text: 'SF Pro Text', var(--display);
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
 
-    /* 间距（8px 网格） */
-    --sp-1: 4px;
-    --sp-2: 8px;
-    --sp-3: 16px;
-    --sp-4: 24px;
-    --sp-5: 32px;
-    --sp-6: 48px;
-    --sp-7: 64px;
-    --sp-8: 96px;
-
-    /* 圆角 */
-    --r-sm: 6px;
-    --r-md: 10px;
-    --r-lg: 16px;
-    --r-full: 999px;
-
-    /* 阴影（两档深度，克制使用） */
-    --sh-sm: 0 1px 2px rgba(16, 24, 40, 0.05), 0 1px 3px rgba(16, 24, 40, 0.08);
-    --sh-md: 0 4px 10px -2px rgba(16, 24, 40, 0.08), 0 2px 4px -2px rgba(16, 24, 40, 0.05);
-    --sh-lg: 0 16px 32px -12px rgba(16, 24, 40, 0.16);
-
-    --on-accent:     #ffffff;
-    --topbar-bg:     rgba(255, 255, 255, 0.86);
-    --footer-fg:     rgba(228, 236, 245, 0.72);
-    --footer-fg-hi:  #ffffff;
-    --measure: 66ch;
-    --maxw: 1120px;
-    --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+    --r-card:  24px;
+    --r-inset: 18px;
+    --r-pill:  980px;
+    --maxw:    1120px;
+    --ease:     cubic-bezier(0.36, 0.73, 0.21, 0.96);
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-*,
-*::before,
-*::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+html[data-theme="dark"] {
+    --white:        #000000;
+    --mist:         #1c1c1e;
+    --hairline:     rgba(255, 255, 255, 0.16);
+    --control:      #2c2c2e;
+    --ink:          #f5f5f7;
+    --secondary:    #a1a1a6;
+    --steel:        #86868b;
+    --link:         #2997ff;
+    --action:       #0a84ff;
+    --action-hover: #409cff;
+    --topbar-bg:    rgba(0, 0, 0, 0.72);
 }
 
-html {
-    -webkit-text-size-adjust: 100%;
-    scroll-behavior: smooth;
-}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; color-scheme: light; }
+
+html[data-theme="dark"] { color-scheme: dark; }
 
 body {
-    background: var(--bg);
-    color: var(--fg);
-    font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC",
-                 "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-    font-size: var(--fs-base);
-    line-height: 1.7;
+    background: var(--white);
+    color: var(--ink);
+    font-family: var(--text);
+    font-size: 17px;
+    line-height: 1.47;
+    letter-spacing: -0.374px;
     font-variant-numeric: tabular-nums;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.35s var(--ease), color 0.35s var(--ease);
 }
 
-/* ---------- 顶栏 ---------- */
+img { display: block; max-width: 100%; height: auto; }
+
+a { color: inherit; text-decoration: none; }
+
+a.link { color: var(--link); }
+a.link::after { content: " ›"; }
+a.link:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+:focus-visible { outline: 2px solid var(--action); outline-offset: 2px; border-radius: 4px; }
+
+/* ---------- 顶栏（产品局部导航） ---------- */
 .topbar {
     position: sticky;
     top: 0;
-    z-index: 20;
+    z-index: 30;
     background: var(--topbar-bg);
-    backdrop-filter: saturate(180%) blur(10px);
-    -webkit-backdrop-filter: saturate(180%) blur(10px);
-    border-bottom: 1px solid var(--line);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid var(--hairline);
+    transition: background-color 0.35s var(--ease), border-color 0.35s var(--ease);
 }
 
 .topbar-inner {
     max-width: var(--maxw);
     margin: 0 auto;
-    padding: 0 var(--sp-4);
-    height: 60px;
+    padding: 0 24px;
+    height: 52px;
     display: flex;
     align-items: center;
-    gap: var(--sp-3);
+    gap: 12px;
 }
 
 .wordmark {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    font-size: var(--fs-base);
-    font-weight: 650;
-    letter-spacing: -0.01em;
-    color: var(--brand);
-    text-decoration: none;
+    gap: 8px;
+    font-family: var(--display);
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: 0.228px;
+    color: var(--ink);
     white-space: nowrap;
 }
 
-.logo {
-    flex: 0 0 auto;
-    width: 34px;
-    height: 34px;
-    border-radius: var(--r-md);
-    box-shadow: var(--sh-sm);
+.logo { flex: 0 0 auto; width: 28px; height: 28px; border-radius: 8px; }
+
+/* 语言切换（胶囊分段按钮） */
+.lang-switch {
+    display: inline-flex;
+    margin-left: 6px;
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-pill);
+    overflow: hidden;
 }
 
-/* 全站图片统一圆角 */
-img {
-    display: block;
-    max-width: 100%;
-    height: auto;
-    border-radius: var(--r-md);
+.lang-switch button {
+    font: inherit;
+    font-size: 12px;
+    letter-spacing: -0.12px;
+    padding: 4px 12px;
+    background: transparent;
+    border: none;
+    color: var(--secondary);
+    cursor: pointer;
+    transition: background 0.2s var(--ease), color 0.2s var(--ease);
 }
+
+.lang-switch button[aria-pressed="true"] { background: var(--ink); color: var(--white); }
 
 .topnav {
     display: flex;
     align-items: center;
-    gap: var(--sp-1);
+    gap: 8px;
     margin-left: auto;
 }
 
-.topnav a {
+.topnav .nav-link {
     padding: 7px 12px;
-    border-radius: var(--r-sm);
-    font-size: var(--fs-sm);
-    color: var(--fg-muted);
-    text-decoration: none;
-    transition: color 0.16s var(--ease), background 0.16s var(--ease);
+    border-radius: var(--r-pill);
+    font-size: 12px;
+    line-height: 1.33;
+    letter-spacing: -0.12px;
+    color: var(--ink);
+    transition: background 0.16s var(--ease);
 }
 
-.topnav a:hover {
-    color: var(--fg);
-    background: var(--bg-subtle);
-}
+.topnav .nav-link:hover { background: var(--mist); }
 
-.topnav .btn {
-    padding: 7px 16px;
-    font-size: var(--fs-sm);
-}
-
-/* ---------- 布局 ---------- */
-.wrap {
-    max-width: var(--maxw);
-    margin: 0 auto;
-    padding: 0 var(--sp-4);
-}
-
-.hero {
-    display: grid;
-    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
-    gap: var(--sp-7) var(--sp-6);
-    align-items: start;
-    padding: var(--sp-8) 0 var(--sp-7);
-}
-
-.eyebrow {
+.topnav .btn-cta {
     display: inline-flex;
     align-items: center;
-    gap: var(--sp-2);
-    padding: 5px 12px 5px 10px;
-    margin-bottom: var(--sp-4);
-    border: 1px solid var(--line);
-    border-radius: var(--r-full);
-    background: var(--bg-subtle);
-    font-size: var(--fs-xs);
-    font-weight: 550;
-    color: var(--fg-muted);
-    letter-spacing: 0.01em;
+    padding: 6px 16px;
+    border-radius: var(--r-pill);
+    background: var(--action);
+    color: #ffffff;
+    font-size: 12px;
+    line-height: 1.33;
+    letter-spacing: -0.12px;
+    white-space: nowrap;
+    transition: background 0.2s var(--ease);
 }
 
-.eyebrow::before {
-    content: "";
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--accent);
+.topnav .btn-cta:hover { background: var(--action-hover); }
+
+/* 主题切换（圆形描边图标按钮） */
+.icon-btn {
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-pill);
+    background: transparent;
+    color: var(--ink);
+    cursor: pointer;
+    transition: background 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+
+.icon-btn:hover { background: var(--mist); }
+.icon-btn svg { width: 16px; height: 16px; }
+.ico-sun { display: none; }
+html[data-theme="dark"] .ico-sun { display: inline-flex; }
+html[data-theme="dark"] .ico-moon { display: none; }
+
+/* ---------- 布局与色带 ---------- */
+.wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+.band { background: var(--mist); }
+
+section { padding: 100px 0; scroll-margin-top: 64px; }
+
+/* ---------- Hero（Apple 式居中） ---------- */
+.hero { text-align: center; padding: 80px 0 0; }
+
+.eyebrow {
+    display: inline-block;
+    margin-bottom: 20px;
+    padding: 6px 16px;
+    border-radius: var(--r-pill);
+    background: var(--mist);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: -0.08px;
+    color: var(--secondary);
 }
 
 h1 {
-    font-size: var(--fs-hero);
-    line-height: 1.08;
-    letter-spacing: -0.025em;
-    font-weight: 700;
-    color: var(--brand);
-    margin-bottom: var(--sp-3);
+    font-family: var(--display);
+    font-size: clamp(40px, 5.2vw, 56px);
+    line-height: 1.06;
+    letter-spacing: -0.005em;
+    font-weight: 600;
+    color: var(--ink);
+    max-width: 16em;
+    margin: 0 auto 16px;
 }
 
 .lede {
-    font-size: var(--fs-lg);
-    line-height: 1.62;
-    color: var(--fg-muted);
-    max-width: var(--measure);
-    margin-bottom: var(--sp-3);
+    font-size: 19px;
+    line-height: 1.42;
+    letter-spacing: 0.231px;
+    color: var(--secondary);
+    max-width: 680px;
+    margin: 0 auto 10px;
 }
 
 .lede-sub {
-    font-size: var(--fs-base);
-    line-height: 1.7;
-    color: var(--fg-subtle);
-    max-width: var(--measure);
+    font-size: 15px;
+    line-height: 1.5;
+    letter-spacing: -0.224px;
+    color: var(--steel);
+    max-width: 640px;
+    margin: 0 auto;
 }
 
-.cta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--sp-3);
-    margin-top: var(--sp-5);
-}
+.cta { display: flex; justify-content: center; flex-wrap: wrap; gap: 16px; margin-top: 32px; }
 
-.btn-note {
-    margin-top: var(--sp-3);
-    font-size: var(--fs-sm);
-    color: var(--fg-subtle);
-}
-
-/* 首屏规格卡 */
-.spec {
-    border: 1px solid var(--line);
-    border-radius: var(--r-lg);
-    background: var(--bg);
-    box-shadow: var(--sh-sm);
-    overflow: hidden;
-}
-
-.spec h2 {
-    padding: var(--sp-3) var(--sp-4);
-    font-size: var(--fs-xs);
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--fg-subtle);
-    background: var(--bg-subtle);
-    border-bottom: 1px solid var(--line);
-}
-
-.spec dl {
-    margin: 0;
-    padding: var(--sp-1) var(--sp-4);
-}
-
-.spec-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: var(--sp-3);
-    padding: 11px 0;
-    border-bottom: 1px solid var(--line);
-    font-size: var(--fs-sm);
-}
-
-.spec-row:last-child {
-    border-bottom: none;
-}
-
-.spec-row dt {
-    color: var(--fg-subtle);
-    font-weight: 500;
-}
-
-.spec-row dd {
-    color: var(--fg);
-    font-weight: 600;
-    text-align: right;
-}
-
-/* ---------- 按钮 ---------- */
+/* ---------- 按钮体系 ---------- */
 .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: var(--sp-2);
-    padding: 12px 24px;
+    gap: 8px;
+    padding: 12px 28px;
     border: 1px solid transparent;
-    border-radius: var(--r-sm);
+    border-radius: var(--r-pill);
     font: inherit;
-    font-size: var(--fs-base);
-    font-weight: 600;
-    letter-spacing: -0.005em;
-    text-decoration: none;
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: -0.374px;
     cursor: pointer;
     white-space: nowrap;
-    transition: background 0.16s var(--ease), border-color 0.16s var(--ease),
-                color 0.16s var(--ease), box-shadow 0.16s var(--ease),
-                transform 0.1s var(--ease);
+    transition: background 0.2s var(--ease), color 0.2s var(--ease), border-color 0.2s var(--ease);
 }
 
-.btn:active {
-    transform: translateY(1px);
-}
+.btn-filled { background: var(--action); color: #ffffff; }
+.btn-filled:hover { background: var(--action-hover); }
 
-.btn:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-}
+.btn-outline { background: var(--mist); color: var(--ink); }
+.btn-outline:hover { background: var(--control); }
 
-.btn-primary {
-    background: var(--accent);
-    color: var(--on-accent);
-    box-shadow: var(--sh-sm);
-}
-
-.btn-primary:hover {
-    background: var(--accent-hover);
-    color: var(--on-accent);
-    box-shadow: var(--sh-md);
-}
-
-.btn-secondary {
-    background: var(--bg);
-    border-color: var(--line-strong);
-    color: var(--fg);
-}
-
-.btn-secondary:hover {
-    background: var(--bg-subtle);
-    border-color: var(--brand-soft);
-    color: var(--brand);
-}
-
-/* ---------- 区块 ---------- */
-section {
-    padding: var(--sp-7) 0;
-    border-top: 1px solid var(--line);
-    scroll-margin-top: 76px;
-}
-
-h2 {
-    font-size: var(--fs-2xl);
-    font-weight: 680;
-    letter-spacing: -0.02em;
-    line-height: 1.25;
-    color: var(--brand);
-    margin-bottom: var(--sp-2);
+/* ---------- 区块标题 ---------- */
+h2.sec {
+    font-family: var(--display);
+    font-size: clamp(32px, 4vw, 40px);
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 12px;
 }
 
 .section-desc {
-    font-size: var(--fs-base);
-    color: var(--fg-muted);
-    max-width: var(--measure);
-    margin-bottom: var(--sp-5);
+    font-size: 19px;
+    line-height: 1.42;
+    letter-spacing: 0.228px;
+    color: var(--secondary);
+    max-width: 680px;
+    margin-bottom: 48px;
 }
 
-h3 {
-    font-size: var(--fs-base);
-    font-weight: 650;
-    color: var(--fg);
-    letter-spacing: -0.008em;
-}
-
-a {
-    color: var(--accent);
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-/* ---------- 卡片网格：1px 发丝分隔 ---------- */
+/* ---------- 卡片网格 ---------- */
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(272px, 1fr));
-    gap: 1px;
-    background: var(--line);
-    border: 1px solid var(--line);
-    border-radius: var(--r-lg);
-    overflow: hidden;
-    box-shadow: var(--sh-sm);
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
 }
 
 .card {
-    background: var(--bg);
-    padding: var(--sp-4);
-    transition: background 0.16s var(--ease);
-}
-
-.card:hover {
-    background: var(--bg-subtle);
+    background: var(--white);
+    border-radius: var(--r-card);
+    padding: 28px;
 }
 
 .card h3 {
-    margin-bottom: 6px;
+    font-family: var(--display);
+    font-size: 21px;
+    line-height: 1.17;
+    font-weight: 600;
+    letter-spacing: 0.231px;
+    color: var(--ink);
+    margin-bottom: 8px;
 }
 
-.card p {
-    font-size: var(--fs-sm);
-    line-height: 1.68;
-    color: var(--fg-muted);
-}
+.card p { font-size: 17px; line-height: 1.47; letter-spacing: -0.374px; color: var(--secondary); }
 
 /* ---------- 代码 ---------- */
-pre {
-    margin: var(--sp-3) 0;
-    padding: var(--sp-4);
-    background: var(--code-bg);
-    color: var(--code-fg);
-    border-radius: var(--r-md);
-    font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
-    font-size: var(--fs-xs);
-    line-height: 1.75;
-    overflow-x: auto;
-}
-
-pre code {
-    background: none;
-    color: inherit;
-    padding: 0;
-    font-size: inherit;
-}
-
 code {
-    font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
-    font-size: 0.875em;
-    background: var(--bg-inset);
-    color: var(--brand);
+    font-family: var(--mono);
+    font-size: 0.86em;
+    background: var(--mist);
     padding: 2px 6px;
-    border-radius: var(--r-sm);
-}
-
-.text-block {
-    border: 1px solid var(--line);
-    border-radius: var(--r-lg);
-    background: var(--bg-subtle);
-    padding: var(--sp-5);
-}
-
-.text-block > * + * {
-    margin-top: var(--sp-3);
-}
-
-.text-block p {
-    max-width: var(--measure);
-    color: var(--fg-muted);
-}
-
-.text-block p:first-child {
-    color: var(--fg);
-}
-
-ul {
-    padding-left: var(--sp-5);
-    color: var(--fg-muted);
-}
-
-li {
-    margin-bottom: var(--sp-2);
+    border-radius: 6px;
+    color: var(--ink);
 }
 
 /* ---------- 表格 ---------- */
-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    border: 1px solid var(--line);
-    border-radius: var(--r-lg);
-    overflow: hidden;
-    background: var(--bg);
-    box-shadow: var(--sh-sm);
-}
+table { width: 100%; border-collapse: collapse; }
 
 th, td {
-    padding: 13px var(--sp-4);
+    padding: 14px 16px;
     text-align: left;
-    font-size: var(--fs-sm);
+    font-size: 15px;
+    letter-spacing: -0.224px;
     vertical-align: top;
+    border-bottom: 1px solid var(--hairline);
 }
 
 th {
-    background: var(--bg-subtle);
-    font-size: var(--fs-xs);
+    font-size: 12px;
     font-weight: 600;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: var(--fg-subtle);
+    color: var(--steel);
 }
 
-td {
-    border-top: 1px solid var(--line);
-    color: var(--fg-muted);
-    line-height: 1.65;
-}
-
-td strong {
-    color: var(--fg);
-    font-weight: 600;
-}
-
-tbody tr {
-    transition: background 0.14s var(--ease);
-}
-
-tbody tr:hover {
-    background: var(--bg-subtle);
-}
+td { color: var(--secondary); line-height: 1.5; }
+td:first-child { color: var(--ink); font-weight: 500; }
+tbody tr:last-child td { border-bottom: none; }
+th:first-child, td:first-child { padding-left: 0; }
+th:last-child, td:last-child { padding-right: 0; }
 
 /* ---------- 提示块 ---------- */
 .notice {
-    border: 1px solid var(--line);
-    border-left: 3px solid var(--brand-soft);
-    border-radius: var(--r-md);
-    background: var(--bg-subtle);
-    padding: var(--sp-4) var(--sp-5);
-    font-size: var(--fs-sm);
-    color: var(--fg-muted);
+    background: var(--mist);
+    border-radius: var(--r-inset);
+    padding: 24px 28px;
+    font-size: 15px;
+    line-height: 1.55;
+    letter-spacing: -0.224px;
+    color: var(--secondary);
 }
 
-.notice p + p {
-    margin-top: var(--sp-2);
-}
-
-.footnote {
-    margin-top: var(--sp-3);
-    font-size: var(--fs-xs);
-    color: var(--fg-subtle);
-}
-
-/* ---------- 页脚 ---------- */
-.footer {
-    margin-top: var(--sp-7);
-    background: var(--brand);
-    color: var(--footer-fg);
-    font-size: var(--fs-sm);
-}
-
-.footer-inner {
-    max-width: var(--maxw);
-    margin: 0 auto;
-    padding: var(--sp-6) var(--sp-4);
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--sp-3) var(--sp-6);
-    align-items: center;
-    justify-content: space-between;
-}
-
-.footer a {
-    color: var(--on-accent);
-    opacity: 0.82;
-    text-decoration: none;
-}
-
-.footer a:hover {
-    opacity: 1;
-    text-decoration: underline;
-}
-
-.footer-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--sp-2) var(--sp-4);
-}
-
-
-/* ---------- 响应式 ---------- */
-@media (max-width: 900px) {
-    .hero {
-        grid-template-columns: 1fr;
-        gap: var(--sp-6);
-        padding-top: var(--sp-7);
-    }
-}
-
-@media (max-width: 720px) {
-    :root {
-        --fs-2xl: 1.45rem;
-    }
-
-    .topnav a:not(.btn) {
-        display: none;
-    }
-
-    .hero {
-        padding-top: var(--sp-6);
-        padding-bottom: var(--sp-6);
-    }
-
-    section {
-        padding: var(--sp-6) 0;
-    }
-
-/* 表格在窄屏改为横向滚动，避免 4 列内容撑破容器 */
-    table {
-        display: block;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        white-space: nowrap;
-    }
-
-    td {
-        white-space: normal;
-        min-width: 120px;
-    }
-
-    th:first-child,
-    td:first-child {
-        position: sticky;
-        left: 0;
-        background: var(--bg);
-        z-index: 1;
-    }
-
-    th:first-child {
-        background: var(--bg-subtle);
-    }
-
-    .cta .btn {
-        flex: 1 1 auto;
-    }
-
-    .stats {
-        flex-direction: column;
-    }
-
-    .project {
-        padding: var(--sp-4);
-    }
-
-    .meta {
-        grid-template-columns: 1fr;
-    }
-
-    th, td {
-        padding: 11px var(--sp-3);
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    html {
-        scroll-behavior: auto;
-    }
-
-    *,
-    *::before,
-    *::after {
-        transition-duration: 0.01ms !important;
-        animation-duration: 0.01ms !important;
-    }
-}
+.notice p + p { margin-top: 10px; }
+.notice strong { color: var(--ink); font-weight: 600; }
 
 /* ==========================================================================
    ERROR-CORE 团队页专有组件
    ========================================================================== */
 .stats {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1px;
-    margin-top: var(--sp-6);
-    background: var(--line);
-    border: 1px solid var(--line);
-    border-radius: var(--r-lg);
-    overflow: hidden;
-    box-shadow: var(--sh-sm);
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    max-width: 980px;
+    margin: 64px auto 80px;
+    text-align: left;
 }
 
 .stat {
-    flex: 1 1 180px;
-    background: var(--bg);
-    padding: var(--sp-4);
+    background: var(--mist);
+    border: none;
+    border-radius: var(--r-card);
+    padding: 24px 28px;
 }
 
 .stat-label {
     display: block;
-    font-size: var(--fs-xs);
+    font-size: 12px;
     font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: var(--fg-subtle);
-    margin-bottom: 7px;
+    letter-spacing: 0.02em;
+    color: var(--steel);
+    margin-bottom: 6px;
 }
 
 .stat-value {
     display: block;
-    font-size: var(--fs-lg);
-    font-weight: 680;
-    letter-spacing: -0.015em;
-    color: var(--brand);
-    line-height: 1.3;
+    font-family: var(--display);
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    color: var(--ink);
+    line-height: 1.2;
     white-space: nowrap;
 }
 
 .stat-note {
     display: block;
-    font-size: var(--fs-xs);
-    font-weight: 450;
-    color: var(--fg-muted);
-    margin-top: 4px;
-    line-height: 1.5;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: -0.224px;
+    color: var(--secondary);
+    margin-top: 6px;
+    line-height: 1.43;
 }
 
 /* 可切换的"团队成立"卡 */
@@ -739,28 +448,13 @@ tbody tr:hover {
     font: inherit;
     color: inherit;
     text-align: left;
-    background: var(--bg);
-    border: none;
     cursor: pointer;
-    transition: background 0.16s var(--ease);
+    transition: background 0.2s var(--ease);
 }
 
-.stat-toggle:hover {
-    background: var(--bg-subtle);
-}
+.stat-toggle:hover { background: var(--control); }
 
-.stat-toggle:hover .stat-note {
-    color: var(--accent);
-}
-
-.stat-toggle:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: -2px;
-}
-
-.stat-toggle .stat-note {
-    transition: color 0.16s var(--ease);
-}
+.stat-toggle:focus-visible { outline-offset: -2px; }
 
 @keyframes statSwap {
     from { opacity: 0; transform: translateY(3px); }
@@ -768,149 +462,246 @@ tbody tr:hover {
 }
 
 .stat-swap {
-    animation: statSwap 0.22s var(--ease);
+    animation: statSwap 0.5s var(--ease-out);
 }
 
 /* 项目卡片 */
 .project {
-    border: 1px solid var(--line);
-    border-radius: var(--r-lg);
-    background: var(--bg);
-    box-shadow: var(--sh-sm);
-    padding: var(--sp-5);
-    margin-bottom: var(--sp-4);
-    transition: box-shadow 0.18s var(--ease), border-color 0.18s var(--ease);
+    background: var(--white);
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-card);
+    padding: 40px;
+    margin-bottom: 32px;
 }
 
-.project:hover {
-    box-shadow: var(--sh-md);
-    border-color: var(--line-strong);
-}
+.project:last-child { margin-bottom: 0; }
 
 .project-title {
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: var(--sp-3);
-    margin-bottom: var(--sp-2);
+    gap: 16px;
+    margin-bottom: 12px;
 }
 
 .project-title h3 {
-    font-size: var(--fs-xl);
-    font-weight: 680;
-    letter-spacing: -0.018em;
-    color: var(--brand);
+    font-family: var(--display);
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    line-height: 1.17;
+    color: var(--ink);
 }
 
 .tag {
-    font-size: var(--fs-xs);
-    font-weight: 550;
-    padding: 4px 11px;
-    border-radius: var(--r-full);
-    border: 1px solid var(--line);
-    background: var(--bg-subtle);
-    color: var(--fg-muted);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: -0.12px;
+    padding: 6px 14px;
+    border-radius: var(--r-pill);
+    border: 1px solid var(--hairline);
+    background: var(--mist);
+    color: var(--secondary);
     white-space: nowrap;
 }
 
-.tag-accent {
-    border-color: var(--accent-ring);
-    background: var(--accent-soft);
-    color: var(--accent-hover);
+.tag-filled {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--white);
 }
 
 .project p.desc {
-    color: var(--fg-muted);
-    max-width: var(--measure);
-    margin-bottom: var(--sp-4);
+    font-size: 17px;
+    line-height: 1.47;
+    letter-spacing: -0.374px;
+    color: var(--secondary);
+    max-width: 720px;
+    margin-bottom: 28px;
 }
 
 .meta {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: var(--sp-2) var(--sp-5);
-    font-size: var(--fs-sm);
-    padding: var(--sp-3) 0;
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
-    margin-bottom: var(--sp-4);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px 32px;
+    background: var(--mist);
+    border-radius: var(--r-inset);
+    padding: 24px 28px;
+    margin-bottom: 28px;
+    font-size: 15px;
+    letter-spacing: -0.224px;
 }
 
-.meta span {
-    color: var(--fg-muted);
-}
+.meta > span { display: block; color: var(--ink); line-height: 1.45; }
 
 .meta strong {
     display: block;
-    font-size: var(--fs-xs);
+    font-size: 12px;
     font-weight: 600;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: var(--fg-subtle);
-    margin-bottom: 2px;
+    color: var(--steel);
+    margin-bottom: 4px;
 }
 
 .features {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 7px var(--sp-5);
-    margin-bottom: var(--sp-4);
-    font-size: var(--fs-sm);
-    color: var(--fg-muted);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px 32px;
+    margin-bottom: 28px;
+    font-size: 15px;
+    letter-spacing: -0.224px;
+    color: var(--secondary);
     list-style: none;
-    padding-left: 0;
 }
 
 .features li {
     position: relative;
-    padding-left: var(--sp-4);
-    margin-bottom: 0;
+    padding-left: 16px;
+    line-height: 1.5;
 }
 
 .features li::before {
     content: "";
     position: absolute;
-    left: 0;
+    left: 2px;
     top: 0.62em;
-    width: 5px;
-    height: 5px;
+    width: 4px;
+    height: 4px;
     border-radius: 50%;
-    background: var(--accent);
+    background: var(--steel);
 }
 
-.links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--sp-3);
-}
+.links { display: flex; flex-wrap: wrap; gap: 16px; }
 
 /* 项目卡内的子区（第三方组件 / 免责） */
 .subsec {
-    margin-top: var(--sp-5);
-    padding-top: var(--sp-4);
-    border-top: 1px solid var(--line);
+    margin-top: 32px;
+    padding-top: 28px;
+    border-top: 1px solid var(--hairline);
 }
 
 .subsec h4 {
-    font-size: var(--fs-base);
-    font-weight: 650;
-    letter-spacing: -0.008em;
-    color: var(--brand);
-    margin-bottom: var(--sp-2);
+    font-family: var(--display);
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: 0.228px;
+    color: var(--ink);
+    margin-bottom: 8px;
 }
 
 .subsec-desc {
-    font-size: var(--fs-sm);
-    color: var(--fg-muted);
-    max-width: var(--measure);
-    margin-bottom: var(--sp-3);
+    font-size: 15px;
+    letter-spacing: -0.224px;
+    line-height: 1.5;
+    color: var(--secondary);
+    max-width: 720px;
+    margin-bottom: 20px;
 }
 
-.subsec .notice {
-    background: var(--bg);
+.subsec table { margin-bottom: 4px; }
+
+/* ---------- 滚动渐显（Apple 克制感）
+   用独立的 translate 属性承载入场位移，与 hover 的 transform 互不冲突 ---------- */
+.js .reveal {
+    opacity: 0;
+    translate: 0 20px;
+    will-change: opacity, translate;
 }
 
+.js .reveal.in {
+    opacity: 1;
+    translate: 0 0;
+    transition: opacity 0.7s var(--ease-out) var(--rd, 0s),
+                translate 0.7s var(--ease-out) var(--rd, 0s);
+}
+
+/* ---------- 页脚 ---------- */
+.footer {
+    background: var(--mist);
+    border-top: 1px solid var(--hairline);
+}
+
+.footer-inner {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 40px 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 32px;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    letter-spacing: -0.12px;
+    color: var(--secondary);
+}
+
+.footer-meta { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+
+.footer a { color: var(--secondary); }
+
+.footer a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---------- 响应式 ---------- */
+@media (max-width: 900px) {
+    .stats {
+        grid-template-columns: 1fr;
+        max-width: 560px;
+        margin-top: 48px;
+        margin-bottom: 64px;
+    }
+}
+
+@media (max-width: 720px) {
+    .topnav .nav-link { display: none; }
+
+    .hero { padding-top: 56px; }
+
+    section { padding: 64px 0; }
+
+    .section-desc { margin-bottom: 32px; }
+
+    .project { padding: 24px; }
+
+    .meta { grid-template-columns: 1fr; }
+
+    .features { grid-template-columns: 1fr; }
+
+    .cta .btn { flex: 1 1 auto; }
+
+    /* 表格在窄屏改为横向滚动，避免撑破容器 */
+    table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        white-space: nowrap;
+    }
+
+    td { white-space: normal; min-width: 120px; }
+
+    th:first-child, td:first-child {
+        position: sticky;
+        left: 0;
+        background: var(--white);
+        z-index: 1;
+    }
+
+    th, td { padding: 12px 14px; }
+
+    th:first-child, td:first-child { padding-left: 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+
+    *, *::before, *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+
+    .js .reveal { opacity: 1; transform: none; }
+}
     </style>
 
     <script type="application/ld+json">
@@ -924,130 +715,140 @@ tbody tr:hover {
   "sameAs": [
     "https://github.com/Tengzicong/Robot_Blockly"
   ],
-  "description": "ERROR-CORE 是一个开源团队，维护 Robot Blockly 机器人积木编程工具与 ERROR-CORE 小游戏平台。"
+  "description": "ERROR-CORE 是一个开源团队，维护 Robot Blockly 机器人积木编程工具与 ERROR-CORE Games 在线小游戏合集。"
 }
     </script>
 </head>
 <body>
     <header class="topbar">
         <div class="topbar-inner">
-            <a class="wordmark" href="index.html"><img class="logo" src="picture/error.png" alt="ERROR-CORE Team 标识" width="34" height="34">ERROR-CORE</a>
+            <a class="wordmark" href="index.html"><img class="logo" src="picture/error.png" alt="ERROR-CORE Team 标识" width="28" height="28">ERROR-CORE</a>
+            <div class="lang-switch" role="group" aria-label="Language">
+                <button type="button" data-lang="zh" aria-pressed="true">中文</button>
+                <button type="button" data-lang="en" aria-pressed="false">EN</button>
+            </div>
             <nav class="topnav">
-                <a href="#team">团队</a>
-                <a href="#projects">开源软件</a>
-                <a class="btn btn-secondary" href="index.html">返回首页</a>
+                <a class="nav-link" href="#team" data-i18n="nav_team">团队</a>
+                <a class="nav-link" href="#projects" data-i18n="nav_projects">开源软件</a>
+                <button type="button" class="icon-btn" id="theme-toggle" aria-label="Toggle dark mode">
+                    <svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+                    <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+                </button>
+                <a class="btn-cta" href="index.html" data-i18n="nav_home">返回首页</a>
             </nav>
         </div>
     </header>
 
-    <div class="wrap">
-        <header class="hero">
-            <div>
-                <span class="eyebrow">独立技术团队 · 开源项目</span>
-                <h1>ERROR-CORE Team</h1>
-                <p class="lede">我们是一个独立的技术团队，作品覆盖机器人可视化编程工具与网页小游戏平台，相关项目均已公开源码。</p>
-                <p class="lede-sub">An independent team building open-source robotics tooling and web mini-games.</p>
-                <div class="cta">
-                    <a class="btn btn-primary" href="#projects">查看开源软件</a>
-                    <a class="btn btn-secondary" href="contact.html">联系我们</a>
-                </div>
+    <header class="hero">
+        <div class="wrap">
+            <span class="eyebrow" data-i18n="hero_eyebrow">独立技术团队 · 开源项目</span>
+            <h1>ERROR-CORE Team</h1>
+            <p class="lede" data-i18n="hero_lede">我们是一个独立的技术团队，作品覆盖机器人可视化编程工具与网页小游戏，相关项目均已公开源码。</p>
+            <p class="lede-sub" data-i18n="hero_lede_sub">An independent team building open-source robotics tooling and web mini-games.</p>
+            <div class="cta">
+                <a class="btn btn-filled" href="#projects" data-i18n="hero_cta1">查看开源软件</a>
+                <a class="btn btn-outline" href="contact.html" data-i18n="hero_cta2">联系我们</a>
             </div>
 
             <div class="stats">
                 <button type="button" class="stat stat-toggle" id="stat-card" aria-live="polite">
-                    <span class="stat-label">团队成立</span>
+                    <span class="stat-label" data-i18n="stat_since_label">团队成立</span>
                     <span class="stat-value" id="stat-since">—</span>
-                    <span class="stat-note" id="stat-hint">点击切换显示方式</span>
+                    <span class="stat-note" id="stat-hint" data-i18n="stat_hint_static">点击切换显示方式</span>
                 </button>
                 <div class="stat">
-                    <span class="stat-label">开源项目</span>
-                    <span class="stat-value">2 个</span>
-                    <span class="stat-note">桌面工具与网页平台</span>
+                    <span class="stat-label" data-i18n="stat_proj_label">开源项目</span>
+                    <span class="stat-value" data-i18n="stat_proj_value">2 个</span>
+                    <span class="stat-note" data-i18n="stat_proj_note">桌面工具与网页游戏</span>
                 </div>
                 <div class="stat">
-                    <span class="stat-label">技术方向</span>
-                    <span class="stat-value">机器人 · 前端</span>
-                    <span class="stat-note">从积木编辑器到真机遥测</span>
+                    <span class="stat-label" data-i18n="stat_dir_label">技术方向</span>
+                    <span class="stat-value" data-i18n="stat_dir_value">机器人 · 前端</span>
+                    <span class="stat-note" data-i18n="stat_dir_note">从积木编辑器到真机遥测</span>
                 </div>
             </div>
-        </header>
+        </div>
+    </header>
 
-        <section id="team">
-            <h2>团队介绍</h2>
-            <p class="section-desc">小团队、少流程，从需求到发布全程自主完成。</p>
+    <section class="band" id="team">
+        <div class="wrap">
+            <h2 class="sec" data-i18n="team_h">团队介绍</h2>
+            <p class="section-desc" data-i18n="team_d">小团队、少流程，从需求到发布全程自主完成。</p>
             <div class="grid">
                 <div class="card">
-                    <h3>方向</h3>
-                    <p>机器人可视化编程、桌面应用打包与分发、网页游戏与交互体验。</p>
+                    <h3 data-i18n="team1t">方向</h3>
+                    <p data-i18n="team1b">机器人可视化编程、桌面应用打包与分发、网页游戏与交互体验。</p>
                 </div>
                 <div class="card">
-                    <h3>技术栈</h3>
-                    <p>Python、JavaScript、HTML / CSS，以及 PyQt 桌面端与 Blockly 可视化编辑器。</p>
+                    <h3 data-i18n="team2t">技术栈</h3>
+                    <p data-i18n="team2b">Python、JavaScript、HTML / CSS，以及 PyQt 桌面端与 Blockly 可视化编辑器。</p>
                 </div>
                 <div class="card">
-                    <h3>开源方式</h3>
-                    <p>源码托管在 GitHub，通过 Release 提供可安装版本，接受 Issue 反馈。</p>
+                    <h3 data-i18n="team3t">开源方式</h3>
+                    <p data-i18n="team3b">源码托管在 GitHub，通过 Release 提供可安装版本，接受 Issue 反馈。</p>
                 </div>
                 <div class="card">
-                    <h3>联系方式</h3>
-                    <p>邮箱 <code>error_core@163.com</code>，也可通过页脚 B 站 / 抖音账号找到我们。</p>
+                    <h3 data-i18n="team4t">联系方式</h3>
+                    <p data-i18n-html="team4b">邮箱 <code>error_core@163.com</code>，也可通过页脚 B 站 / 抖音账号找到我们。</p>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="projects">
-            <h2>开源软件</h2>
-            <p class="section-desc">两款产品，一个面向真机调试，一个面向浏览器娱乐。</p>
+    <section id="projects">
+        <div class="wrap">
+            <h2 class="sec" data-i18n="proj_h">开源软件</h2>
+            <p class="section-desc" data-i18n="proj_d">两款产品，一个面向真机调试，一个面向浏览器娱乐。</p>
 
             <div class="project">
                 <div class="project-title">
                     <h3>Robot Blockly</h3>
-                    <span class="tag tag-accent">v0.1.1 公测版 · MIT</span>
+                    <span class="tag tag-filled" data-i18n="rb_tag">v0.1.1 公测版 · MIT</span>
                 </div>
-                <p class="desc">宇树机器人可视化积木编程桌面软件。拖拽积木即可生成 Python 代码，一键运行对接 <code>unitree_sdk2py</code>，支持 Go2 四足机器人与 G1 人形机器人。</p>
+                <p class="desc" data-i18n-html="rb_desc">宇树机器人可视化积木编程桌面软件。拖拽积木即可生成 Python 代码，一键运行对接 <code>unitree_sdk2py</code>，支持 Go2 四足机器人与 G1 人形机器人。</p>
                 <div class="meta">
-                    <span><strong>支持平台</strong> macOS (Intel / Apple Silicon) · Linux x64</span>
-                    <span><strong>许可证</strong> MIT License</span>
-                    <span><strong>代码仓库</strong> GitHub</span>
-                    <span><strong>语言构成</strong> Python 51.2% / JavaScript 26.9% / Shell 10.4% / HTML 8.0%</span>
+                    <span><strong data-i18n="rb_m1k">支持平台</strong> <span data-i18n="rb_m1v">macOS (Intel / Apple Silicon) · Linux x64</span></span>
+                    <span><strong data-i18n="rb_m2k">许可证</strong> <span data-i18n="rb_m2v">MIT License</span></span>
+                    <span><strong data-i18n="rb_m3k">代码仓库</strong> <span data-i18n="rb_m3v">GitHub</span></span>
+                    <span><strong data-i18n="rb_m4k">语言构成</strong> <span data-i18n="rb_m4v">Python 51.2% / JavaScript 26.9% / Shell 10.4% / HTML 8.0%</span></span>
                 </div>
                 <ul class="features">
-                    <li>积木编程：基于 Blockly，支持循环与条件嵌套</li>
-                    <li>代码生成：一键输出可读的 Python 脚本</li>
-                    <li>一键运行：执行生成脚本并输出到日志面板</li>
-                    <li>状态监控：DDS 订阅 <code>rt/lowstate</code></li>
-                    <li>摄像头回传：实时显示机器人画面</li>
-                    <li>激光雷达：叠加 Go2 点云与测距标尺</li>
-                    <li>程序存取：XML 工程保存 / 加载 / 导出 <code>.py</code></li>
-                    <li>网络配置：内置网卡检测与一键静态 IP</li>
+                    <li data-i18n="rb_f1">积木编程：基于 Blockly，支持循环与条件嵌套</li>
+                    <li data-i18n="rb_f2">代码生成：一键输出可读的 Python 脚本</li>
+                    <li data-i18n="rb_f3">一键运行：执行生成脚本并输出到日志面板</li>
+                    <li data-i18n-html="rb_f4">状态监控：DDS 订阅 <code>rt/lowstate</code></li>
+                    <li data-i18n="rb_f5">摄像头回传：实时显示机器人画面</li>
+                    <li data-i18n="rb_f6">激光雷达：叠加 Go2 点云与测距标尺</li>
+                    <li data-i18n-html="rb_f7">程序存取：XML 工程保存 / 加载 / 导出 <code>.py</code></li>
+                    <li data-i18n="rb_f8">网络配置：内置网卡检测与一键静态 IP</li>
                 </ul>
                 <div class="links">
-                    <a class="btn btn-primary" href="robot-blockly.html#download">下载中心</a>
-                    <a class="btn btn-secondary" href="robot-blockly.html">详细介绍</a>
-                    <a class="btn btn-secondary"
+                    <a class="btn btn-filled" href="robot-blockly.html" data-i18n="rb_l3">详细介绍</a>
+                    <a class="btn btn-outline" href="robot-blockly.html#video" data-i18n="rb_l2">演示视频</a>
+                    <a class="btn btn-outline"
                        href="https://github.com/Tengzicong/Robot_Blockly"
-                       target="_blank" rel="noopener noreferrer">GitHub 仓库</a>
+                       target="_blank" rel="noopener noreferrer" data-i18n="rb_l4">GitHub 仓库</a>
                 </div>
                 <div class="subsec" id="components">
-                    <h4>使用的第三方组件</h4>
-                    <p class="subsec-desc">以下组件版权归其各自作者所有，我们的项目仅在构建 / 运行时引用，不包含第三方代码的修改。</p>
+                    <h4 data-i18n="comp_h">使用的第三方组件</h4>
+                    <p class="subsec-desc" data-i18n="comp_d">以下组件版权归其各自作者所有，我们的项目仅在构建 / 运行时引用，不包含第三方代码的修改。</p>
                     <table>
                         <thead>
                             <tr>
-                                <th scope="col">组件</th>
-                                <th scope="col">来源</th>
-                                <th scope="col">协议</th>
+                                <th scope="col" data-i18n="comp_th1">组件</th>
+                                <th scope="col" data-i18n="comp_th2">来源</th>
+                                <th scope="col" data-i18n="comp_th3">协议</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td><a href="https://github.com/unitreerobotics/unitree_sdk2_python" target="_blank" rel="noopener noreferrer">unitree_sdk2py</a></td>
-                                <td>宇树官方 Python SDK（本项目运行时引用）</td>
+                                <td><a class="link" href="https://github.com/unitreerobotics/unitree_sdk2_python" target="_blank" rel="noopener noreferrer">unitree_sdk2py</a></td>
+                                <td data-i18n="comp_r1c">宇树官方 Python SDK（本项目运行时引用）</td>
                                 <td>BSD-3-Clause</td>
                             </tr>
                             <tr>
-                                <td><a href="https://developers.google.com/blockly" target="_blank" rel="noopener noreferrer">Blockly</a></td>
-                                <td>Google 开源积木编辑器（本项目编辑器内核）</td>
+                                <td><a class="link" href="https://developers.google.com/blockly" target="_blank" rel="noopener noreferrer">Blockly</a></td>
+                                <td data-i18n="comp_r2c">Google 开源积木编辑器（本项目编辑器内核）</td>
                                 <td>Apache-2.0</td>
                             </tr>
                         </tbody>
@@ -1055,128 +856,353 @@ tbody tr:hover {
                 </div>
 
                 <div class="subsec">
-                    <h4>说明与免责</h4>
+                    <h4 data-i18n="disc_h">说明与免责</h4>
                     <div class="notice">
-                        <p>Robot Blockly 为作者独立创作，与宇树（Unitree）公司及其关联实体不存在任何隶属、合作或代理关系，亦未从该公司获得任何形式的授权、赞助或技术支持。完整声明见 <a href="https://github.com/Tengzicong/Robot_Blockly/blob/main/DISCLAIMER.md" target="_blank" rel="noopener noreferrer">DISCLAIMER.md</a>。</p>
-                        <p>使用本团队的工具操作任何机器人所产生的全部风险与后果，由使用者自行承担；相关项目主要面向技术研究、学习与交流。</p>
+                        <p data-i18n-html="disc_p1">Robot Blockly 为作者独立创作，与宇树（Unitree）公司及其关联实体不存在任何隶属、合作或代理关系，亦未从该公司获得任何形式的授权、赞助或技术支持。完整声明见 <a class="link" href="https://github.com/Tengzicong/Robot_Blockly/blob/main/DISCLAIMER.md" target="_blank" rel="noopener noreferrer">DISCLAIMER.md</a>。</p>
+                        <p data-i18n="disc_p2">使用本团队的工具操作任何机器人所产生的全部风险与后果，由使用者自行承担；相关项目主要面向技术研究、学习与交流。</p>
                     </div>
                 </div>
             </div>
 
             <div class="project">
                 <div class="project-title">
-                    <h3>ERROR-CORE 小游戏平台</h3>
-                    <span class="tag">纯前端 · 源码公开</span>
+                    <h3>ERROR-CORE Games</h3>
+                    <span class="tag" data-i18n="games_tag">纯前端 · 源码公开</span>
                 </div>
-                <p class="desc">本站点本身。纯 HTML / CSS / JavaScript 实现的静态小游戏平台，无后端依赖，可直接部署到任意静态托管服务。</p>
+                <p class="desc" data-i18n="games_desc">ERROR-CORE Studio 上的小游戏合集。纯 HTML / CSS / JavaScript 实现的静态网页游戏，无后端依赖，可直接部署到任意静态托管服务。</p>
                 <div class="meta">
-                    <span><strong>技术</strong> HTML5 Canvas / CSS3 / 原生 JavaScript</span>
-                    <span><strong>依赖</strong> 无框架</span>
-                    <span><strong>适配</strong> 桌面与移动端响应式</span>
+                    <span><strong data-i18n="games_m1k">技术</strong> <span data-i18n="games_m1v">HTML5 Canvas / CSS3 / 原生 JavaScript</span></span>
+                    <span><strong data-i18n="games_m2k">依赖</strong> <span data-i18n="games_m2v">无框架</span></span>
+                    <span><strong data-i18n="games_m3k">适配</strong> <span data-i18n="games_m3v">桌面与移动端响应式</span></span>
                 </div>
                 <ul class="features">
-                    <li>贪吃蛇 Snake</li>
-                    <li>射击游戏 Shooting</li>
-                    <li>打砖块 Breakout</li>
-                    <li>足球射门 Football</li>
-                    <li>画板 Drawing</li>
-                    <li>触屏长按连续操控适配</li>
-                    <li>Cookie 政策与同意弹窗</li>
-                    <li>设备检测与移动端工具栏</li>
+                    <li data-i18n="games_f1">贪吃蛇 Snake</li>
+                    <li data-i18n="games_f2">射击游戏 Shooting</li>
+                    <li data-i18n="games_f3">打砖块 Breakout</li>
+                    <li data-i18n="games_f4">足球射门 Football</li>
+                    <li data-i18n="games_f5">画板 Drawing</li>
+                    <li data-i18n="games_f6">触屏长按连续操控适配</li>
+                    <li data-i18n="games_f7">Cookie 政策与同意弹窗</li>
+                    <li data-i18n="games_f8">设备检测与移动端工具栏</li>
                 </ul>
                 <div class="links">
-                    <a class="btn btn-primary" href="minigame.html">进入小游戏平台</a>
-                    <a class="btn btn-secondary"
+                    <a class="btn btn-filled" href="minigame.html" data-i18n="games_l1">进入游戏合集</a>
+                    <a class="btn btn-outline"
                        href="https://github.com/Tengzicong/code"
-                       target="_blank" rel="noopener noreferrer">GitHub 仓库</a>
+                       target="_blank" rel="noopener noreferrer" data-i18n="games_l2">GitHub 仓库</a>
                 </div>
             </div>
-        </section>
-
-    </div>
+        </div>
+    </section>
 
     <footer class="footer">
         <div class="footer-inner">
             <p>© ERROR-CORE Team</p>
             <div class="footer-meta">
-                <a href="https://space.bilibili.com/3546631121144154" target="_blank" rel="noopener noreferrer">B站 Bilibili</a>
-                <a href="https://www.douyin.com/user/MS4wLjABAAAA0cxdKFB-D6ucvm2i3AE92bzBC-xSHgmW0ew1iwh0Isx-DwXKsMF499VcAle9571J" target="_blank" rel="noopener noreferrer">抖音 Douyin</a>
-                <a href="contact.html">联系我们</a>
-                <a href="index.html">返回首页</a>
+                <a href="https://space.bilibili.com/3546631121144154" target="_blank" rel="noopener noreferrer" data-i18n="ft_bili">B站 Bilibili</a>
+                <a href="https://www.douyin.com/user/MS4wLjABAAAA0cxdKFB-D6ucvm2i3AE92bzBC-xSHgmW0ew1iwh0Isx-DwXKsMF499VcAle9571J" target="_blank" rel="noopener noreferrer" data-i18n="ft_douyin">抖音 Douyin</a>
+                <a href="contact.html" data-i18n="ft_contact">联系我们</a>
+                <a href="index.html" data-i18n="ft_home">返回首页</a>
             </div>
         </div>
     </footer>
+
     <script>
+/* ==========================================================================
+   i18n + 团队成立计时 + 主题切换（全程零本地存储）
+   ========================================================================== */
+const I18N = {
+    zh: {
+        nav_team: '团队', nav_projects: '开源软件', nav_home: '返回首页',
+        hero_eyebrow: '独立技术团队 · 开源项目',
+        hero_lede: '我们是一个独立的技术团队，作品覆盖机器人可视化编程工具与网页小游戏，相关项目均已公开源码。',
+        hero_lede_sub: 'An independent team building open-source robotics tooling and web mini-games.',
+        hero_cta1: '查看开源软件', hero_cta2: '联系我们',
+        stat_since_label: '团队成立', stat_hint_static: '点击切换显示方式',
+        stat_proj_label: '开源项目', stat_proj_value: '2 个', stat_proj_note: '桌面工具与网页游戏',
+        stat_dir_label: '技术方向', stat_dir_value: '机器人 · 前端', stat_dir_note: '从积木编辑器到真机遥测',
+        st_today: '今天成立',
+        st_days_since: '至今 {d} 天',
+        st_founded_hint: '成立于 {date} · 点击切换',
+        st_years: '{n} 年', st_months: '{n} 个月', st_days: '{n} 天',
+        st_hint_md: '{m} 个月 {d} 天 · 合计 {t} 天',
+        st_hint_d: '{d} 天 · 合计 {t} 天',
+        team_h: '团队介绍',
+        team_d: '小团队、少流程，从需求到发布全程自主完成。',
+        team1t: '方向', team1b: '机器人可视化编程、桌面应用打包与分发、网页游戏与交互体验。',
+        team2t: '技术栈', team2b: 'Python、JavaScript、HTML / CSS，以及 PyQt 桌面端与 Blockly 可视化编辑器。',
+        team3t: '开源方式', team3b: '源码托管在 GitHub，通过 Release 提供可安装版本，接受 Issue 反馈。',
+        team4t: '联系方式', team4b: '邮箱 <code>error_core@163.com</code>，也可通过页脚 B 站 / 抖音账号找到我们。',
+        proj_h: '开源软件',
+        proj_d: '两款产品，一个面向真机调试，一个面向浏览器娱乐。',
+        rb_tag: 'v0.1.1 公测版 · MIT',
+        rb_desc: '宇树机器人可视化积木编程桌面软件。拖拽积木即可生成 Python 代码，一键运行对接 <code>unitree_sdk2py</code>，支持 Go2 四足机器人与 G1 人形机器人。',
+        rb_m1k: '支持平台', rb_m1v: 'macOS (Intel / Apple Silicon) · Linux x64',
+        rb_m2k: '许可证', rb_m2v: 'MIT License',
+        rb_m3k: '代码仓库', rb_m3v: 'GitHub',
+        rb_m4k: '语言构成', rb_m4v: 'Python 51.2% / JavaScript 26.9% / Shell 10.4% / HTML 8.0%',
+        rb_f1: '积木编程：基于 Blockly，支持循环与条件嵌套',
+        rb_f2: '代码生成：一键输出可读的 Python 脚本',
+        rb_f3: '一键运行：执行生成脚本并输出到日志面板',
+        rb_f4: '状态监控：DDS 订阅 <code>rt/lowstate</code>',
+        rb_f5: '摄像头回传：实时显示机器人画面',
+        rb_f6: '激光雷达：叠加 Go2 点云与测距标尺',
+        rb_f7: '程序存取：XML 工程保存 / 加载 / 导出 <code>.py</code>',
+        rb_f8: '网络配置：内置网卡检测与一键静态 IP',
+        rb_l2: '演示视频', rb_l3: '详细介绍', rb_l4: 'GitHub 仓库',
+        comp_h: '使用的第三方组件',
+        comp_d: '以下组件版权归其各自作者所有，我们的项目仅在构建 / 运行时引用，不包含第三方代码的修改。',
+        comp_th1: '组件', comp_th2: '来源', comp_th3: '协议',
+        comp_r1c: '宇树官方 Python SDK（本项目运行时引用）',
+        comp_r2c: 'Google 开源积木编辑器（本项目编辑器内核）',
+        disc_h: '说明与免责',
+        disc_p1: 'Robot Blockly 为作者独立创作，与宇树（Unitree）公司及其关联实体不存在任何隶属、合作或代理关系，亦未从该公司获得任何形式的授权、赞助或技术支持。完整声明见 <a class="link" href="https://github.com/Tengzicong/Robot_Blockly/blob/main/DISCLAIMER.md" target="_blank" rel="noopener noreferrer">DISCLAIMER.md</a>。',
+        disc_p2: '使用本团队的工具操作任何机器人所产生的全部风险与后果，由使用者自行承担；相关项目主要面向技术研究、学习与交流。',
+        games_tag: '纯前端 · 源码公开',
+        games_desc: 'ERROR-CORE Studio 上的小游戏合集。纯 HTML / CSS / JavaScript 实现的静态网页游戏，无后端依赖，可直接部署到任意静态托管服务。',
+        games_m1k: '技术', games_m1v: 'HTML5 Canvas / CSS3 / 原生 JavaScript',
+        games_m2k: '依赖', games_m2v: '无框架',
+        games_m3k: '适配', games_m3v: '桌面与移动端响应式',
+        games_f1: '贪吃蛇 Snake', games_f2: '射击游戏 Shooting', games_f3: '打砖块 Breakout',
+        games_f4: '足球射门 Football', games_f5: '画板 Drawing',
+        games_f6: '触屏长按连续操控适配', games_f7: 'Cookie 政策与同意弹窗', games_f8: '设备检测与移动端工具栏',
+        games_l1: '进入游戏合集', games_l2: 'GitHub 仓库',
+        ft_bili: 'B站 Bilibili', ft_douyin: '抖音 Douyin', ft_contact: '联系我们', ft_home: '返回首页'
+    },
+    en: {
+        nav_team: 'Team', nav_projects: 'Open Source', nav_home: 'Back to home',
+        hero_eyebrow: 'Independent Tech Team · Open Source',
+        hero_lede: 'We are an independent technical team whose work spans visual robot programming tools and web mini-games, all published with open source.',
+        hero_lede_sub: 'An independent team building open-source robotics tooling and web mini-games.',
+        hero_cta1: 'View open-source software', hero_cta2: 'Contact us',
+        stat_since_label: 'Founded', stat_hint_static: 'Click to change display',
+        stat_proj_label: 'Open-source projects', stat_proj_value: '2', stat_proj_note: 'Desktop tooling & web games',
+        stat_dir_label: 'Focus', stat_dir_value: 'Robotics · Front-end', stat_dir_note: 'From block editor to live robot telemetry',
+        st_today: 'Founded today',
+        st_days_since: '{d} days so far',
+        st_founded_hint: 'Founded {date} · click to toggle',
+        st_years: '{n} yr', st_months: '{n} mo', st_days: '{n} d',
+        st_hint_md: '{m} months {d} days · {t} days in total',
+        st_hint_d: '{d} days · {t} days in total',
+        team_h: 'The Team',
+        team_d: 'A small team with little process — we go from idea to release entirely on our own.',
+        team1t: 'Directions', team1b: 'Visual robot programming, desktop app packaging & distribution, web games and interactive experiences.',
+        team2t: 'Stack', team2b: 'Python, JavaScript, HTML / CSS, plus PyQt for desktop and Blockly for the visual editor.',
+        team3t: 'How we open source', team3b: 'Source hosted on GitHub, installable builds shipped via Releases, and Issue feedback welcome.',
+        team4t: 'Contact', team4b: 'Email <code>error_core@163.com</code>, or find us via the bilibili / Douyin accounts in the footer.',
+        proj_h: 'Open-source Software',
+        proj_d: 'Two products — one for real-robot debugging, one for browser fun.',
+        rb_tag: 'v0.1.1 Public Beta · MIT',
+        rb_desc: 'A desktop block-programming app for Unitree robots. Drag blocks to generate Python, run it in one click against <code>unitree_sdk2py</code>, and support both the Go2 quadruped and the G1 humanoid.',
+        rb_m1k: 'Platforms', rb_m1v: 'macOS (Intel / Apple Silicon) · Linux x64',
+        rb_m2k: 'License', rb_m2v: 'MIT License',
+        rb_m3k: 'Repository', rb_m3v: 'GitHub',
+        rb_m4k: 'Languages', rb_m4v: 'Python 51.2% / JavaScript 26.9% / Shell 10.4% / HTML 8.0%',
+        rb_f1: 'Block programming: built on Blockly with nestable loops and conditions',
+        rb_f2: 'Code generation: readable Python scripts in one click',
+        rb_f3: 'One-click run: executes generated scripts with output in the log panel',
+        rb_f4: 'Live state: DDS subscription to <code>rt/lowstate</code>',
+        rb_f5: 'Camera stream: the robot\u2019s point of view in real time',
+        rb_f6: 'LiDAR: Go2 point cloud overlaid with a range scale',
+        rb_f7: 'Projects: save / load XML, export <code>.py</code>',
+        rb_f8: 'Networking: built-in NIC detection and one-click static IP',
+        rb_l1: 'Download Center', rb_l2: 'Demo Video', rb_l3: 'Full Details', rb_l4: 'GitHub Repo',
+        comp_h: 'Third-party Components',
+        comp_d: 'Copyright of the components below belongs to their respective authors; our projects only reference them at build / run time and contain no modified third-party code.',
+        comp_th1: 'Component', comp_th2: 'Source', comp_th3: 'License',
+        comp_r1c: 'Official Unitree Python SDK (referenced at run time)',
+        comp_r2c: 'Google open-source block editor (editor core)',
+        disc_h: 'Notice & Disclaimer',
+        disc_p1: 'Robot Blockly is independently authored and is not affiliated with, endorsed by, or sponsored by Unitree or its related entities; no authorization, sponsorship or technical support was received from the company. The full statement is in <a class="link" href="https://github.com/Tengzicong/Robot_Blockly/blob/main/DISCLAIMER.md" target="_blank" rel="noopener noreferrer">DISCLAIMER.md</a>.',
+        disc_p2: 'All risks and consequences arising from operating any robot with our tools are borne by the user; these projects are intended mainly for technical research, learning and exchange.',
+        games_tag: 'Pure front-end · Source public',
+        games_desc: 'A mini-game collection on ERROR-CORE Studio. Static web games built purely with HTML / CSS / JavaScript, with no backend dependency — deployable to any static hosting service.',
+        games_m1k: 'Tech', games_m1v: 'HTML5 Canvas / CSS3 / vanilla JavaScript',
+        games_m2k: 'Dependencies', games_m2v: 'No framework',
+        games_m3k: 'Responsive', games_m3v: 'Desktop & mobile friendly',
+        games_f1: 'Snake', games_f2: 'Shooting', games_f3: 'Breakout',
+        games_f4: 'Football', games_f5: 'Drawing',
+        games_f6: 'Touch hold-to-continue controls', games_f7: 'Cookie policy & consent dialog', games_f8: 'Device detection & mobile toolbar',
+        games_l1: 'Play the games', games_l2: 'GitHub Repo',
+        ft_bili: 'Bilibili', ft_douyin: 'Douyin', ft_contact: 'Contact us', ft_home: 'Back to home'
+    }
+};
+
+/* 语言默认值：浏览器语言 > 中文；不读取任何本地存储 */
+let LANG = 'zh';
+try {
+    LANG = (navigator.language || 'zh-CN').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en';
+} catch (e) {}
+
+function t(k) {
+    const dict = I18N[LANG] || I18N.zh;
+    return dict[k] !== undefined ? dict[k] : (I18N.zh[k] !== undefined ? I18N.zh[k] : k);
+}
+
+function fmt(s, vars) {
+    return s.replace(/\{(\w+)\}/g, (m, k) => (vars && vars[k] !== undefined ? vars[k] : m));
+}
+
+/* 取模板并填参（供动态计时文案使用） */
+function S(k, vars) { return fmt(t(k), vars); }
+
+/* ---------- 团队成立计时（原 stats 脚本，文案改走 I18N） ---------- */
+const SINCE = new Date(2026, 0, 3);   // 团队成立日：2026-01-03
+const statCard = document.getElementById('stat-card');
+const statValue = document.getElementById('stat-since');
+const statHint = document.getElementById('stat-hint');
+
+const pad = n => String(n).padStart(2, '0');
+const dayMs = 86400000;
+
+function elapsed() {
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const days = Math.round((today - SINCE) / dayMs);
+
+    // 整月数：以成立日的"锚点日"逐月推进，避免按 30 天估算
+    let months = 0;
+    let anchor = new Date(SINCE.getFullYear(), SINCE.getMonth(), SINCE.getDate());
+    while (true) {
+        const next = new Date(anchor.getFullYear(), anchor.getMonth() + 1, SINCE.getDate());
+        if (next > today) break;
+        anchor = next;
+        months++;
+    }
+    const extraDays = Math.round((today - anchor) / dayMs);
+    return { days, months, extraDays };
+}
+
+const views = [
+    {
+        value: (e) => e.days === 0 ? t('st_today') : S('st_days_since', { d: e.days }),
+        hint: () => S('st_founded_hint', {
+            date: SINCE.getFullYear() + '-' + pad(SINCE.getMonth() + 1) + '-' + pad(SINCE.getDate())
+        })
+    },
+    {
+        value: (e) => {
+            const parts = [];
+            const y = Math.floor(e.months / 12);
+            if (y) parts.push(S('st_years', { n: y }));
+            if (e.months % 12) parts.push(S('st_months', { n: e.months % 12 }));
+            if (e.extraDays) parts.push(S('st_days', { n: e.extraDays }));
+            return parts.length ? parts.join(' ') : t('st_today');
+        },
+        hint: (e) => e.months
+            ? S('st_hint_md', { m: e.months, d: e.extraDays, t: e.days })
+            : S('st_hint_d', { d: e.extraDays, t: e.days })
+    }
+];
+
+let viewIdx = 0;
+
+function renderStat(animate) {
+    if (!statCard || !statValue) return;
+    const e = elapsed();
+    statValue.textContent = views[viewIdx].value(e);
+    statHint.textContent = views[viewIdx].hint(e);
+    if (animate) {
+        statValue.classList.remove('stat-swap');
+        void statValue.offsetWidth;          // 强制回流以重启动画
+        statValue.classList.add('stat-swap');
+    }
+}
+
+if (statCard) {
+    statCard.addEventListener('click', () => {
+        viewIdx = (viewIdx + 1) % views.length;
+        renderStat(true);
+    });
+    renderStat(false);
+}
+
+/* ---------- 语言切换：只改内存变量，不存储 ---------- */
+/* 页面元信息双语（title / description / keywords / OG / twitter） */
+const META_I18N = {
+    zh: {
+        title: 'ERROR-CORE Team 开源项目介绍 - Robot Blockly 与 ERROR-CORE Games',
+        description: 'ERROR-CORE 团队官方介绍页：开源机器人积木编程工具 Robot Blockly（基于 Google Blockly 与 Unitree SDK）与 ERROR-CORE Games 小游戏合集的项目详情、版本信息与开源协议说明。',
+        keywords: 'ERROR-CORE, 开源团队, Robot Blockly, Unitree, 宇树, Blockly, 机器人编程'
+    },
+    en: {
+        title: 'ERROR-CORE Team Open-Source Projects - Robot Blockly & ERROR-CORE Games',
+        description: 'Official page of the ERROR-CORE team: project details, versions and open-source licensing for Robot Blockly (an open-source visual robotics programming tool built on Google Blockly and the Unitree SDK) and the ERROR-CORE Games web mini-game collection.',
+        keywords: 'ERROR-CORE, open source team, Robot Blockly, Unitree, Blockly, robot programming'
+    }
+};
+
+function setMeta(nameOrProp, content) {
+    const el = document.querySelector(`meta[name="${nameOrProp}"], meta[property="${nameOrProp}"]`);
+    if (el) el.setAttribute('content', content);
+}
+
+function applyLang() {
+    document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = t(el.dataset.i18n); });
+    document.querySelectorAll('[data-i18n-html]').forEach(el => { el.innerHTML = t(el.dataset.i18nHtml); });
+    document.documentElement.setAttribute('lang', LANG === 'en' ? 'en' : 'zh-CN');
+    document.querySelectorAll('.lang-switch button').forEach(b =>
+        b.setAttribute('aria-pressed', String(b.dataset.lang === LANG)));
+    renderStat(false);   // 重渲染动态计时文案
+    // 元信息双语
+    const m = META_I18N[LANG] || META_I18N.zh;
+    document.title = m.title;
+    setMeta('description', m.description);
+    setMeta('keywords', m.keywords);
+    setMeta('og:title', m.title);
+    setMeta('og:description', m.description);
+    setMeta('twitter:title', m.title);
+    setMeta('twitter:description', m.description);
+}
+
+document.querySelectorAll('.lang-switch button').forEach(btn => {
+    btn.addEventListener('click', () => {
+        LANG = btn.dataset.lang === 'en' ? 'en' : 'zh';
+        applyLang();
+    });
+});
+
+/* ---------- 主题切换：仅本次会话生效，不存储；默认跟随系统 ---------- */
+const root = document.documentElement;
+
+function setTheme(theme) {
+    root.setAttribute('data-theme', theme);
+}
+
+document.getElementById('theme-toggle').addEventListener('click', () => {
+    setTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+});
+
+// 跟随系统主题变化
+if (window.matchMedia) {
+    matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+        setTheme(e.matches ? 'dark' : 'light');
+    });
+}
+
+// 初始语言应用（HTML 默认中文文案，英文环境需替换一次）
+if (LANG !== 'zh') applyLang();
+    </script>
+    <script>
+    /* Apple 风格滚动渐显：元素进入视口时淡入上移，同组元素依次错开 80ms */
     (function () {
-        const SINCE = new Date(2026, 0, 3);   // 团队成立日：2026-01-03
-        const card = document.getElementById('stat-card');
-        const value = document.getElementById('stat-since');
-        const hint = document.getElementById('stat-hint');
-        if (!card || !value) return;
-
-        const pad = n => String(n).padStart(2, '0');
-        const dayMs = 86400000;
-
-        function elapsed() {
-            const now = new Date();
-            const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-            const days = Math.round((today - SINCE) / dayMs);
-
-            // 整月数：以成立日的"锚点日"逐月推进，避免按 30 天估算
-            let months = 0;
-            let anchor = new Date(SINCE.getFullYear(), SINCE.getMonth(), SINCE.getDate());
-            while (true) {
-                const next = new Date(anchor.getFullYear(), anchor.getMonth() + 1, SINCE.getDate());
-                if (next > today) break;
-                anchor = next;
-                months++;
-            }
-            const extraDays = Math.round((today - anchor) / dayMs);
-            return { days, months, extraDays };
-        }
-
-        const views = [
-            {
-                value: () => {
-                    const e = elapsed();
-                    return e.days === 0 ? '今天成立' : '至今 ' + e.days + ' 天';
-                },
-                hint: (e) => '成立于 ' + SINCE.getFullYear() + '-' + pad(SINCE.getMonth() + 1) +
-                             '-' + pad(SINCE.getDate()) + ' · 点击切换'
-            },
-            {
-                value: () => {
-                    const e = elapsed();
-                    const parts = [];
-                    const y = Math.floor(e.months / 12);
-                    if (y) parts.push(y + ' 年');
-                    if (e.months % 12) parts.push(e.months % 12 + ' 个月');
-                    if (e.extraDays) parts.push(e.extraDays + ' 天');
-                    return parts.length ? parts.join(' ') : '今天成立';
-                },
-                hint: (e) => (e.months ? e.months + ' 个月 ' : '') + e.extraDays + ' 天 · 合计 ' + e.days + ' 天'
-            }
-        ];
-
-        let i = 0;
-
-        function render(animate) {
-            const e = elapsed();
-            value.textContent = views[i].value();
-            hint.textContent = views[i].hint(e);
-            if (animate) {
-                value.classList.remove('stat-swap');
-                void value.offsetWidth;          // 强制回流以重启动画
-                value.classList.add('stat-swap');
-            }
-        }
-
-        card.addEventListener('click', () => {
-            i = (i + 1) % views.length;
-            render(true);
+        if (!('IntersectionObserver' in window)) return;
+        var els = document.querySelectorAll(
+            '.hero .wrap, .hero .stats .stat, section .wrap > h2.sec, section .wrap > .section-desc, .grid > .card, section .wrap > .project');
+        var counts = new WeakMap();
+        els.forEach(function (el) {
+            var p = el.parentElement;
+            var n = counts.get(p) || 0;
+            el.style.setProperty('--rd', (n * 0.08) + 's');
+            counts.set(p, n + 1);
+            el.classList.add('reveal');
         });
-
-        render(false);
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+                if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+            });
+        }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+        els.forEach(function (el) { io.observe(el); });
     })();
     </script>
 </body>

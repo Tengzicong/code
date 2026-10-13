@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="js/lang-theme.js"></script>
     <meta name="description" content="ERROR-CORE 团队联系方式：通过电子邮件 error_core@163.com 联系开发者，反馈 Bug、提出建议或探讨 Robot Blockly 机器人积木编程合作。">
     <meta name="keywords" content="联系我们, ERROR-CORE 联系方式, 反馈, 合作">
     <link rel="canonical" href="https://tzc.yffyeah.top/contact.html">
@@ -19,176 +20,6 @@
     <link rel="stylesheet" href="style.css">
     <script src="js/device-detect.js" defer></script>
     <style>
-        .logo-container {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            display: flex;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .toolbar-container {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-        }
-
-        .error-logo {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-            margin-right: 10px;
-        }
-
-        .toolbar {
-            position: relative;
-            width: 40px;
-            height: 40px;
-            background: rgba(0, 0, 0, 0.85);
-            border-radius: 50%;
-            border: 2px solid #ffd700;
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
-            cursor: pointer;
-            transition: all 0.4s ease;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .toolbar:hover {
-            width: 220px;
-            height: auto;
-            border-radius: 15px;
-            padding: 15px;
-            box-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
-        }
-
-        .toolbar-icon {
-            color: #ffd700;
-            font-size: 1.5rem;
-            transition: all 0.4s ease;
-            z-index: 3;
-        }
-
-        .toolbar:hover .toolbar-icon {
-            opacity: 0;
-            transform: scale(0.5);
-        }
-
-        .toolbar-content {
-            display: none;
-            flex-direction: column;
-            align-items: stretch;
-            gap: 8px;
-            opacity: 0;
-            transform: translateX(20px);
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .toolbar:hover .toolbar-content {
-            display: flex;
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .toolbar-item {
-            opacity: 0;
-            transform: translateX(10px);
-            transition: all 0.3s ease;
-        }
-
-        .toolbar:hover .toolbar-item,
-        .toolbar:hover .social-item {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .toolbar-item:nth-child(1) { transition-delay: 0.1s; }
-        .toolbar-item:nth-child(2) { transition-delay: 0.15s; }
-        .toolbar-item:nth-child(3) { transition-delay: 0.2s; }
-        .toolbar-item:nth-child(4) { transition-delay: 0.25s; }
-
-        .toolbar-title {
-            color: #ffd700;
-            font-size: 1.1rem;
-            font-weight: bold;
-            text-align: center;
-            padding: 8px 0;
-            margin-bottom: 8px;
-            border-bottom: 1px solid rgba(255, 215, 0, 0.3);
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-        }
-
-        .expanded-toolbar-icon {
-            color: #ffd700;
-            font-size: 1.5rem;
-            transition: transform 0.8s linear;
-            align-self: flex-end;
-            margin-top: 5px;
-        }
-
-        .toolbar:hover .expanded-toolbar-icon {
-            animation: rotate360 0.8s linear;
-        }
-
-        @keyframes rotate360 {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .toolbar-item, .social-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 215, 0, 0.9);
-            color: #8b0000;
-            border: none;
-            border-radius: 5px;
-            padding: 8px 15px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            font-size: 0.9rem;
-            min-width: 150px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            text-decoration: none;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .toolbar-item::before, .social-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            transition: 0.5s;
-        }
-
-        .toolbar-item:hover, .social-item:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
-        }
-
-        .toolbar-item:hover::before, .social-item:hover::before {
-            left: 100%;
-        }
-
-        .toolbar-item:active, .social-item:active {
-            transform: translateY(1px) scale(0.98);
-        }
-
-        .social-icon-small {
-            width: 20px;
-            height: 20px;
-        }
-
         .contact-section {
             background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(10px);
@@ -310,54 +141,162 @@
                 font-size: 0.95rem;
             }
         }
+
+        .lt-mount {
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            z-index: 1001;
+        }
+
+        /* 返回按钮（右上角，与左上角语言/主题控件对称） */
+        .back-btn {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            z-index: 1001;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 980px;
+            font-size: 0.9rem;
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.85);
+            background: rgba(10, 12, 24, 0.55);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .back-btn:hover {
+            color: #ffffff;
+            background: rgba(10, 12, 24, 0.75);
+            transform: translateY(-1px);
+        }
+
+        html[data-theme="light"] .back-btn {
+            color: #55607a;
+            background: rgba(255, 255, 255, 0.65);
+            border-color: rgba(0, 0, 0, 0.08);
+        }
+
+        html[data-theme="light"] .back-btn:hover {
+            color: #1d1d1f;
+            background: rgba(255, 255, 255, 0.85);
+        }
+
+        /* ---------- 深浅色主题（零存储：默认跟随系统，手动切换不持久化） ---------- */
+        html[data-theme="light"] { color-scheme: light; }
+        html[data-theme="dark"] { color-scheme: dark; }
+
+        body {
+            transition: background-color .35s ease, color .35s ease;
+        }
+
+        /* 底部版权行不遮挡内容 */
+        .container {
+            padding-bottom: 72px;
+        }
+
+        html[data-theme="dark"] {
+            background-color: #0f0f12;
+        }
+
+        html[data-theme="dark"] body {
+            background-color: #0f0f12;
+            background-image:
+                radial-gradient(1100px 520px at 50% -10%, rgba(255, 107, 74, 0.05), transparent 70%),
+                radial-gradient(900px 500px at 100% 0%, rgba(88, 148, 255, 0.04), transparent 65%);
+        }
+
+        html[data-theme="dark"] .contact-section {
+            background: rgba(28, 28, 30, 0.85);
+            border-color: rgba(255, 255, 255, 0.16);
+        }
+
+        html[data-theme="dark"] .contact-item {
+            background: #1c1c1e;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        html[data-theme="dark"] .contact-item:hover {
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.65);
+        }
+
+        html[data-theme="dark"] .contact-item h3 {
+            color: #f5f5f7;
+        }
+
+        html[data-theme="dark"] .contact-item p {
+            color: #c7c7cc;
+        }
+
+        html[data-theme="dark"] .game-info h2,
+        html[data-theme="dark"] .game-info h3 {
+            color: #f5f5f7;
+        }
+
+        html[data-theme="dark"] .game-info p,
+        html[data-theme="dark"] .game-info li {
+            color: #c7c7cc;
+        }
+
+        html[data-theme="dark"] .game-info a {
+            color: #6ab0ff;
+        }
     </style>
+    <script>
+        window.PAGE_I18N = {
+            zh: {
+                back_btn: '← 返回首页<br>Home',
+                contact_heading: '📧 联系我们<br>Contact Us',
+                email_label: '邮箱',
+                info_h2: '联系 ERROR-CORE Team',
+                info_p: '无论你是想反馈 ERROR-CORE Games 的 Bug、提出新游戏创意，还是讨论 Robot Blockly 机器人积木编程的使用问题与合作，都欢迎通过上面的邮箱与我们联系。我们也开源了全部项目代码，你可以直接在 GitHub 上提交 Issue 或 Pull Request 参与共建。',
+                join_h2: '加入我们',
+                join_p: 'ERROR-CORE 是一支因兴趣聚在一起的开源团队，所有项目都利用业余时间完成，目前没有报酬。如果你热爱编程、游戏或机器人，愿意为开源项目贡献代码与创意，欢迎通过上面的邮箱联系我们——来信请简单说明你想加入的方向和一段自我介绍，我们会尽快回复。一起做点有意思的东西，把想法变成作品。'
+            },
+            en: {
+                back_btn: '← Home',
+                contact_heading: '📧 Contact Us',
+                email_label: 'Email',
+                info_h2: 'Reach the ERROR-CORE Team',
+                info_p: 'Whether you want to report a bug in ERROR-CORE Games, pitch a new game idea, or discuss usage questions and collaboration around Robot Blockly robotics block programming, you are welcome to reach us at the email address above. All of our project code is open source, so you can also contribute directly on GitHub by opening an issue or submitting a pull request.',
+                join_h2: 'Join Us',
+                join_p: 'ERROR-CORE is an open-source team brought together by shared curiosity — every project is built in our spare time, and there is no pay involved. If you are passionate about programming, games, or robotics and want to contribute code and ideas to open source, write to us at the email above: briefly tell us which direction you would like to join and introduce yourself, and we will get back to you soon. Let\'s build something interesting together and turn ideas into real projects.'
+            }
+        };
+        window.PAGE_META = {
+            zh: {
+                title: '联系我们 - ERROR-CORE Team',
+                description: 'ERROR-CORE 团队联系方式：通过电子邮件 error_core@163.com 联系开发者，反馈 Bug、提出建议或探讨 Robot Blockly 机器人积木编程合作。',
+                keywords: '联系我们, ERROR-CORE 联系方式, 反馈, 合作'
+            },
+            en: {
+                title: 'Contact Us - ERROR-CORE Team',
+                description: 'Contact the ERROR-CORE team: reach the developer by email at error_core@163.com to report bugs, share suggestions, or discuss Robot Blockly robotics block programming collaborations.',
+                keywords: 'contact us, ERROR-CORE contact, feedback, collaboration'
+            }
+        };
+    </script>
 </head>
 <body>
-    <div class="logo-container">
-        <img src="picture/error.png" alt="ERROR Logo" class="error-logo">
-    </div>
-
-    <div class="toolbar-container">
-        <div class="toolbar">
-            <div class="toolbar-icon">⚙️</div>
-            <div class="toolbar-content">
-                <div class="toolbar-title">工具栏<br>Toolbar</div>
-                <a href="index.html" class="toolbar-item">
-                    <span>🏠</span>
-                    <span>首页<br>Home</span>
-                </a>
-                <a href="contact.html" class="toolbar-item">
-                    <span>📞</span>
-                    <span>联系我们<br>Contact</span>
-                </a>
-                <a href="index.html" class="toolbar-item">
-                    <span>🔙</span>
-                    <span>返回首页<br>Back</span>
-                </a>
-                <a href="https://space.bilibili.com/3546631121144154" class="social-item" target="_blank">
-                    <img src="picture/bilibili.svg" alt="Bilibili" class="social-icon-small">
-                    <span>B站<br>Bilibili</span>
-                </a>
-                <a href="https://www.douyin.com/user/MS4wLjABAAAA0cxdKFB-D6ucvm2i3AE92bzBC-xSHgmW0ew1iwh0Isx-DwXKsMF499VcAle9571J" class="social-item" target="_blank">
-                    <img src="picture/douyin.svg" alt="抖音" class="social-icon-small">
-                    <span>抖音<br>Douyin</span>
-                </a>
-                <div class="expanded-toolbar-icon">⚙️</div>
-            </div>
-        </div>
-    </div>
+    <span class="lt-mount"></span>
+    <a href="index.html" class="back-btn" data-i18n-html="back_btn">← 返回首页<br>Home</a>
 
     <div class="stars" id="stars"></div>
 
     <div class="container">
         <div class="contact-section">
-            <h1 class="contact-title">📧 联系我们<br>Contact Us</h1>
+            <h1 class="contact-title" data-i18n-html="contact_heading">📧 联系我们<br>Contact Us</h1>
 
             <div class="contact-item">
                 <div class="contact-icon">✉️</div>
                 <div>
-                    <h3>邮箱</h3>
-                    <p>error_core@163.com</p>
+                    <h3 data-i18n="email_label">邮箱</h3>
+                    <p><a href="mailto:error_core@163.com">error_core@163.com</a></p>
                 </div>
             </div>
 
@@ -365,19 +304,24 @@
                 <div class="contact-icon">🐙</div>
                 <div>
                     <h3>GitHub</h3>
-                    <p><a href="https://github.com/Tengzicong/Robot_Blockly" target="_blank">github.com/Tengzicong/Robot_Blockly</a></p>
+                    <p><a href="https://github.com/Tengzicong/" target="_blank" rel="noopener noreferrer">github.com/Tengzicong</a></p>
                 </div>
             </div>
 
             <section class="game-info">
-                <h2>联系 ERROR-CORE Team</h2>
-                <p>无论你是想反馈小游戏平台的 Bug、提出新游戏创意，还是讨论 Robot Blockly 机器人积木编程的使用问题与合作，都欢迎通过上面的邮箱与我们联系。我们也开源了全部项目代码，你可以直接在 GitHub 上提交 Issue 或 Pull Request 参与共建。</p>
+                <h2 data-i18n="info_h2">联系 ERROR-CORE Team</h2>
+                <p data-i18n="info_p">无论你是想反馈 ERROR-CORE Games 的 Bug、提出新游戏创意，还是讨论 Robot Blockly 机器人积木编程的使用问题与合作，都欢迎通过上面的邮箱与我们联系。我们也开源了全部项目代码，你可以直接在 GitHub 上提交 Issue 或 Pull Request 参与共建。</p>
+            </section>
+
+            <section class="game-info">
+                <h2 data-i18n="join_h2">加入我们</h2>
+                <p data-i18n="join_p">ERROR-CORE 是一支因兴趣聚在一起的开源团队，所有项目都利用业余时间完成，目前没有报酬。如果你热爱编程、游戏或机器人，愿意为开源项目贡献代码与创意，欢迎通过上面的邮箱联系我们——来信请简单说明你想加入的方向和一段自我介绍，我们会尽快回复。一起做点有意思的东西，把想法变成作品。</p>
             </section>
         </div>
     </div>
 
     <script>
-        // 星空效果（设备检测与工具栏逻辑由 js/device-detect.js 统一提供）
+        // 星空效果（设备检测逻辑由 js/device-detect.js 统一提供）
         function createStars() {
             const starsContainer = document.getElementById('stars');
             const starCount = 100;
