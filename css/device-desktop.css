@@ -1,0 +1,31 @@
+/* ==========================================================================
+   设备专属样式 · 电脑端（≥1024px 视口，或带鼠标键盘的大屏设备）
+   由 js/device-detect.js 在渲染前注入并启用（media="all"）。
+   桌面端布局主要由各页面自有样式与 style.css 的既有规则负责，
+   本文件仅做桌面端的统一收口：内容限宽、触屏控件默认隐藏、悬停反馈。
+   ========================================================================== */
+
+body.desktop-device {
+    font-size: var(--fs-base, 0.9375rem);
+    line-height: 1.65;
+}
+
+/* 内容限宽：超宽屏居中，阅读行长受控 */
+body.desktop-device .container {
+    max-width: 1120px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+body.desktop-device .game-container {
+    max-width: 860px;
+}
+
+/* 悬停反馈仅在真正的鼠标指针设备上启用 */
+@media (hover: hover) and (pointer: fine) {
+    body.desktop-device .btn,
+    body.desktop-device .nav-link,
+    body.desktop-device button {
+        cursor: pointer;
+    }
+}

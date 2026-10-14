@@ -1,0 +1,128 @@
+/* ==========================================================================
+   设备专属样式 · 手机端（< 600px 视口 或 触屏小屏设备）
+   由 js/device-detect.js 在渲染前注入并启用（media="all"）。
+   本文件在页面自有样式之后加载，用于统一手机端的：
+   字号 / 间距 / 触控区域（≥44px）/ 单列布局 / 横竖屏自适应。
+   注意：仅做增量覆盖，不改动各页面自有视觉语言。
+   ========================================================================== */
+
+/* 手机端基础排版：略小的基础字号与行高，正文更易读 */
+body.mobile-device {
+    font-size: 0.9375rem;
+    line-height: 1.7;
+}
+
+/* 触控目标统一 ≥44px（Apple HIG 最小可点击区域） */
+body.mobile-device a,
+body.mobile-device button,
+body.mobile-device .btn,
+body.mobile-device .nav-link,
+body.mobile-device input[type="button"],
+body.mobile-device input[type="submit"],
+body.mobile-device [role="button"] {
+    touch-action: manipulation;
+}
+
+body.mobile-device button,
+body.mobile-device .btn,
+body.mobile-device .nav-link {
+    min-height: 44px;
+}
+
+/* 链接/按钮间距：手机上避免误触相邻元素 */
+body.mobile-device .hero-actions,
+body.mobile-device .action-buttons,
+body.mobile-device .dlw-actions {
+    gap: var(--sp-3, 12px);
+}
+
+/* 卡片网格：手机强制单列，防止过窄换行错乱 */
+body.mobile-device .game-grid,
+body.mobile-device .features-section,
+body.mobile-device .cards {
+    grid-template-columns: 1fr !important;
+    gap: var(--sp-3, 12px);
+}
+
+/* 容器边距收紧 */
+body.mobile-device .container {
+    padding: var(--sp-5, 24px) var(--sp-4, 16px) var(--sp-7, 48px);
+    gap: var(--sp-5, 24px);
+}
+
+/* 游戏页：方向键/按钮尺寸适配拇指操作 */
+body.mobile-device .controls button {
+    width: 60px;
+    height: 60px;
+    min-width: 44px;
+    min-height: 44px;
+    font-size: 1.25rem;
+}
+
+/* Snake 四键九宫格（沿用既有布局类，手机上收紧） */
+body.mobile-device .controls.dpad {
+    width: min(220px, 76%);
+    margin: 0 auto;
+}
+
+/* 顶部导航：手机收进折叠菜单（页面自带 .nav-toggle 时生效） */
+body.mobile-device .nav-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+}
+
+/* 固定悬浮控件（左上语言/主题、右上返回）：手机上缩小内边距防遮挡 */
+body.mobile-device .lt-fixed,
+body.mobile-device .lt-mount {
+    top: 10px;
+    left: 10px;
+}
+
+body.mobile-device .back-btn {
+    top: 10px;
+    right: 10px;
+    padding: 7px 12px;
+    font-size: 0.8125rem;
+}
+
+/* 画布类元素：手机上确保不横向溢出 */
+body.mobile-device canvas {
+    max-width: 100%;
+    height: auto;
+}
+
+/* 横屏手机：高度紧张，压缩上下留白、方向键改横排省高 */
+@media (orientation: landscape) {
+    body.mobile-device .container,
+    body.mobile-device .game-container {
+        padding-top: var(--sp-3, 12px);
+        padding-bottom: var(--sp-3, 12px);
+        gap: var(--sp-3, 12px);
+    }
+
+    body.mobile-device .controls button {
+        width: 52px;
+        height: 52px;
+    }
+
+    /* 横屏时四键方向盘保持横排网格，避免占满屏幕高度 */
+    body.mobile-device .controls.dpad {
+        width: min(260px, 60%);
+    }
+}
+
+/* 小屏横屏（如 iPhone SE 横屏 667×375）进一步压缩 */
+@media (orientation: landscape) and (max-height: 420px) {
+    body.mobile-device .score-panel > div {
+        padding: var(--sp-1, 4px) var(--sp-2, 8px);
+        min-width: 0;
+    }
+
+    body.mobile-device .controls button {
+        width: 46px;
+        height: 46px;
+    }
+}
