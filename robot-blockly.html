@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Robot Blockly 官方下载页：v0.1.1 公测版，基于 Blockly 可视化积木的机器人编程工具，支持 Unitree 宇树机器人，提供 Linux amd64/arm64 与 macOS 安装包免费下载，MIT 协议开源。">
+    <meta name="description" content="Robot Blockly 官方下载页：v0.1.1 公测版，基于 Blockly 可视化积木的机器人编程工具，支持 Unitree 宇树机器人，提供 Linux amd64 与 macOS 安装包免费下载，MIT 协议开源。">
     <meta name="keywords" content="Robot Blockly, 积木编程, 图形化编程, Unitree, 宇树机器人, Blockly, MIT 开源">
     <link rel="canonical" href="https://tzc.yffyeah.top/robot-blockly.html">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="ERROR-CORE">
     <meta property="og:title" content="Robot Blockly - 机器人积木编程工具下载 | ERROR-CORE 开源">
-    <meta property="og:description" content="Robot Blockly 官方下载页：v0.1.1 公测版，基于 Blockly 可视化积木的机器人编程工具，支持 Unitree 宇树机器人，提供 Linux amd64/arm64 与 macOS 安装包免费下载，MIT 协议开源。">
+    <meta property="og:description" content="Robot Blockly 官方下载页：v0.1.1 公测版，基于 Blockly 可视化积木的机器人编程工具，支持 Unitree 宇树机器人，提供 Linux amd64 与 macOS 安装包免费下载，MIT 协议开源。">
     <meta property="og:url" content="https://tzc.yffyeah.top/robot-blockly.html">
     <meta property="og:image" content="https://tzc.yffyeah.top/picture/sc.jpg">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Robot Blockly - 机器人积木编程工具下载 | ERROR-CORE 开源">
-    <meta name="twitter:description" content="Robot Blockly 官方下载页：v0.1.1 公测版，基于 Blockly 可视化积木的机器人编程工具，支持 Unitree 宇树机器人，提供 Linux amd64/arm64 与 macOS 安装包免费下载，MIT 协议开源。">
+    <meta name="twitter:description" content="Robot Blockly 官方下载页：v0.1.1 公测版，基于 Blockly 可视化积木的机器人编程工具，支持 Unitree 宇树机器人，提供 Linux amd64 与 macOS 安装包免费下载，MIT 协议开源。">
     <title>Robot Blockly - 机器人积木编程工具下载 | ERROR-CORE 开源</title>
     <link rel="icon" type="image/svg+xml" href="picture/blockly-unitree.svg">
     <link rel="apple-touch-icon" href="picture/blockly-unitree.svg">
@@ -448,6 +448,34 @@ h1 .grad {
 
 .console-meta .ok { color: var(--cyan); font-weight: 600; }
 
+.console-sub {
+    margin-top: 6px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 12px;
+    font-size: 12px;
+    letter-spacing: 0;
+    color: var(--slate);
+}
+
+.console-sub[hidden] { display: none; }
+
+.console-sub .pkg-dl {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-weight: 600;
+    color: var(--blue-link);
+}
+
+.console-sub .pkg-dl svg { width: 13px; height: 13px; }
+.console-sub .pkg-dl:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+.console-sub .go-dl { color: var(--slate); text-decoration: underline; text-underline-offset: 3px; }
+.console-sub .go-dl:hover { color: var(--blue-link); text-decoration: underline; }
+
 .console-cta {
     display: inline-flex;
     align-items: center;
@@ -466,22 +494,6 @@ h1 .grad {
 .console-cta:hover { background: var(--blue-hover); text-decoration: none; }
 .console-cta:active { transform: scale(0.97); }
 .console-cta svg { width: 16px; height: 16px; }
-
-.console-ticker {
-    border-top: 1px solid var(--hairline);
-    padding: 9px 24px;
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.04em;
-    color: var(--steel);
-    background: var(--inset);
-    display: flex;
-    gap: 24px;
-    overflow: hidden;
-    white-space: nowrap;
-}
-
-.console-ticker i { font-style: normal; color: var(--cyan); }
 
 /* ---------- 章节锚点导航 ---------- */
 .anchor-nav {
@@ -592,6 +604,44 @@ h2.sec {
 .video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 
 .video-caption { margin-top: 16px; font-size: 14px; letter-spacing: -0.224px; color: var(--slate); }
+
+/* 演示视频：滚动到该区域才加载播放，离开即停 */
+.video-cover {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    color: rgba(255, 255, 255, 0.62);
+    transition: opacity 0.5s var(--ease), visibility 0.5s var(--ease);
+}
+
+.vc-play {
+    position: relative;
+    width: 46px;
+    height: 46px;
+    border: 1px solid rgba(255, 255, 255, 0.36);
+    border-radius: 50%;
+}
+
+.vc-play::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-38%, -50%);
+    width: 0;
+    height: 0;
+    border-left: 11px solid rgba(255, 255, 255, 0.8);
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+}
+
+.video-cover p { font-size: 13px; letter-spacing: -0.08px; }
+
+.video-frame.is-loaded .video-cover { opacity: 0; visibility: hidden; }
 
 /* ---------- 下载中心 ---------- */
 .dlw {
@@ -751,7 +801,7 @@ h2.sec {
 
 .req-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 12px;
 }
 
@@ -845,6 +895,443 @@ tbody tr:last-child td { border-bottom: none; }
 
 .js .reveal.in { opacity: 1; transform: none; }
 
+/* ---------- 能力区 · 滚动叙事（一个窗口，走完全程） ---------- */
+.journey {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 56px;
+    margin-bottom: 64px;
+}
+
+.journey-visual { min-width: 0; }
+
+.aw-sticky { position: sticky; top: 84px; }
+
+/* 应用窗口 */
+.appwin {
+    background: var(--white);
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-card);
+    overflow: hidden;
+    font-size: 12px;
+    line-height: 1.4;
+    user-select: none;
+}
+
+.aw-bar {
+    height: 34px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 12px;
+    background: var(--mist);
+    border-bottom: 1px solid var(--hairline);
+}
+
+.aw-dots { display: inline-flex; gap: 5px; }
+.aw-dots i { width: 8px; height: 8px; border-radius: 50%; }
+.aw-dots i:nth-child(1) { background: #ff5f57; }
+.aw-dots i:nth-child(2) { background: #febc2e; }
+.aw-dots i:nth-child(3) { background: #28c840; }
+
+.aw-title { font-size: 11px; font-weight: 600; letter-spacing: -0.1px; color: var(--slate); }
+
+.aw-net {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--slate);
+}
+
+.aw-net i { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); }
+
+/* 遥测条 */
+.aw-tele {
+    height: 26px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 12px;
+    border-bottom: 1px solid var(--hairline);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    color: var(--steel);
+}
+
+.aw-tele b { color: var(--ink); font-weight: 600; }
+
+/* 主体：分类栏 + 画布 */
+.aw-main { display: grid; grid-template-columns: 62px minmax(0, 1fr); }
+
+.aw-rail {
+    padding: 10px 8px;
+    border-right: 1px solid var(--hairline);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.aw-rail > b {
+    margin-bottom: 2px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--steel);
+}
+
+.aw-chip {
+    padding: 5px 4px;
+    border-radius: 7px;
+    background: var(--mist);
+    color: var(--slate);
+    font-size: 11px;
+    text-align: center;
+    transition: background 0.45s var(--ease), color 0.45s var(--ease);
+}
+
+.aw-canvas {
+    position: relative;
+    min-height: 168px;
+    padding: 12px;
+    background-image: radial-gradient(var(--grid) 1px, transparent 1px);
+    background-size: 12px 12px;
+}
+
+.aw-blk {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    width: 58%;
+    max-width: 190px;
+    margin-bottom: 6px;
+    padding: 6px 8px;
+    border-radius: 8px;
+    border-left: 3px solid var(--cyan);
+    background: var(--mist);
+    color: var(--ink);
+    font-size: 11px;
+}
+
+.aw-blk i { flex: none; width: 8px; height: 8px; border-radius: 2px; background: var(--cyan); }
+
+.aw-b2 { border-left-color: var(--blue-fill); }
+.aw-b2 i { background: var(--blue-fill); }
+.aw-b3 { border-left-color: var(--orange); }
+.aw-b3 i { background: var(--orange); }
+.aw-b4 { margin-left: 14px; border-left-color: var(--steel); }
+.aw-b4 i { background: var(--steel); }
+
+/* 摄像头回传 */
+.aw-cam {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 92px;
+    height: 62px;
+    border: 1px solid var(--hairline);
+    border-radius: 10px;
+    background: #0b0b0d;
+    overflow: hidden;
+}
+
+.aw-cam > span {
+    position: absolute;
+    left: 7px;
+    top: 5px;
+    z-index: 2;
+    font-size: 9px;
+    letter-spacing: 0.04em;
+    color: rgba(255, 255, 255, 0.62);
+}
+
+.aw-cam::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(85% 65% at 50% 108%, rgba(10, 132, 255, 0.45), transparent 68%);
+}
+
+.aw-cam::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(100, 210, 255, 0.85), transparent);
+    animation: camscan 3.4s var(--ease) infinite;
+}
+
+@keyframes camscan {
+    0%   { top: 4px; opacity: 0; }
+    15%  { opacity: 1; }
+    85%  { opacity: 1; }
+    100% { top: 58px; opacity: 0; }
+}
+
+.aw-cam em {
+    position: absolute;
+    right: 7px;
+    top: 7px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #ff453a;
+    opacity: 0;
+    transition: opacity 0.4s var(--ease);
+}
+
+/* 运行按钮 */
+.aw-run {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 13px 5px 11px;
+    border-radius: var(--r-pill);
+    background: var(--steel);
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 600;
+    transition: background 0.5s var(--ease), box-shadow 0.5s var(--ease);
+}
+
+.aw-run::before {
+    content: "";
+    width: 0;
+    height: 0;
+    border-left: 5px solid currentColor;
+    border-top: 3.5px solid transparent;
+    border-bottom: 3.5px solid transparent;
+}
+
+/* 底部：代码 + 日志 */
+.aw-dock {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    border-top: 1px solid var(--hairline);
+}
+
+.aw-pane { min-height: 98px; padding: 9px 12px; overflow: hidden; }
+
+.aw-pane > b {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--steel);
+}
+
+.aw-code {
+    background: var(--code-bg);
+    color: var(--code-fg);
+    border-right: 1px solid var(--hairline);
+}
+
+.aw-code > b { color: rgba(255, 255, 255, 0.5); }
+
+.aw-lines {
+    font-family: var(--mono);
+    font-size: 9px;
+    line-height: 1.6;
+    white-space: nowrap;
+}
+
+.aw-lines .ln { display: block; }
+.aw-lines em { font-style: normal; color: #64d2ff; }
+.aw-lines em.k { color: #ff7ab6; }
+.aw-lines em.n { color: #ffb340; }
+
+.aw-log { background: var(--white); }
+
+.aw-log .lg {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 5px;
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--slate);
+}
+
+.aw-log .lg::before {
+    content: "";
+    flex: none;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #28c840;
+}
+
+/* 阶段切换（滚动驱动） */
+html.js .aw-blk,
+html.js .aw-lines .ln,
+html.js .aw-log .lg,
+html.js .aw-tele {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.45s var(--ease) var(--d, 0s), transform 0.45s var(--ease) var(--d, 0s);
+}
+
+html.js .aw-cam { opacity: 0.42; transition: opacity 0.6s var(--ease); }
+
+.aw-b1 { --d: 0.04s; }
+.aw-b2 { --d: 0.12s; }
+.aw-b3 { --d: 0.20s; }
+.aw-b4 { --d: 0.28s; }
+.aw-lines .ln:nth-child(1) { --d: 0.05s; }
+.aw-lines .ln:nth-child(2) { --d: 0.13s; }
+.aw-lines .ln:nth-child(3) { --d: 0.21s; }
+.aw-lines .ln:nth-child(4) { --d: 0.29s; }
+.aw-log .lg:nth-child(2) { --d: 0.05s; }
+.aw-log .lg:nth-child(3) { --d: 0.13s; }
+.aw-log .lg:nth-child(4) { --d: 0.21s; }
+
+/* ① 拖入积木 */
+html.js .appwin[data-stage="1"] .aw-blk { opacity: 1; transform: none; }
+
+/* ② 生成 Python */
+html.js .appwin[data-stage="2"] .aw-blk { opacity: 0.42; transform: none; }
+html.js .appwin[data-stage="2"] .aw-lines .ln { opacity: 1; transform: none; }
+
+/* ③ 应用内运行 */
+html.js .appwin[data-stage="3"] .aw-blk { opacity: 0.42; transform: none; }
+html.js .appwin[data-stage="3"] .aw-lines .ln { opacity: 1; transform: none; }
+html.js .appwin[data-stage="3"] .aw-log .lg { opacity: 1; transform: none; }
+
+/* ④ 真机遥测与画面 */
+html.js .appwin[data-stage="4"] .aw-blk { opacity: 0.42; transform: none; }
+html.js .appwin[data-stage="4"] .aw-lines .ln { opacity: 1; transform: none; }
+html.js .appwin[data-stage="4"] .aw-log .lg { opacity: 1; transform: none; }
+html.js .appwin[data-stage="4"] .aw-tele { opacity: 1; transform: none; }
+html.js .appwin[data-stage="4"] .aw-cam { opacity: 1; }
+html.js .appwin[data-stage="4"] .aw-cam em { opacity: 1; }
+html.js .appwin[data-stage="4"] .aw-r4 { background: rgba(10, 132, 255, 0.12); color: var(--blue-link); }
+
+/* 运动分类在搭积木 / 生成 / 运行三步保持选中 */
+html.js .appwin[data-stage="1"] .aw-r1,
+html.js .appwin[data-stage="2"] .aw-r1,
+html.js .appwin[data-stage="3"] .aw-r1 {
+    background: rgba(10, 132, 255, 0.12);
+    color: var(--blue-link);
+}
+
+html.js .appwin[data-stage="3"] .aw-run,
+html.js .appwin[data-stage="4"] .aw-run {
+    background: var(--blue-fill);
+    animation: runring 2.4s var(--ease) infinite;
+}
+
+@keyframes runring {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(10, 132, 255, 0.35); }
+    60%      { box-shadow: 0 0 0 7px rgba(10, 132, 255, 0); }
+}
+
+/* 步骤时间轴 */
+.journey-steps { min-width: 0; list-style: none; }
+
+.jstep {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: clamp(300px, 56vh, 480px);
+    padding-left: 34px;
+}
+
+.jstep::before {
+    content: attr(data-no);
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: calc(50% - 13px);
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--hairline);
+    border-radius: 50%;
+    background: var(--white);
+    color: var(--steel);
+    font-family: var(--mono);
+    font-size: 11px;
+    transition: color 0.45s var(--ease), background 0.45s var(--ease), border-color 0.45s var(--ease);
+}
+
+.jstep::after {
+    content: "";
+    position: absolute;
+    left: 13px;
+    top: calc(50% + 15px);
+    width: 1px;
+    height: calc(100% - 30px);
+    background: var(--hairline);
+    transition: background 0.5s var(--ease);
+}
+
+.jstep:last-child::after { display: none; }
+
+.jstep.passed::after { background: var(--cyan); }
+
+.jstep.on::before {
+    background: var(--blue-fill);
+    border-color: transparent;
+    color: #ffffff;
+}
+
+.jstep h3 {
+    font-family: var(--display);
+    font-size: 24px;
+    line-height: 1.17;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+    color: var(--ink);
+    margin-bottom: 8px;
+    opacity: 0.3;
+    transition: opacity 0.5s var(--ease);
+}
+
+.jstep p {
+    font-size: 17px;
+    line-height: 1.47;
+    letter-spacing: -0.374px;
+    color: var(--slate);
+    max-width: 30em;
+    opacity: 0.3;
+    transition: opacity 0.5s var(--ease);
+}
+
+.jstep.on h3, .jstep.on p { opacity: 1; }
+
+@media (max-width: 860px) {
+    .journey { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+    .aw-sticky { position: static; }
+    .jstep {
+        min-height: 0;
+        justify-content: flex-start;
+        padding: 22px 0 22px 34px;
+    }
+    .jstep::before { top: 22px; }
+    .jstep::after { top: 48px; bottom: 0; height: auto; }
+    .jstep h3, .jstep p { opacity: 1; }
+    .jstep::before {
+        background: var(--blue-fill);
+        border-color: transparent;
+        color: #ffffff;
+    }
+    .jstep::after { background: var(--cyan); }
+    html.js .appwin[data-stage="4"] .aw-blk { opacity: 1; }
+}
+
 /* ---------- 响应式 ---------- */
 @media (max-width: 820px) {
     .dlw-dl { flex-direction: column; align-items: stretch; }
@@ -857,6 +1344,7 @@ tbody tr:last-child td { border-bottom: none; }
 @media (max-width: 640px) {
     .hero-links { gap: 20px; }
     .dlw { padding: 24px; }
+    .req-grid { grid-template-columns: 1fr; }
     section { padding: 64px 0; }
     .topnav .pill-outline { display: none; }
 }
@@ -907,17 +1395,12 @@ tbody tr:last-child td { border-bottom: none; }
                     <div class="console-info">
                         <p class="console-title" data-i18n="con_title">已为你匹配安装包</p>
                         <p class="console-meta" id="console-meta" data-i18n="con_meta">正在识别系统与芯片架构…</p>
+                        <p class="console-sub" id="console-sub" hidden></p>
                     </div>
                     <a class="console-cta" href="#download">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v13M6 11l6 6 6-6M4 21h16"/></svg>
                         <span data-i18n="con_cta">下载</span>
                     </a>
-                </div>
-                <div class="console-ticker">
-                    <span><i>●</i> macOS Intel · .dmg</span>
-                    <span><i>●</i> <span data-i18n="tk2">Apple Silicon · 打包中</span></span>
-                    <span><i>●</i> Linux x64 · .deb</span>
-                    <span><i>●</i> v0.1.1 · 299 MB</span>
                 </div>
             </div>
         </div>
@@ -936,6 +1419,76 @@ tbody tr:last-child td { border-bottom: none; }
             <p class="sec-kicker" data-i18n="cap_k">能力</p>
             <h2 class="sec" data-i18n="cap_h">一个窗口，走完全程。</h2>
             <p class="section-desc" data-i18n="cap_d">编辑器、代码生成、运行控制与设备遥测不再分散在多个工具之间。打开 Robot Blockly，从想法到机器人动起来，就在同一个界面里完成。</p>
+            <div class="journey" id="journey">
+                <div class="journey-visual">
+                    <div class="aw-sticky">
+                        <div class="appwin" id="appwin" data-stage="1" aria-hidden="true">
+                            <div class="aw-bar">
+                                <span class="aw-dots"><i></i><i></i><i></i></span>
+                                <span class="aw-title">Robot Blockly</span>
+                                <span class="aw-net"><i></i><span data-i18n="jw_net">Go2 · 192.168.123.161</span></span>
+                            </div>
+                            <div class="aw-tele">
+                                <span>IMU</span><b>+0.02 rad</b>
+                                <span>BAT</span><b>92%</b>
+                                <span>TEMP</span><b>41 ℃</b>
+                            </div>
+                            <div class="aw-main">
+                                <div class="aw-rail">
+                                    <b data-i18n="jw_rail">积木</b>
+                                    <span class="aw-chip aw-r1" data-i18n="jw_r1">运动</span>
+                                    <span class="aw-chip aw-r2" data-i18n="jw_r2">姿态</span>
+                                    <span class="aw-chip aw-r3" data-i18n="jw_r3">传感</span>
+                                    <span class="aw-chip aw-r4" data-i18n="jw_r4">视觉</span>
+                                </div>
+                                <div class="aw-canvas">
+                                    <div class="aw-blk aw-b1"><i></i><span data-i18n="jw_b1">当程序开始</span></div>
+                                    <div class="aw-blk aw-b2"><i></i><span data-i18n="jw_b2">解锁站立</span></div>
+                                    <div class="aw-blk aw-b3"><i></i><span data-i18n="jw_b3">前进 0.3 m/s</span></div>
+                                    <div class="aw-blk aw-b4"><i></i><span data-i18n="jw_b4">重复 4 次</span></div>
+                                    <div class="aw-cam"><span data-i18n="jw_cam">摄像头</span><em></em></div>
+                                    <span class="aw-run" data-i18n="jw_run">运行</span>
+                                </div>
+                            </div>
+                            <div class="aw-dock">
+                                <div class="aw-pane aw-code">
+                                    <b>Python</b>
+                                    <div class="aw-lines">
+                                        <span class="ln"><em class="k">from</em> unitree_sdk2py <em class="k">import</em> go2</span>
+                                        <span class="ln">client = <em>SportClient</em>()</span>
+                                        <span class="ln">client.<em>BalanceStand</em>()</span>
+                                        <span class="ln">client.<em>Move</em>(<em class="n">0.3</em>, <em class="n">0</em>, <em class="n">0</em>)</span>
+                                    </div>
+                                </div>
+                                <div class="aw-pane aw-log">
+                                    <b data-i18n="jw_log">运行日志</b>
+                                    <p class="lg"><span data-i18n="jw_l1">BalanceStand() 解锁完成</span></p>
+                                    <p class="lg"><span data-i18n="jw_l2">Move 指令已下发 · vx=0.3</span></p>
+                                    <p class="lg"><span data-i18n="jw_l3">IMU 姿态正常 · 电量 92%</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ol class="journey-steps">
+                    <li class="jstep" data-no="1">
+                        <h3 data-i18n="cap_j1t">拖入积木</h3>
+                        <p data-i18n="cap_j1b">从左侧分类栏取积木，落到画布上，动作序列一块块搭起来。</p>
+                    </li>
+                    <li class="jstep" data-no="2">
+                        <h3 data-i18n="cap_j2t">生成代码</h3>
+                        <p data-i18n="cap_j2b">只有点击「生成代码」或「运行」，画布内容才会生成右侧的 Python 代码。</p>
+                    </li>
+                    <li class="jstep" data-no="3">
+                        <h3 data-i18n="cap_j3t">点一下，就在应用里跑</h3>
+                        <p data-i18n="cap_j3b">点击运行，程序当场执行，输出实时回流底部日志。</p>
+                    </li>
+                    <li class="jstep" data-no="4">
+                        <h3 data-i18n="cap_j4t">机器人动起来</h3>
+                        <p data-i18n="cap_j4b">真机状态与摄像头画面同步回来，整条链路留在同一个窗口。</p>
+                    </li>
+                </ol>
+            </div>
             <div class="grid">
                 <div class="card">
                     <h3 data-i18n="cap1t">拖拽即编程</h3>
@@ -980,10 +1533,14 @@ tbody tr:last-child td { border-bottom: none; }
                 <h2 class="sec" data-i18n="vid_h">眼见为实。</h2>
                 <p class="section-desc" data-i18n="vid_d">一段完整实录：在 Go2 真机上，从搭建积木到程序执行，全程不过几分钟。</p>
                 <div class="video-card">
-                    <div class="video-frame">
-                        <iframe src="https://player.bilibili.com/player.html?bvid=BV1wEtV61E8M&page=1&high_quality=1&danmaku=0"
+                    <div class="video-frame" id="video-frame">
+                        <iframe data-src="https://player.bilibili.com/player.html?bvid=BV1wEtV61E8M&page=1&high_quality=1&danmaku=0&autoplay=1"
                                 scrolling="no" border="0" frameborder="no" framespacing="0"
                                 allowfullscreen="true" title="Robot Blockly 演示视频"></iframe>
+                        <div class="video-cover">
+                            <span class="vc-play" aria-hidden="true"></span>
+                            <p data-i18n="vid_hint">滚动到这里才加载播放</p>
+                        </div>
                     </div>
                     <p class="video-caption" data-i18n-html="vid_cap">视频托管于哔哩哔哩：<a href="https://www.bilibili.com/video/BV1wEtV61E8M/" target="_blank" rel="noopener noreferrer">在 B 站观看</a></p>
                 </div>
@@ -1024,19 +1581,24 @@ tbody tr:last-child td { border-bottom: none; }
                     <h4 data-i18n="req_h4">装之前，先看一眼</h4>
                     <div class="req-grid">
                         <div class="req-card">
-                            <strong>macOS (Intel)</strong>
-                            <span class="req-os" data-i18n="r1o">macOS 12 Monterey 及以上</span>
-                            <p data-i18n="r1p">仅适用于 Intel x86_64 芯片机型，与 Apple Silicon 版本互不通用。</p>
+                            <strong>macOS · Intel</strong>
+                            <span class="req-os" data-i18n="r1o">Intel x86_64 · macOS 12 Monterey 及以上</span>
+                            <p data-i18n="r1p">仅适用于 Intel 芯片机型；与 Apple Silicon 版本互不通用。</p>
                         </div>
                         <div class="req-card">
-                            <strong>macOS (Apple Silicon)</strong>
-                            <span class="req-os" data-i18n="r2o">macOS 12 Monterey 及以上</span>
-                            <p data-i18n="r2p">支持 M1 / M2 / M3 / M4 系列芯片，原生 arm64 安装包正在打包中。</p>
+                            <strong>macOS · Apple Silicon</strong>
+                            <span class="req-os" data-i18n="r2o">Apple M 系列芯片 · macOS 12 Monterey 及以上</span>
+                            <p data-i18n="r2p">适用于 Apple M 系列芯片；原生 arm64 安装包正在打包中。</p>
                         </div>
                         <div class="req-card">
-                            <strong>Linux (x64)</strong>
+                            <strong>Linux</strong>
                             <span class="req-os" data-i18n="r3o">主流发行版 · amd64</span>
-                            <p data-i18n="r3p">amd64 架构；需具备与机器人通信的有线网口。</p>
+                            <p data-i18n="r3p">适用于主流发行版；需具备与机器人通信的有线网口。</p>
+                        </div>
+                        <div class="req-card">
+                            <strong>Windows</strong>
+                            <span class="req-os" data-i18n="r4o">Windows 10 及以上 · x64</span>
+                            <p data-i18n="r4p">64 位系统；安装包正在打包中。</p>
                         </div>
                     </div>
                     <p class="footnote" data-i18n="footnote">通用要求：与机器人处于同网段；Go2 固件 ≥ 1.1.6（MCF 模式）。</p>
@@ -1136,20 +1698,18 @@ const RELEASE = {
     baseUrl: 'https://github.com/Tengzicong/Robot_Blockly/releases/download/',
     releasesPage: 'https://github.com/Tengzicong/Robot_Blockly/releases',
     assets: {
-        'mac-intel': { file: 'RobotBlockly-0.1.1-x86_64.dmg', size: '299 MB', note: 'x86_64 · macOS 12+' },
+        'mac-intel': { file: 'RobotBlockly-0.1.1-x86_64.dmg', size: '299 MB', note: 'Intel x86_64 · macOS 12+' },
         'mac-arm':   null,
         'linux-x64': { file: 'Robot-blockly_0.1.2_amd64.deb', size: '248 KB', note: 'amd64 · .deb 安装包' },
-        'linux-arm': null,
         'win-x64':   null
     }
 };
 
 const PLATFORMS = [
-    { id: 'mac-intel', name: 'macOS (Intel)',         sub: 'x86_64 · macOS 12+', icon: 'apple'   },
-    { id: 'mac-arm',   name: 'macOS (Apple Silicon)', sub: 'arm64 · M1 / M2 / M3 / M4', icon: 'apple' },
-    { id: 'linux-x64', name: 'Linux (64-bit)',        sub: 'x86_64 / amd64 · deb', icon: 'linux' },
-    { id: 'linux-arm', name: 'Linux (Aarch64)',       sub: 'arm64 · deb',        icon: 'linux'   },
-    { id: 'win-x64',   name: 'Windows (64-bit)',      sub: 'x86_64',             icon: 'windows' }
+    { id: 'mac-intel', name: 'macOS (Intel)',         sub: 'Intel x86_64 · macOS 12+', icon: 'apple'   },
+    { id: 'mac-arm',   name: 'macOS (Apple Silicon)', sub: 'Apple M-series · macOS 12+', icon: 'apple'   },
+    { id: 'linux-x64', name: 'Linux (64-bit)',        sub: 'amd64 · mainstream distros', icon: 'linux' },
+    { id: 'win-x64',   name: 'Windows (64-bit)',      sub: 'x64 · Windows 10+',         icon: 'windows' }
 ];
 
 const ICONS = {
@@ -1231,16 +1791,16 @@ async function detectPlatform() {
     // 先取 UA 架构线索（Linux 最可靠），再取 Client Hints / WebGL
     const arch = (isLinux ? archFromUA() : null) || await detectArch() || (isLinux ? archFromUA() : null);
 
-    if (isIPad)                          return { id: null,        os: 'iPadOS', arch: arch || 'arm64' };
+    if (isIPad)                          return { id: null,        os: 'iPadOS', arch: arch || 'arm64', unsupported: true };
     if (/Windows NT/.test(ua))           return { id: 'win-x64',   os: 'Windows', arch: arch || 'x86_64' };
     if (isMacLike) {
         if (arch === 'arm64')            return { id: 'mac-arm',   os: 'macOS (Apple Silicon)', arch: 'arm64' };
         if (arch === 'x86_64')           return { id: 'mac-intel', os: 'macOS (Intel)', arch: 'x86_64' };
         return { id: null, os: 'macOS', arch: null };
     }
-    if (/Android/.test(ua))              return { id: 'linux-arm', os: 'Android', arch: arch || 'arm64' };
+    if (/Android/.test(ua))              return { id: null, os: 'Android', arch: arch || 'arm64', unsupported: true };
     if (isLinux) {
-        if (arch === 'arm64')            return { id: 'linux-arm', os: 'Linux (Aarch64)', arch: arch || 'arm64' };
+        if (arch === 'arm64')            return { id: null, os: 'Linux (Aarch64)', arch: arch || 'arm64', unsupported: true };
         if (arch === 'x86_64')           return { id: 'linux-x64', os: 'Linux (64-bit)', arch: arch || 'x86_64' };
         return { id: null, os: 'Linux', arch: null };
     }
@@ -1343,7 +1903,9 @@ function updateDetect(d) {
     const archText = d.arch ? ' · ' + d.arch : '';
     const vars = { os: d.os, arch: archText };
 
-    if (d.id && assetFor(d.id)) {
+    if (d.unsupported) {
+        note.innerHTML = fmt(t('det_unsupported'), vars);
+    } else if (d.id && assetFor(d.id)) {
         note.innerHTML = fmt(t('det_matched'), vars);
     } else if (d.id) {
         note.innerHTML = fmt(t('det_pending'), vars);
@@ -1356,12 +1918,34 @@ function updateDetect(d) {
 
     const cm = document.getElementById('console-meta');
     if (cm) {
-        if (d.id && assetFor(d.id)) {
+        if (d.unsupported) {
+            cm.innerHTML = fmt(t('cm_unsupported'), { os: d.os });
+        } else if (d.id && assetFor(d.id)) {
             cm.innerHTML = fmt(t('cm_matched'), { os: d.os, arch: archText, file: assetFor(d.id).file });
         } else if (d.os) {
             cm.innerHTML = fmt(t('cm_os'), { os: d.os });
         } else {
             cm.innerHTML = t('cm_none');
+        }
+    }
+
+    /* 控制台副行：匹配成功时直接展示安装包（文件名 + 大小 + 直链下载），
+       并始终给出「不对？前往下载中心」的手动选择入口 */
+    const cs = document.getElementById('console-sub');
+    if (cs) {
+        if (d.id && assetFor(d.id)) {
+            const a = assetFor(d.id);
+            cs.innerHTML =
+                '<a class="pkg-dl" href="' + urlFor(a) + '" download="' + a.file + '">' +
+                    ICONS.download + '<span>' + a.file + ' · ' + a.size + '</span></a>' +
+                '<a class="go-dl" href="#download">' + t('con_wrong') + '</a>';
+            cs.hidden = false;
+        } else if (d.os || d.id) {
+            cs.innerHTML = '<a class="go-dl" href="#download">' + t('con_go') + '</a>';
+            cs.hidden = false;
+        } else {
+            cs.innerHTML = '';
+            cs.hidden = true;
         }
     }
 }
@@ -1392,7 +1976,7 @@ const I18N = {
         hero_link1: '看看它怎么跑', hero_link2: '它能做什么',
         con_badge: '免费', con_title: '已为你匹配安装包',
         con_meta: '正在识别系统与芯片架构…', con_cta: '下载',
-        tk2: 'Apple Silicon · 打包中',
+        con_wrong: '不匹配？前往下载中心', con_go: '前往下载中心手动选择',
         an1: '它能做什么', an2: '眼见为实', an3: '获取安装包', an4: '连上机器人', an5: '开源与致谢',
         cap_k: '能力', cap_h: '一个窗口，走完全程。',
         cap_d: '编辑器、代码生成、运行控制与设备遥测不再分散在多个工具之间。打开 Robot Blockly，从想法到机器人动起来，就在同一个界面里完成。',
@@ -1404,9 +1988,19 @@ const I18N = {
         cap6t: '雷达点云可视化', cap6b: '叠加 Go2 激光雷达点云与测距标尺，环境感知一目了然。',
         cap7t: '工程可存可取', cap7b: 'XML 工程保存与载入，迭代与协作有迹可循。',
         cap8t: '双架构跨平台', cap8b: 'macOS Intel / Apple Silicon 与 Linux x64 分别构建，互不混用。',
+        cap_j1t: '拖入积木', cap_j1b: '从左侧分类栏取积木，落到画布上，动作序列一块块搭起来。',
+        cap_j2t: '生成代码', cap_j2b: '只有点击「生成代码」或「运行」，画布内容才会生成右侧的 Python 代码。',
+        cap_j3t: '点一下，就在应用里跑', cap_j3b: '点击运行，程序当场执行，输出实时回流底部日志。',
+        cap_j4t: '机器人动起来', cap_j4b: '真机状态与摄像头画面同步回来，整条链路留在同一个窗口。',
+        jw_net: 'Go2 · 192.168.123.161', jw_rail: '积木',
+        jw_r1: '运动', jw_r2: '姿态', jw_r3: '传感', jw_r4: '视觉',
+        jw_b1: '当程序开始', jw_b2: '解锁站立', jw_b3: '前进 0.3 m/s', jw_b4: '重复 4 次',
+        jw_cam: '摄像头', jw_run: '运行', jw_log: '运行日志',
+        jw_l1: 'BalanceStand() 解锁完成', jw_l2: 'Move 指令已下发 · vx=0.3', jw_l3: 'IMU 姿态正常 · 电量 92%',
         vid_k: '演示', vid_h: '眼见为实。',
         vid_d: '一段完整实录：在 Go2 真机上，从搭建积木到程序执行，全程不过几分钟。',
         vid_cap: '视频托管于哔哩哔哩：<a href="https://www.bilibili.com/video/BV1wEtV61E8M/" target="_blank" rel="noopener noreferrer">在 B 站观看</a>',
+        vid_hint: '滚动到这里才加载播放',
         dl_k: '下载', dl_h: '选对架构，装上就用。',
         dl_d: '浏览器会预选你当前的系统与芯片；拿不准时，参照下方系统要求手动选择即可。',
         dlh_h3: '选择您的操作系统', dlh_p: 'Intel 与 Apple Silicon 的安装包互不通用，请按芯片型号选择。',
@@ -1418,9 +2012,10 @@ const I18N = {
         warn_li3: '或在终端移除隔离属性：',
         warn_p2: '安装步骤：双击挂载 <code>.dmg</code> → 将 <code>RobotBlockly.app</code> 拖入「应用程序」→ 弹出磁盘。',
         req_h4: '装之前，先看一眼',
-        r1o: 'macOS 12 Monterey 及以上', r1p: '仅适用于 Intel x86_64 芯片机型，与 Apple Silicon 版本互不通用。',
-        r2o: 'macOS 12 Monterey 及以上', r2p: '支持 M1 / M2 / M3 / M4 系列芯片，原生 arm64 安装包正在打包中。',
-        r3o: '主流发行版 · amd64', r3p: 'amd64 架构；需具备与机器人通信的有线网口。',
+        r1o: 'Intel x86_64 · macOS 12 Monterey 及以上', r1p: '仅适用于 Intel 芯片机型；与 Apple Silicon 版本互不通用。',
+        r2o: 'Apple M 系列芯片 · macOS 12 Monterey 及以上', r2p: '适用于 Apple M 系列芯片；原生 arm64 安装包正在打包中。',
+        r3o: '主流发行版 · amd64', r3p: '适用于主流发行版；需具备与机器人通信的有线网口。',
+        r4o: 'Windows 10 及以上 · x64', r4p: '64 位系统；安装包正在打包中。',
         footnote: '通用要求：与机器人处于同网段；Go2 固件 ≥ 1.1.6（MCF 模式）。',
         st_k: '连接', st_h: '让电脑和 Go2 说上话。',
         st_d: 'Go2 出厂固定 IP 为 <code>192.168.123.161</code>，不提供 DHCP。有线直连时，把电脑网卡通配为静态 IP <code>192.168.123.241/24</code> 即可握手；软件内置网卡检测与一键配置（Linux）。',
@@ -1439,15 +2034,17 @@ const I18N = {
         na: '暂未提供', choose: '请先在上方选择您的操作系统。',
         dl_btn: '下载 {name} 版', notes: '发行说明',
         pending: '{name} 版本正在打包中。',
-        pending2: 'amd64 / x86_64 与 arm64 的安装包互不通用，需分别构建；该版本发布后可在本页直接下载。请关注',
+        pending2: '不同平台与架构的安装包互不通用，需分别构建；该版本发布后可在本页直接下载。请关注',
         pending3: '获取更新。',
         copy: '复制直链', copied: '已复制 ✓', copyfail: '复制失败',
         det_matched: '已检测到您正在使用 <b>{os}{arch}</b>，已为您选中对应的安装包。',
         det_pending: '已检测到您正在使用 <b>{os}{arch}</b>，该架构的安装包正在打包中，也可手动选择其他平台。',
         det_arch: '已检测到 <b>{os}</b>，但无法确认芯片架构（arm64 / x86_64），两者安装包不通用，请手动选择。',
+        det_unsupported: '已检测到 <b>{os}{arch}</b>，该平台暂未提供安装包；请在上方手动选择 macOS、Linux 或 Windows。',
         det_none: '未能识别您的系统，请在上方手动选择操作系统。',
         cm_matched: '<span class="ok">✓ 已匹配</span> {os}{arch} → {file}',
         cm_os: '识别到 <span class="ok">{os}</span>，请在下方确认芯片架构',
+        cm_unsupported: '识别到 <span class="ok">{os}</span>，该平台暂未提供安装包',
         cm_none: '请手动选择操作系统与芯片架构'
     },
     en: {
@@ -1458,7 +2055,7 @@ const I18N = {
         hero_link1: 'See it in action', hero_link2: 'What it does',
         con_badge: 'Free', con_title: 'Installer matched for you',
         con_meta: 'Detecting system and chip architecture…', con_cta: 'Download',
-        tk2: 'Apple Silicon · coming soon',
+        con_wrong: 'Not a match? Go to the download center', con_go: 'Choose manually in the download center',
         an1: 'What it does', an2: 'See it run', an3: 'Get the installer', an4: 'Connect the robot', an5: 'Open source',
         cap_k: 'Capabilities', cap_h: 'One window, whole workflow.',
         cap_d: 'Editor, code generation, run control and device telemetry no longer live in separate tools. Open Robot Blockly and go from idea to a moving robot in the same window.',
@@ -1470,9 +2067,19 @@ const I18N = {
         cap6t: 'LiDAR point cloud', cap6b: 'Overlay Go2 lidar points with a range scale — perceive the environment instantly.',
         cap7t: 'Save & load projects', cap7b: 'XML projects keep every iteration and collaboration traceable.',
         cap8t: 'Dual-arch cross-platform', cap8b: 'Separate builds for macOS Intel / Apple Silicon and Linux x64 — never mixed.',
+        cap_j1t: 'Drop in a block', cap_j1b: 'Take a block from the category rail and drop it on the canvas — the sequence builds up block by block.',
+        cap_j2t: 'Generate code', cap_j2b: 'Python is generated only when you click Generate code or Run — it does not follow the canvas automatically.',
+        cap_j3t: 'One click to run', cap_j3b: 'Hit Run and the program executes in place, streaming output back into the log below.',
+        cap_j4t: 'The robot moves', cap_j4b: 'Live telemetry and the camera view come back at once — the whole loop stays in one window.',
+        jw_net: 'Go2 · 192.168.123.161', jw_rail: 'Blocks',
+        jw_r1: 'Motion', jw_r2: 'Pose', jw_r3: 'Sensor', jw_r4: 'Vision',
+        jw_b1: 'when program starts', jw_b2: 'stand up', jw_b3: 'forward 0.3 m/s', jw_b4: 'repeat 4 times',
+        jw_cam: 'Camera', jw_run: 'Run', jw_log: 'Log',
+        jw_l1: 'BalanceStand() unlocked', jw_l2: 'Move command sent · vx=0.3', jw_l3: 'IMU stable · battery 92%',
         vid_k: 'Demo', vid_h: 'See it run.',
         vid_d: 'A full recording: from building blocks to executing on a real Go2 in just minutes.',
         vid_cap: 'Hosted on bilibili: <a href="https://www.bilibili.com/video/BV1wEtV61E8M/" target="_blank" rel="noopener noreferrer">Watch on bilibili</a>',
+        vid_hint: 'Loads and plays once scrolled into view',
         dl_k: 'Download', dl_h: 'Pick the right architecture.',
         dl_d: 'Your browser preselects the current system and chip; when unsure, follow the requirements below and choose manually.',
         dlh_h3: 'Choose your operating system', dlh_p: 'Intel and Apple Silicon installers are not interchangeable — pick by chip model.',
@@ -1484,9 +2091,10 @@ const I18N = {
         warn_li3: 'Or remove the quarantine attribute in Terminal:',
         warn_p2: 'Install: double-click the <code>.dmg</code> → drag <code>RobotBlockly.app</code> into Applications → eject the disk.',
         req_h4: 'Check before you install',
-        r1o: 'macOS 12 Monterey or later', r1p: 'Intel x86_64 machines only; not compatible with the Apple Silicon build.',
-        r2o: 'macOS 12 Monterey or later', r2p: 'M1 / M2 / M3 / M4 chips; the native arm64 package is being prepared.',
-        r3o: 'Mainstream distros · amd64', r3p: 'amd64 architecture; a wired Ethernet port toward the robot is required.',
+        r1o: 'Intel x86_64 · macOS 12 Monterey or later', r1p: 'Intel machines only; not compatible with the Apple Silicon build.',
+        r2o: 'Apple M-series · macOS 12 Monterey or later', r2p: 'For Apple M-series chips; the native arm64 package is being prepared.',
+        r3o: 'Mainstream distros · amd64', r3p: 'For mainstream distributions; a wired Ethernet port toward the robot is required.',
+        r4o: 'Windows 10 or later · x64', r4p: '64-bit system; the installer is being packaged.',
         footnote: 'Common requirements: same subnet as the robot; Go2 firmware ≥ 1.1.6 (MCF mode).',
         st_k: 'Connect', st_h: 'Put your computer and the Go2 on speaking terms.',
         st_d: 'The Go2 ships with a fixed IP <code>192.168.123.161</code> and no DHCP. Over a direct cable, assign your NIC the static IP <code>192.168.123.241/24</code> to handshake; the app includes NIC detection and one-click setup (Linux).',
@@ -1505,15 +2113,17 @@ const I18N = {
         na: 'Coming soon', choose: 'Please choose an operating system above.',
         dl_btn: 'Download for {name}', notes: 'Release notes',
         pending: 'The {name} build is being packaged.',
-        pending2: 'amd64 / x86_64 and arm64 installers are not interchangeable and are built separately; once released it will be downloadable right here. Follow',
+        pending2: 'Installers for different platforms and architectures are not interchangeable and are built separately; once released it will be downloadable right here. Follow',
         pending3: 'for updates.',
         copy: 'Copy link', copied: 'Copied ✓', copyfail: 'Copy failed',
         det_matched: 'Detected <b>{os}{arch}</b> — the matching installer is selected for you.',
         det_pending: 'Detected <b>{os}{arch}</b>. An installer for this architecture is being packaged; you can also pick another platform below.',
         det_arch: 'Detected <b>{os}</b>, but the chip architecture (arm64 / x86_64) is unclear. Installers are not interchangeable — please choose manually.',
+        det_unsupported: 'Detected <b>{os}{arch}</b> — no installer is available for this platform yet; please choose macOS, Linux or Windows above.',
         det_none: 'Your system could not be identified. Please choose an operating system above.',
         cm_matched: '<span class="ok">✓ Matched</span> {os}{arch} → {file}',
         cm_os: 'Detected <span class="ok">{os}</span> — please confirm the chip architecture below',
+        cm_unsupported: 'Detected <span class="ok">{os}</span> — no installer for this platform yet',
         cm_none: 'Please choose the OS and chip architecture manually'
     }
 };
@@ -1537,12 +2147,12 @@ function fmt(s, vars) {
 const META_I18N = {
     zh: {
         title: 'Robot Blockly - 机器人积木编程工具下载 | ERROR-CORE 开源',
-        description: 'Robot Blockly 官方下载页：v0.1.1 公测版，基于 Blockly 可视化积木的机器人编程工具，支持 Unitree 宇树机器人，提供 Linux amd64/arm64 与 macOS 安装包免费下载，MIT 协议开源。',
+        description: 'Robot Blockly 官方下载页：v0.1.1 公测版，基于 Blockly 可视化积木的机器人编程工具，支持 Unitree 宇树机器人，提供 Linux amd64 与 macOS 安装包免费下载，MIT 协议开源。',
         keywords: 'Robot Blockly, 积木编程, 图形化编程, Unitree, 宇树机器人, Blockly, MIT 开源'
     },
     en: {
         title: 'Robot Blockly - Visual Block Programming for Robots | ERROR-CORE Open Source',
-        description: 'Official download page for Robot Blockly v0.1.1 beta: a Blockly-based visual programming tool for Unitree robots, with free installers for Linux amd64/arm64 and macOS, open-sourced under the MIT license.',
+        description: 'Official download page for Robot Blockly v0.1.1 beta: a Blockly-based visual programming tool for Unitree robots, with free installers for Linux amd64 and macOS, open-sourced under the MIT license.',
         keywords: 'Robot Blockly, block programming, visual programming, Unitree, Blockly, MIT open source'
     }
 };
@@ -1619,6 +2229,7 @@ initDownload();
             '.hero .kicker, .hero .launch-label, .hero h1, .hero .hero-sub, .hero .hero-links, ' +
             '.product-shot, .console, .anchor-nav, ' +
             'section > .sec-kicker, section > h2.sec, section > .section-desc, ' +
+            '.journey .aw-sticky, ' +
             '.video-card, .dlw, .grid > .card, .text-block, section > table, section > .notice, .req-grid > *');
         var counts = new WeakMap();
         els.forEach(function (el) {
@@ -1635,6 +2246,105 @@ initDownload();
         }, { rootMargin: '0px 0px -6% 0px', threshold: 0.08 });
         els.forEach(function (el) { io.observe(el); });
     }
+})();
+</script>
+<script>
+/* 能力区滚动叙事：滚动到第几步，窗口就演到第几步 */
+(function () {
+    var journey = document.getElementById('journey');
+    var appwin = document.getElementById('appwin');
+    if (!journey || !appwin) return;
+    var steps = Array.prototype.slice.call(journey.querySelectorAll('.jstep'));
+    if (!steps.length) return;
+
+    var mqNarrow = window.matchMedia ? matchMedia('(max-width: 860px)') : null;
+    var mqReduce = window.matchMedia ? matchMedia('(prefers-reduced-motion: reduce)') : null;
+
+    var isStatic = false;
+    var ticking = false;
+
+    function paint(stage) {
+        appwin.setAttribute('data-stage', String(stage));
+        steps.forEach(function (step, i) {
+            step.classList.toggle('on', i === stage - 1);
+            step.classList.toggle('passed', i < stage - 1);
+        });
+    }
+
+    function update() {
+        ticking = false;
+        if (isStatic) return;
+        var vh = window.innerHeight || document.documentElement.clientHeight;
+        var center = vh / 2;
+        var best = 0;
+        var bestGap = Infinity;
+        var visible = false;
+        steps.forEach(function (step, i) {
+            var box = step.getBoundingClientRect();
+            if (box.bottom > 0 && box.top < vh) visible = true;
+            var gap = Math.abs(box.top + box.height / 2 - center);
+            if (gap < bestGap) { bestGap = gap; best = i; }
+        });
+        if (visible) paint(best + 1);
+    }
+
+    /* 窄屏与「减少动态效果」下不再滚动驱动，直接呈现走完全程的最终状态 */
+    function sync() {
+        isStatic = !!(mqReduce && mqReduce.matches) || !!(mqNarrow && mqNarrow.matches);
+        ticking = false;
+        if (isStatic) { paint(steps.length); } else { update(); }
+    }
+
+    function onScroll() {
+        if (isStatic || ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(update);
+    }
+
+    sync();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', sync, { passive: true });
+    if (mqNarrow && mqNarrow.addEventListener) {
+        mqNarrow.addEventListener('change', sync);
+        if (mqReduce) mqReduce.addEventListener('change', sync);
+    }
+})();
+</script>
+<script>
+/* 演示视频：滚到该区域才加载播放，离开视口立即停止 */
+(function () {
+    var frame = document.getElementById('video-frame');
+    if (!frame) return;
+    var iframe = frame.querySelector('iframe[data-src]');
+    if (!iframe) return;
+
+    var src = iframe.getAttribute('data-src');
+    var playing = false;
+
+    function play() {
+        if (playing) return;
+        playing = true;
+        iframe.src = src;
+        frame.classList.add('is-loaded');
+    }
+
+    function stop() {
+        if (!playing) return;
+        playing = false;
+        iframe.src = 'about:blank';
+    }
+
+    if (!('IntersectionObserver' in window)) { play(); return; }
+
+    var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            // 露出过半即加载播放；完全离开视口才停止
+            if (entry.intersectionRatio >= 0.5) { play(); }
+            else if (entry.intersectionRatio === 0) { stop(); }
+        });
+    }, { threshold: [0, 0.5] });
+
+    io.observe(frame);
 })();
 </script>
 </body>
