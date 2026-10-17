@@ -640,6 +640,47 @@ th:last-child, td:last-child { padding-right: 0; }
 
 .footer-meta { display: flex; flex-wrap: wrap; gap: 8px 24px; }
 
+/* 视频号：悬停显示二维码浮层（页脚在页面底部，浮层向上弹出） */
+.footer-meta a.has-qr { position: relative; }
+.footer-meta .qr-pop {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%) scale(0.96);
+    width: 500px;
+    max-width: 90vw;
+    background: #ffffff;
+    border: 1px solid #d6d6d6;
+    border-radius: 16px;
+    padding: 12px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+    z-index: 2000;
+}
+.footer-meta .qr-pop img {
+    display: block;
+    width: 100%;
+    height: auto;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+.footer-meta .qr-pop .qr-tip {
+    display: block;
+    text-align: center;
+    margin-top: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #1d1d1f;
+}
+.footer-meta a.has-qr:hover .qr-pop,
+.footer-meta a.has-qr:focus-visible .qr-pop {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) scale(1);
+}
+
 .footer a { color: var(--secondary); }
 
 .footer a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
@@ -790,7 +831,7 @@ th:last-child, td:last-child { padding-right: 0; }
                 </div>
                 <div class="card">
                     <h3 data-i18n="team4t">联系方式</h3>
-                    <p data-i18n-html="team4b">邮箱 <code>error_core@163.com</code>，也可通过页脚 B 站 / 抖音账号找到我们。</p>
+                    <p data-i18n-html="team4b">邮箱 <code>error_core@163.com</code>，也可通过页脚 B 站 / 抖音 / Instagram 账号找到我们。</p>
                 </div>
             </div>
         </div>
@@ -902,6 +943,8 @@ th:last-child, td:last-child { padding-right: 0; }
             <div class="footer-meta">
                 <a href="https://space.bilibili.com/3546631121144154" target="_blank" rel="noopener noreferrer" data-i18n="ft_bili">B站 Bilibili</a>
                 <a href="https://www.douyin.com/user/MS4wLjABAAAA0cxdKFB-D6ucvm2i3AE92bzBC-xSHgmW0ew1iwh0Isx-DwXKsMF499VcAle9571J" target="_blank" rel="noopener noreferrer" data-i18n="ft_douyin">抖音 Douyin</a>
+                <a href="https://www.instagram.com/zicongteng/" target="_blank" rel="noopener noreferrer" data-i18n="ft_instagram">Instagram</a>
+                <a href="picture/IMG_1764.jpg" class="has-qr" target="_blank" rel="noopener noreferrer"><span data-i18n="ft_shipinhao">视频号</span><div class="qr-pop"><img src="picture/IMG_1764.jpg" alt="视频号二维码"><span class="qr-tip" data-i18n="qr_tip">使用微信扫码</span></div></a>
                 <a href="contact.html" data-i18n="ft_contact">联系我们</a>
                 <a href="index.html" data-i18n="ft_home">返回首页</a>
             </div>
@@ -933,7 +976,7 @@ const I18N = {
         team1t: '方向', team1b: '机器人可视化编程、桌面应用打包与分发、网页游戏与交互体验。',
         team2t: '技术栈', team2b: 'Python、JavaScript、HTML / CSS，以及 PyQt 桌面端与 Blockly 可视化编辑器。',
         team3t: '开源方式', team3b: '源码托管在 GitHub，通过 Release 提供可安装版本，接受 Issue 反馈。',
-        team4t: '联系方式', team4b: '邮箱 <code>error_core@163.com</code>，也可通过页脚 B 站 / 抖音账号找到我们。',
+        team4t: '联系方式', team4b: '邮箱 <code>error_core@163.com</code>，也可通过页脚 B 站 / 抖音 / Instagram 账号找到我们。',
         proj_h: '开源软件',
         proj_d: '两款产品，一个面向真机调试，一个面向浏览器娱乐。',
         rb_tag: 'v0.1.1 公测版 · MIT',
@@ -968,7 +1011,7 @@ const I18N = {
         games_f4: '足球射门 Football', games_f5: '画板 Drawing',
         games_f6: '触屏长按连续操控适配', games_f7: 'Cookie 政策与同意弹窗', games_f8: '设备检测与移动端工具栏',
         games_l1: '进入游戏合集', games_l2: 'GitHub 仓库',
-        ft_bili: 'B站 Bilibili', ft_douyin: '抖音 Douyin', ft_contact: '联系我们', ft_home: '返回首页'
+        ft_bili: 'B站 Bilibili', ft_douyin: '抖音 Douyin', ft_instagram: 'Instagram', ft_shipinhao: '视频号', qr_tip: '使用微信扫码', ft_contact: '联系我们', ft_home: '返回首页'
     },
     en: {
         nav_team: 'Team', nav_projects: 'Open Source', nav_home: 'Back to home',
@@ -990,7 +1033,7 @@ const I18N = {
         team1t: 'Directions', team1b: 'Visual robot programming, desktop app packaging & distribution, web games and interactive experiences.',
         team2t: 'Stack', team2b: 'Python, JavaScript, HTML / CSS, plus PyQt for desktop and Blockly for the visual editor.',
         team3t: 'How we open source', team3b: 'Source hosted on GitHub, installable builds shipped via Releases, and Issue feedback welcome.',
-        team4t: 'Contact', team4b: 'Email <code>error_core@163.com</code>, or find us via the bilibili / Douyin accounts in the footer.',
+        team4t: 'Contact', team4b: 'Email <code>error_core@163.com</code>, or find us via the bilibili / Douyin / Instagram accounts in the footer.',
         proj_h: 'Open-source Software',
         proj_d: 'Two products — one for real-robot debugging, one for browser fun.',
         rb_tag: 'v0.1.1 Public Beta · MIT',
@@ -1025,7 +1068,7 @@ const I18N = {
         games_f4: 'Football', games_f5: 'Drawing',
         games_f6: 'Touch hold-to-continue controls', games_f7: 'Cookie policy & consent dialog', games_f8: 'Device detection & mobile toolbar',
         games_l1: 'Play the games', games_l2: 'GitHub Repo',
-        ft_bili: 'Bilibili', ft_douyin: 'Douyin', ft_contact: 'Contact us', ft_home: 'Back to home'
+        ft_bili: 'Bilibili', ft_douyin: 'Douyin', ft_instagram: 'Instagram', ft_shipinhao: 'WeChat Channels', qr_tip: 'Scan with WeChat', ft_contact: 'Contact us', ft_home: 'Back to home'
     }
 };
 

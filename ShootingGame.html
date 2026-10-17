@@ -37,7 +37,9 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
+            font-family: 'SF Pro Text', ui-sans-serif, system-ui, -apple-system,
+                BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC",
+                "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
         }
         body {
             display: flex;
@@ -45,8 +47,8 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            background: linear-gradient(135deg, #ffd700, #ffa500, #ff8c00);
-            color: #333;
+            background: #f5f5f7;
+            color: #1d1d1f;
         }
 
 
@@ -55,9 +57,9 @@
             margin-bottom: 20px;
         }
         canvas {
-            border-radius: 10px;
+            border-radius: 28px;
             background: #fff;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            border: 1px solid #d6d6d6;
         }
         .score-panel {
             display: flex;
@@ -67,12 +69,12 @@
             font-size: 1.2rem;
         }
         .score-panel div {
-            background: rgba(255, 255, 255, 0.7);
+            background: #ffffff;
             padding: 8px 15px;
-            border-radius: 5px;
-            color: #333;
-            font-weight: bold;
-            text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.5);
+            border-radius: 28px;
+            color: #1d1d1f;
+            font-weight: 600;
+            border: 1px solid #d6d6d6;
         }
         
        
@@ -84,16 +86,16 @@
         .controls button {
             width: 70px;
             height: 60px;
-            border: none;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
+            border: 1px solid #d6d6d6;
+            border-radius: 980px;
+            background: #ffffff;
+            color: #1d1d1f;
             font-size: 1.2rem;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: background 0.2s ease;
         }
         .controls button:hover {
-            background: rgba(255, 255, 255, 0.25);
+            background: #f5f5f7;
         }
         @media (max-width: 768px) {
             .score-panel {
@@ -121,15 +123,14 @@
                 width: 60px;
                 height: 60px;
                 font-size: 1.8rem;
-                background: rgba(255, 255, 255, 0.2);
-                border: 2px solid rgba(255, 255, 255, 0.5);
-                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+                background: #ffffff;
+                border: 1px solid #d6d6d6;
                 cursor: pointer;
                 touch-action: manipulation;
             }
             
             .controls button:active {
-                background: rgba(255, 255, 255, 0.4);
+                background: #f5f5f7;
                 transform: scale(0.95);
             }
             
@@ -180,40 +181,37 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(255, 255, 255, 0.9);
+            background: #ffffff;
             padding: 30px;
-            border-radius: 15px;
+            border-radius: 28px;
             text-align: center;
             display: none;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
-            border: 3px solid #ff0000;
+            border: 1px solid #d6d6d6;
         }
         .game-over h2 {
             margin-bottom: 20px;
             font-size: 2.5rem;
-            color: #ff0000;
-            text-shadow: 2px 2px 0 #ffff00;
+            font-weight: 600;
+            color: #1d1d1f;
         }
         .game-over p {
             margin-bottom: 20px;
             font-size: 1.5rem;
-            color: #333;
+            color: #1d1d1f;
         }
         .game-over button {
             padding: 12px 25px;
             border: none;
-            border-radius: 8px;
-            background: linear-gradient(45deg, #ff0000, #ff4500);
+            border-radius: 980px;
+            background: #0071e3;
             color: white;
             font-size: 1.2rem;
-            font-weight: bold;
+            font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
+            transition: background 0.2s ease;
         }
         .game-over button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(255, 0, 0, 0.6);
+            background: #0077ed;
         }
         .start-screen {
             position: absolute;
@@ -221,41 +219,39 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(255, 215, 0, 0.95);
+            background: rgba(255, 255, 255, 0.95);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            border-radius: 10px;
+            border-radius: 28px;
         }
         .start-screen h1 {
             font-size: 2.5rem;
             margin-bottom: 20px;
-            color: #8b0000;
-            text-shadow: 2px 2px 0 #ffd700;
+            font-weight: 600;
+            color: #1d1d1f;
         }
         .start-screen p {
             margin-bottom: 30px;
             font-size: 1.2rem;
             text-align: center;
             max-width: 500px;
-            color: #333;
+            color: #1d1d1f;
         }
         .start-screen button {
             padding: 15px 30px;
             border: none;
-            border-radius: 8px;
-            background: linear-gradient(45deg, #ff0000, #ff4500);
+            border-radius: 980px;
+            background: #0071e3;
             color: white;
             font-size: 1.3rem;
-            font-weight: bold;
+            font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
+            transition: background 0.2s ease;
         }
         .start-screen button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(255, 0, 0, 0.6);
+            background: #0077ed;
         }
         
         
@@ -302,44 +298,109 @@
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            color: rgba(255, 255, 255, 0.6);
+            color: #86868b;
             font-size: 0.9rem;
-            font-family: Arial, sans-serif;
+            font-family: inherit;
             z-index: 1000;
-            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
 
-        /* ===== 深浅色主题：深色为现状，以下为浅色覆盖（不动 canvas 游戏世界配色） ===== */
+        /* ===== 深浅色主题：浅色为 Apple 白画廊默认，以下为深色覆盖（不动 canvas 游戏世界配色） ===== */
         body {
             transition: background-color .35s ease, color .35s ease;
         }
-        html[data-theme="light"] body {
-            background: #f5f5f7;
+
+        /* 共享 style.css 组件适配浅色画廊 */
+        .home-button {
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid #d6d6d6;
             color: #1d1d1f;
         }
-        html[data-theme="light"] .score-panel div {
+        .home-button:hover {
             background: #ffffff;
-            color: #1d1d1f;
-            border: 1px solid rgba(0, 0, 0, .12);
-            text-shadow: none;
+            border-color: #86868b;
+            color: #0066cc;
         }
-        html[data-theme="light"] .game-over {
-            background: rgba(245, 245, 247, .92);
-        }
-        html[data-theme="light"] .game-over p {
+        .game-info h2,
+        .game-info h3 {
             color: #1d1d1f;
         }
-        html[data-theme="light"] .controls button {
-            background: #ffffff;
-            color: #1d1d1f;
-            border: 1px solid rgba(0, 0, 0, .12);
+        .game-info p,
+        .game-info li {
+            color: #6e6e73;
         }
-        html[data-theme="light"] .controls button:hover {
-            background: #f0f0f3;
+        .watermark {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid #d6d6d6;
+            border-radius: 980px;
+            color: #86868b;
         }
-        html[data-theme="light"] .copyright {
-            color: #6e6e78;
-            text-shadow: none;
+
+        html[data-theme="dark"] body {
+            background: #000000;
+            color: #f5f5f7;
+        }
+        html[data-theme="dark"] .score-panel div {
+            background: #1c1c1e;
+            color: #f5f5f7;
+            border-color: rgba(255, 255, 255, .16);
+        }
+        html[data-theme="dark"] canvas {
+            border-color: rgba(255, 255, 255, .16);
+        }
+        html[data-theme="dark"] .game-over {
+            background: #1c1c1e;
+            border-color: rgba(255, 255, 255, .16);
+        }
+        html[data-theme="dark"] .game-over h2,
+        html[data-theme="dark"] .game-over p {
+            color: #f5f5f7;
+        }
+        html[data-theme="dark"] .game-over button,
+        html[data-theme="dark"] .start-screen button {
+            background: #0a84ff;
+        }
+        html[data-theme="dark"] .game-over button:hover,
+        html[data-theme="dark"] .start-screen button:hover {
+            background: #409cff;
+        }
+        html[data-theme="dark"] .start-screen {
+            background: rgba(0, 0, 0, 0.92);
+        }
+        html[data-theme="dark"] .start-screen h1,
+        html[data-theme="dark"] .start-screen p {
+            color: #f5f5f7;
+        }
+        html[data-theme="dark"] .controls button {
+            background: #1c1c1e;
+            color: #f5f5f7;
+            border-color: rgba(255, 255, 255, .16);
+        }
+        html[data-theme="dark"] .controls button:hover {
+            background: #2c2c2e;
+        }
+        html[data-theme="dark"] .watermark {
+            background: rgba(28, 28, 30, 0.85);
+            color: #a1a1a6;
+            border-color: rgba(255, 255, 255, .16);
+        }
+        html[data-theme="dark"] .copyright {
+            color: #86868b;
+        }
+        html[data-theme="dark"] .home-button {
+            background: rgba(28, 28, 30, 0.85);
+            border-color: rgba(255, 255, 255, .16);
+            color: #f5f5f7;
+        }
+        html[data-theme="dark"] .home-button:hover {
+            color: #2997ff;
+        }
+        html[data-theme="dark"] .game-info h2,
+        html[data-theme="dark"] .game-info h3 {
+            color: #f5f5f7;
+        }
+        html[data-theme="dark"] .game-info p,
+        html[data-theme="dark"] .game-info li {
+            color: #a1a1a6;
         }
 
         /* 语言/主题控件融入记分栏 */

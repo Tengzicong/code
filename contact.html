@@ -21,10 +21,9 @@
     <script src="js/device-detect.js"></script>
     <style>
         .contact-section {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 15px;
+            background: #ffffff;
+            border: 1px solid #d6d6d6;
+            border-radius: 28px;
             padding: 40px;
             width: 100%;
             max-width: 800px;
@@ -33,12 +32,10 @@
 
         .contact-title {
             font-size: 2.5rem;
-            font-weight: 800;
-            color: #fff;
-            text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+            font-weight: 600;
+            color: #1d1d1f;
             margin-bottom: 40px;
             text-align: center;
-            animation: pulse 2s infinite;
         }
 
         .contact-item {
@@ -46,15 +43,14 @@
             align-items: center;
             gap: 20px;
             padding: 25px;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 15px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-            transition: all 0.3s ease;
+            background: #f5f5f7;
+            border: 1px solid #d6d6d6;
+            border-radius: 18px;
+            transition: background 0.3s ease;
         }
 
         .contact-item:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+            background: #ececf1;
         }
 
         .contact-icon {
@@ -62,14 +58,72 @@
             animation: bounce 2s infinite;
         }
 
+        .contact-logo {
+            width: 48px;
+            height: 48px;
+            display: block;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        /* 悬停卡片时图标放大并轻微上浮 */
+        .contact-item:hover .contact-logo {
+            transform: scale(1.15) translateY(-2px);
+        }
+
+        /* GitHub 图标为深色填充，深色主题下反色为白色 */
+        html[data-theme="dark"] .contact-logo.github {
+            filter: invert(1);
+        }
+
+        /* 视频号：悬停图标显示二维码浮层 */
+        .contact-icon.has-qr { position: relative; }
+        .contact-icon.has-qr .qr-pop {
+            position: absolute;
+            top: 50%;
+            left: calc(100% + 12px);
+            transform: translateY(-50%) scale(0.96);
+            width: 500px;
+            max-width: 90vw;
+            background: #ffffff;
+            border: 1px solid #d6d6d6;
+            border-radius: 16px;
+            padding: 12px;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+            z-index: 2000;
+        }
+        .contact-icon.has-qr .qr-pop img {
+            display: block;
+            width: 100%;
+            height: auto;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+        }
+        .contact-icon.has-qr .qr-pop .qr-tip {
+            display: block;
+            text-align: center;
+            margin-top: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #1d1d1f;
+        }
+        .contact-item:hover .contact-icon.has-qr .qr-pop {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(-50%) scale(1);
+        }
+
         .contact-item h3 {
-            color: #333;
+            color: #1d1d1f;
             margin: 0 0 5px 0;
             font-size: 1.3rem;
         }
 
         .contact-item p {
-            color: #666;
+            color: #6e6e73;
             margin: 0;
             font-size: 1.2rem;
         }
@@ -79,11 +133,10 @@
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            color: rgba(255, 255, 255, 0.6);
+            color: #86868b;
             font-size: 0.9rem;
-            font-family: Arial, sans-serif;
+            font-family: inherit;
             z-index: 1000;
-            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
 
         /* 白卡片内的说明文字改用深色 */
@@ -201,28 +254,30 @@
         }
 
         html[data-theme="dark"] {
-            background-color: #0f0f12;
+            background-color: #000000;
         }
 
         html[data-theme="dark"] body {
-            background-color: #0f0f12;
-            background-image:
-                radial-gradient(1100px 520px at 50% -10%, rgba(255, 107, 74, 0.05), transparent 70%),
-                radial-gradient(900px 500px at 100% 0%, rgba(88, 148, 255, 0.04), transparent 65%);
+            background-color: #000000;
+            background-image: none;
         }
 
         html[data-theme="dark"] .contact-section {
-            background: rgba(28, 28, 30, 0.85);
+            background: #1c1c1e;
             border-color: rgba(255, 255, 255, 0.16);
         }
 
+        html[data-theme="dark"] .contact-title {
+            color: #f5f5f7;
+        }
+
         html[data-theme="dark"] .contact-item {
-            background: #1c1c1e;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            background: #2c2c2e;
+            border-color: rgba(255, 255, 255, 0.16);
         }
 
         html[data-theme="dark"] .contact-item:hover {
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.65);
+            background: #3a3a3c;
         }
 
         html[data-theme="dark"] .contact-item h3 {
@@ -230,7 +285,7 @@
         }
 
         html[data-theme="dark"] .contact-item p {
-            color: #c7c7cc;
+            color: #a1a1a6;
         }
 
         html[data-theme="dark"] .game-info h2,
@@ -253,6 +308,13 @@
                 back_btn: '← 返回首页<br>Home',
                 contact_heading: '📧 联系我们<br>Contact Us',
                 email_label: '邮箱',
+                bili_label: 'B 站',
+                bili_link: 'space.bilibili.com',
+                douyin_label: '抖音',
+                douyin_link: 'douyin.com',
+                shipinhao_label: '视频号',
+                qr_tip: '使用微信扫码',
+                shipinhao_link: '查看二维码',
                 info_h2: '联系 ERROR-CORE Team',
                 info_p: '无论你是想反馈 ERROR-CORE Games 的 Bug、提出新游戏创意，还是讨论 Robot Blockly 机器人积木编程的使用问题与合作，都欢迎通过上面的邮箱与我们联系。我们也开源了全部项目代码，你可以直接在 GitHub 上提交 Issue 或 Pull Request 参与共建。',
                 join_h2: '加入我们',
@@ -262,6 +324,13 @@
                 back_btn: '← Home',
                 contact_heading: '📧 Contact Us',
                 email_label: 'Email',
+                bili_label: 'Bilibili',
+                bili_link: 'space.bilibili.com',
+                douyin_label: 'Douyin',
+                douyin_link: 'douyin.com',
+                shipinhao_label: 'WeChat Channels',
+                qr_tip: 'Scan with WeChat',
+                shipinhao_link: 'View QR code',
                 info_h2: 'Reach the ERROR-CORE Team',
                 info_p: 'Whether you want to report a bug in ERROR-CORE Games, pitch a new game idea, or discuss usage questions and collaboration around Robot Blockly robotics block programming, you are welcome to reach us at the email address above. All of our project code is open source, so you can also contribute directly on GitHub by opening an issue or submitting a pull request.',
                 join_h2: 'Join Us',
@@ -293,7 +362,7 @@
             <h1 class="contact-title" data-i18n-html="contact_heading">📧 联系我们<br>Contact Us</h1>
 
             <div class="contact-item">
-                <div class="contact-icon">✉️</div>
+                <div class="contact-icon"><img src="picture/netease-1.svg" alt="Email" class="contact-logo"></div>
                 <div>
                     <h3 data-i18n="email_label">邮箱</h3>
                     <p><a href="mailto:error_core@163.com">error_core@163.com</a></p>
@@ -301,10 +370,42 @@
             </div>
 
             <div class="contact-item">
-                <div class="contact-icon">🐙</div>
+                <div class="contact-icon"><img src="picture/github-icon-1.svg" alt="GitHub" class="contact-logo github"></div>
                 <div>
                     <h3>GitHub</h3>
                     <p><a href="https://github.com/Tengzicong/" target="_blank" rel="noopener noreferrer">github.com/Tengzicong</a></p>
+                </div>
+            </div>
+
+            <div class="contact-item">
+                <div class="contact-icon"><img src="picture/bilibili.svg" alt="Bilibili" class="contact-logo"></div>
+                <div>
+                    <h3 data-i18n="bili_label">B 站</h3>
+                    <p><a href="https://space.bilibili.com/3546631121144154" target="_blank" rel="noopener noreferrer" data-i18n="bili_link">space.bilibili.com</a></p>
+                </div>
+            </div>
+
+            <div class="contact-item">
+                <div class="contact-icon"><img src="picture/douyin.svg" alt="Douyin" class="contact-logo"></div>
+                <div>
+                    <h3 data-i18n="douyin_label">抖音</h3>
+                    <p><a href="https://www.douyin.com/user/MS4wLjABAAAA0cxdKFB-D6ucvm2i3AE92bzBC-xSHgmW0ew1iwh0Isx-DwXKsMF499VcAle9571J" target="_blank" rel="noopener noreferrer" data-i18n="douyin_link">douyin.com</a></p>
+                </div>
+            </div>
+
+            <div class="contact-item">
+                <div class="contact-icon"><img src="picture/instagram-2016-5.svg" alt="Instagram" class="contact-logo"></div>
+                <div>
+                    <h3>Instagram</h3>
+                    <p><a href="https://www.instagram.com/zicongteng/" target="_blank" rel="noopener noreferrer">instagram.com/zicongteng</a></p>
+                </div>
+            </div>
+
+            <div class="contact-item">
+                <div class="contact-icon has-qr"><img src="picture/logoc.png" alt="WeChat Channels" class="contact-logo"><div class="qr-pop"><img src="picture/IMG_1764.jpg" alt="视频号二维码"><span class="qr-tip" data-i18n="qr_tip">使用微信扫码</span></div></div>
+                <div>
+                    <h3 data-i18n="shipinhao_label">视频号</h3>
+                    <p><a href="picture/IMG_1764.jpg" target="_blank" rel="noopener noreferrer" data-i18n="shipinhao_link">查看二维码</a></p>
                 </div>
             </div>
 

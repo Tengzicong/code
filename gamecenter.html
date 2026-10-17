@@ -153,7 +153,48 @@ a { color: inherit; text-decoration: none; }
 
 .topnav .nav-link[aria-current="page"] { background: var(--control); }
 
-.nav-icon { width: 14px; height: 14px; flex-shrink: 0; }
+.nav-icon { width: 14px; height: 14px; flex-shrink: 0; object-fit: contain; }
+
+/* 视频号：悬停显示二维码浮层 */
+.nav-link.has-qr { position: relative; }
+.qr-pop {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%) scale(0.96);
+    width: 500px;
+    max-width: 90vw;
+    background: #ffffff;
+    border: 1px solid #d6d6d6;
+    border-radius: 16px;
+    padding: 12px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+    z-index: 2000;
+}
+.qr-pop img {
+    display: block;
+    width: 100%;
+    height: auto;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+.qr-pop .qr-tip {
+    display: block;
+    text-align: center;
+    margin-top: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #1d1d1f;
+}
+.nav-link.has-qr:hover .qr-pop,
+.nav-link.has-qr:focus-visible .qr-pop {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) scale(1);
+}
 
 /* 语言 / 主题控件挂载点（lang-theme.js 自动注入胶囊按钮） */
 .lt-mount {
@@ -436,6 +477,13 @@ h2.sec {
                 <a href="https://www.douyin.com/user/MS4wLjABAAAA0cxdKFB-D6ucvm2i3AE92bzBC-xSHgmW0ew1iwh0Isx-DwXKsMF499VcAle9571J" class="nav-link" target="_blank" rel="noopener noreferrer">
                     <img src="picture/douyin.svg" alt="" class="nav-icon"><span data-i18n="nav_douyin">抖音</span>
                 </a>
+                <a href="https://www.instagram.com/zicongteng/" class="nav-link" target="_blank" rel="noopener noreferrer">
+                    <img src="picture/instagram-2016-5.svg" alt="" class="nav-icon"><span data-i18n="nav_instagram">Instagram</span>
+                </a>
+                <a href="picture/IMG_1764.jpg" class="nav-link has-qr" target="_blank" rel="noopener noreferrer">
+                    <img src="picture/logoc.png" alt="" class="nav-icon"><span data-i18n="nav_shipinhao">视频号</span>
+                    <div class="qr-pop"><img src="picture/IMG_1764.jpg" alt="视频号二维码"><span class="qr-tip" data-i18n="qr_tip">使用微信扫码</span></div>
+                </a>
             </nav>
             <span class="lt-mount"></span>
             <button type="button" class="nav-toggle" id="navToggle" aria-label="展开导航" aria-expanded="false" aria-controls="appbarNav">☰</button>
@@ -527,6 +575,9 @@ h2.sec {
                 nav_site: '返回首页',
                 nav_bilibili: 'B 站',
                 nav_douyin: '抖音',
+                nav_instagram: 'Instagram',
+                nav_shipinhao: '视频号',
+                qr_tip: '使用微信扫码',
                 nav_expand: '展开导航',
                 nav_collapse: '收起导航',
                 hero_eyebrow: '4 款游戏 · 键盘与触屏双操作',
@@ -553,6 +604,9 @@ h2.sec {
                 nav_site: 'Site Home',
                 nav_bilibili: 'Bilibili',
                 nav_douyin: 'Douyin',
+                nav_instagram: 'Instagram',
+                nav_shipinhao: 'WeChat Channels',
+                qr_tip: 'Scan with WeChat',
                 nav_expand: 'Expand navigation',
                 nav_collapse: 'Collapse navigation',
                 hero_eyebrow: '4 Games · Keyboard & Touch Controls',
