@@ -21,23 +21,13 @@
     <script src="js/device-detect.js"></script>
     <script src="js/touch-controls.js" defer></script>
     <style>
-        .error-logo {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            z-index: 1000;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-        }
-        
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
+            font-family: 'SF Pro Text', ui-sans-serif, system-ui, -apple-system,
+                BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC",
+                "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
         }
         body {
             display: flex;
@@ -45,8 +35,8 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            background: linear-gradient(135deg, #ffd700, #ffa500, #ff8c00);
-            color: #333;
+            background: #f5f5f7;
+            color: #1d1d1f;
         }
 
         .game-container {
@@ -54,165 +44,73 @@
             margin-bottom: 20px;
         }
         canvas {
-            border-radius: 10px;
-            background: #fff;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            border-radius: 28px;
+            background: #ffffff;
+            border: 1px solid #d6d6d6;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.10);
         }
         .score-panel {
             display: flex;
             justify-content: space-between;
+            align-items: center;
+            gap: 8px;
             width: 800px;
             margin-bottom: 15px;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
         }
         .score-panel div {
-            background: rgba(255, 255, 255, 0.7);
+            background: #ffffff;
             padding: 8px 15px;
-            border-radius: 5px;
-            color: #333;
-            font-weight: bold;
-            text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.5);
+            border-radius: 28px;
+            color: #1d1d1f;
+            font-weight: 600;
+            border: 1px solid #d6d6d6;
+            line-height: 1.4;
         }
-        
-       
+
         .controls {
             display: none;
             gap: 10px;
             margin-top: 20px;
         }
         .controls button {
-            width: 70px;
+            width: 60px;
             height: 60px;
-            border: none;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
+            border: 1px solid #d6d6d6;
+            border-radius: 980px;
+            background: #ffffff;
+            color: #1d1d1f;
             font-size: 1.2rem;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: background 0.2s ease;
         }
         .controls button:hover {
-            background: rgba(255, 255, 255, 0.25);
-        }
-        @media (max-width: 768px) {
-            .score-panel {
-                width: 90%;
-                max-width: 350px;
-                font-size: 0.9rem;
-            }
-            
-            .score-panel div {
-                padding: 6px 10px;
-                font-size: 0.85rem;
-            }
-            
-            .controls {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 15px;
-                margin-top: 15px;
-                width: 100%;
-                max-width: 400px;
-            }
-            
-            .controls button {
-                width: 60px;
-                height: 60px;
-                font-size: 1.8rem;
-                background: rgba(255, 255, 255, 0.2);
-                border: 2px solid rgba(255, 255, 255, 0.5);
-                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-                cursor: pointer;
-                touch-action: manipulation;
-            }
-            
-            .controls button:active {
-                background: rgba(255, 255, 255, 0.4);
-                transform: scale(0.95);
-            }
-            
-            /* 游戏标题适配 */
-            h1 {
-                font-size: 1.3rem;
-                padding: 0 10px;
-                text-align: center;
-            }
-            
-            /* 开始屏幕适配 */
-            .start-screen {
-                padding: 20px;
-                text-align: center;
-            }
-            
-            .start-screen p {
-                font-size: 0.85rem;
-                margin: 10px 0;
-            }
-            
-            .start-screen button {
-                padding: 12px 25px;
-                font-size: 1rem;
-                margin-top: 10px;
-            }
-            
-            /* 画布适配 */
-            canvas {
-                max-width: 100%;
-                height: auto;
-            }
-            
-            /* 社交媒体链接适配 */
-            .social-links {
-                bottom: 15px;
-                right: 15px;
-            }
-            
-            .social-link {
-                width: 45px;
-                height: 45px;
-                font-size: 1.2rem;
-            }
+            background: #f5f5f7;
         }
         .game-over {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(255, 255, 255, 0.9);
+            background: #ffffff;
             padding: 30px;
-            border-radius: 15px;
+            border-radius: 28px;
             text-align: center;
             display: none;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
-            border: 3px solid #ff0000;
+            border: 1px solid #d6d6d6;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.10);
+            z-index: 10;
         }
         .game-over h2 {
             margin-bottom: 20px;
             font-size: 2.5rem;
-            color: #ff0000;
-            text-shadow: 2px 2px 0 #ffff00;
+            font-weight: 600;
+            color: #1d1d1f;
         }
         .game-over p {
             margin-bottom: 20px;
             font-size: 1.5rem;
-            color: #333;
-        }
-        .game-over button {
-            padding: 12px 25px;
-            border: none;
-            border-radius: 8px;
-            background: linear-gradient(45deg, #ff0000, #ff4500);
-            color: white;
-            font-size: 1.2rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
-        }
-        .game-over button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(255, 0, 0, 0.6);
+            color: #1d1d1f;
         }
         .start-screen {
             position: absolute;
@@ -220,119 +118,160 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(255, 215, 0, 0.95);
+            background: rgba(255, 255, 255, 0.95);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            border-radius: 10px;
+            border-radius: 28px;
+            z-index: 5;
         }
         .start-screen h1 {
             font-size: 2.5rem;
             margin-bottom: 20px;
-            color: #8b0000;
-            text-shadow: 2px 2px 0 #ffd700;
+            font-weight: 600;
+            color: #1d1d1f;
         }
         .start-screen p {
             margin-bottom: 30px;
             font-size: 1.2rem;
             text-align: center;
             max-width: 500px;
-            color: #333;
+            color: #1d1d1f;
         }
+        .game-over button,
         .start-screen button {
-            padding: 15px 30px;
+            padding: 14px 28px;
             border: none;
-            border-radius: 8px;
-            background: linear-gradient(45deg, #ff0000, #ff4500);
+            border-radius: 980px;
+            background: #0071e3;
             color: white;
-            font-size: 1.3rem;
-            font-weight: bold;
+            font-size: 1.2rem;
+            font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
+            transition: background 0.2s ease;
         }
+        .game-over button:hover,
         .start-screen button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(255, 0, 0, 0.6);
+            background: #0077ed;
         }
-        
-        
-        
-        .paddle {
-            position: absolute;
-            width: 100px;
-            height: 15px;
-            background: linear-gradient(45deg, #00ff9d, #00cc7a);
-            border-radius: 8px;
-            box-shadow: 0 0 15px rgba(0, 255, 157, 0.5);
-            transition: all 0.1s ease;
+
+        .watermark {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            font-size: 0.8rem;
+            color: #86868b;
+            z-index: 1000;
+            pointer-events: none;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 5px 10px;
+            border-radius: 980px;
+            border: 1px solid #d6d6d6;
         }
-        
-        .ball {
-            position: absolute;
-            width: 15px;
-            height: 15px;
-            background: linear-gradient(45deg, #00ff9d, #ffffff);
-            border-radius: 50%;
-            box-shadow: 0 0 10px rgba(0, 255, 157, 0.8);
-        }
-        
-        .brick {
-            position: absolute;
-            border-radius: 4px;
-            box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
-        }
-        
-        @media (max-width: 768px) {
-            .feedback-panel {
-                width: 300px;
-            }
-        }
-        
+
         .copyright {
             position: fixed;
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            color: rgba(255, 255, 255, 0.6);
+            color: #86868b;
             font-size: 0.9rem;
-            font-family: Arial, sans-serif;
+            font-family: inherit;
             z-index: 1000;
-            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
 
-        /* ===== 深浅色主题：深色为现状，以下为浅色覆盖（不动 canvas 游戏世界配色） ===== */
+        /* ===== 深浅色主题：浅色为 Apple 白画廊默认，以下为深色覆盖（不动 canvas 游戏世界配色） ===== */
         body {
             transition: background-color .35s ease, color .35s ease;
         }
-        html[data-theme="light"] body {
-            background: #f5f5f7;
+
+        /* 共享 style.css 组件适配浅色画廊 */
+        .home-button {
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid #d6d6d6;
             color: #1d1d1f;
         }
-        html[data-theme="light"] .score-panel div {
+        .home-button:hover {
             background: #ffffff;
-            color: #1d1d1f;
-            border: 1px solid rgba(0, 0, 0, .12);
-            text-shadow: none;
+            border-color: #86868b;
+            color: #0066cc;
         }
-        html[data-theme="light"] .game-over {
-            background: rgba(245, 245, 247, .92);
-        }
-        html[data-theme="light"] .game-over p {
+        .game-info h2,
+        .game-info h3 {
             color: #1d1d1f;
         }
-        html[data-theme="light"] .controls button {
-            background: #ffffff;
-            color: #1d1d1f;
-            border: 1px solid rgba(0, 0, 0, .12);
+        .game-info p,
+        .game-info li {
+            color: #6e6e73;
         }
-        html[data-theme="light"] .controls button:hover {
-            background: #f0f0f3;
+
+        html[data-theme="dark"] body {
+            background: #000000;
+            color: #f5f5f7;
         }
-        html[data-theme="light"] .copyright {
-            color: #6e6e78;
-            text-shadow: none;
+        html[data-theme="dark"] .score-panel div {
+            background: #1c1c1e;
+            color: #f5f5f7;
+            border-color: rgba(255, 255, 255, .16);
+        }
+        html[data-theme="dark"] canvas {
+            border-color: rgba(255, 255, 255, .16);
+        }
+        html[data-theme="dark"] .game-over {
+            background: #1c1c1e;
+            border-color: rgba(255, 255, 255, .16);
+        }
+        html[data-theme="dark"] .game-over h2,
+        html[data-theme="dark"] .game-over p {
+            color: #f5f5f7;
+        }
+        html[data-theme="dark"] .game-over button,
+        html[data-theme="dark"] .start-screen button {
+            background: #0a84ff;
+        }
+        html[data-theme="dark"] .game-over button:hover,
+        html[data-theme="dark"] .start-screen button:hover {
+            background: #409cff;
+        }
+        html[data-theme="dark"] .start-screen {
+            background: rgba(0, 0, 0, 0.92);
+        }
+        html[data-theme="dark"] .start-screen h1,
+        html[data-theme="dark"] .start-screen p {
+            color: #f5f5f7;
+        }
+        html[data-theme="dark"] .controls button {
+            background: #1c1c1e;
+            color: #f5f5f7;
+            border-color: rgba(255, 255, 255, .16);
+        }
+        html[data-theme="dark"] .controls button:hover {
+            background: #2c2c2e;
+        }
+        html[data-theme="dark"] .watermark {
+            background: rgba(28, 28, 30, 0.85);
+            color: #a1a1a6;
+            border-color: rgba(255, 255, 255, .16);
+        }
+        html[data-theme="dark"] .copyright {
+            color: #86868b;
+        }
+        html[data-theme="dark"] .home-button {
+            background: rgba(28, 28, 30, 0.85);
+            border-color: rgba(255, 255, 255, .16);
+            color: #f5f5f7;
+        }
+        html[data-theme="dark"] .home-button:hover {
+            color: #2997ff;
+        }
+        html[data-theme="dark"] .game-info h2,
+        html[data-theme="dark"] .game-info h3 {
+            color: #f5f5f7;
+        }
+        html[data-theme="dark"] .game-info p,
+        html[data-theme="dark"] .game-info li {
+            color: #a1a1a6;
         }
 
         /* 语言/主题控件融入记分栏 */
@@ -340,11 +279,94 @@
             display: inline-flex;
             align-items: center;
         }
+
+        /* ===== 移动端适配（置于样式末尾，确保覆盖基础规则） ===== */
         @media (max-width: 768px) {
             .score-panel {
                 flex-wrap: wrap;
                 justify-content: center;
                 gap: 6px;
+                width: 90%;
+                max-width: 350px;
+                font-size: 0.9rem;
+            }
+
+            .score-panel div {
+                padding: 6px 10px;
+                font-size: 0.85rem;
+            }
+
+            .controls {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+                margin-top: 15px;
+            }
+
+            .controls button {
+                width: 55px;
+                height: 55px;
+                font-size: 1.5rem;
+                touch-action: manipulation;
+            }
+
+            .controls button:active {
+                background: #f5f5f7;
+                transform: scale(0.95);
+            }
+
+            .start-screen {
+                padding: 15px;
+                overflow-x: hidden;
+            }
+
+            .start-screen h1 {
+                font-size: 1.5rem;
+                margin-bottom: 15px;
+                text-align: center;
+            }
+
+            .start-screen p {
+                font-size: 0.8rem;
+                margin-bottom: 20px;
+                padding: 0 5px;
+                line-height: 1.6;
+                max-width: 100%;
+                overflow-wrap: break-word;
+                word-break: break-word;
+            }
+
+            .start-screen button {
+                padding: 12px 25px;
+                font-size: 0.95rem;
+                max-width: 100%;
+            }
+
+            .game-over {
+                padding: 20px;
+                width: 85%;
+                max-width: 320px;
+            }
+
+            .game-over h2 {
+                font-size: 1.6rem;
+                margin-bottom: 12px;
+            }
+
+            .game-over p {
+                font-size: 1.1rem;
+                margin-bottom: 16px;
+            }
+
+            .game-over button {
+                padding: 12px 25px;
+                font-size: 0.95rem;
+            }
+
+            canvas {
+                max-width: 100%;
+                height: auto;
             }
         }
     </style>
@@ -372,29 +394,29 @@
     </script>
 </head>
 <body>
-    <button class="home-button" data-i18n-html="home_games" onclick="goHome()">返回游戏中心<br>Games</button>
-    <button class="home-button home-index" data-i18n-html="home_index" onclick="window.location.href='index.html'">站点主页<br>Site</button>
+    <button class="home-button" data-i18n-html="home_games" onclick="goHome()">返回游戏中心</button>
+    <button class="home-button home-index" data-i18n-html="home_index" onclick="window.location.href='index.html'">站点主页</button>
     <!-- ERROR logo 圆形图片 -->
     
     
     <div class="game-container">
         <div class="score-panel">
-            <div><span data-i18n="label_score">当前得分 Score</span><br><span id="score">0</span></div>
-            <div><span data-i18n="label_lives">生命 Lives</span><br><span id="lives">3</span></div>
-            <div><span data-i18n="label_high">最高得分 High Score</span><br><span id="high-score">0</span></div>
+            <div><span data-i18n="label_score">当前得分</span><br><span id="score">0</span></div>
+            <div><span data-i18n="label_lives">生命</span><br><span id="lives">3</span></div>
+            <div><span data-i18n="label_high">最高得分</span><br><span id="high-score">0</span></div>
             <span class="lt-mount"></span>
         </div>
        
         <canvas id="gameCanvas" width="800" height="400"></canvas>
         <div class="game-over">
-            <h2 data-i18n="go_title">游戏结束Game Over</h2>
-            <p><span data-i18n="go_score">得分 | Score:</span><span id="final-score">0</span></p>
-            <button data-i18n-html="btn_restart" onclick="restartGame()">重新开始<br>Restart</button>
+            <h2 data-i18n="go_title">游戏结束</h2>
+            <p><span data-i18n="go_score">本局得分：</span><span id="final-score">0</span></p>
+            <button data-i18n="btn_restart" onclick="restartGame()">重新开始</button>
         </div>
         <div class="start-screen" id="start-screen">
-            <h1 data-i18n-html="start_title">打砖块游戏<br>Breakout Game</h1>
-            <p data-i18n-html="start_desc">使用A/D或方向键移动挡板，让球反弹消除所有砖块！<br>Use A/D or arrow keys to move paddle, bounce the ball to eliminate all bricks!</p>
-            <button data-i18n-html="btn_start" onclick="startGame()">开始游戏<br>Start Game</button>
+            <h1 data-i18n="start_title">打砖块</h1>
+            <p data-i18n="start_desc">使用 A/D 或 ← → 方向键移动挡板，让球反弹击碎所有砖块！</p>
+            <button data-i18n="btn_start" onclick="startGame()">开始游戏</button>
         </div>
     </div>
     <div class="controls">
@@ -438,18 +460,18 @@
     <script>
         window.PAGE_I18N = {
             zh: {
-                home_games: '返回游戏中心<br>Games',
-                home_index: '站点主页<br>Site',
-                label_score: '当前得分 Score',
-                label_lives: '生命 Lives',
-                label_high: '最高得分 High Score',
-                go_title: '游戏结束Game Over',
-                go_score: '得分 | Score:',
-                btn_restart: '重新开始<br>Restart',
-                start_title: '打砖块游戏<br>Breakout Game',
-                start_desc: '使用A/D或方向键移动挡板，让球反弹消除所有砖块！<br>Use A/D or arrow keys to move paddle, bounce the ball to eliminate all bricks!',
-                btn_start: '开始游戏<br>Start Game',
-                win_alert: '恭喜！你赢了！\nCongratulations! You won!',
+                home_games: '返回游戏中心',
+                home_index: '站点主页',
+                label_score: '当前得分',
+                label_lives: '生命',
+                label_high: '最高得分',
+                go_title: '游戏结束',
+                go_score: '本局得分：',
+                btn_restart: '重新开始',
+                start_title: '打砖块',
+                start_desc: '使用 A/D 或 ← → 方向键移动挡板，让球反弹击碎所有砖块！',
+                btn_start: '开始游戏',
+                win_alert: '恭喜！你赢了！',
                 info_title: '打砖块游戏介绍',
                 info_desc: '打砖块（Breakout）源自雅达利 1976 年的经典街机作品，是电子游戏史上最具影响力的玩法之一：玩家控制屏幕底部的挡板，反弹小球击碎上方排列的彩色砖块，每块砖被击碎都会得分，全部清空即通关。ERROR-CORE 版本为纯前端 HTML5 Canvas 实现，手机与电脑浏览器均可直接游玩。',
                 info_how: '操作方法',
@@ -582,6 +604,8 @@
         document.addEventListener('keyup', keyUpHandler, false);
 
         function keyDownHandler(e) {
+            // 非编辑态拦截方向键默认页面滚动；输入框聚焦时由 lang-theme.js 捕获守卫放行
+            if (!LT.isEditing() && LT.ARROW_KEYS.indexOf(e.key) !== -1) e.preventDefault();
             if (e.key === 'Right' || e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
                 rightPressed = true;
             } else if (e.key === 'Left' || e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {

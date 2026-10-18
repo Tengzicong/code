@@ -2,6 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ERROR-CORE Studio - Robot Blockly 机器人编程与在线小游戏 | ERROR-CORE 开源团队</title>
     <meta name="description" content="ERROR-CORE Studio 是开源团队 ERROR-CORE Team 的官方站点：提供 Robot Blockly 宇树机器人积木编程工具下载，以及贪吃蛇、打砖块、飞机射击、足球射门 4 款免下载在线小游戏和网页画板工具。">
@@ -18,138 +19,483 @@
     <meta name="twitter:description" content="ERROR-CORE Studio 是开源团队 ERROR-CORE Team 的官方站点：提供 Robot Blockly 宇树机器人积木编程工具下载，以及贪吃蛇、打砖块、飞机射击、足球射门 4 款免下载在线小游戏和网页画板工具。">
     <link rel="icon" href="picture/error.png">
     <link rel="apple-touch-icon" href="picture/error.png">
-    <link rel="stylesheet" href="style.css">
+    <script>document.documentElement.classList.add('js');</script>
     <script src="js/lang-theme.js"></script>
     <script src="js/device-detect.js"></script>
     <style>
-        .appbar .lt-mount {
-            margin-left: auto;
-        }
+/* ==========================================================================
+   Apple · 白色画廊排版（与游戏中心/首页统一，支持深色模式）
+   Gallery White / Studio Mist 交替色带；大圆角卡片、无阴影、克制字重(≤600)
+   Action Blue 仅用于紧凑 CTA 按钮；文字链接用 Apple Blue
+   ========================================================================== */
+:root {
+    --white:        #ffffff;
+    --mist:         #f5f5f7;
+    --hairline:     #d6d6d6;
+    --control:      #e6e6e8;
+    --ink:          #1d1d1f;
+    --secondary:    #6e6e73;
+    --steel:        #86868b;
+    --link:         #0066cc;
+    --action:       #0071e3;
+    --action-hover: #0077ed;
+    --topbar-bg:    rgba(255, 255, 255, 0.92);
 
-        .hero {
-            text-align: center;
-            max-width: 760px;
-        }
+    --display: 'SF Pro Display', ui-sans-serif, system-ui, -apple-system,
+               BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC",
+               "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    --text: 'SF Pro Text', var(--display);
 
-        .hero-actions {
-            display: flex;
-            gap: var(--sp-3);
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: var(--sp-5);
-        }
+    --r-card:  24px;
+    --r-inset: 18px;
+    --r-pill:  980px;
+    --maxw:    1120px;
+    --ease:     cubic-bezier(0.36, 0.73, 0.21, 0.96);
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
 
-        .sections {
-            display: flex;
-            flex-direction: column;
-            gap: var(--sp-7);
-            width: 100%;
-            max-width: 900px;
-        }
+html[data-theme="dark"] {
+    --white:        #000000;
+    --mist:         #1c1c1e;
+    --hairline:     rgba(255, 255, 255, 0.16);
+    --control:      #2c2c2e;
+    --ink:          #f5f5f7;
+    --secondary:    #a1a1a6;
+    --steel:        #86868b;
+    --link:         #2997ff;
+    --action:       #0a84ff;
+    --action-hover: #409cff;
+    --topbar-bg:    rgba(0, 0, 0, 0.72);
+}
 
-        .section h2 {
-            font-size: var(--fs-lg);
-            font-weight: 700;
-            letter-spacing: -0.01em;
-            margin-bottom: var(--sp-2);
-        }
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-        .section > p {
-            color: var(--fg-muted);
-            margin-bottom: var(--sp-4);
-            max-width: var(--measure);
-        }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; color-scheme: light; }
 
-        .section .game-grid,
-        .section .features-section {
-            max-width: none;
-        }
+html[data-theme="dark"] { color-scheme: dark; }
 
-        .game-card h3,
-        .feature-card h3 {
-            font-size: var(--fs-md);
-            font-weight: 650;
-        }
+body {
+    background: var(--white);
+    color: var(--ink);
+    font-family: var(--text);
+    font-size: 17px;
+    line-height: 1.47;
+    letter-spacing: -0.374px;
+    font-variant-numeric: tabular-nums;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.35s var(--ease), color 0.35s var(--ease);
+}
 
-        .game-card p,
-        .feature-card p {
-            font-size: var(--fs-sm);
-            color: var(--fg-muted);
-            line-height: 1.7;
-        }
+img { display: block; max-width: 100%; height: auto; }
 
-        .play-button {
-            margin-top: var(--sp-2);
-            align-self: flex-start;
-        }
+a { color: inherit; text-decoration: none; }
 
-        .howto-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: var(--sp-3);
-        }
+:focus-visible { outline: 2px solid var(--action); outline-offset: 2px; border-radius: 4px; }
 
-        .howto-list li {
-            padding: var(--sp-4) var(--sp-5);
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--r-md);
-            color: var(--fg-muted);
-            font-size: var(--fs-base);
-            line-height: 1.7;
-        }
+/* ---------- 顶栏 ---------- */
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    background: var(--topbar-bg);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid var(--hairline);
+    transition: background-color 0.35s var(--ease), border-color 0.35s var(--ease);
+}
 
-        .howto-list li strong {
-            color: var(--fg);
-        }
+.topbar-inner {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 24px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
 
-        .about-team {
-            padding: var(--sp-5);
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--r-lg);
-            color: var(--fg-muted);
-            line-height: 1.8;
-        }
+.wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--display);
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: 0.228px;
+    color: var(--ink);
+    white-space: nowrap;
+}
 
-        .about-team a {
-            color: var(--accent);
-        }
+.logo { flex: 0 0 auto; width: 28px; height: 28px; border-radius: 8px; }
 
-        .about-team a:hover {
-            text-decoration: underline;
-        }
+.topnav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.topnav .nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 12px;
+    border-radius: var(--r-pill);
+    font-size: 12px;
+    line-height: 1.33;
+    letter-spacing: -0.12px;
+    color: var(--ink);
+    transition: background 0.16s var(--ease);
+}
+
+.topnav .nav-link:hover { background: var(--mist); }
+
+.topnav .nav-link[aria-current="page"] { background: var(--control); }
+
+/* 语言 / 主题控件挂载点 */
+.lt-mount {
+    display: inline-flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+/* 移动端导航展开按钮（桌面隐藏） */
+.nav-toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-pill);
+    background: transparent;
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+
+.nav-toggle:hover { background: var(--mist); }
+
+/* ---------- 布局与色带 ---------- */
+.wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+.band { background: var(--mist); padding-top: 40px; }
+
+section { padding: 100px 0; scroll-margin-top: 64px; }
+
+/* ---------- Hero ---------- */
+.hero { text-align: center; padding: 88px 0 40px; }
+
+.eyebrow {
+    display: inline-block;
+    margin-bottom: 20px;
+    padding: 6px 16px;
+    border-radius: var(--r-pill);
+    background: var(--mist);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: -0.08px;
+    color: var(--secondary);
+}
+
+h1 {
+    font-family: var(--display);
+    font-size: clamp(40px, 5.2vw, 56px);
+    line-height: 1.06;
+    letter-spacing: -0.005em;
+    font-weight: 600;
+    color: var(--ink);
+    max-width: 16em;
+    margin: 0 auto 16px;
+}
+
+.lede {
+    font-size: 19px;
+    line-height: 1.42;
+    letter-spacing: 0.231px;
+    color: var(--secondary);
+    max-width: 680px;
+    margin: 0 auto 10px;
+}
+
+.lede .en {
+    display: block;
+    margin-top: 8px;
+    font-size: 15px;
+    line-height: 1.5;
+    letter-spacing: -0.224px;
+    color: var(--steel);
+}
+
+.hero-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 28px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 22px;
+    border-radius: var(--r-pill);
+    background: var(--action);
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: -0.224px;
+    transition: background 0.2s var(--ease);
+}
+
+.btn:hover { background: var(--action-hover); }
+
+.btn.ghost {
+    background: transparent;
+    color: var(--link);
+    border: 1px solid var(--hairline);
+}
+
+.btn.ghost:hover { background: var(--mist); }
+
+/* ---------- 区块标题 ---------- */
+h2.sec {
+    font-family: var(--display);
+    font-size: clamp(32px, 4vw, 40px);
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 12px;
+}
+
+.section-desc {
+    font-size: 19px;
+    line-height: 1.42;
+    letter-spacing: 0.228px;
+    color: var(--secondary);
+    max-width: 680px;
+    margin-bottom: 48px;
+}
+
+/* ---------- 卡片网格 ---------- */
+.game-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+}
+
+.game-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background: var(--white);
+    border-radius: var(--r-card);
+    padding: 28px;
+    transition: translate 0.25s var(--ease-out), background 0.25s var(--ease);
+}
+
+.game-card:hover { translate: 0 -2px; }
+
+.game-card:active { translate: 0 0; }
+
+.game-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    margin-bottom: 16px;
+    border-radius: var(--r-inset);
+    background: var(--mist);
+    font-size: 28px;
+    line-height: 1;
+}
+
+.game-title {
+    font-family: var(--display);
+    font-size: 21px;
+    line-height: 1.17;
+    font-weight: 600;
+    letter-spacing: 0.231px;
+    color: var(--ink);
+    margin-bottom: 2px;
+}
+
+.game-subtitle {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--steel);
+    margin-bottom: 10px;
+}
+
+.game-description {
+    font-size: 15px;
+    line-height: 1.5;
+    letter-spacing: -0.224px;
+    color: var(--secondary);
+    margin-bottom: 20px;
+}
+
+.play-button {
+    display: inline-flex;
+    align-items: center;
+    margin-top: auto;
+    padding: 8px 18px;
+    border-radius: var(--r-pill);
+    background: var(--action);
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: -0.224px;
+    white-space: nowrap;
+    transition: background 0.2s var(--ease);
+}
+
+.game-card:hover .play-button { background: var(--action-hover); }
+
+/* ---------- 说明文字区 ---------- */
+.info-col { max-width: 720px; }
+
+.info-col p {
+    font-size: 17px;
+    line-height: 1.55;
+    letter-spacing: -0.374px;
+    color: var(--secondary);
+}
+
+.info-col p + p { margin-top: 16px; }
+
+.info-col a { color: var(--link); }
+
+.info-col a:hover { text-decoration: underline; }
+
+/* 玩法列表 */
+.howto-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 720px;
+}
+
+.howto-list li {
+    padding: 20px 24px;
+    background: var(--white);
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-inset);
+    color: var(--secondary);
+    font-size: 16px;
+    line-height: 1.6;
+    letter-spacing: -0.224px;
+}
+
+.howto-list li strong { color: var(--ink); }
+
+/* ---------- 滚动渐显 ---------- */
+.js .reveal {
+    opacity: 0;
+    translate: 0 20px;
+    will-change: opacity, translate;
+}
+
+.js .reveal.in {
+    opacity: 1;
+    translate: 0 0;
+    transition: opacity 0.7s var(--ease-out) var(--rd, 0s),
+                translate 0.7s var(--ease-out) var(--rd, 0s);
+}
+
+/* ---------- 页脚 ---------- */
+.footer {
+    background: var(--mist);
+    border-top: 1px solid var(--hairline);
+}
+
+.footer-inner {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 40px 24px;
+    font-size: 12px;
+    letter-spacing: -0.12px;
+    color: var(--steel);
+}
+
+/* ---------- 响应式 ---------- */
+@media (max-width: 720px) {
+    .topbar-inner { height: auto; min-height: 52px; padding-top: 8px; padding-bottom: 8px; }
+
+    .nav-toggle { display: inline-flex; }
+
+    .topnav { display: none; }
+
+    .topnav.is-open {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+        order: 5;
+        gap: 2px;
+        padding-top: 8px;
+        border-top: 1px solid var(--hairline);
+    }
+
+    .topnav.is-open .nav-link {
+        justify-content: flex-start;
+        padding: 11px 12px;
+        border-radius: 12px;
+        font-size: 15px;
+        letter-spacing: -0.224px;
+    }
+
+    .hero { padding: 56px 0 28px; }
+
+    section { padding: 64px 0; }
+
+    .band { padding-top: 28px; }
+
+    .section-desc { margin-bottom: 32px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+
+    *, *::before, *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+
+    .js .reveal { opacity: 1; translate: 0 0; }
+}
     </style>
 </head>
 <body>
-    <div class="stars" aria-hidden="true"></div>
-
-    <header class="appbar">
-        <a href="index.html" class="brand">
-            <img src="picture/error.png" alt="ERROR-CORE 标志" class="brand-mark">
-            <span class="brand-text">
-                <strong>ERROR-CORE</strong>
-                <small>Studio</small>
-            </span>
-        </a>
-        <span class="lt-mount"></span>
-        <button class="nav-toggle" aria-label="展开导航" aria-expanded="false">☰</button>
-        <nav class="appbar-nav">
-            <a href="index.html" class="nav-link" aria-current="page" data-i18n="nav_home">首页</a>
-            <a href="gamecenter.html" class="nav-link" data-i18n="nav_games">游戏中心</a>
-            <a href="robot-blockly.html" class="nav-link">Robot Blockly</a>
-            <a href="drawing.html" class="nav-link" data-i18n="nav_draw">画板</a>
-            <a href="errorcore.html" class="nav-link" data-i18n="nav_about">关于我们</a>
-            <a href="contact.html" class="nav-link" data-i18n="nav_contact">联系我们</a>
-        </nav>
+    <header class="topbar">
+        <div class="topbar-inner">
+            <a class="wordmark" href="index.html"><img class="logo" src="picture/error.png" alt="ERROR-CORE Logo" width="28" height="28">ERROR-CORE</a>
+            <nav class="topnav" id="appbarNav" aria-label="主导航">
+                <a href="index.html" class="nav-link" aria-current="page" data-i18n="nav_home">首页</a>
+                <a href="gamecenter.html" class="nav-link" data-i18n="nav_games">游戏中心</a>
+                <a href="robot-blockly.html" class="nav-link">Robot Blockly</a>
+                <a href="drawing.html" class="nav-link" data-i18n="nav_draw">画板</a>
+                <a href="errorcore.html" class="nav-link" data-i18n="nav_about">关于我们</a>
+                <a href="contact.html" class="nav-link" data-i18n="nav_contact">联系我们</a>
+            </nav>
+            <span class="lt-mount"></span>
+            <button type="button" class="nav-toggle" id="navToggle" aria-label="展开导航" aria-expanded="false" aria-controls="appbarNav">☰</button>
+        </div>
     </header>
 
-    <main class="container">
-        <section class="hero">
+    <header class="hero">
+        <div class="wrap">
             <span class="eyebrow" data-i18n="hero_eyebrow">开源工具 · 在线游戏 · 免下载</span>
-            <h1 class="main-title">ERROR-CORE Studio</h1>
-            <p class="sub-title" data-i18n-html="hero_sub">
+            <h1>ERROR-CORE Studio</h1>
+            <p class="lede" data-i18n-html="hero_sub">
                 ERROR-CORE 开源团队的作品站：机器人积木编程工具 Robot Blockly，加上打开浏览器就能玩的经典小游戏合集。
                 <span class="en">Open-source robotics tooling and browser mini-games by ERROR-CORE Team.</span>
             </p>
@@ -157,76 +503,99 @@
                 <a href="gamecenter.html" class="btn" data-i18n="hero_btn_games">进入游戏中心</a>
                 <a href="robot-blockly.html" class="btn ghost" data-i18n="hero_btn_blockly">Robot Blockly 积木编程</a>
             </div>
-        </section>
-
-        <div class="sections">
-            <section class="section">
-                <h2 data-i18n="sec_games_h2">游戏平台：四款经典，即开即玩</h2>
-                <p data-i18n="sec_games_p">每一款都经过手机与桌面浏览器适配，无需注册、无需下载，点击卡片即可开始游戏。</p>
-                <div class="game-grid">
-                    <a href="Snake.html" class="game-card">
-                        <h3 data-i18n="card_snake_h3">🐍 贪吃蛇</h3>
-                        <p data-i18n="card_snake_p">最经典的 Snake 玩法：方向键或滑动屏幕控制小蛇转向，吃掉食物身体变长、速度递增，撞墙或咬到自己即结束。看你能刷到多少分。</p>
-                        <span class="play-button" data-i18n="play_now">立即游玩</span>
-                    </a>
-                    <a href="BreakoutGame.html" class="game-card">
-                        <h3 data-i18n="card_breakout_h3">🧱 打砖块</h3>
-                        <p data-i18n="card_breakout_p">街机 Breakout 复刻：移动挡板反弹小球，逐层击碎彩色砖块。三条生命、关卡式砖块布局，考验角度计算与反应速度。</p>
-                        <span class="play-button" data-i18n="play_now">立即游玩</span>
-                    </a>
-                    <a href="ShootingGame.html" class="game-card">
-                        <h3 data-i18n="card_shoot_h3">✈️ 飞机射击</h3>
-                        <p data-i18n="card_shoot_p">纵版卷轴射击：操控战机左右机动，发射子弹拦截不断逼近的敌机群。敌机速度随时间提升，是纯粹的反应力考验。</p>
-                        <span class="play-button" data-i18n="play_now">立即游玩</span>
-                    </a>
-                    <a href="FootballGame.html" class="game-card">
-                        <h3 data-i18n="card_foot_h3">⚽ 足球射门</h3>
-                        <p data-i18n="card_foot_p">限时点球大战：瞄准球门空档起脚，骗过守门员扑救路线得分。支持单人与双人对战两种模式，进球后还有烟花庆祝画面。</p>
-                        <span class="play-button" data-i18n="play_now">立即游玩</span>
-                    </a>
-                </div>
-            </section>
-
-            <section class="section">
-                <h2 data-i18n="sec_howto_h2">怎么玩：键盘 + 触屏双操作</h2>
-                <ul class="howto-list">
-                    <li data-i18n-html="howto_desktop"><strong>电脑端：</strong>贪吃蛇使用 ↑ ↓ ← → 方向键；打砖块用 ← → 移动挡板；飞机射击用方向键移动、空格键开火；足球射管用方向键瞄准、回车键射门。</li>
-                    <li data-i18n-html="howto_mobile"><strong>手机端：</strong>页面底部自动出现触屏方向键与射击按钮，横竖屏均可游玩，无需外接键盘。</li>
-                    <li data-i18n-html="howto_scores"><strong>成绩保存：</strong>每款游戏的最高分自动记录在浏览器本地（localStorage），换设备或清除缓存前成绩一直有效。</li>
-                </ul>
-            </section>
-
-            <section class="section">
-                <h2 data-i18n="sec_blockly_h2">开源项目：Robot Blockly 机器人积木编程</h2>
-                <p data-i18n="sec_blockly_p">除了小游戏，ERROR-CORE 团队还开源了机器人可视化编程工具。</p>
-                <div class="features-section">
-                    <a href="robot-blockly.html" class="feature-card">
-                        <h3>🤖 Robot Blockly v0.1.1</h3>
-                        <p data-i18n="card_blockly_p">基于 Google Blockly 的拖拽式积木编程工具，面向 Unitree 宇树机器人。像搭积木一样编写动作指令，零代码基础也能让机器人动起来。提供 Linux 与 macOS 安装包，MIT 协议开源。</p>
-                        <span class="play-button" data-i18n="card_blockly_btn">查看下载</span>
-                    </a>
-                    <a href="errorcore.html" class="feature-card">
-                        <h3 data-i18n="card_team_h3">👥 关于 ERROR-CORE Team</h3>
-                        <p data-i18n="card_team_p">团队成立于 2026 年 1 月，专注于开源教育与休闲网页工具。ERROR-CORE Studio 上的小游戏、画板工具与 Robot Blockly 均对社区开放，欢迎反馈与建议。</p>
-                        <span class="play-button" data-i18n="card_team_btn">了解团队</span>
-                    </a>
-                </div>
-            </section>
-
-            <section class="section">
-                <h2 data-i18n="sec_why_h2">为什么选择 ERROR-CORE</h2>
-                <div class="about-team" data-i18n-html="sec_why_body">
-                    ERROR-CORE Studio 由个人开源团队维护，所有游戏均为纯前端实现（HTML5 Canvas + JavaScript），
-                    不依赖任何服务器后端：打开页面即完成全部资源加载，游玩过程零网络请求，你的操作数据与最高分只保存在自己的设备上。
-                    页面自适应手机、平板与桌面浏览器，并针对触屏设备提供了专门的方向键控件。
-                    如果你想反馈 Bug、提出新游戏创意，或参与 <a href="errorcore.html">开源项目</a> 共建，
-                    随时通过 <a href="contact.html">联系我们</a> 页面找到我们。
-                </div>
-            </section>
         </div>
-    </main>
+    </header>
 
-    <footer class="copyright">ERROR-CORE Team</footer>
+    <section class="band">
+        <div class="wrap">
+            <h2 class="sec" data-i18n="sec_games_h2">游戏平台：四款经典，即开即玩</h2>
+            <p class="section-desc" data-i18n="sec_games_p">每一款都经过手机与桌面浏览器适配，无需注册、无需下载，点击卡片即可开始游戏。</p>
+            <div class="game-grid">
+                <a href="Snake.html" class="game-card">
+                    <div class="game-icon">🐍</div>
+                    <h2 class="game-title" data-i18n="card_snake_h3">贪吃蛇</h2>
+                    <p class="game-subtitle">Snake</p>
+                    <p class="game-description" data-i18n="card_snake_p">方向键或滑动屏幕控制小蛇转向，吃掉食物身体变长、速度递增，撞墙或咬到自己即结束。看你能刷到多少分。</p>
+                    <span class="play-button" data-i18n="play_now">立即游玩</span>
+                </a>
+                <a href="BreakoutGame.html" class="game-card">
+                    <div class="game-icon">🧱</div>
+                    <h2 class="game-title" data-i18n="card_breakout_h3">打砖块</h2>
+                    <p class="game-subtitle">Breakout</p>
+                    <p class="game-description" data-i18n="card_breakout_p">移动挡板反弹小球，逐层击碎彩色砖块。三条生命、关卡式砖块布局，考验角度计算与反应速度。</p>
+                    <span class="play-button" data-i18n="play_now">立即游玩</span>
+                </a>
+                <a href="ShootingGame.html" class="game-card">
+                    <div class="game-icon">✈️</div>
+                    <h2 class="game-title" data-i18n="card_shoot_h3">飞机射击</h2>
+                    <p class="game-subtitle">Shooting</p>
+                    <p class="game-description" data-i18n="card_shoot_p">操控战机左右机动，发射子弹拦截不断逼近的敌机群。敌机速度随时间提升，是纯粹的反应力考验。</p>
+                    <span class="play-button" data-i18n="play_now">立即游玩</span>
+                </a>
+                <a href="FootballGame.html" class="game-card">
+                    <div class="game-icon">⚽</div>
+                    <h2 class="game-title" data-i18n="card_foot_h3">足球射门</h2>
+                    <p class="game-subtitle">Soccer Shootout</p>
+                    <p class="game-description" data-i18n="card_foot_p">操控球员跑位冲撞射门，骗过守门员得分。支持人机与双人对战两种模式，进球后还有烟花庆祝画面。</p>
+                    <span class="play-button" data-i18n="play_now">立即游玩</span>
+                </a>
+                <a href="drawing.html" class="game-card">
+                    <div class="game-icon">🎨</div>
+                    <h2 class="game-title" data-i18n="card_draw_h3">在线画板</h2>
+                    <p class="game-subtitle">Drawing Board</p>
+                    <p class="game-description" data-i18n="card_draw_p">多种笔刷与橡皮擦随手切换，支持鼠标与触屏绘制，作品一键导出 PNG 保存到本地。</p>
+                    <span class="play-button" data-i18n="draw_now">开始绘画</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="wrap">
+            <h2 class="sec" data-i18n="sec_howto_h2">怎么玩：键盘 + 触屏双操作</h2>
+            <ul class="howto-list">
+                <li data-i18n-html="howto_desktop"><strong>电脑端：</strong>贪吃蛇使用 ↑ ↓ ← → 方向键；打砖块用 ← → 移动挡板；飞机射击用方向键移动、空格键开火；足球大战用 W/A/S/D 与方向键分别操控双方。</li>
+                <li data-i18n-html="howto_mobile"><strong>手机端：</strong>页面底部自动出现触屏方向键与射击按钮，横竖屏均可游玩，无需外接键盘。</li>
+                <li data-i18n-html="howto_scores"><strong>成绩保存：</strong>每款游戏的最高分自动记录在浏览器本地（localStorage），换设备或清除缓存前成绩一直有效。</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="band">
+        <div class="wrap">
+            <h2 class="sec" data-i18n="sec_blockly_h2">开源项目：Robot Blockly 机器人积木编程</h2>
+            <p class="section-desc" data-i18n="sec_blockly_p">除了小游戏，ERROR-CORE 团队还开源了机器人可视化编程工具。</p>
+            <div class="game-grid">
+                <a href="robot-blockly.html" class="game-card">
+                    <div class="game-icon">🤖</div>
+                    <h2 class="game-title">Robot Blockly v0.1.1</h2>
+                    <p class="game-subtitle">Visual Programming</p>
+                    <p class="game-description" data-i18n="card_blockly_p">基于 Google Blockly 的拖拽式积木编程工具，面向 Unitree 宇树机器人。像搭积木一样编写动作指令，零代码基础也能让机器人动起来。提供 Linux 与 macOS 安装包，MIT 协议开源。</p>
+                    <span class="play-button" data-i18n="card_blockly_btn">查看下载</span>
+                </a>
+                <a href="errorcore.html" class="game-card">
+                    <div class="game-icon">👥</div>
+                    <h2 class="game-title" data-i18n="card_team_h3">关于 ERROR-CORE Team</h2>
+                    <p class="game-subtitle">Open-Source Team</p>
+                    <p class="game-description" data-i18n="card_team_p">ERROR-CORE 是一个虚拟团队，成员线上协作。团队成立于 2026 年 1 月，专注于开源教育与休闲网页工具。ERROR-CORE Studio 上的小游戏、画板工具与 Robot Blockly 均对社区开放，欢迎反馈与建议。</p>
+                    <span class="play-button" data-i18n="card_team_btn">了解团队</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="wrap">
+            <h2 class="sec" data-i18n="sec_why_h2">为什么选择 ERROR-CORE</h2>
+            <div class="info-col" data-i18n-html="sec_why_body">
+                <p>ERROR-CORE Studio 由个人开源团队维护，所有游戏均为纯前端实现（HTML5 Canvas + JavaScript），不依赖任何服务器后端：打开页面即完成全部资源加载，游玩过程零网络请求，你的操作数据与最高分只保存在自己的设备上。页面自适应手机、平板与桌面浏览器，并针对触屏设备提供了专门的方向键控件。如果你想反馈 Bug、提出新游戏创意，或参与 <a href="errorcore.html">开源项目</a> 共建，随时通过 <a href="contact.html">联系我们</a> 页面找到我们。</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-inner">© ERROR-CORE Team All Rights Reserved</div>
+    </footer>
 
     <script>
         window.PAGE_META = {
@@ -256,28 +625,31 @@
                 hero_btn_blockly: 'Robot Blockly 积木编程',
                 sec_games_h2: '游戏平台：四款经典，即开即玩',
                 sec_games_p: '每一款都经过手机与桌面浏览器适配，无需注册、无需下载，点击卡片即可开始游戏。',
-                card_snake_h3: '🐍 贪吃蛇',
-                card_snake_p: '最经典的 Snake 玩法：方向键或滑动屏幕控制小蛇转向，吃掉食物身体变长、速度递增，撞墙或咬到自己即结束。看你能刷到多少分。',
-                card_breakout_h3: '🧱 打砖块',
-                card_breakout_p: '街机 Breakout 复刻：移动挡板反弹小球，逐层击碎彩色砖块。三条生命、关卡式砖块布局，考验角度计算与反应速度。',
-                card_shoot_h3: '✈️ 飞机射击',
-                card_shoot_p: '纵版卷轴射击：操控战机左右机动，发射子弹拦截不断逼近的敌机群。敌机速度随时间提升，是纯粹的反应力考验。',
-                card_foot_h3: '⚽ 足球射门',
-                card_foot_p: '限时点球大战：瞄准球门空档起脚，骗过守门员扑救路线得分。支持单人与双人对战两种模式，进球后还有烟花庆祝画面。',
+                card_snake_h3: '贪吃蛇',
+                card_snake_p: '方向键或滑动屏幕控制小蛇转向，吃掉食物身体变长、速度递增，撞墙或咬到自己即结束。看你能刷到多少分。',
+                card_breakout_h3: '打砖块',
+                card_breakout_p: '移动挡板反弹小球，逐层击碎彩色砖块。三条生命、关卡式砖块布局，考验角度计算与反应速度。',
+                card_shoot_h3: '飞机射击',
+                card_shoot_p: '操控战机左右机动，发射子弹拦截不断逼近的敌机群。敌机速度随时间提升，是纯粹的反应力考验。',
+                card_foot_h3: '足球射门',
+                card_foot_p: '操控球员跑位冲撞射门，骗过守门员得分。支持人机与双人对战两种模式，进球后还有烟花庆祝画面。',
+                card_draw_h3: '在线画板',
+                card_draw_p: '多种笔刷与橡皮擦随手切换，支持鼠标与触屏绘制，作品一键导出 PNG 保存到本地。',
                 play_now: '立即游玩',
+                draw_now: '开始绘画',
                 sec_howto_h2: '怎么玩：键盘 + 触屏双操作',
-                howto_desktop: '<strong>电脑端：</strong>贪吃蛇使用 ↑ ↓ ← → 方向键；打砖块用 ← → 移动挡板；飞机射击用方向键移动、空格键开火；足球射管用方向键瞄准、回车键射门。',
+                howto_desktop: '<strong>电脑端：</strong>贪吃蛇使用 ↑ ↓ ← → 方向键；打砖块用 ← → 移动挡板；飞机射击用方向键移动、空格键开火；足球大战用 W/A/S/D 与方向键分别操控双方。',
                 howto_mobile: '<strong>手机端：</strong>页面底部自动出现触屏方向键与射击按钮，横竖屏均可游玩，无需外接键盘。',
                 howto_scores: '<strong>成绩保存：</strong>每款游戏的最高分自动记录在浏览器本地（localStorage），换设备或清除缓存前成绩一直有效。',
                 sec_blockly_h2: '开源项目：Robot Blockly 机器人积木编程',
                 sec_blockly_p: '除了小游戏，ERROR-CORE 团队还开源了机器人可视化编程工具。',
                 card_blockly_p: '基于 Google Blockly 的拖拽式积木编程工具，面向 Unitree 宇树机器人。像搭积木一样编写动作指令，零代码基础也能让机器人动起来。提供 Linux 与 macOS 安装包，MIT 协议开源。',
                 card_blockly_btn: '查看下载',
-                card_team_h3: '👥 关于 ERROR-CORE Team',
-                card_team_p: '团队成立于 2026 年 1 月，专注于开源教育与休闲网页工具。ERROR-CORE Studio 上的小游戏、画板工具与 Robot Blockly 均对社区开放，欢迎反馈与建议。',
+                card_team_h3: '关于 ERROR-CORE Team',
+                card_team_p: 'ERROR-CORE 是一个虚拟团队，成员线上协作。团队成立于 2026 年 1 月，专注于开源教育与休闲网页工具。ERROR-CORE Studio 上的小游戏、画板工具与 Robot Blockly 均对社区开放，欢迎反馈与建议。',
                 card_team_btn: '了解团队',
                 sec_why_h2: '为什么选择 ERROR-CORE',
-                sec_why_body: 'ERROR-CORE Studio 由个人开源团队维护，所有游戏均为纯前端实现（HTML5 Canvas + JavaScript），不依赖任何服务器后端：打开页面即完成全部资源加载，游玩过程零网络请求，你的操作数据与最高分只保存在自己的设备上。页面自适应手机、平板与桌面浏览器，并针对触屏设备提供了专门的方向键控件。如果你想反馈 Bug、提出新游戏创意，或参与 <a href="errorcore.html">开源项目</a> 共建，随时通过 <a href="contact.html">联系我们</a> 页面找到我们。'
+                sec_why_body: '<p>ERROR-CORE Studio 由个人开源团队维护，所有游戏均为纯前端实现（HTML5 Canvas + JavaScript），不依赖任何服务器后端：打开页面即完成全部资源加载，游玩过程零网络请求，你的操作数据与最高分只保存在自己的设备上。页面自适应手机、平板与桌面浏览器，并针对触屏设备提供了专门的方向键控件。如果你想反馈 Bug、提出新游戏创意，或参与 <a href="errorcore.html">开源项目</a> 共建，随时通过 <a href="contact.html">联系我们</a> 页面找到我们。</p>'
             },
             en: {
                 nav_home: 'Home',
@@ -293,49 +665,39 @@
                 hero_btn_blockly: 'Robot Blockly Programming',
                 sec_games_h2: 'Game Platform: Four Classics, Ready to Play',
                 sec_games_p: 'Every title is tuned for mobile and desktop browsers. No sign-up, no downloads — just click a card and start playing.',
-                card_snake_h3: '🐍 Snake',
-                card_snake_p: 'The timeless Snake: steer with arrow keys or swipes, eat food to grow longer and faster, and the run ends when you hit a wall or bite yourself. See how high you can score.',
-                card_breakout_h3: '🧱 Breakout',
-                card_breakout_p: 'An arcade Breakout remake: move the paddle to bounce the ball and smash colored bricks layer by layer. Three lives and level-style brick layouts put your angles and reflexes to the test.',
-                card_shoot_h3: '✈️ Shooting',
-                card_shoot_p: 'A vertical-scrolling shooter: weave your fighter left and right and blast waves of closing enemies. Enemy speed climbs over time — a pure test of reaction.',
-                card_foot_h3: '⚽ Soccer Shootout',
-                card_foot_p: 'A timed penalty shootout: aim for the gap in the goal and fool the keeper to score. Solo and two-player versus modes, with fireworks after every goal.',
+                card_snake_h3: 'Snake',
+                card_snake_p: 'Steer with arrow keys or swipes, eat food to grow longer and faster, and the run ends when you hit a wall or bite yourself. See how high you can score.',
+                card_breakout_h3: 'Breakout',
+                card_breakout_p: 'Move the paddle to bounce the ball and smash colored bricks layer by layer. Three lives and level-style brick layouts put your angles and reflexes to the test.',
+                card_shoot_h3: 'Shooting',
+                card_shoot_p: 'Weave your fighter left and right and blast waves of closing enemies. Enemy speed climbs over time — a pure test of reaction.',
+                card_foot_h3: 'Soccer Shootout',
+                card_foot_p: 'Run, charge and strike to beat the keeper. Solo versus AI and two-player local modes, with fireworks after every goal.',
+                card_draw_h3: 'Drawing Board',
+                card_draw_p: 'Switch brushes and eraser on the fly, draw with mouse or touch, and export your artwork as a PNG in one click.',
                 play_now: 'Play Now',
+                draw_now: 'Start Drawing',
                 sec_howto_h2: 'How to Play: Keyboard + Touch Controls',
-                howto_desktop: '<strong>Desktop:</strong> Snake uses the ↑ ↓ ← → arrow keys; Breakout moves the paddle with ← →; Shooting moves with arrow keys and fires with Space; in the soccer shootout, aim with arrow keys and shoot with Enter.',
+                howto_desktop: '<strong>Desktop:</strong> Snake uses the ↑ ↓ ← → arrow keys; Breakout moves the paddle with ← →; Shooting moves with arrow keys and fires with Space; in Soccer Battle, W/A/S/D and the arrow keys control the two sides.',
                 howto_mobile: '<strong>Mobile:</strong> on-screen D-pads and fire buttons appear automatically at the bottom of the page. Play in portrait or landscape — no external keyboard needed.',
                 howto_scores: '<strong>Score saving:</strong> each game records your high score locally in the browser (localStorage), so it stays valid across sessions until you switch devices or clear the cache.',
                 sec_blockly_h2: 'Open-Source Project: Robot Blockly Visual Programming',
                 sec_blockly_p: 'Beyond the mini-games, the ERROR-CORE Team has also open-sourced a visual programming tool for robots.',
                 card_blockly_p: 'A drag-and-drop block programming tool built on Google Blockly, designed for Unitree robots. Compose motion commands like stacking blocks — even with zero coding experience you can get a robot moving. Linux and macOS installers available, released under the MIT license.',
                 card_blockly_btn: 'View Downloads',
-                card_team_h3: '👥 About ERROR-CORE Team',
-                card_team_p: 'Founded in January 2026, the team focuses on open-source education and casual web tools. The mini-games, drawing board and Robot Blockly on ERROR-CORE Studio are all open to the community — feedback and suggestions welcome.',
+                card_team_h3: 'About ERROR-CORE Team',
+                card_team_p: 'ERROR-CORE is a virtual team collaborating online. Founded in January 2026, the team focuses on open-source education and casual web tools. The mini-games, drawing board and Robot Blockly on ERROR-CORE Studio are all open to the community — feedback and suggestions welcome.',
                 card_team_btn: 'Meet the Team',
                 sec_why_h2: 'Why Choose ERROR-CORE',
-                sec_why_body: 'ERROR-CORE Studio is maintained by a solo open-source team, and every game is a pure front-end implementation (HTML5 Canvas + JavaScript) with no server backend: loading the page fetches all resources, gameplay makes zero network requests, and your input data and high scores stay on your own device. Pages adapt to phones, tablets and desktop browsers, with dedicated on-screen D-pads for touch devices. To report a bug, pitch a new game idea, or join our <a href="errorcore.html">open-source projects</a>, reach us anytime through the <a href="contact.html">Contact</a> page.'
+                sec_why_body: '<p>ERROR-CORE Studio is maintained by a solo open-source team, and every game is a pure front-end implementation (HTML5 Canvas + JavaScript) with no server backend: loading the page fetches all resources, gameplay makes zero network requests, and your input data and high scores stay on your own device. Pages adapt to phones, tablets and desktop browsers, with dedicated on-screen D-pads for touch devices. To report a bug, pitch a new game idea, or join our <a href="errorcore.html">open-source projects</a>, reach us anytime through the <a href="contact.html">Contact</a> page.</p>'
             }
         };
     </script>
 
     <script>
-        function createStars() {
-            const container = document.querySelector('.stars');
-            if (!container) return;
-            for (let i = 0; i < 40; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                star.style.left = Math.random() * 100 + '%';
-                star.style.top = Math.random() * 100 + '%';
-                star.style.animationDelay = Math.random() * 4 + 's';
-                container.appendChild(star);
-            }
-        }
-
         function initNavToggle() {
             const toggle = document.querySelector('.nav-toggle');
-            const nav = document.querySelector('.appbar-nav');
+            const nav = document.querySelector('.topnav');
             if (!toggle || !nav) return;
             const syncToggleLabel = function () {
                 const open = nav.classList.contains('is-open');
@@ -346,21 +708,43 @@
 
             toggle.addEventListener('click', function () {
                 const open = nav.classList.toggle('is-open');
-                toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+                toggle.setAttribute('aria-expanded', String(open));
                 syncToggleLabel();
+                toggle.textContent = open ? '✕' : '☰';
             });
             nav.addEventListener('click', function (e) {
                 if (e.target.closest('a') && nav.classList.contains('is-open')) {
                     nav.classList.remove('is-open');
                     toggle.setAttribute('aria-expanded', 'false');
+                    toggle.textContent = '☰';
+                    syncToggleLabel();
                 }
             });
         }
 
-        window.addEventListener('load', function () {
-            createStars();
-            initNavToggle();
+        window.addEventListener('load', initNavToggle);
+    </script>
+    <script>
+    /* Apple 风格滚动渐显：元素进入视口时淡入上移，同组元素依次错开 80ms */
+    (function () {
+        if (!('IntersectionObserver' in window)) return;
+        var els = document.querySelectorAll(
+            '.hero .wrap, section .wrap > h2.sec, section .wrap > .section-desc, section .wrap > .info-col, section .wrap > .howto-list, .game-grid > .game-card');
+        var counts = new WeakMap();
+        els.forEach(function (el) {
+            var p = el.parentElement;
+            var n = counts.get(p) || 0;
+            el.style.setProperty('--rd', (n * 0.08) + 's');
+            counts.set(p, n + 1);
+            el.classList.add('reveal');
         });
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+                if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+            });
+        }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+        els.forEach(function (el) { io.observe(el); });
+    })();
     </script>
 </body>
 </html>

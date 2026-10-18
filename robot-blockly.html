@@ -25,7 +25,10 @@
             var h = document.documentElement;
             var theme = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
             h.setAttribute('data-theme', theme);
-            var lang = (navigator.language || 'zh-CN').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en';
+            var saved = null;
+            try { saved = localStorage.getItem('ec-lang'); } catch (err) {}
+            var lang = (saved === 'zh' || saved === 'en') ? saved
+                : (navigator.language || 'zh-CN').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en';
             if (lang === 'en') h.setAttribute('lang', 'en');
         } catch (e) {}
     })();
@@ -2128,11 +2131,16 @@ const I18N = {
     }
 };
 
-/* 语言默认值：浏览器语言 > 中文；不读取任何本地存储 */
+/* 语言优先级：用户主动保存的选择（全站共享 localStorage 'ec-lang'）> 浏览器语言 > 中文 */
 let LANG = 'zh';
 try {
+    const saved = localStorage.getItem('ec-lang');
+    LANG = (saved === 'zh' || saved === 'en') ? saved
+        : (navigator.language || 'zh-CN').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en';
+    if (localStorage.getItem('ec-lang') !== LANG) localStorage.setItem('ec-lang', LANG);
+} catch (e) {
     LANG = (navigator.language || 'zh-CN').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en';
-} catch (e) {}
+}
 
 function t(k) {
     const dict = I18N[LANG] || I18N.zh;
@@ -2191,8 +2199,17 @@ function applyLang() {
 document.querySelectorAll('.lang-switch button').forEach(btn => {
     btn.addEventListener('click', () => {
         LANG = btn.dataset.lang === 'en' ? 'en' : 'zh';
+        try { localStorage.setItem('ec-lang', LANG); } catch (e) {}
         applyLang();
     });
+});
+
+/* 跨标签页语言同步：其他页面切换语言后本页即时跟随 */
+window.addEventListener('storage', e => {
+    if (e.key === 'ec-lang' && (e.newValue === 'zh' || e.newValue === 'en') && e.newValue !== LANG) {
+        LANG = e.newValue;
+        applyLang();
+    }
 });
 
 /* 主题切换：仅本次会话生效，不存储；默认跟随系统 */

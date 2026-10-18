@@ -1,9 +1,10 @@
 /* ==========================================================================
-   全站语言 + 主题切换（零存储）
-   - 主题：默认跟随系统 prefers-color-scheme，data-theme="light|dark"，
+   全站语言 + 主题切换
+   - 主题：零存储。默认跟随系统 prefers-color-scheme，data-theme="light|dark"，
      系统切换实时跟随；手动切换仅影响当前页面，不写任何本地存储。
-   - 语言：默认跟随 navigator.language（zh* → 中文，其余 → 英文）；
-     手动切换同样不存储。
+   - 语言：优先读取用户主动保存的选择（localStorage 'ec-lang'），
+     无保存记录时自动跟随 navigator.language（zh* → 中文，其余 → 英文）；
+     手动切换立即全站生效并持久化，刷新/跨页均保持。
    - 页面接入：
        1) <head> 尽早引入 <script src="js/lang-theme.js"></script>
        2) 可选定义 window.PAGE_I18N = { zh:{key:'文案'}, en:{...} }
@@ -34,10 +35,20 @@
     }
 
     /* ---------- 语言 ---------- */
+    var LANG_KEY = 'ec-lang';
     function sysLang() {
         return (navigator.language || 'zh-CN').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en';
     }
-    var LANG = sysLang();
+    function savedLang() {
+        try {
+            var v = localStorage.getItem(LANG_KEY);
+            return v === 'zh' || v === 'en' ? v : null;
+        } catch (e) { return null; }
+    }
+    // 优先用户主动保存的语言，无则跟随系统语言
+    var LANG = savedLang() || sysLang();
+    // 同步写入，保证同标签页内后续打开的页面立即读到最新选择
+    try { if (savedLang() !== LANG) localStorage.setItem(LANG_KEY, LANG); } catch (e) {}
 
     function t(key) {
         var dict = (window.PAGE_I18N || {})[LANG] || {};
@@ -53,6 +64,15 @@
     function applyLang() {
         document.querySelectorAll('[data-i18n]').forEach(function (el) { el.textContent = t(el.dataset.i18n); });
         document.querySelectorAll('[data-i18n-html]').forEach(function (el) { el.innerHTML = t(el.dataset.i18nHtml); });
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(function (el) {
+            el.setAttribute('placeholder', t(el.dataset.i18nPlaceholder));
+        });
+        document.querySelectorAll('[data-i18n-title]').forEach(function (el) {
+            el.setAttribute('title', t(el.dataset.i18nTitle));
+        });
+        document.querySelectorAll('[data-i18n-aria]').forEach(function (el) {
+            el.setAttribute('aria-label', t(el.dataset.i18nAria));
+        });
         root.setAttribute('lang', LANG === 'en' ? 'en' : 'zh-CN');
         var m = (window.PAGE_META || {})[LANG];
         if (m) {
@@ -113,6 +133,7 @@
         host.querySelectorAll('.lt-lang button').forEach(function (btn) {
             btn.addEventListener('click', function () {
                 LANG = btn.dataset.lang === 'en' ? 'en' : 'zh';
+                try { localStorage.setItem(LANG_KEY, LANG); } catch (e) {}
                 applyLang();
             });
         });
@@ -129,10 +150,55 @@
         mount();
     }
 
+    /* ---------- 输入框焦点方向键守卫（修复滚动异常 任务2） ----------
+       根因：游戏页的 window/document keydown 监听器对方向键从不 preventDefault，
+       浏览器同时执行方向键的默认页面滚动，导致游戏进行中画面偏移；
+       且监听器挂在 window/document 上不区分事件源，简介编辑输入框聚焦时
+       方向键会同时触发"角色移动 + 页面滚动"，干扰编辑。
+       方案：
+       1) 捕获阶段监听：可编辑元素（input/textarea/contenteditable）聚焦时，
+          方向键在捕获阶段 stopPropagation，游戏监听器收不到事件，
+          角色不再误动；不调用 preventDefault，框内光标移动与文本选择保留，
+          且单行输入框内方向键本身不会滚动页面。
+       2) 焦点不在可编辑元素时（isEditing() 为 false），游戏页自行对方向键
+          preventDefault，消除默认页面滚动；失焦即自动恢复（无持久拦截）。
+       ------------------------------------------------------------- */
+    var ARROW_KEYS = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
+    function isEditable(el) {
+        if (!el || el === document.body || el === document.documentElement) return false;
+        var tag = (el.tagName || '').toLowerCase();
+        if (tag === 'textarea') return true;
+        if (tag === 'input') {
+            var ty = (el.type || 'text').toLowerCase();
+            return ['text', 'search', 'email', 'tel', 'url', 'password', 'number'].indexOf(ty) !== -1;
+        }
+        if (el.isContentEditable) return true;
+        return false;
+    }
+    window.addEventListener('keydown', function (e) {
+        if (ARROW_KEYS.indexOf(e.key) === -1) return;
+        if (isEditable(e.target) || isEditable(document.activeElement)) {
+            // 输入框内：仅拦截事件向游戏监听器冒泡，保留光标移动/文本选择
+            e.stopPropagation();
+        }
+    }, true); // 捕获阶段，先于页面监听器
+    function isEditing() {
+        return isEditable(document.activeElement);
+    }
+
     window.LT = {
         get lang() { return LANG; },
         t: t,
         applyLang: applyLang,
-        setTheme: setTheme
+        setTheme: setTheme,
+        isEditing: isEditing,
+        ARROW_KEYS: ARROW_KEYS
     };
+    // 跨标签页语言同步：其他标签页切换语言后本页刷新（若可见）
+    window.addEventListener('storage', function (e) {
+        if (e.key === LANG_KEY && (e.newValue === 'zh' || e.newValue === 'en')) {
+            LANG = e.newValue;
+            applyLang();
+        }
+    });
 })();

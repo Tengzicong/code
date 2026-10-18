@@ -224,12 +224,12 @@ a { color: inherit; text-decoration: none; }
 /* ---------- 布局与色带 ---------- */
 .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
 
-.band { background: var(--mist); }
+.band { background: var(--mist); padding-top: 40px; }
 
 section { padding: 100px 0; scroll-margin-top: 64px; }
 
 /* ---------- Hero（Apple 式居中） ---------- */
-.hero { text-align: center; padding: 88px 0 96px; }
+.hero { text-align: center; padding: 88px 0 40px; }
 
 .eyebrow {
     display: inline-block;
@@ -546,7 +546,9 @@ h2.sec {
 }
 
 @media (max-width: 720px) {
-    .hero { padding: 56px 0 64px; }
+    .hero { padding: 56px 0 28px; }
+
+    .band { padding-top: 28px; }
 
     section { padding: 64px 0; }
 
@@ -662,13 +664,13 @@ h2.sec {
                     <a href="gamecenter.html" class="entry-card">
                         <span class="card-icon" aria-hidden="true">🎮</span>
                         <span class="card-title" data-i18n="card_games_title">游戏中心</span>
-                        <span class="card-desc" data-i18n="card_games_desc">贪吃蛇、射击、打砖块、足球大战，四款游戏与最高分记录。</span>
+                        <span class="card-desc" data-i18n="card_games_desc">四款经典游戏的入口，最高分自动保存在本机。</span>
                         <span class="btn btn-filled" data-i18n="card_games_btn">进入 →</span>
                     </a>
                     <a href="drawing.html" class="entry-card">
                         <span class="card-icon" aria-hidden="true">🎨</span>
                         <span class="card-title" data-i18n="card_draw_title">画板</span>
-                        <span class="card-desc" data-i18n="card_draw_desc">可调笔刷与颜色的手绘板，支持导出 PNG 保存到本地。</span>
+                        <span class="card-desc" data-i18n="card_draw_desc">可调笔刷与颜色的在线手绘板，支持导出 PNG 保存到本地。</span>
                         <span class="btn btn-filled" data-i18n="card_draw_btn">开始绘制 →</span>
                     </a>
                 </div>
@@ -679,7 +681,7 @@ h2.sec {
         <section>
             <div class="wrap prose">
                 <h2 class="sec" data-i18n="info_h2">关于 ERROR-CORE Games</h2>
-                <p data-i18n="info_p1">ERROR-CORE Games 由开源团队 ERROR-CORE Team 维护，提供贪吃蛇、打砖块、飞机射击、足球射门 4 款经典游戏的网页版，以及在线画板等实用小工具。合集完全免费、无广告、无需注册，所有游戏基于 HTML5 Canvas 技术实现，在手机、平板和电脑上都能流畅运行。</p>
+                <p data-i18n="info_p1">ERROR-CORE Games 由开源虚拟团队 ERROR-CORE Team 维护（成员线上协作），提供贪吃蛇、打砖块、飞机射击、足球射门 4 款经典游戏的网页版，以及在线画板等实用小工具。合集完全免费、无广告、无需注册，所有游戏基于 HTML5 Canvas 技术实现，在手机、平板和电脑上都能流畅运行。</p>
                 <p data-i18n="info_p2">除了休闲游戏，团队还开源了机器人可视化编程工具 Robot Blockly——基于 Google Blockly 的拖拽式积木编程环境，支持宇树（Unitree）系列机器人，零代码基础也能让机器人动起来。</p>
             </div>
         </section>
@@ -720,13 +722,13 @@ h2.sec {
                 hero_title: 'ERROR-CORE 小游戏',
                 hero_sub: '浏览器里直接玩的经典小游戏，桌面与手机均可操作。<span class="en">Play classic mini-games right in your browser.</span>',
                 card_games_title: '游戏中心',
-                card_games_desc: '贪吃蛇、射击、打砖块、足球大战，四款游戏与最高分记录。',
+                card_games_desc: '四款经典游戏的入口，最高分自动保存在本机。',
                 card_games_btn: '进入 →',
                 card_draw_title: '画板',
-                card_draw_desc: '可调笔刷与颜色的手绘板，支持导出 PNG 保存到本地。',
+                card_draw_desc: '可调笔刷与颜色的在线手绘板，支持导出 PNG 保存到本地。',
                 card_draw_btn: '开始绘制 →',
                 info_h2: '关于 ERROR-CORE Games',
-                info_p1: 'ERROR-CORE Games 由开源团队 ERROR-CORE Team 维护，提供贪吃蛇、打砖块、飞机射击、足球射门 4 款经典游戏的网页版，以及在线画板等实用小工具。合集完全免费、无广告、无需注册，所有游戏基于 HTML5 Canvas 技术实现，在手机、平板和电脑上都能流畅运行。',
+                info_p1: 'ERROR-CORE Games 由开源虚拟团队 ERROR-CORE Team 维护（成员线上协作），提供贪吃蛇、打砖块、飞机射击、足球射门 4 款经典游戏的网页版，以及在线画板等实用小工具。合集完全免费、无广告、无需注册，所有游戏基于 HTML5 Canvas 技术实现，在手机、平板和电脑上都能流畅运行。',
                 info_p2: '除了休闲游戏，团队还开源了机器人可视化编程工具 Robot Blockly——基于 Google Blockly 的拖拽式积木编程环境，支持宇树（Unitree）系列机器人，零代码基础也能让机器人动起来。',
                 cookie_title: '🍪 Cookie 政策',
                 cookie_intro: 'ERROR-CORE 尊重您的隐私，并致力于保护您的个人信息安全。本 Cookie 政策说明我们如何使用 Cookie 和类似技术。',
@@ -761,13 +763,13 @@ h2.sec {
                 hero_title: 'ERROR-CORE Mini-Games',
                 hero_sub: 'Classic mini-games you can play right in your browser, on desktop or mobile.',
                 card_games_title: 'Game Center',
-                card_games_desc: 'Snake, Shooting, Breakout and Soccer Battle — four games with high-score records.',
+                card_games_desc: 'The entry point to all four classic games, with high scores saved on your device.',
                 card_games_btn: 'Enter →',
                 card_draw_title: 'Drawing Board',
-                card_draw_desc: 'A hand-drawing board with adjustable brush and colors, with PNG export to your device.',
+                card_draw_desc: 'An online hand-drawing board with adjustable brush and colors, with PNG export to your device.',
                 card_draw_btn: 'Start Drawing →',
                 info_h2: 'About ERROR-CORE Games',
-                info_p1: 'ERROR-CORE Games is maintained by the open-source ERROR-CORE Team, offering web versions of 4 classic games — Snake, Breakout, Shooting and Soccer Shootout — plus handy tools like an online drawing board. The collection is completely free, ad-free and needs no sign-up; every game is built on HTML5 Canvas and runs smoothly on phones, tablets and computers.',
+                info_p1: 'ERROR-CORE Games is maintained by the open-source virtual team ERROR-CORE Team (members collaborate online), offering web versions of 4 classic games — Snake, Breakout, Plane Shooting and Soccer Shootout — plus handy tools like an online drawing board. The collection is completely free, ad-free and needs no sign-up; every game is built on HTML5 Canvas and runs smoothly on phones, tablets and computers.',
                 info_p2: 'Beyond casual games, the team has also open-sourced Robot Blockly, a visual programming tool for robots — a drag-and-drop block environment built on Google Blockly, supporting the Unitree robot line so even zero-code beginners can get a robot moving.',
                 cookie_title: '🍪 Cookie Policy',
                 cookie_intro: 'ERROR-CORE respects your privacy and is committed to keeping your personal information safe. This Cookie Policy explains how we use cookies and similar technologies.',

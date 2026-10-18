@@ -26,7 +26,10 @@
             var h = document.documentElement;
             var theme = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
             h.setAttribute('data-theme', theme);
-            var lang = (navigator.language || 'zh-CN').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en';
+            var saved = null;
+            try { saved = localStorage.getItem('ec-lang'); } catch (err) {}
+            var lang = (saved === 'zh' || saved === 'en') ? saved
+                : (navigator.language || 'zh-CN').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en';
             if (lang === 'en') h.setAttribute('lang', 'en');
         } catch (e) {}
     })();
@@ -757,7 +760,7 @@ th:last-child, td:last-child { padding-right: 0; }
   "sameAs": [
     "https://github.com/Tengzicong/Robot_Blockly"
   ],
-  "description": "ERROR-CORE 是一个开源团队，维护 Robot Blockly 机器人积木编程工具与 ERROR-CORE Games 在线小游戏合集。"
+  "description": "ERROR-CORE 是一个开源虚拟团队，成员线上协作，维护 Robot Blockly 机器人积木编程工具与 ERROR-CORE Games 在线小游戏合集。"
 }
     </script>
 </head>
@@ -783,10 +786,10 @@ th:last-child, td:last-child { padding-right: 0; }
 
     <header class="hero">
         <div class="wrap">
-            <span class="eyebrow" data-i18n="hero_eyebrow">独立技术团队 · 开源项目</span>
+            <span class="eyebrow" data-i18n="hero_eyebrow">虚拟技术团队 · 开源项目</span>
             <h1>ERROR-CORE Team</h1>
-            <p class="lede" data-i18n="hero_lede">我们是一个独立的技术团队，作品覆盖机器人可视化编程工具与网页小游戏，相关项目均已公开源码。</p>
-            <p class="lede-sub" data-i18n="hero_lede_sub">An independent team building open-source robotics tooling and web mini-games.</p>
+            <p class="lede" data-i18n="hero_lede">我们是一个虚拟的独立技术团队，成员全部线上协作，作品覆盖机器人可视化编程工具与网页小游戏，相关项目均已公开源码。</p>
+            <p class="lede-sub" data-i18n="hero_lede_sub">A virtual team of independent developers building open-source robotics tooling and web mini-games.</p>
             <div class="cta">
                 <a class="btn btn-filled" href="#projects" data-i18n="hero_cta1">查看开源软件</a>
                 <a class="btn btn-outline" href="contact.html" data-i18n="hero_cta2">联系我们</a>
@@ -815,7 +818,7 @@ th:last-child, td:last-child { padding-right: 0; }
     <section class="band" id="team">
         <div class="wrap">
             <h2 class="sec" data-i18n="team_h">团队介绍</h2>
-            <p class="section-desc" data-i18n="team_d">小团队、少流程，从需求到发布全程自主完成。</p>
+            <p class="section-desc" data-i18n="team_d">我们是一个虚拟团队，成员线上协作；小团队、少流程，从需求到发布全程自主完成。</p>
             <div class="grid">
                 <div class="card">
                     <h3 data-i18n="team1t">方向</h3>
@@ -958,9 +961,9 @@ th:last-child, td:last-child { padding-right: 0; }
 const I18N = {
     zh: {
         nav_team: '团队', nav_projects: '开源软件', nav_home: '返回首页',
-        hero_eyebrow: '独立技术团队 · 开源项目',
-        hero_lede: '我们是一个独立的技术团队，作品覆盖机器人可视化编程工具与网页小游戏，相关项目均已公开源码。',
-        hero_lede_sub: 'An independent team building open-source robotics tooling and web mini-games.',
+        hero_eyebrow: '虚拟技术团队 · 开源项目',
+        hero_lede: '我们是一个虚拟的独立技术团队，成员全部线上协作，作品覆盖机器人可视化编程工具与网页小游戏，相关项目均已公开源码。',
+        hero_lede_sub: 'A virtual team of independent developers building open-source robotics tooling and web mini-games.',
         hero_cta1: '查看开源软件', hero_cta2: '联系我们',
         stat_since_label: '团队成立', stat_hint_static: '点击切换显示方式',
         stat_proj_label: '开源项目', stat_proj_value: '2 个', stat_proj_note: '桌面工具与网页游戏',
@@ -972,7 +975,7 @@ const I18N = {
         st_hint_md: '{m} 个月 {d} 天 · 合计 {t} 天',
         st_hint_d: '{d} 天 · 合计 {t} 天',
         team_h: '团队介绍',
-        team_d: '小团队、少流程，从需求到发布全程自主完成。',
+        team_d: '我们是一个虚拟团队，成员线上协作；小团队、少流程，从需求到发布全程自主完成。',
         team1t: '方向', team1b: '机器人可视化编程、桌面应用打包与分发、网页游戏与交互体验。',
         team2t: '技术栈', team2b: 'Python、JavaScript、HTML / CSS，以及 PyQt 桌面端与 Blockly 可视化编辑器。',
         team3t: '开源方式', team3b: '源码托管在 GitHub，通过 Release 提供可安装版本，接受 Issue 反馈。',
@@ -1015,9 +1018,9 @@ const I18N = {
     },
     en: {
         nav_team: 'Team', nav_projects: 'Open Source', nav_home: 'Back to home',
-        hero_eyebrow: 'Independent Tech Team · Open Source',
-        hero_lede: 'We are an independent technical team whose work spans visual robot programming tools and web mini-games, all published with open source.',
-        hero_lede_sub: 'An independent team building open-source robotics tooling and web mini-games.',
+        hero_eyebrow: 'Virtual Tech Team · Open Source',
+        hero_lede: 'We are a virtual, independent technical team — all members collaborate online. Our work spans visual robot programming tools and web mini-games, all published with open source.',
+        hero_lede_sub: 'A virtual team of independent developers building open-source robotics tooling and web mini-games.',
         hero_cta1: 'View open-source software', hero_cta2: 'Contact us',
         stat_since_label: 'Founded', stat_hint_static: 'Click to change display',
         stat_proj_label: 'Open-source projects', stat_proj_value: '2', stat_proj_note: 'Desktop tooling & web games',
@@ -1029,7 +1032,7 @@ const I18N = {
         st_hint_md: '{m} months {d} days · {t} days in total',
         st_hint_d: '{d} days · {t} days in total',
         team_h: 'The Team',
-        team_d: 'A small team with little process — we go from idea to release entirely on our own.',
+        team_d: 'We are a virtual team collaborating online — small, with little process: we go from idea to release entirely on our own.',
         team1t: 'Directions', team1b: 'Visual robot programming, desktop app packaging & distribution, web games and interactive experiences.',
         team2t: 'Stack', team2b: 'Python, JavaScript, HTML / CSS, plus PyQt for desktop and Blockly for the visual editor.',
         team3t: 'How we open source', team3b: 'Source hosted on GitHub, installable builds shipped via Releases, and Issue feedback welcome.',
@@ -1072,11 +1075,16 @@ const I18N = {
     }
 };
 
-/* 语言默认值：浏览器语言 > 中文；不读取任何本地存储 */
+/* 语言优先级：用户主动保存的选择（全站共享 localStorage 'ec-lang'）> 浏览器语言 > 中文 */
 let LANG = 'zh';
 try {
+    const saved = localStorage.getItem('ec-lang');
+    LANG = (saved === 'zh' || saved === 'en') ? saved
+        : (navigator.language || 'zh-CN').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en';
+    if (localStorage.getItem('ec-lang') !== LANG) localStorage.setItem('ec-lang', LANG);
+} catch (e) {
     LANG = (navigator.language || 'zh-CN').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en';
-} catch (e) {}
+}
 
 function t(k) {
     const dict = I18N[LANG] || I18N.zh;
@@ -1202,8 +1210,17 @@ function applyLang() {
 document.querySelectorAll('.lang-switch button').forEach(btn => {
     btn.addEventListener('click', () => {
         LANG = btn.dataset.lang === 'en' ? 'en' : 'zh';
+        try { localStorage.setItem('ec-lang', LANG); } catch (e) {}
         applyLang();
     });
+});
+
+/* 跨标签页语言同步：其他页面切换语言后本页即时跟随 */
+window.addEventListener('storage', e => {
+    if (e.key === 'ec-lang' && (e.newValue === 'zh' || e.newValue === 'en') && e.newValue !== LANG) {
+        LANG = e.newValue;
+        applyLang();
+    }
 });
 
 /* ---------- 主题切换：仅本次会话生效，不存储；默认跟随系统 ---------- */

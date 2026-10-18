@@ -45,13 +45,17 @@
         .drawing-toolbar {
             display: flex;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 16px;
             margin-bottom: 20px;
-            padding: 15px;
+            padding: 14px 16px;
             background: #f5f5f7;
             border: 1px solid #d6d6d6;
             border-radius: 18px;
             align-items: center;
+        }
+
+        .drawing-toolbar .tool-btn {
+            margin-left: auto;
         }
 
         .tool-group {
@@ -65,32 +69,85 @@
             color: #1d1d1f;
         }
 
-        .color-picker {
+        #colorPicker {
             width: 40px;
             height: 40px;
-            border: none;
+            padding: 0;
+            border: 1px solid #d6d6d6;
             border-radius: 50%;
             cursor: pointer;
-            overflow: hidden;
+            background: none;
         }
 
-        .brush-size {
-            width: 100px;
+        #brushSize {
+            width: 120px;
+            accent-color: #ff6b4a;
+            cursor: pointer;
+        }
+
+        #brushSizeValue {
+            display: inline-block;
+            min-width: 2ch;
+            font-variant-numeric: tabular-nums;
+            color: #1d1d1f;
+        }
+
+        .tool-options {
+            display: inline-flex;
+            border: 1px solid #d6d6d6;
+            border-radius: 980px;
+            overflow: hidden;
+            background: #ffffff;
+        }
+
+        .tool-option {
+            padding: 7px 14px;
+            border: none;
+            background: transparent;
+            color: #1d1d1f;
+            font-size: 0.88rem;
+            font-weight: 500;
+            cursor: pointer;
+            opacity: .65;
+            transition: background 0.2s ease, opacity 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .tool-option + .tool-option {
+            border-left: 1px solid #d6d6d6;
+        }
+
+        .tool-option:hover {
+            background: #f5f5f7;
+            opacity: 1;
+        }
+
+        .tool-option.selected {
+            background: #0071e3;
+            color: #ffffff;
+            opacity: 1;
         }
 
         .tool-btn {
-            padding: 8px 16px;
-            background: #0071e3;
+            padding: 8px 18px;
+            background: #ff6b4a;
             color: white;
             border: none;
             border-radius: 980px;
             cursor: pointer;
-            transition: background 0.2s ease;
+            transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
             font-weight: 500;
         }
 
         .tool-btn:hover {
-            background: #0077ed;
+            background: #ff8266;
+            box-shadow: 0 4px 12px rgba(255, 107, 74, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .tool-btn:active {
+            transform: translateY(0);
+            box-shadow: none;
         }
 
         .canvas-container {
@@ -102,28 +159,36 @@
         }
 
         #drawingCanvas {
+            display: block;
             cursor: crosshair;
+            touch-action: none;
         }
 
         .save-section {
             text-align: center;
-            margin-top: 20px;
         }
 
         .save-btn {
-            padding: 12px 30px;
-            font-size: 1.1rem;
-            background: #0071e3;
+            padding: 12px 32px;
+            font-size: 1.05rem;
+            background: #34c759;
             color: white;
             border: none;
             border-radius: 980px;
             cursor: pointer;
-            transition: background 0.2s ease;
-            font-weight: 500;
+            transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+            font-weight: 600;
         }
 
         .save-btn:hover {
-            background: #0077ed;
+            background: #3fd76d;
+            box-shadow: 0 4px 12px rgba(52, 199, 89, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .save-btn:active {
+            transform: translateY(0);
+            box-shadow: none;
         }
 
         .copyright {
@@ -152,13 +217,13 @@
 
             .drawing-toolbar {
                 flex-direction: column;
+                align-items: stretch;
                 gap: 10px;
-                padding: 10px;
+                padding: 12px;
             }
 
             .tool-group {
-                flex-direction: row;
-                align-items: center;
+                justify-content: space-between;
                 gap: 8px;
             }
 
@@ -166,36 +231,39 @@
                 font-size: 0.9rem;
             }
 
-            #colorPicker {
-                width: 40px;
-                height: 40px;
+            .tool-options {
+                flex: 1;
+                justify-content: center;
+            }
+
+            .tool-option {
+                padding: 7px 10px;
+                font-size: 0.82rem;
             }
 
             #brushSize {
-                width: 100px;
+                flex: 1;
+                min-width: 0;
             }
 
             #brushSizeValue {
                 font-size: 0.9rem;
             }
 
-            .tool-btn {
+            .drawing-toolbar .tool-btn {
+                margin-left: 0;
+                width: 100%;
                 padding: 8px 15px;
                 font-size: 0.9rem;
             }
 
             .canvas-container {
-                padding: 10px;
+                border-radius: 18px;
             }
 
             #drawingCanvas {
                 width: 100% !important;
                 height: auto !important;
-            }
-
-            .action-buttons {
-                flex-direction: column;
-                gap: 10px;
             }
 
             .save-btn {
@@ -292,14 +360,47 @@
             color: #f5f5f7;
         }
 
-        html[data-theme="dark"] .tool-btn,
-        html[data-theme="dark"] .save-btn {
-            background: #0a84ff;
+        html[data-theme="dark"] .tool-btn {
+            background: #ff6b4a;
         }
 
-        html[data-theme="dark"] .tool-btn:hover,
+        html[data-theme="dark"] .tool-btn:hover {
+            background: #ff8266;
+        }
+
+        html[data-theme="dark"] .save-btn {
+            background: #30d158;
+            color: #05331a;
+        }
+
         html[data-theme="dark"] .save-btn:hover {
-            background: #409cff;
+            background: #4be077;
+        }
+
+        html[data-theme="dark"] #colorPicker {
+            border-color: rgba(255, 255, 255, 0.16);
+        }
+
+        html[data-theme="dark"] .tool-options {
+            background: #1c1c1e;
+            border-color: rgba(255, 255, 255, 0.16);
+        }
+
+        html[data-theme="dark"] .tool-option {
+            color: #f5f5f7;
+        }
+
+        html[data-theme="dark"] .tool-option + .tool-option {
+            border-left-color: rgba(255, 255, 255, 0.16);
+        }
+
+        html[data-theme="dark"] .tool-option:hover {
+            background: #2c2c2e;
+        }
+
+        html[data-theme="dark"] .tool-option.selected {
+            background: #0a84ff;
+            color: #ffffff;
         }
 
         /* 画布保持白色画纸，仅边框适配深色 */
@@ -318,37 +419,47 @@
     <script>
         window.PAGE_I18N = {
             zh: {
-                back_btn: '← 返回首页<br>Home',
-                drawing_heading: '🎨 画板<br>Drawing Board',
+                back_btn: '← 返回首页',
+                drawing_heading: '🎨 在线画板',
                 color_label: '颜色:',
+                tool_label: '工具:',
+                brush_round: '圆头笔',
+                brush_square: '方头笔',
+                brush_marker: '马克笔',
+                eraser_btn: '橡皮擦',
                 brush_label: '画笔大小:',
                 clear_btn: '清空画布',
                 save_btn: '💾 保存为PNG',
-                info_h2: '在线画板使用说明',
-                info_p1: 'ERROR-CORE 在线画板是一款免安装的浏览器绘图工具：在工具栏选择颜色、拖动滑块调节笔刷粗细，即可在画布上自由绘制；绘制过程支持鼠标与触屏（手指直接作画），完成后点击"保存为 PNG"按钮将作品下载到本地。清空按钮可一键重置画布重新开始。',
-                info_p2: '画板完全在浏览器本地运行，你的作品不会上传到任何服务器，刷新页面前请及时保存作品。'
+                info_h2: '使用说明',
+                info_p1: '选择颜色与工具（圆头笔、方头笔、马克笔或橡皮擦），拖动滑块调节画笔粗细，即可在画布上绘制，支持鼠标与触屏。完成后点击"保存为 PNG"下载作品，"清空画布"可重新开始。',
+                info_p2: '画板在浏览器本地运行，作品不会上传服务器，刷新页面前请先保存。'
             },
             en: {
                 back_btn: '← Home',
                 drawing_heading: '🎨 Drawing Board',
                 color_label: 'Color:',
+                tool_label: 'Tool:',
+                brush_round: 'Round Pen',
+                brush_square: 'Square Pen',
+                brush_marker: 'Marker',
+                eraser_btn: 'Eraser',
                 brush_label: 'Brush Size:',
                 clear_btn: 'Clear Canvas',
                 save_btn: '💾 Save as PNG',
-                info_h2: 'How to Use the Online Drawing Board',
-                info_p1: 'The ERROR-CORE online drawing board is a browser-based painting tool that needs no installation: pick a color in the toolbar, drag the slider to adjust brush thickness, and start sketching freely on the canvas. Drawing works with both mouse and touch (paint with your fingers), and when you are done, click the "Save as PNG" button to download your artwork. The Clear button resets the canvas in one tap so you can start over.',
-                info_p2: 'The drawing board runs entirely in your browser — your artwork is never uploaded to any server, so remember to save before refreshing the page.'
+                info_h2: 'How to Use',
+                info_p1: 'Pick a color and a tool (round pen, square pen, marker, or eraser), adjust the brush size with the slider, and start drawing — mouse and touch both work. Click "Save as PNG" to download your artwork, or "Clear Canvas" to start over.',
+                info_p2: 'The board runs entirely in your browser and never uploads your artwork. Save before refreshing the page.'
             }
         };
         window.PAGE_META = {
             zh: {
                 title: '在线画板 - 免费绘图工具 | ERROR-CORE Drawing',
-                description: 'ERROR-CORE 在线画板：浏览器内免费绘图工具，支持颜色选择、画笔粗细调节、触屏绘制与作品保存下载，无需安装任何软件。',
+                description: 'ERROR-CORE 在线画板：浏览器内免费绘图工具，支持多种笔刷切换、橡皮擦、颜色选择、画笔粗细调节、触屏绘制与作品保存下载，无需安装任何软件。',
                 keywords: '在线画板, 网页绘图, 画板工具, drawing, ERROR-CORE'
             },
             en: {
                 title: 'Online Drawing Board - Free Sketch Tool | ERROR-CORE Drawing',
-                description: 'ERROR-CORE online drawing board: a free in-browser painting tool with color picker, adjustable brush size, touch drawing, and one-click PNG export — no software installation required.',
+                description: 'ERROR-CORE online drawing board: a free in-browser painting tool with multiple brush types, an eraser, color picker, adjustable brush size, touch drawing, and one-click PNG export — no software installation required.',
                 keywords: 'online drawing board, web sketch tool, drawing app, free paint, ERROR-CORE'
             }
         };
@@ -356,20 +467,29 @@
 </head>
 <body>
     <span class="lt-mount"></span>
-    <a href="index.html" class="back-btn" data-i18n-html="back_btn">← 返回首页<br>Home</a>
+    <a href="gamecenter.html" class="back-btn" data-i18n="back_btn">← 返回首页</a>
 
     <div class="stars" id="stars"></div>
 
     <div class="container">
         <div class="drawing-container">
             <div class="drawing-header">
-                <h1 class="drawing-title" data-i18n-html="drawing_heading">🎨 画板<br>Drawing Board</h1>
+                <h1 class="drawing-title" data-i18n-html="drawing_heading">🎨 在线画板</h1>
             </div>
 
             <div class="drawing-toolbar">
                 <div class="tool-group">
                     <label for="colorPicker" data-i18n="color_label">颜色:</label>
                     <input type="color" id="colorPicker" value="#000000">
+                </div>
+                <div class="tool-group">
+                    <label data-i18n="tool_label">工具:</label>
+                    <div class="tool-options" role="group" aria-label="Tools">
+                        <button type="button" class="tool-option selected" data-tool="round" data-i18n="brush_round">圆头笔</button>
+                        <button type="button" class="tool-option" data-tool="square" data-i18n="brush_square">方头笔</button>
+                        <button type="button" class="tool-option" data-tool="marker" data-i18n="brush_marker">马克笔</button>
+                        <button type="button" class="tool-option" id="eraserBtn" data-tool="eraser" data-i18n="eraser_btn">橡皮擦</button>
+                    </div>
                 </div>
                 <div class="tool-group">
                     <label for="brushSize" data-i18n="brush_label">画笔大小:</label>
@@ -389,9 +509,9 @@
         </div>
 
         <section class="game-info">
-            <h2 data-i18n="info_h2">在线画板使用说明</h2>
-            <p data-i18n="info_p1">ERROR-CORE 在线画板是一款免安装的浏览器绘图工具：在工具栏选择颜色、拖动滑块调节笔刷粗细，即可在画布上自由绘制；绘制过程支持鼠标与触屏（手指直接作画），完成后点击"保存为 PNG"按钮将作品下载到本地。清空按钮可一键重置画布重新开始。</p>
-            <p data-i18n="info_p2">画板完全在浏览器本地运行，你的作品不会上传到任何服务器，刷新页面前请及时保存作品。</p>
+            <h2 data-i18n="info_h2">使用说明</h2>
+            <p data-i18n="info_p1">选择颜色，拖动滑块调节画笔粗细，即可在画布上绘制，支持鼠标与触屏。完成后点击"保存为 PNG"下载作品，"清空画布"可重新开始。</p>
+            <p data-i18n="info_p2">画板在浏览器本地运行，作品不会上传服务器，刷新页面前请先保存。</p>
         </section>
     </div>
 
@@ -426,6 +546,7 @@
             let isDrawing = false;
             let lastX = 0;
             let lastY = 0;
+            let currentTool = 'round';
 
             ctx.lineCap = 'round';
             ctx.lineJoin = 'round';
@@ -433,6 +554,43 @@
             brushSize.addEventListener('input', function() {
                 brushSizeValue.textContent = this.value;
             });
+
+            // 工具切换：圆头笔 / 方头笔 / 马克笔（半透明宽笔触）/ 橡皮擦
+            document.querySelectorAll('.tool-option').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    currentTool = btn.dataset.tool;
+                    document.querySelectorAll('.tool-option').forEach(function (b) {
+                        b.classList.toggle('selected', b === btn);
+                    });
+                });
+            });
+
+            function applyToolStyle() {
+                if (currentTool === 'eraser') {
+                    ctx.strokeStyle = '#ffffff';
+                    ctx.globalAlpha = 1;
+                    ctx.lineCap = 'round';
+                    ctx.lineWidth = brushSize.value * 2;
+                } else if (currentTool === 'square') {
+                    ctx.strokeStyle = colorPicker.value;
+                    ctx.globalAlpha = 1;
+                    ctx.lineCap = 'butt';
+                    ctx.lineJoin = 'miter';
+                    ctx.lineWidth = brushSize.value;
+                } else if (currentTool === 'marker') {
+                    ctx.strokeStyle = colorPicker.value;
+                    ctx.globalAlpha = 0.35;
+                    ctx.lineCap = 'round';
+                    ctx.lineJoin = 'round';
+                    ctx.lineWidth = brushSize.value * 2.5;
+                } else {
+                    ctx.strokeStyle = colorPicker.value;
+                    ctx.globalAlpha = 1;
+                    ctx.lineCap = 'round';
+                    ctx.lineJoin = 'round';
+                    ctx.lineWidth = brushSize.value;
+                }
+            }
 
             function startDrawing(e) {
                 isDrawing = true;
@@ -444,11 +602,10 @@
 
                 const [currentX, currentY] = getCoordinates(e);
 
+                applyToolStyle();
                 ctx.beginPath();
                 ctx.moveTo(lastX, lastY);
                 ctx.lineTo(currentX, currentY);
-                ctx.strokeStyle = colorPicker.value;
-                ctx.lineWidth = brushSize.value;
                 ctx.stroke();
 
                 [lastX, lastY] = [currentX, currentY];
@@ -458,14 +615,24 @@
                 isDrawing = false;
             }
 
+            // 坐标按 canvas 内部像素与实际显示尺寸的比例换算：
+            // 移动端 CSS 将画布缩放为 width:100%，直接用 clientX-rect.left 会错位
             function getCoordinates(e) {
                 const rect = canvas.getBoundingClientRect();
-                if (e.type.includes('mouse')) {
-                    return [e.clientX - rect.left, e.clientY - rect.top];
-                } else if (e.type.includes('touch')) {
-                    return [e.touches[0].clientX - rect.left, e.touches[0].clientY - rect.top];
+                const scaleX = canvas.width / rect.width;
+                const scaleY = canvas.height / rect.height;
+                let clientX, clientY;
+                if (e.touches && e.touches.length) {
+                    clientX = e.touches[0].clientX;
+                    clientY = e.touches[0].clientY;
+                } else if (e.changedTouches && e.changedTouches.length) {
+                    clientX = e.changedTouches[0].clientX;
+                    clientY = e.changedTouches[0].clientY;
+                } else {
+                    clientX = e.clientX;
+                    clientY = e.clientY;
                 }
-                return [0, 0];
+                return [(clientX - rect.left) * scaleX, (clientY - rect.top) * scaleY];
             }
 
             canvas.addEventListener('mousedown', startDrawing);
@@ -473,9 +640,19 @@
             canvas.addEventListener('mouseup', stopDrawing);
             canvas.addEventListener('mouseout', stopDrawing);
 
-            canvas.addEventListener('touchstart', startDrawing);
-            canvas.addEventListener('touchmove', draw);
-            canvas.addEventListener('touchend', stopDrawing);
+            // 触屏：passive:false + preventDefault，阻止绘制手势触发页面滚动/平移（修复移动端画画时画面移动）
+            canvas.addEventListener('touchstart', function (e) {
+                e.preventDefault();
+                startDrawing(e);
+            }, { passive: false });
+            canvas.addEventListener('touchmove', function (e) {
+                e.preventDefault();
+                draw(e);
+            }, { passive: false });
+            canvas.addEventListener('touchend', function (e) {
+                e.preventDefault();
+                stopDrawing();
+            }, { passive: false });
 
             clearBtn.addEventListener('click', function() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
