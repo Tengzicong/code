@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="ERROR-CORE Cookie 政策：说明我们如何使用 Cookie 和类似技术，以及您如何管理这些技术。">
+    <meta name="robots" content="noindex">
+    <title>Cookie 政策 - ERROR-CORE</title>
+    <link rel="icon" type="image/png" href="picture/error-icon.png">
+    <link rel="apple-touch-icon" href="picture/error-icon.png">
+    <script src="js/lang-theme.js"></script>
+    <style>
+/* ==========================================================================
+   Cookie 政策页 · Apple 排版（移动端优先，支持深色模式）
+   ========================================================================== */
+:root {
+    --white:        #ffffff;
+    --mist:         #f5f5f7;
+    --hairline:     #d6d6d6;
+    --ink:          #1d1d1f;
+    --secondary:    #6e6e73;
+    --steel:        #86868b;
+    --link:         #0066cc;
+
+    --display: 'SF Pro Display', ui-sans-serif, system-ui, -apple-system,
+               BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC",
+               "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    --text: 'SF Pro Text', var(--display);
+
+    --r-card: 24px;
+    --r-pill: 980px;
+    --ease:   cubic-bezier(0.36, 0.73, 0.21, 0.96);
+}
+
+html[data-theme="dark"] {
+    --white:        #000000;
+    --mist:         #1c1c1e;
+    --hairline:     rgba(255, 255, 255, 0.16);
+    --ink:          #f5f5f7;
+    --secondary:    #a1a1a6;
+    --steel:        #86868b;
+    --link:         #2997ff;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; color-scheme: light; }
+
+html[data-theme="dark"] { color-scheme: dark; }
+
+body {
+    background: var(--white);
+    color: var(--ink);
+    font-family: var(--text);
+    font-size: 17px;
+    line-height: 1.47;
+    letter-spacing: -0.374px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.35s var(--ease), color 0.35s var(--ease);
+}
+
+a { color: var(--link); text-decoration: none; }
+
+a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+.page {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 72px 24px 96px;
+    padding-left: max(24px, env(safe-area-inset-left));
+    padding-right: max(24px, env(safe-area-inset-right));
+    padding-bottom: max(96px, env(safe-area-inset-bottom));
+}
+
+/* 返回链接 */
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 36px;
+    padding: 7px 16px;
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-pill);
+    font-size: 13px;
+    letter-spacing: -0.08px;
+    color: var(--ink);
+    transition: background 0.2s var(--ease);
+}
+
+.back-link:hover { background: var(--mist); text-decoration: none; }
+
+h1 {
+    font-family: var(--display);
+    font-size: clamp(32px, 7vw, 44px);
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 14px;
+}
+
+.updated {
+    font-size: 14px;
+    letter-spacing: -0.224px;
+    color: var(--steel);
+    margin-bottom: 48px;
+}
+
+h2 {
+    font-family: var(--display);
+    font-size: 24px;
+    line-height: 1.25;
+    letter-spacing: -0.3px;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 44px 0 12px;
+}
+
+h3 {
+    font-family: var(--display);
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: -0.374px;
+    color: var(--ink);
+    margin: 24px 0 8px;
+}
+
+p, li {
+    font-size: 17px;
+    line-height: 1.6;
+    letter-spacing: -0.374px;
+    color: var(--secondary);
+}
+
+p + p { margin-top: 12px; }
+
+ul, ol { margin: 8px 0 16px 1.3rem; }
+
+li { margin-bottom: 8px; }
+
+li::marker { color: var(--steel); }
+
+strong { color: var(--ink); font-weight: 600; }
+
+.note {
+    margin: 16px 0;
+    padding: 14px 18px;
+    background: var(--mist);
+    border-radius: 14px;
+    font-size: 15px;
+    line-height: 1.5;
+    letter-spacing: -0.224px;
+    color: var(--secondary);
+}
+
+.note strong { color: var(--ink); }
+
+hr {
+    border: 0;
+    border-top: 1px solid var(--hairline);
+    margin: 48px 0 24px;
+}
+
+.meta {
+    font-size: 14px;
+    line-height: 1.6;
+    letter-spacing: -0.224px;
+    color: var(--steel);
+}
+
+.meta p + p { margin-top: 6px; }
+
+@media (max-width: 720px) {
+    .page { padding-top: 56px; }
+
+    h2 { margin-top: 36px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+}
+    </style>
+</head>
+<body>
+    <main class="page">
+        <a class="back-link" href="index.html" id="backLink" data-i18n="back">← 返回首页</a>
+
+        <h1 data-i18n="title">Cookie 政策</h1>
+        <p class="updated" data-i18n="updated">最后更新日期：UTC+8 2026年5月27日21:00</p>
+
+        <h2 data-i18n="s1_h2">概述</h2>
+        <p data-i18n="s1_p1">ERROR-CORE 小游戏（以下简称"我们"）尊重您的隐私，并致力于保护您的个人信息安全。本 Cookie 政策说明我们如何使用 Cookie 和类似技术来识别您，以及您如何管理这些技术。</p>
+
+        <h2 data-i18n="s2_h2">什么是 Cookie</h2>
+        <p data-i18n="s2_p1">Cookie 是网站发送到您浏览器的小型文本文件，存储在您的设备上。它们用于使网站正常运行、改善用户体验、分析网站流量和行为。</p>
+
+        <h2 data-i18n="s3_h2">我们使用的 Cookie 类型</h2>
+        <h3 data-i18n="s3_h3_1">必要 Cookie</h3>
+        <p data-i18n="s3_p1">这些 Cookie 对于网站的基本功能是必需的。它们允许您在网站上导航和使用其功能，例如访问安全区域。</p>
+        <h3 data-i18n="s3_h3_2">分析和性能 Cookie</h3>
+        <p data-i18n="s3_p2">这些 Cookie 收集有关访客如何使用网站的信息，帮助我们改进网站性能和用户体验。</p>
+        <h3 data-i18n="s3_h3_3">功能性 Cookie</h3>
+        <p data-i18n="s3_p3">这些 Cookie 允许网站记住您的偏好设置，提供更个性化的体验。</p>
+
+        <h2 data-i18n="s4_h2">Cookie 的使用目的</h2>
+        <ol>
+            <li data-i18n-html="s4_li1"><strong>确保网站正常运行</strong>：必要 Cookie 支持基本功能</li>
+            <li data-i18n-html="s4_li2"><strong>分析网站流量</strong>：了解访客如何与网站互动</li>
+            <li data-i18n-html="s4_li3"><strong>优化用户体验</strong>：记住您的偏好设置</li>
+            <li data-i18n-html="s4_li4"><strong>安全目的</strong>：保护网站和用户数据</li>
+        </ol>
+
+        <h2 data-i18n="s5_h2">您的选择</h2>
+        <p data-i18n="s5_p1">您可以通过浏览器设置管理 Cookie：</p>
+        <ul>
+            <li data-i18n-html="s5_li1"><strong>浏览器设置</strong>：大多数浏览器允许您拒绝或删除 Cookie</li>
+            <li data-i18n-html="s5_li2"><strong>第三方工具</strong>：可以使用第三方工具管理 Cookie</li>
+        </ul>
+        <p class="note" data-i18n-html="s5_note"><strong>请注意</strong>：禁用某些 Cookie 可能会影响网站的正常功能。</p>
+
+        <h2 data-i18n="s6_h2">更新本政策</h2>
+        <p data-i18n="s6_p1">我们可能会不定期更新本 Cookie 政策。更新后的政策将在此页面发布，并注明更新日期。</p>
+
+        <h2 data-i18n="s7_h2">联系我们</h2>
+        <p data-i18n="s7_p1">如有任何问题或疑虑，请通过以下方式联系我们：</p>
+        <ul>
+            <li><span data-i18n="s7_mail_label">邮箱：</span><a href="mailto:error_core@163.com">error_core@163.com</a></li>
+        </ul>
+
+        <hr>
+        <div class="meta">
+            <p data-i18n="version">版本：V1.0.0</p>
+            <p data-i18n="copyright">© ERROR-CORE Team All Rights Reserved</p>
+        </div>
+    </main>
+
+    <script>
+        window.PAGE_META = {
+            zh: {
+                title: 'Cookie 政策 - ERROR-CORE',
+                description: 'ERROR-CORE Cookie 政策：说明我们如何使用 Cookie 和类似技术，以及您如何管理这些技术。'
+            },
+            en: {
+                title: 'Cookie Policy - ERROR-CORE',
+                description: 'ERROR-CORE Cookie Policy: how we use cookies and similar technologies, and how you can manage them.'
+            }
+        };
+        window.PAGE_I18N = {
+            zh: {
+                back: '← 返回首页',
+                title: 'Cookie 政策',
+                updated: '最后更新日期：UTC+8 2026年5月27日21:00',
+                s1_h2: '概述',
+                s1_p1: 'ERROR-CORE 小游戏（以下简称"我们"）尊重您的隐私，并致力于保护您的个人信息安全。本 Cookie 政策说明我们如何使用 Cookie 和类似技术来识别您，以及您如何管理这些技术。',
+                s2_h2: '什么是 Cookie',
+                s2_p1: 'Cookie 是网站发送到您浏览器的小型文本文件，存储在您的设备上。它们用于使网站正常运行、改善用户体验、分析网站流量和行为。',
+                s3_h2: '我们使用的 Cookie 类型',
+                s3_h3_1: '必要 Cookie',
+                s3_p1: '这些 Cookie 对于网站的基本功能是必需的。它们允许您在网站上导航和使用其功能，例如访问安全区域。',
+                s3_h3_2: '分析和性能 Cookie',
+                s3_p2: '这些 Cookie 收集有关访客如何使用网站的信息，帮助我们改进网站性能和用户体验。',
+                s3_h3_3: '功能性 Cookie',
+                s3_p3: '这些 Cookie 允许网站记住您的偏好设置，提供更个性化的体验。',
+                s4_h2: 'Cookie 的使用目的',
+                s4_li1: '<strong>确保网站正常运行</strong>：必要 Cookie 支持基本功能',
+                s4_li2: '<strong>分析网站流量</strong>：了解访客如何与网站互动',
+                s4_li3: '<strong>优化用户体验</strong>：记住您的偏好设置',
+                s4_li4: '<strong>安全目的</strong>：保护网站和用户数据',
+                s5_h2: '您的选择',
+                s5_p1: '您可以通过浏览器设置管理 Cookie：',
+                s5_li1: '<strong>浏览器设置</strong>：大多数浏览器允许您拒绝或删除 Cookie',
+                s5_li2: '<strong>第三方工具</strong>：可以使用第三方工具管理 Cookie',
+                s5_note: '<strong>请注意</strong>：禁用某些 Cookie 可能会影响网站的正常功能。',
+                s6_h2: '更新本政策',
+                s6_p1: '我们可能会不定期更新本 Cookie 政策。更新后的政策将在此页面发布，并注明更新日期。',
+                s7_h2: '联系我们',
+                s7_p1: '如有任何问题或疑虑，请通过以下方式联系我们：',
+                s7_mail_label: '邮箱：',
+                version: '版本：V1.0.0',
+                copyright: '© ERROR-CORE Team All Rights Reserved'
+            },
+            en: {
+                back: '← Back to Home',
+                title: 'Cookie Policy',
+                updated: 'Last updated: May 27, 2026, 21:00 (UTC+8)',
+                s1_h2: 'Overview',
+                s1_p1: 'ERROR-CORE Mini-Games ("we") respects your privacy and is committed to protecting your personal information. This Cookie Policy explains how we use cookies and similar technologies to recognize you, and how you can manage these technologies.',
+                s2_h2: 'What Are Cookies',
+                s2_p1: 'Cookies are small text files that a website sends to your browser and stores on your device. They are used to keep the website working properly, improve your experience, and analyze site traffic and behavior.',
+                s3_h2: 'Types of Cookies We Use',
+                s3_h3_1: 'Essential Cookies',
+                s3_p1: 'These cookies are required for the basic functions of the website. They allow you to navigate the site and use its features, such as accessing secure areas.',
+                s3_h3_2: 'Analytics & Performance Cookies',
+                s3_p2: 'These cookies collect information about how visitors use the website, helping us improve site performance and the user experience.',
+                s3_h3_3: 'Functional Cookies',
+                s3_p3: 'These cookies allow the website to remember your preferences and provide a more personalized experience.',
+                s4_h2: 'Purposes of Cookie Use',
+                s4_li1: '<strong>Keep the website running</strong>: essential cookies support basic functionality',
+                s4_li2: '<strong>Analyze site traffic</strong>: understand how visitors interact with the site',
+                s4_li3: '<strong>Optimize user experience</strong>: remember your preferences',
+                s4_li4: '<strong>Security</strong>: protect the website and user data',
+                s5_h2: 'Your Choices',
+                s5_p1: 'You can manage cookies through your browser settings:',
+                s5_li1: '<strong>Browser settings</strong>: most browsers allow you to refuse or delete cookies',
+                s5_li2: '<strong>Third-party tools</strong>: you can use third-party tools to manage cookies',
+                s5_note: '<strong>Please note</strong>: disabling certain cookies may affect the normal functionality of the website.',
+                s6_h2: 'Updates to This Policy',
+                s6_p1: 'We may update this Cookie Policy from time to time. The updated policy will be posted on this page with the revision date noted.',
+                s7_h2: 'Contact Us',
+                s7_p1: 'If you have any questions or concerns, please contact us at:',
+                s7_mail_label: 'Email: ',
+                version: 'Version: V1.0.0',
+                copyright: '© ERROR-CORE Team All Rights Reserved'
+            }
+        };
+
+        // 返回链接：有浏览历史时返回上一页，否则回首页
+        document.getElementById('backLink').addEventListener('click', function (e) {
+            if (window.history.length > 1) {
+                e.preventDefault();
+                window.history.back();
+            }
+        });
+    </script>
+</body>
+</html>

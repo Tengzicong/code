@@ -7,7 +7,7 @@
     <meta name="keywords" content="ERROR-CORE, ERROR-CORE Games, 在线游戏, HTML5 游戏, 免费小游戏">
     <link rel="canonical" href="https://tzc.yffyeah.top/minigame.html">
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="ERROR-CORE">
+    <meta property="og:site_name" content="ERROR-CORE Team">
     <meta property="og:title" content="ERROR-CORE Games - 4 款经典游戏在线玩">
     <meta property="og:description" content="ERROR-CORE Games 小游戏合集：贪吃蛇、打砖块、飞机射击、足球射门 4 款经典 HTML5 游戏免费在线玩，无需下载注册，手机电脑通用。">
     <meta property="og:url" content="https://tzc.yffyeah.top/minigame.html">
@@ -18,6 +18,9 @@
     <title>ERROR-CORE Games - 4 款经典游戏在线玩</title>
     <script src="js/lang-theme.js"></script>
     <script src="js/device-detect.js"></script>
+    <link rel="icon" type="image/png" href="picture/error-icon.png">
+    <link rel="apple-touch-icon" href="picture/error-icon.png">
+    <script src="js/cookie-consent.js" defer></script>
     <style>
 /* ==========================================================================
    Apple · 白色画廊排版（支持深色模式）
@@ -331,146 +334,6 @@ h2.sec {
     color: var(--steel);
 }
 
-/* ==========================================================================
-   Cookie 政策弹窗（Apple 化：大圆角卡片 + 胶囊按钮）
-   ========================================================================== */
-.cookie-modal-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-    background: rgba(0, 0, 0, 0.42);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.24s var(--ease), visibility 0.24s var(--ease);
-}
-
-.cookie-modal-overlay.show { opacity: 1; visibility: visible; }
-
-.cookie-modal {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-    width: min(520px, 100%);
-    max-height: min(80vh, 640px);
-    padding: 28px;
-    background: var(--white);
-    border: 1px solid var(--hairline);
-    border-radius: var(--r-card);
-    transform: translateY(8px) scale(0.985);
-    transition: transform 0.24s var(--ease), background-color 0.35s var(--ease);
-}
-
-.cookie-modal-overlay.show .cookie-modal { transform: none; }
-
-.cookie-modal h2 {
-    font-family: var(--display);
-    font-size: 21px;
-    font-weight: 600;
-    letter-spacing: 0.231px;
-    text-align: left;
-    color: var(--ink);
-}
-
-.cookie-modal-content {
-    overflow-y: auto;
-    padding-right: 4px;
-    font-size: 15px;
-    line-height: 1.55;
-    letter-spacing: -0.224px;
-    color: var(--secondary);
-}
-
-.cookie-modal-content h3 {
-    margin-top: 18px;
-    margin-bottom: 8px;
-    font-size: 17px;
-    font-weight: 600;
-    letter-spacing: -0.374px;
-    color: var(--ink);
-}
-
-.cookie-modal-content h3:first-child { margin-top: 0; }
-
-.cookie-modal-content p { margin-bottom: 10px; }
-
-.cookie-modal-content ul { margin: 0 0 10px 1.15rem; }
-
-.cookie-modal-content li { margin-bottom: 6px; }
-
-.cookie-modal-content strong { color: var(--ink); font-weight: 600; }
-
-.privacy-link { color: var(--link); text-decoration: none; }
-
-.privacy-link:hover { text-decoration: underline; text-underline-offset: 3px; }
-
-.cookie-consent-checkbox label {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    padding: 14px 18px;
-    background: var(--mist);
-    border: 1px solid var(--hairline);
-    border-radius: var(--r-inset);
-    font-size: 14px;
-    line-height: 1.45;
-    letter-spacing: -0.224px;
-    color: var(--secondary);
-    cursor: pointer;
-    transition: border-color 0.2s var(--ease);
-}
-
-.cookie-consent-checkbox label:hover { border-color: var(--steel); }
-
-.cookie-consent-checkbox input[type="checkbox"] {
-    width: 17px;
-    height: 17px;
-    margin-top: 2px;
-    flex-shrink: 0;
-    accent-color: var(--action);
-    cursor: pointer;
-}
-
-.cookie-modal-buttons {
-    display: flex;
-    gap: 12px;
-    justify-content: flex-end;
-}
-
-.cookie-btn {
-    padding: 10px 22px;
-    min-height: 42px;
-    border: 1px solid transparent;
-    border-radius: var(--r-pill);
-    font-family: inherit;
-    font-size: 15px;
-    font-weight: 500;
-    letter-spacing: -0.224px;
-    cursor: pointer;
-    transition: background-color 0.2s var(--ease),
-                border-color 0.2s var(--ease),
-                color 0.2s var(--ease);
-}
-
-.cookie-btn.accept { background: var(--action); color: #ffffff; }
-
-.cookie-btn.accept:hover { background: var(--action-hover); }
-
-.cookie-btn.accept:disabled {
-    background: var(--control);
-    color: var(--steel);
-    cursor: not-allowed;
-}
-
-.cookie-btn.decline { background: var(--mist); color: var(--ink); }
-
-.cookie-btn.decline:hover { background: var(--control); }
-
 /* ---------- 响应式 ---------- */
 @media (max-width: 900px) {
     .appbar-nav .nav-link { display: none; }
@@ -514,12 +377,6 @@ h2.sec {
     .entry-card { padding: 28px; }
 
     .entry-card .btn { width: 100%; }
-
-    .cookie-modal { padding: 22px; max-height: 86vh; }
-
-    .cookie-modal-buttons { flex-direction: column-reverse; }
-
-    .cookie-btn { width: 100%; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -533,46 +390,6 @@ h2.sec {
     </style>
 </head>
 <body>
-    <!-- Cookie协议弹窗 -->
-    <div class="cookie-modal-overlay" id="cookieOverlay">
-        <div class="cookie-modal">
-            <h2 data-i18n="cookie_title">🍪 Cookie 政策</h2>
-            <div class="cookie-modal-content">
-                <p data-i18n="cookie_intro">ERROR-CORE 尊重您的隐私，并致力于保护您的个人信息安全。本 Cookie 政策说明我们如何使用 Cookie 和类似技术。</p>
-
-                <h3 data-i18n="cookie_what_h3">什么是 Cookie</h3>
-                <p data-i18n="cookie_what_p">Cookie 是网站发送到您浏览器的小型文本文件，存储在您的设备上。它们用于使网站正常运行、改善用户体验、分析网站流量和行为。</p>
-
-                <h3 data-i18n="cookie_types_h3">我们使用的 Cookie 类型</h3>
-                <ul>
-                    <li data-i18n-html="cookie_type_necessary"><strong>必要 Cookie</strong>：对于网站的基本功能是必需的</li>
-                    <li data-i18n-html="cookie_type_analytics"><strong>分析 Cookie</strong>：收集有关访客如何使用网站的信息</li>
-                    <li data-i18n-html="cookie_type_functional"><strong>功能性 Cookie</strong>：允许网站记住您的偏好设置</li>
-                </ul>
-
-                <h3 data-i18n="cookie_purpose_h3">Cookie 的使用目的</h3>
-                <ul>
-                    <li data-i18n="cookie_purpose_1">确保网站正常运行</li>
-                    <li data-i18n="cookie_purpose_2">分析网站流量</li>
-                    <li data-i18n="cookie_purpose_3">优化用户体验</li>
-                </ul>
-            </div>
-
-            <!-- 同意复选框 -->
-            <div class="cookie-consent-checkbox">
-                <label>
-                    <input type="checkbox" id="cookieConsentCheckbox">
-                    <span data-i18n-html="cookie_consent">我已阅读并同意 <a href="cookie-policy.md" target="_blank" class="privacy-link">《Cookie隐私协议》</a></span>
-                </label>
-            </div>
-
-            <div class="cookie-modal-buttons">
-                <button class="cookie-btn decline" id="declineCookie" data-i18n="cookie_decline">拒绝</button>
-                <button class="cookie-btn accept" id="acceptCookie" disabled data-i18n="cookie_accept">同意</button>
-            </div>
-        </div>
-    </div>
-
     <header class="topbar">
         <div class="topbar-inner">
             <a class="wordmark" href="minigame.html"><img class="logo" src="picture/error.png" alt="ERROR-CORE Logo" width="28" height="28">ERROR-CORE</a>
@@ -676,22 +493,7 @@ h2.sec {
                 card_draw_btn: '开始绘制 →',
                 info_h2: '关于 ERROR-CORE Games',
                 info_p1: 'ERROR-CORE Games 由开源团队 ERROR-CORE Team 维护，提供贪吃蛇、打砖块、飞机射击、足球射门 4 款经典游戏的网页版，以及在线画板等实用小工具。合集完全免费、无广告、无需注册，所有游戏基于 HTML5 Canvas 技术实现，在手机、平板和电脑上都能流畅运行。',
-                info_p2: '除了休闲游戏，团队还开源了机器人可视化编程工具 Robot Blockly——基于 Google Blockly 的拖拽式积木编程环境，支持宇树（Unitree）系列机器人，零代码基础也能让机器人动起来。',
-                cookie_title: '🍪 Cookie 政策',
-                cookie_intro: 'ERROR-CORE 尊重您的隐私，并致力于保护您的个人信息安全。本 Cookie 政策说明我们如何使用 Cookie 和类似技术。',
-                cookie_what_h3: '什么是 Cookie',
-                cookie_what_p: 'Cookie 是网站发送到您浏览器的小型文本文件，存储在您的设备上。它们用于使网站正常运行、改善用户体验、分析网站流量和行为。',
-                cookie_types_h3: '我们使用的 Cookie 类型',
-                cookie_type_necessary: '<strong>必要 Cookie</strong>：对于网站的基本功能是必需的',
-                cookie_type_analytics: '<strong>分析 Cookie</strong>：收集有关访客如何使用网站的信息',
-                cookie_type_functional: '<strong>功能性 Cookie</strong>：允许网站记住您的偏好设置',
-                cookie_purpose_h3: 'Cookie 的使用目的',
-                cookie_purpose_1: '确保网站正常运行',
-                cookie_purpose_2: '分析网站流量',
-                cookie_purpose_3: '优化用户体验',
-                cookie_consent: '我已阅读并同意 <a href="cookie-policy.md" target="_blank" class="privacy-link">《Cookie隐私协议》</a>',
-                cookie_decline: '拒绝',
-                cookie_accept: '同意'
+                info_p2: '除了休闲游戏，团队还开源了机器人可视化编程工具 Robot Blockly——基于 Google Blockly 的拖拽式积木编程环境，支持宇树（Unitree）系列机器人，零代码基础也能让机器人动起来。'
             },
             en: {
                 nav_home: 'Home',
@@ -714,64 +516,12 @@ h2.sec {
                 card_draw_btn: 'Start Drawing →',
                 info_h2: 'About ERROR-CORE Games',
                 info_p1: 'ERROR-CORE Games is maintained by the open-source ERROR-CORE Team, offering web versions of 4 classic games — Snake, Breakout, Shooting and Soccer Shootout — plus handy tools like an online drawing board. The collection is completely free, ad-free and needs no sign-up; every game is built on HTML5 Canvas and runs smoothly on phones, tablets and computers.',
-                info_p2: 'Beyond casual games, the team has also open-sourced Robot Blockly, a visual programming tool for robots — a drag-and-drop block environment built on Google Blockly, supporting the Unitree robot line so even zero-code beginners can get a robot moving.',
-                cookie_title: '🍪 Cookie Policy',
-                cookie_intro: 'ERROR-CORE respects your privacy and is committed to keeping your personal information safe. This Cookie Policy explains how we use cookies and similar technologies.',
-                cookie_what_h3: 'What Are Cookies',
-                cookie_what_p: 'Cookies are small text files a website sends to your browser and stores on your device. They are used to keep the site running, improve your experience, and analyze site traffic and behavior.',
-                cookie_types_h3: 'Types of Cookies We Use',
-                cookie_type_necessary: '<strong>Essential cookies</strong>: required for the basic functions of the website',
-                cookie_type_analytics: '<strong>Analytics cookies</strong>: collect information about how visitors use the website',
-                cookie_type_functional: '<strong>Functional cookies</strong>: allow the website to remember your preferences',
-                cookie_purpose_h3: 'Purposes of Cookie Use',
-                cookie_purpose_1: 'Keep the website running properly',
-                cookie_purpose_2: 'Analyze website traffic',
-                cookie_purpose_3: 'Optimize the user experience',
-                cookie_consent: 'I have read and agree to the <a href="cookie-policy.md" target="_blank" class="privacy-link">Cookie Privacy Agreement</a>',
-                cookie_decline: 'Decline',
-                cookie_accept: 'Accept'
+                info_p2: 'Beyond casual games, the team has also open-sourced Robot Blockly, a visual programming tool for robots — a drag-and-drop block environment built on Google Blockly, supporting the Unitree robot line so even zero-code beginners can get a robot moving.'
             }
         };
     </script>
 
     <script>
-        // Cookie政策弹窗处理
-        function initCookieModal() {
-            const overlay = document.getElementById('cookieOverlay');
-            const acceptBtn = document.getElementById('acceptCookie');
-            const declineBtn = document.getElementById('declineCookie');
-            const consentCheckbox = document.getElementById('cookieConsentCheckbox');
-
-            // 检查用户是否已经同意过Cookie政策
-            const hasAccepted = localStorage.getItem('cookieAccepted');
-
-            if (!hasAccepted) {
-                // 首次访问，显示弹窗
-                setTimeout(() => {
-                    overlay.classList.add('show');
-                }, 500);
-            }
-
-            // 复选框状态变化监听
-            consentCheckbox.addEventListener('change', () => {
-                acceptBtn.disabled = !consentCheckbox.checked;
-            });
-
-            // 同意按钮（只有勾选复选框才能点击）
-            acceptBtn.addEventListener('click', () => {
-                if (consentCheckbox.checked) {
-                    localStorage.setItem('cookieAccepted', 'true');
-                    overlay.classList.remove('show');
-                }
-            });
-
-            // 拒绝按钮
-            declineBtn.addEventListener('click', () => {
-                localStorage.setItem('cookieAccepted', 'false');
-                overlay.classList.remove('show');
-            });
-        }
-
         function initNavToggle() {
             const toggle = document.getElementById('navToggle');
             const nav = document.getElementById('appbarNav');
@@ -802,7 +552,6 @@ h2.sec {
         }
 
         window.addEventListener('load', function() {
-            initCookieModal();
             initNavToggle();
         });
     </script>
