@@ -26,7 +26,10 @@
             var h = document.documentElement;
             var theme = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
             h.setAttribute('data-theme', theme);
-            var lang = (navigator.language || 'zh-CN').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en';
+            var saved = null;
+            try { saved = localStorage.getItem('ec-lang'); } catch (err) {}
+            var lang = (saved === 'zh' || saved === 'en') ? saved
+                : (navigator.language || 'zh-CN').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en';
             if (lang === 'en') h.setAttribute('lang', 'en');
         } catch (e) {}
     })();
@@ -641,6 +644,47 @@ th:last-child, td:last-child { padding-right: 0; }
 
 .footer-meta { display: flex; flex-wrap: wrap; gap: 8px 24px; }
 
+/* 视频号：悬停显示二维码浮层（页脚在页面底部，浮层向上弹出） */
+.footer-meta a.has-qr { position: relative; }
+.footer-meta .qr-pop {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%) scale(0.96);
+    width: 500px;
+    max-width: 90vw;
+    background: #ffffff;
+    border: 1px solid #d6d6d6;
+    border-radius: 16px;
+    padding: 12px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+    z-index: 2000;
+}
+.footer-meta .qr-pop img {
+    display: block;
+    width: 100%;
+    height: auto;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+.footer-meta .qr-pop .qr-tip {
+    display: block;
+    text-align: center;
+    margin-top: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #1d1d1f;
+}
+.footer-meta a.has-qr:hover .qr-pop,
+.footer-meta a.has-qr:focus-visible .qr-pop {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) scale(1);
+}
+
 .footer a { color: var(--secondary); }
 
 .footer a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
@@ -717,7 +761,7 @@ th:last-child, td:last-child { padding-right: 0; }
   "sameAs": [
     "https://github.com/Tengzicong/Robot_Blockly"
   ],
-  "description": "ERROR-CORE 是一个开源团队，维护 Robot Blockly 机器人积木编程工具与 ERROR-CORE Games 在线小游戏合集。"
+  "description": "ERROR-CORE 是一个开源虚拟团队，成员线上协作，维护 Robot Blockly 机器人积木编程工具与 ERROR-CORE Games 在线小游戏合集。"
 }
     </script>
 </head>
@@ -743,10 +787,10 @@ th:last-child, td:last-child { padding-right: 0; }
 
     <header class="hero">
         <div class="wrap">
-            <span class="eyebrow" data-i18n="hero_eyebrow">独立技术团队 · 开源项目</span>
+            <span class="eyebrow" data-i18n="hero_eyebrow">虚拟技术团队 · 开源项目</span>
             <h1>ERROR-CORE Team</h1>
-            <p class="lede" data-i18n="hero_lede">我们是一个独立的技术团队，作品覆盖机器人可视化编程工具与网页小游戏，相关项目均已公开源码。</p>
-            <p class="lede-sub" data-i18n="hero_lede_sub">An independent team building open-source robotics tooling and web mini-games.</p>
+            <p class="lede" data-i18n="hero_lede">我们是一个虚拟的独立技术团队，成员全部线上协作，作品覆盖机器人可视化编程工具与网页小游戏，相关项目均已公开源码。</p>
+            <p class="lede-sub" data-i18n="hero_lede_sub">A virtual team of independent developers building open-source robotics tooling and web mini-games.</p>
             <div class="cta">
                 <a class="btn btn-filled" href="#projects" data-i18n="hero_cta1">查看开源软件</a>
                 <a class="btn btn-outline" href="contact.html" data-i18n="hero_cta2">联系我们</a>
@@ -775,7 +819,7 @@ th:last-child, td:last-child { padding-right: 0; }
     <section class="band" id="team">
         <div class="wrap">
             <h2 class="sec" data-i18n="team_h">团队介绍</h2>
-            <p class="section-desc" data-i18n="team_d">小团队、少流程，从需求到发布全程自主完成。</p>
+            <p class="section-desc" data-i18n="team_d">我们是一个虚拟团队，成员线上协作；小团队、少流程，从需求到发布全程自主完成。</p>
             <div class="grid">
                 <div class="card">
                     <h3 data-i18n="team1t">方向</h3>
@@ -791,7 +835,7 @@ th:last-child, td:last-child { padding-right: 0; }
                 </div>
                 <div class="card">
                     <h3 data-i18n="team4t">联系方式</h3>
-                    <p data-i18n-html="team4b">邮箱 <code>error_core@163.com</code>，也可通过页脚 B 站 / 抖音账号找到我们。</p>
+                    <p data-i18n-html="team4b">邮箱 <code>error_core@163.com</code>，也可通过页脚 B 站 / 抖音 / Instagram 账号找到我们。</p>
                 </div>
             </div>
         </div>
@@ -903,6 +947,8 @@ th:last-child, td:last-child { padding-right: 0; }
             <div class="footer-meta">
                 <a href="https://space.bilibili.com/3546631121144154" target="_blank" rel="noopener noreferrer" data-i18n="ft_bili">B站 Bilibili</a>
                 <a href="https://www.douyin.com/user/MS4wLjABAAAA0cxdKFB-D6ucvm2i3AE92bzBC-xSHgmW0ew1iwh0Isx-DwXKsMF499VcAle9571J" target="_blank" rel="noopener noreferrer" data-i18n="ft_douyin">抖音 Douyin</a>
+                <a href="https://www.instagram.com/zicongteng/" target="_blank" rel="noopener noreferrer" data-i18n="ft_instagram">Instagram</a>
+                <a href="picture/IMG_1764.jpg" class="has-qr" target="_blank" rel="noopener noreferrer"><span data-i18n="ft_shipinhao">视频号</span><div class="qr-pop"><img src="picture/IMG_1764.jpg" alt="视频号二维码"><span class="qr-tip" data-i18n="qr_tip">使用微信扫码</span></div></a>
                 <a href="contact.html" data-i18n="ft_contact">联系我们</a>
                 <a href="index.html" data-i18n="ft_home">返回首页</a>
             </div>
@@ -916,9 +962,9 @@ th:last-child, td:last-child { padding-right: 0; }
 const I18N = {
     zh: {
         nav_team: '团队', nav_projects: '开源软件', nav_home: '返回首页',
-        hero_eyebrow: '独立技术团队 · 开源项目',
-        hero_lede: '我们是一个独立的技术团队，作品覆盖机器人可视化编程工具与网页小游戏，相关项目均已公开源码。',
-        hero_lede_sub: 'An independent team building open-source robotics tooling and web mini-games.',
+        hero_eyebrow: '虚拟技术团队 · 开源项目',
+        hero_lede: '我们是一个虚拟的独立技术团队，成员全部线上协作，作品覆盖机器人可视化编程工具与网页小游戏，相关项目均已公开源码。',
+        hero_lede_sub: 'A virtual team of independent developers building open-source robotics tooling and web mini-games.',
         hero_cta1: '查看开源软件', hero_cta2: '联系我们',
         stat_since_label: '团队成立', stat_hint_static: '点击切换显示方式',
         stat_proj_label: '开源项目', stat_proj_value: '2 个', stat_proj_note: '桌面工具与网页游戏',
@@ -930,11 +976,11 @@ const I18N = {
         st_hint_md: '{m} 个月 {d} 天 · 合计 {t} 天',
         st_hint_d: '{d} 天 · 合计 {t} 天',
         team_h: '团队介绍',
-        team_d: '小团队、少流程，从需求到发布全程自主完成。',
+        team_d: '我们是一个虚拟团队，成员线上协作；小团队、少流程，从需求到发布全程自主完成。',
         team1t: '方向', team1b: '机器人可视化编程、桌面应用打包与分发、网页游戏与交互体验。',
         team2t: '技术栈', team2b: 'Python、JavaScript、HTML / CSS，以及 PyQt 桌面端与 Blockly 可视化编辑器。',
         team3t: '开源方式', team3b: '源码托管在 GitHub，通过 Release 提供可安装版本，接受 Issue 反馈。',
-        team4t: '联系方式', team4b: '邮箱 <code>error_core@163.com</code>，也可通过页脚 B 站 / 抖音账号找到我们。',
+        team4t: '联系方式', team4b: '邮箱 <code>error_core@163.com</code>，也可通过页脚 B 站 / 抖音 / Instagram 账号找到我们。',
         proj_h: '开源软件',
         proj_d: '两款产品，一个面向真机调试，一个面向浏览器娱乐。',
         rb_tag: 'v0.1.1 公测版 · MIT',
@@ -969,13 +1015,13 @@ const I18N = {
         games_f4: '足球射门 Football', games_f5: '画板 Drawing',
         games_f6: '触屏长按连续操控适配', games_f7: 'Cookie 政策与同意弹窗', games_f8: '设备检测与移动端工具栏',
         games_l1: '进入游戏合集', games_l2: 'GitHub 仓库',
-        ft_bili: 'B站 Bilibili', ft_douyin: '抖音 Douyin', ft_contact: '联系我们', ft_home: '返回首页'
+        ft_bili: 'B站 Bilibili', ft_douyin: '抖音 Douyin', ft_instagram: 'Instagram', ft_shipinhao: '视频号', qr_tip: '使用微信扫码', ft_contact: '联系我们', ft_home: '返回首页'
     },
     en: {
         nav_team: 'Team', nav_projects: 'Open Source', nav_home: 'Back to home',
-        hero_eyebrow: 'Independent Tech Team · Open Source',
-        hero_lede: 'We are an independent technical team whose work spans visual robot programming tools and web mini-games, all published with open source.',
-        hero_lede_sub: 'An independent team building open-source robotics tooling and web mini-games.',
+        hero_eyebrow: 'Virtual Tech Team · Open Source',
+        hero_lede: 'We are a virtual, independent technical team — all members collaborate online. Our work spans visual robot programming tools and web mini-games, all published with open source.',
+        hero_lede_sub: 'A virtual team of independent developers building open-source robotics tooling and web mini-games.',
         hero_cta1: 'View open-source software', hero_cta2: 'Contact us',
         stat_since_label: 'Founded', stat_hint_static: 'Click to change display',
         stat_proj_label: 'Open-source projects', stat_proj_value: '2', stat_proj_note: 'Desktop tooling & web games',
@@ -987,11 +1033,11 @@ const I18N = {
         st_hint_md: '{m} months {d} days · {t} days in total',
         st_hint_d: '{d} days · {t} days in total',
         team_h: 'The Team',
-        team_d: 'A small team with little process — we go from idea to release entirely on our own.',
+        team_d: 'We are a virtual team collaborating online — small, with little process: we go from idea to release entirely on our own.',
         team1t: 'Directions', team1b: 'Visual robot programming, desktop app packaging & distribution, web games and interactive experiences.',
         team2t: 'Stack', team2b: 'Python, JavaScript, HTML / CSS, plus PyQt for desktop and Blockly for the visual editor.',
         team3t: 'How we open source', team3b: 'Source hosted on GitHub, installable builds shipped via Releases, and Issue feedback welcome.',
-        team4t: 'Contact', team4b: 'Email <code>error_core@163.com</code>, or find us via the bilibili / Douyin accounts in the footer.',
+        team4t: 'Contact', team4b: 'Email <code>error_core@163.com</code>, or find us via the bilibili / Douyin / Instagram accounts in the footer.',
         proj_h: 'Open-source Software',
         proj_d: 'Two products — one for real-robot debugging, one for browser fun.',
         rb_tag: 'v0.1.1 Public Beta · MIT',
@@ -1026,15 +1072,20 @@ const I18N = {
         games_f4: 'Football', games_f5: 'Drawing',
         games_f6: 'Touch hold-to-continue controls', games_f7: 'Cookie policy & consent dialog', games_f8: 'Device detection & mobile toolbar',
         games_l1: 'Play the games', games_l2: 'GitHub Repo',
-        ft_bili: 'Bilibili', ft_douyin: 'Douyin', ft_contact: 'Contact us', ft_home: 'Back to home'
+        ft_bili: 'Bilibili', ft_douyin: 'Douyin', ft_instagram: 'Instagram', ft_shipinhao: 'WeChat Channels', qr_tip: 'Scan with WeChat', ft_contact: 'Contact us', ft_home: 'Back to home'
     }
 };
 
-/* 语言默认值：浏览器语言 > 中文；不读取任何本地存储 */
+/* 语言优先级：用户主动保存的选择（全站共享 localStorage 'ec-lang'）> 浏览器语言 > 中文 */
 let LANG = 'zh';
 try {
+    const saved = localStorage.getItem('ec-lang');
+    LANG = (saved === 'zh' || saved === 'en') ? saved
+        : (navigator.language || 'zh-CN').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en';
+    if (localStorage.getItem('ec-lang') !== LANG) localStorage.setItem('ec-lang', LANG);
+} catch (e) {
     LANG = (navigator.language || 'zh-CN').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en';
-} catch (e) {}
+}
 
 function t(k) {
     const dict = I18N[LANG] || I18N.zh;
@@ -1160,8 +1211,17 @@ function applyLang() {
 document.querySelectorAll('.lang-switch button').forEach(btn => {
     btn.addEventListener('click', () => {
         LANG = btn.dataset.lang === 'en' ? 'en' : 'zh';
+        try { localStorage.setItem('ec-lang', LANG); } catch (e) {}
         applyLang();
     });
+});
+
+/* 跨标签页语言同步：其他页面切换语言后本页即时跟随 */
+window.addEventListener('storage', e => {
+    if (e.key === 'ec-lang' && (e.newValue === 'zh' || e.newValue === 'en') && e.newValue !== LANG) {
+        LANG = e.newValue;
+        applyLang();
+    }
 });
 
 /* ---------- 主题切换：仅本次会话生效，不存储；默认跟随系统 ---------- */

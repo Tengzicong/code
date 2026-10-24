@@ -154,7 +154,48 @@ a { color: inherit; text-decoration: none; }
 
 .appbar-nav .nav-link[aria-current="page"] { color: var(--secondary); }
 
-.nav-icon { width: 15px; height: 15px; }
+.nav-icon { width: 15px; height: 15px; object-fit: contain; }
+
+/* 视频号：悬停显示二维码浮层 */
+.nav-link.has-qr { position: relative; }
+.qr-pop {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%) scale(0.96);
+    width: 500px;
+    max-width: 90vw;
+    background: #ffffff;
+    border: 1px solid #d6d6d6;
+    border-radius: 16px;
+    padding: 12px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+    z-index: 2000;
+}
+.qr-pop img {
+    display: block;
+    width: 100%;
+    height: auto;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+.qr-pop .qr-tip {
+    display: block;
+    text-align: center;
+    margin-top: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #1d1d1f;
+}
+.nav-link.has-qr:hover .qr-pop,
+.nav-link.has-qr:focus-visible .qr-pop {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) scale(1);
+}
 
 /* 语言/主题控件挂载点（lang-theme.js 注入胶囊按钮） */
 .lt-mount {
@@ -186,12 +227,12 @@ a { color: inherit; text-decoration: none; }
 /* ---------- 布局与色带 ---------- */
 .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
 
-.band { background: var(--mist); }
+.band { background: var(--mist); padding-top: 40px; }
 
 section { padding: 100px 0; scroll-margin-top: 64px; }
 
 /* ---------- Hero（Apple 式居中） ---------- */
-.hero { text-align: center; padding: 88px 0 96px; }
+.hero { text-align: center; padding: 88px 0 40px; }
 
 .eyebrow {
     display: inline-block;
@@ -368,7 +409,9 @@ h2.sec {
 }
 
 @media (max-width: 720px) {
-    .hero { padding: 56px 0 64px; }
+    .hero { padding: 56px 0 28px; }
+
+    .band { padding-top: 28px; }
 
     section { padding: 64px 0; }
 
@@ -405,6 +448,13 @@ h2.sec {
                 <a href="https://www.douyin.com/user/MS4wLjABAAAA0cxdKFB-D6ucvm2i3AE92bzBC-xSHgmW0ew1iwh0Isx-DwXKsMF499VcAle9571J" class="nav-link" target="_blank" rel="noopener noreferrer">
                     <img src="picture/douyin.svg" alt="" class="nav-icon"><span data-i18n="nav_douyin">抖音</span>
                 </a>
+                <a href="https://www.instagram.com/zicongteng/" class="nav-link" target="_blank" rel="noopener noreferrer">
+                    <img src="picture/instagram-2016-5.svg" alt="" class="nav-icon"><span data-i18n="nav_instagram">Instagram</span>
+                </a>
+                <a href="picture/IMG_1764.jpg" class="nav-link has-qr" target="_blank" rel="noopener noreferrer">
+                    <img src="picture/logoc.png" alt="" class="nav-icon"><span data-i18n="nav_shipinhao">视频号</span>
+                    <div class="qr-pop"><img src="picture/IMG_1764.jpg" alt="视频号二维码"><span class="qr-tip" data-i18n="qr_tip">使用微信扫码</span></div>
+                </a>
             </nav>
             <span class="lt-mount"></span>
             <button type="button" class="nav-toggle" id="navToggle" aria-label="展开导航" aria-expanded="false" aria-controls="appbarNav">☰</button>
@@ -431,13 +481,13 @@ h2.sec {
                     <a href="gamecenter.html" class="entry-card">
                         <span class="card-icon" aria-hidden="true">🎮</span>
                         <span class="card-title" data-i18n="card_games_title">游戏中心</span>
-                        <span class="card-desc" data-i18n="card_games_desc">贪吃蛇、射击、打砖块、足球大战，四款游戏与最高分记录。</span>
+                        <span class="card-desc" data-i18n="card_games_desc">四款经典游戏的入口，最高分自动保存在本机。</span>
                         <span class="btn btn-filled" data-i18n="card_games_btn">进入 →</span>
                     </a>
                     <a href="drawing.html" class="entry-card">
                         <span class="card-icon" aria-hidden="true">🎨</span>
                         <span class="card-title" data-i18n="card_draw_title">画板</span>
-                        <span class="card-desc" data-i18n="card_draw_desc">可调笔刷与颜色的手绘板，支持导出 PNG 保存到本地。</span>
+                        <span class="card-desc" data-i18n="card_draw_desc">可调笔刷与颜色的在线手绘板，支持导出 PNG 保存到本地。</span>
                         <span class="btn btn-filled" data-i18n="card_draw_btn">开始绘制 →</span>
                     </a>
                 </div>
@@ -448,7 +498,7 @@ h2.sec {
         <section>
             <div class="wrap prose">
                 <h2 class="sec" data-i18n="info_h2">关于 ERROR-CORE Games</h2>
-                <p data-i18n="info_p1">ERROR-CORE Games 由开源团队 ERROR-CORE Team 维护，提供贪吃蛇、打砖块、飞机射击、足球射门 4 款经典游戏的网页版，以及在线画板等实用小工具。合集完全免费、无广告、无需注册，所有游戏基于 HTML5 Canvas 技术实现，在手机、平板和电脑上都能流畅运行。</p>
+                <p data-i18n="info_p1">ERROR-CORE Games 由开源虚拟团队 ERROR-CORE Team 维护（成员线上协作），提供贪吃蛇、打砖块、飞机射击、足球射门 4 款经典游戏的网页版，以及在线画板等实用小工具。合集完全免费、无广告、无需注册，所有游戏基于 HTML5 Canvas 技术实现，在手机、平板和电脑上都能流畅运行。</p>
                 <p data-i18n="info_p2">除了休闲游戏，团队还开源了机器人可视化编程工具 Robot Blockly——基于 Google Blockly 的拖拽式积木编程环境，支持宇树（Unitree）系列机器人，零代码基础也能让机器人动起来。</p>
             </div>
         </section>
@@ -480,19 +530,22 @@ h2.sec {
                 nav_site: '返回首页',
                 nav_bilibili: 'B 站',
                 nav_douyin: '抖音',
+                nav_instagram: 'Instagram',
+                nav_shipinhao: '视频号',
+                qr_tip: '使用微信扫码',
                 nav_expand: '展开导航',
                 nav_collapse: '收起导航',
                 hero_eyebrow: '开源 · 免费 · 无需安装',
                 hero_title: 'ERROR-CORE 小游戏',
                 hero_sub: '浏览器里直接玩的经典小游戏，桌面与手机均可操作。<span class="en">Play classic mini-games right in your browser.</span>',
                 card_games_title: '游戏中心',
-                card_games_desc: '贪吃蛇、射击、打砖块、足球大战，四款游戏与最高分记录。',
+                card_games_desc: '四款经典游戏的入口，最高分自动保存在本机。',
                 card_games_btn: '进入 →',
                 card_draw_title: '画板',
-                card_draw_desc: '可调笔刷与颜色的手绘板，支持导出 PNG 保存到本地。',
+                card_draw_desc: '可调笔刷与颜色的在线手绘板，支持导出 PNG 保存到本地。',
                 card_draw_btn: '开始绘制 →',
                 info_h2: '关于 ERROR-CORE Games',
-                info_p1: 'ERROR-CORE Games 由开源团队 ERROR-CORE Team 维护，提供贪吃蛇、打砖块、飞机射击、足球射门 4 款经典游戏的网页版，以及在线画板等实用小工具。合集完全免费、无广告、无需注册，所有游戏基于 HTML5 Canvas 技术实现，在手机、平板和电脑上都能流畅运行。',
+                info_p1: 'ERROR-CORE Games 由开源虚拟团队 ERROR-CORE Team 维护（成员线上协作），提供贪吃蛇、打砖块、飞机射击、足球射门 4 款经典游戏的网页版，以及在线画板等实用小工具。合集完全免费、无广告、无需注册，所有游戏基于 HTML5 Canvas 技术实现，在手机、平板和电脑上都能流畅运行。',
                 info_p2: '除了休闲游戏，团队还开源了机器人可视化编程工具 Robot Blockly——基于 Google Blockly 的拖拽式积木编程环境，支持宇树（Unitree）系列机器人，零代码基础也能让机器人动起来。'
             },
             en: {
@@ -503,19 +556,22 @@ h2.sec {
                 nav_site: 'Site Home',
                 nav_bilibili: 'Bilibili',
                 nav_douyin: 'Douyin',
+                nav_instagram: 'Instagram',
+                nav_shipinhao: 'WeChat Channels',
+                qr_tip: 'Scan with WeChat',
                 nav_expand: 'Expand navigation',
                 nav_collapse: 'Collapse navigation',
                 hero_eyebrow: 'Open-Source · Free · No Install',
                 hero_title: 'ERROR-CORE Mini-Games',
                 hero_sub: 'Classic mini-games you can play right in your browser, on desktop or mobile.',
                 card_games_title: 'Game Center',
-                card_games_desc: 'Snake, Shooting, Breakout and Soccer Battle — four games with high-score records.',
+                card_games_desc: 'The entry point to all four classic games, with high scores saved on your device.',
                 card_games_btn: 'Enter →',
                 card_draw_title: 'Drawing Board',
-                card_draw_desc: 'A hand-drawing board with adjustable brush and colors, with PNG export to your device.',
+                card_draw_desc: 'An online hand-drawing board with adjustable brush and colors, with PNG export to your device.',
                 card_draw_btn: 'Start Drawing →',
                 info_h2: 'About ERROR-CORE Games',
-                info_p1: 'ERROR-CORE Games is maintained by the open-source ERROR-CORE Team, offering web versions of 4 classic games — Snake, Breakout, Shooting and Soccer Shootout — plus handy tools like an online drawing board. The collection is completely free, ad-free and needs no sign-up; every game is built on HTML5 Canvas and runs smoothly on phones, tablets and computers.',
+                info_p1: 'ERROR-CORE Games is maintained by the open-source virtual team ERROR-CORE Team (members collaborate online), offering web versions of 4 classic games — Snake, Breakout, Plane Shooting and Soccer Shootout — plus handy tools like an online drawing board. The collection is completely free, ad-free and needs no sign-up; every game is built on HTML5 Canvas and runs smoothly on phones, tablets and computers.',
                 info_p2: 'Beyond casual games, the team has also open-sourced Robot Blockly, a visual programming tool for robots — a drag-and-drop block environment built on Google Blockly, supporting the Unitree robot line so even zero-code beginners can get a robot moving.'
             }
         };

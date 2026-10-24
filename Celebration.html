@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ERROR-CORE 足球大战胜利庆祝页：分出胜负后的烟花与彩带庆祝画面，可再来一局或返回首页。">
+    <meta name="keywords" content="胜利庆祝, 足球射门, ERROR-CORE, 小游戏">
     <title>胜利庆祝 | Victory Celebration</title>
     <script src="js/lang-theme.js"></script>
     <script src="js/device-detect.js"></script>
@@ -21,85 +23,102 @@
 
         body {
             min-height: 100vh;
-            background: linear-gradient(135deg, #ffd700, #ff8c00, #ff4500);
+            background:
+                radial-gradient(1100px 520px at 50% -8%, rgba(255, 200, 60, 0.22), rgba(255, 200, 60, 0) 70%),
+                #f5f5f7;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-family: 'Arial', sans-serif;
+            font-family: 'SF Pro Text', ui-sans-serif, system-ui, -apple-system,
+                BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC",
+                "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
             overflow: hidden;
             position: relative;
+            color: #1d1d1f;
         }
         
         .container {
             text-align: center;
             z-index: 10;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 36px 28px;
+            background: #ffffff;
+            border: 1px solid #d6d6d6;
+            border-radius: 28px;
+            box-shadow: 0 20px 60px rgba(180, 140, 30, 0.14);
             max-width: 90%;
             width: 100%;
         }
         
         h1 {
-            font-size: 3rem;
-            color: #fff;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
-            margin-bottom: 20px;
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #b8860b, #e6b422 45%, #b8860b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
             animation: pulse 1.5s infinite;
         }
         
         .winner-display {
             font-size: 2rem;
-            color: #fff;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
-            margin: 30px 0;
-            font-weight: bold;
+            color: #1d1d1f;
+            margin: 18px 0 8px;
+            font-weight: 600;
         }
         
-        .container p {
-            font-size: 1.2rem;
-            margin: 15px 0;
+        .victory-line {
+            color: #1d1d1f;
+            font-size: 1.15rem;
+            margin: 8px 0 0;
             padding: 0 10px;
         }
         
+        .btn-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-top: 30px;
+        }
+        
         .btn {
-            padding: 12px 25px;
-            font-size: 1rem;
-            background: linear-gradient(45deg, #ff0000, #ff4500);
+            padding: 14px 30px;
+            font-size: 1.15rem;
+            background: #0071e3;
             color: white;
             border: none;
-            border-radius: 50px;
+            border-radius: 980px;
             cursor: pointer;
-            margin-top: 30px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            font-weight: 600;
+            transition: background 0.2s ease, box-shadow 0.2s ease;
             display: inline-block;
             text-decoration: none;
+            box-shadow: 0 6px 16px rgba(0, 113, 227, 0.25);
         }
         
         .btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            background: #0077ed;
         }
 
         .btn-home {
-            background: rgba(255, 255, 255, 0.25);
-            border: 2px solid rgba(255, 255, 255, 0.7);
-            margin-left: 12px;
+            background: #f5f5f7;
+            border: 1px solid #d6d6d6;
+            color: #1d1d1f;
+            font-weight: 500;
+            box-shadow: none;
         }
 
         .btn-home:hover {
-            background: rgba(255, 255, 255, 0.4);
+            background: #ececf1;
         }
         
         /* 移动端适配 */
         @media (max-width: 768px) {
             .container {
-                padding: 15px;
+                padding: 24px 16px;
                 max-width: 95%;
             }
             
@@ -111,13 +130,13 @@
                 font-size: 1.5rem;
             }
             
-            .container p {
+            .victory-line {
                 font-size: 1rem;
             }
             
             .btn {
-                padding: 10px 20px;
-                font-size: 0.9rem;
+                padding: 11px 24px;
+                font-size: 0.95rem;
             }
         }
         
@@ -128,25 +147,6 @@
             background-color: #f00;
             border-radius: 50%;
             animation: fall linear forwards;
-        }
-        
-        .btn {
-            padding: 15px 30px;
-            font-size: 1.2rem;
-            background: linear-gradient(45deg, #ff0000, #ff4500);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            margin-top: 30px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-        
-        .btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
         }
         
         @keyframes pulse {
@@ -181,62 +181,67 @@
             }
         }
 
-        .victory-line {
-            color: white;
-        }
-
         .copyright {
             position: fixed;
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            color: rgba(255, 255, 255, 0.6);
+            color: #86868b;
             font-size: 0.9rem;
-            font-family: Arial, sans-serif;
+            font-family: inherit;
             z-index: 1000;
-            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
 
-        /* ---------- 浅色主题覆盖（深色即上方既有规则） ---------- */
+        /* ---------- 深色主题覆盖（浅色为 Apple 白画廊默认） ---------- */
         body {
             transition: background-color 0.35s ease, color 0.35s ease;
         }
 
-        html[data-theme="light"] body {
-            background: linear-gradient(135deg, #ffedb0, #ffc76e, #ff9d66);
+        html[data-theme="dark"] body {
+            background:
+                radial-gradient(1100px 520px at 50% -8%, rgba(255, 200, 60, 0.14), rgba(255, 200, 60, 0) 70%),
+                #000000;
+            color: #f5f5f7;
         }
 
-        html[data-theme="light"] .container {
-            background: rgba(255, 255, 255, 0.55);
+        html[data-theme="dark"] .container {
+            background: #1c1c1e;
+            border-color: rgba(255, 255, 255, 0.16);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
         }
 
-        html[data-theme="light"] h1 {
-            color: #8a4a00;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+        html[data-theme="dark"] h1 {
+            background: linear-gradient(135deg, #ffd766, #f5c542 45%, #ffd766);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
-        html[data-theme="light"] .winner-display {
-            color: #6b3a00;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+        html[data-theme="dark"] .winner-display,
+        html[data-theme="dark"] .victory-line {
+            color: #f5f5f7;
         }
 
-        html[data-theme="light"] .victory-line {
-            color: #5c3300;
+        html[data-theme="dark"] .btn {
+            background: #0a84ff;
         }
 
-        html[data-theme="light"] .btn-home {
-            background: rgba(255, 255, 255, 0.6);
-            border: 2px solid rgba(138, 74, 0, 0.45);
-            color: #5c3300;
+        html[data-theme="dark"] .btn:hover {
+            background: #409cff;
         }
 
-        html[data-theme="light"] .btn-home:hover {
-            background: rgba(255, 255, 255, 0.8);
+        html[data-theme="dark"] .btn-home {
+            background: #2c2c2e;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            color: #f5f5f7;
         }
 
-        html[data-theme="light"] .copyright {
-            color: rgba(92, 51, 0, 0.75);
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        html[data-theme="dark"] .btn-home:hover {
+            background: #3a3a3c;
+        }
+
+        html[data-theme="dark"] .copyright {
+            color: #86868b;
         }
     </style>
 </head>
@@ -244,42 +249,41 @@
     <div class="container">
         <h1 data-i18n="title_h1">🎉 恭喜 🎉</h1>
         <div class="winner-display" id="winnerDisplay">Player 1 Wins!</div>
-        <p class="victory-line" style="font-size: 1.5rem; margin: 20px 0;" data-i18n="victory_line1">获得了胜利！</p>
-        <p class="victory-line" style="font-size: 1.2rem; margin: 20px 0;" data-i18n="victory_line2">You are the champion!</p>
-        <a href="FootballGame.html" class="btn" data-i18n-html="btn_again">再来一局<br>Play Again</a>
-        <a href="index.html" class="btn btn-home" data-i18n-html="btn_home">返回首页<br>Home</a>
+        <p class="victory-line" data-i18n="victory_line">你就是本场冠军！</p>
+        <div class="btn-row">
+            <a href="FootballGame.html" class="btn" data-i18n="btn_again">再来一局</a>
+            <a href="index.html" class="btn btn-home" data-i18n="btn_home">返回首页</a>
+        </div>
     </div>
 
     <script>
         window.PAGE_META = {
             zh: {
                 title: '胜利庆祝 | Victory Celebration',
-                description: 'ERROR-CORE 足球大战胜利庆祝页：进球获胜后的烟花与彩带庆祝画面。',
+                description: 'ERROR-CORE 足球大战胜利庆祝页：分出胜负后的烟花与彩带庆祝画面，可再来一局或返回首页。',
                 keywords: '胜利庆祝, 足球射门, ERROR-CORE, 小游戏'
             },
             en: {
                 title: 'Victory Celebration | 胜利庆祝',
-                description: 'ERROR-CORE Soccer Battle victory page: fireworks and confetti after you win the shootout.',
+                description: 'ERROR-CORE Soccer Battle victory page: fireworks and confetti after the shootout — play again or head back home.',
                 keywords: 'victory celebration, soccer shootout, ERROR-CORE, mini-games'
             }
         };
         window.PAGE_I18N = {
             zh: {
                 title_h1: '🎉 恭喜 🎉',
-                victory_line1: '获得了胜利！',
-                victory_line2: 'You are the champion!',
-                btn_again: '再来一局<br>Play Again',
-                btn_home: '返回首页<br>Home',
-                win_p1: '玩家1 获胜！',
-                win_p2: '玩家2 获胜！',
+                victory_line: '你就是本场冠军！',
+                btn_again: '再来一局',
+                btn_home: '返回首页',
+                win_p1: '玩家 1 获胜！',
+                win_p2: '玩家 2 获胜！',
                 win_suffix: ' 获胜！'
             },
             en: {
                 title_h1: '🎉 Congratulations 🎉',
-                victory_line1: 'Victory is yours!',
-                victory_line2: 'You are the champion!',
-                btn_again: 'Play Again<br>再来一局',
-                btn_home: 'Back to Home<br>返回首页',
+                victory_line: 'You are the champion!',
+                btn_again: 'Play Again',
+                btn_home: 'Back to Home',
                 win_p1: 'Player 1 Wins!',
                 win_p2: 'Player 2 Wins!',
                 win_suffix: ' Wins!'

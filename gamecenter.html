@@ -154,7 +154,48 @@ a { color: inherit; text-decoration: none; }
 
 .topnav .nav-link[aria-current="page"] { background: var(--control); }
 
-.nav-icon { width: 14px; height: 14px; flex-shrink: 0; }
+.nav-icon { width: 14px; height: 14px; flex-shrink: 0; object-fit: contain; }
+
+/* 视频号：悬停显示二维码浮层 */
+.nav-link.has-qr { position: relative; }
+.qr-pop {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%) scale(0.96);
+    width: 500px;
+    max-width: 90vw;
+    background: #ffffff;
+    border: 1px solid #d6d6d6;
+    border-radius: 16px;
+    padding: 12px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+    z-index: 2000;
+}
+.qr-pop img {
+    display: block;
+    width: 100%;
+    height: auto;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+.qr-pop .qr-tip {
+    display: block;
+    text-align: center;
+    margin-top: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #1d1d1f;
+}
+.nav-link.has-qr:hover .qr-pop,
+.nav-link.has-qr:focus-visible .qr-pop {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) scale(1);
+}
 
 /* 语言 / 主题控件挂载点（lang-theme.js 自动注入胶囊按钮） */
 .lt-mount {
@@ -185,12 +226,12 @@ a { color: inherit; text-decoration: none; }
 /* ---------- 布局与色带 ---------- */
 .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
 
-.band { background: var(--mist); }
+.band { background: var(--mist); padding-top: 40px; }
 
 section { padding: 100px 0; scroll-margin-top: 64px; }
 
 /* ---------- Hero（Apple 式居中） ---------- */
-.hero { text-align: center; padding: 80px 0 0; }
+.hero { text-align: center; padding: 88px 0 40px; }
 
 .eyebrow {
     display: inline-block;
@@ -258,7 +299,7 @@ h2.sec {
 .game-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 20px;
+    gap: 24px;
 }
 
 .game-card {
@@ -268,12 +309,12 @@ h2.sec {
     background: var(--white);
     border-radius: var(--r-card);
     padding: 28px;
-    transition: transform 0.25s var(--ease), background 0.25s var(--ease);
+    transition: translate 0.25s var(--ease-out), background 0.25s var(--ease);
 }
 
-.game-card:hover { transform: translateY(-3px); }
+.game-card:hover { translate: 0 -2px; }
 
-.game-card:active { transform: translateY(0); }
+.game-card:active { translate: 0 0; }
 
 .game-icon {
     display: flex;
@@ -402,9 +443,11 @@ h2.sec {
         letter-spacing: -0.224px;
     }
 
-    .hero { padding-top: 56px; }
+    .hero { padding: 56px 0 28px; }
 
     section { padding: 64px 0; }
+
+    .band { padding-top: 28px; }
 
     .section-desc { margin-bottom: 32px; }
 }
@@ -437,6 +480,13 @@ h2.sec {
                 <a href="https://www.douyin.com/user/MS4wLjABAAAA0cxdKFB-D6ucvm2i3AE92bzBC-xSHgmW0ew1iwh0Isx-DwXKsMF499VcAle9571J" class="nav-link" target="_blank" rel="noopener noreferrer">
                     <img src="picture/douyin.svg" alt="" class="nav-icon"><span data-i18n="nav_douyin">抖音</span>
                 </a>
+                <a href="https://www.instagram.com/zicongteng/" class="nav-link" target="_blank" rel="noopener noreferrer">
+                    <img src="picture/instagram-2016-5.svg" alt="" class="nav-icon"><span data-i18n="nav_instagram">Instagram</span>
+                </a>
+                <a href="picture/IMG_1764.jpg" class="nav-link has-qr" target="_blank" rel="noopener noreferrer">
+                    <img src="picture/logoc.png" alt="" class="nav-icon"><span data-i18n="nav_shipinhao">视频号</span>
+                    <div class="qr-pop"><img src="picture/IMG_1764.jpg" alt="视频号二维码"><span class="qr-tip" data-i18n="qr_tip">使用微信扫码</span></div>
+                </a>
             </nav>
             <span class="lt-mount"></span>
             <button type="button" class="nav-toggle" id="navToggle" aria-label="展开导航" aria-expanded="false" aria-controls="appbarNav">☰</button>
@@ -461,15 +511,15 @@ h2.sec {
                     <div class="game-icon">🐍</div>
                     <h2 class="game-title" data-i18n="card_snake_title">贪吃蛇</h2>
                     <p class="game-subtitle">Snake</p>
-                    <p class="game-description" data-i18n="card_snake_desc">方向键或滑动操控，吃到食物加速，撞墙即结束。</p>
+                    <p class="game-description" data-i18n="card_snake_desc">方向键或滑动转向。越吃越长，撞墙即终。</p>
                     <span class="play-button" data-i18n="play_btn">开始游戏 →</span>
                 </a>
 
                 <a href="ShootingGame.html" class="game-card">
                     <div class="game-icon">🎯</div>
-                    <h2 class="game-title" data-i18n="card_shoot_title">射击游戏</h2>
+                    <h2 class="game-title" data-i18n="card_shoot_title">飞机射击</h2>
                     <p class="game-subtitle">Shooting</p>
-                    <p class="game-description" data-i18n="card_shoot_desc">移动准星瞄准目标，命中计分，考验反应速度。</p>
+                    <p class="game-description" data-i18n="card_shoot_desc">移动准星瞄准开火，命中计分。反应越快，分数越高。</p>
                     <span class="play-button" data-i18n="play_btn">开始游戏 →</span>
                 </a>
 
@@ -477,16 +527,24 @@ h2.sec {
                     <div class="game-icon">🧱</div>
                     <h2 class="game-title" data-i18n="card_break_title">打砖块</h2>
                     <p class="game-subtitle">Breakout</p>
-                    <p class="game-description" data-i18n="card_break_desc">反弹小球清除全部砖块，掉落即失去一条生命。</p>
+                    <p class="game-description" data-i18n="card_break_desc">弹球清除全部砖块。球掉落即失去一条生命。</p>
                     <span class="play-button" data-i18n="play_btn">开始游戏 →</span>
                 </a>
 
                 <a href="FootballGame.html" class="game-card">
                     <div class="game-icon">⚽</div>
-                    <h2 class="game-title" data-i18n="card_foot_title">足球大战</h2>
-                    <p class="game-subtitle">Soccer Battle</p>
-                    <p class="game-description" data-i18n="card_foot_desc">控制球员带球射门，与守门员斗智斗勇抢高分。</p>
+                    <h2 class="game-title" data-i18n="card_foot_title">足球射门</h2>
+                    <p class="game-subtitle">Soccer Shootout</p>
+                    <p class="game-description" data-i18n="card_foot_desc">瞄准死角主罚点球。与守门员斗智斗勇抢高分。</p>
                     <span class="play-button" data-i18n="play_btn">开始游戏 →</span>
+                </a>
+
+                <a href="drawing.html" class="game-card">
+                    <div class="game-icon">🎨</div>
+                    <h2 class="game-title" data-i18n="card_draw_title">在线画板</h2>
+                    <p class="game-subtitle">Drawing Board</p>
+                    <p class="game-description" data-i18n="card_draw_desc">多种笔刷与橡皮擦随手切换，触屏绘制，作品一键导出 PNG。</p>
+                    <span class="play-button" data-i18n="draw_btn">开始绘画 →</span>
                 </a>
             </div>
         </div>
@@ -528,23 +586,29 @@ h2.sec {
                 nav_site: '返回首页',
                 nav_bilibili: 'B 站',
                 nav_douyin: '抖音',
+                nav_instagram: 'Instagram',
+                nav_shipinhao: '视频号',
+                qr_tip: '使用微信扫码',
                 nav_expand: '展开导航',
                 nav_collapse: '收起导航',
                 hero_eyebrow: '4 款游戏 · 键盘与触屏双操作',
                 hero_title: '游戏中心',
                 hero_sub: '选择一款开始，最高分会自动保存在本机浏览器。<span class="en">Pick a game — your best score is saved locally.</span>',
                 card_snake_title: '贪吃蛇',
-                card_snake_desc: '方向键或滑动操控，吃到食物加速，撞墙即结束。',
-                card_shoot_title: '射击游戏',
-                card_shoot_desc: '移动准星瞄准目标，命中计分，考验反应速度。',
+                card_snake_desc: '方向键或滑动转向。越吃越长，撞墙即终。',
+                card_shoot_title: '飞机射击',
+                card_shoot_desc: '移动准星瞄准开火，命中计分。反应越快，分数越高。',
                 card_break_title: '打砖块',
-                card_break_desc: '反弹小球清除全部砖块，掉落即失去一条生命。',
-                card_foot_title: '足球大战',
-                card_foot_desc: '控制球员带球射门，与守门员斗智斗勇抢高分。',
+                card_break_desc: '弹球清除全部砖块。球掉落即失去一条生命。',
+                card_foot_title: '足球射门',
+                card_foot_desc: '瞄准死角主罚点球。与守门员斗智斗勇抢高分。',
+                card_draw_title: '在线画板',
+                card_draw_desc: '多种笔刷与橡皮擦随手切换，触屏绘制，作品一键导出 PNG。',
                 play_btn: '开始游戏 →',
+                draw_btn: '开始绘画 →',
                 info_h2: '游戏中心说明',
-                info_p1: '这里汇集了 ERROR-CORE Games 的全部 4 款经典小游戏：贪吃蛇、打砖块、飞机射击与足球射门。所有游戏均为纯前端 HTML5 Canvas 实现，无需下载、无需注册，打开页面即可游玩；游戏数据（最高分）仅保存在你自己的浏览器本地，不会上传到任何服务器。',
-                info_p2: '合集针对手机、平板与桌面浏览器分别做了适配：桌面端使用键盘方向键操作，移动端会自动出现触屏方向键与射击按钮，横屏竖屏均可游玩。点击任意游戏卡片即可进入对应详情页开始游戏。'
+                info_p1: '这里汇集了 ERROR-CORE Games 的全部 4 款经典小游戏：贪吃蛇、打砖块、飞机射击与足球射门，并附带一个在线画板创作工具。所有游戏均为纯前端 HTML5 Canvas 实现，无需下载、无需注册，打开页面即可游玩；最高分仅保存在本机浏览器，不会上传到任何服务器。',
+                info_p2: '合集针对手机、平板与桌面分别做了适配：桌面端用键盘方向键操作，移动端自动出现触屏方向键与射击按钮，横竖屏均可游玩。点击任意游戏卡片即可开始。'
             },
             en: {
                 nav_home: 'Home',
@@ -554,23 +618,29 @@ h2.sec {
                 nav_site: 'Site Home',
                 nav_bilibili: 'Bilibili',
                 nav_douyin: 'Douyin',
+                nav_instagram: 'Instagram',
+                nav_shipinhao: 'WeChat Channels',
+                qr_tip: 'Scan with WeChat',
                 nav_expand: 'Expand navigation',
                 nav_collapse: 'Collapse navigation',
                 hero_eyebrow: '4 Games · Keyboard & Touch Controls',
                 hero_title: 'Game Center',
                 hero_sub: 'Pick a game — your best score is saved locally in your browser.',
                 card_snake_title: 'Snake',
-                card_snake_desc: 'Steer with arrow keys or swipes, speed up as you eat, and it ends when you hit a wall.',
-                card_shoot_title: 'Shooting',
-                card_shoot_desc: 'Move the crosshair to line up targets and score hits — a true reflex test.',
+                card_snake_desc: 'Steer with arrow keys or swipes. Eat to grow — one wall hit ends the run.',
+                card_shoot_title: 'Plane Shooting',
+                card_shoot_desc: 'Aim the crosshair and blast the incoming planes. Faster reflexes, higher score.',
                 card_break_title: 'Breakout',
-                card_break_desc: 'Bounce the ball to clear every brick; miss it and lose a life.',
-                card_foot_title: 'Soccer Battle',
-                card_foot_desc: 'Dribble and shoot past the keeper, outsmarting them for a high score.',
+                card_break_desc: 'Bounce the ball to clear every brick. Miss it and lose a life.',
+                card_foot_title: 'Soccer Shootout',
+                card_foot_desc: 'Pick a corner and beat the keeper from the spot. Outsmart him for a high score.',
+                card_draw_title: 'Drawing Board',
+                card_draw_desc: 'Switch brushes and eraser on the fly, draw with touch, and export your art as PNG.',
                 play_btn: 'Play Now →',
+                draw_btn: 'Start Drawing →',
                 info_h2: 'About the Game Center',
-                info_p1: 'This page gathers all 4 classic mini-games from ERROR-CORE Games: Snake, Breakout, Shooting and Soccer Shootout. Every game is a pure front-end HTML5 Canvas implementation — no downloads, no sign-up, just open the page and play. Game data (high scores) is stored only in your own browser and never uploaded to any server.',
-                info_p2: 'The collection is adapted for phones, tablets and desktop browsers: use keyboard arrow keys on desktop, while on mobile an on-screen D-pad and fire button appear automatically, in portrait or landscape. Click any game card to open its page and start playing.'
+                info_p1: 'This page gathers all 4 classic mini-games from ERROR-CORE Games — Snake, Breakout, Plane Shooting and Soccer Shootout — plus an online drawing board. Every game is a pure front-end HTML5 Canvas implementation — no downloads, no sign-up, just open the page and play. High scores stay in your own browser and are never uploaded to any server.',
+                info_p2: 'The collection is adapted for phones, tablets and desktops: use keyboard arrow keys on desktop, while on mobile an on-screen D-pad and fire button appear automatically, in portrait or landscape. Click any game card to start playing.'
             }
         };
     </script>
